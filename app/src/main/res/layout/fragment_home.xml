@@ -1,0 +1,511 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#EFEFEF"
+    tools:context=".fragments.HomeFragment">
+
+    <View
+        android:id="@+id/topViewHome"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:background="@color/primaryColor"
+        android:layout_alignParentTop="true"/>
+
+    <View
+        android:id="@+id/topViewHomeWave"
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        android:layout_below="@id/topViewHome"
+        android:layout_marginTop="-1dp"
+        android:background="@drawable/wave" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="16dp"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:paddingBottom="12dp">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvHai"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:text="Hai,"
+            android:layout_marginBottom="6dp"
+            android:textColor="@color/white"
+            android:textSize="22sp" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvNama"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Lee Ruby"
+            android:layout_below="@id/tvHai"
+            android:layout_marginBottom="4dp"
+            android:textColor="@color/white"
+            android:textSize="22sp" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvSelamatDatang"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvNama"
+            android:layout_marginBottom="8dp"
+            android:text="Selamat datang di Simtaq"
+            android:textColor="@color/white"
+            android:textSize="22sp" />
+
+        <!-- TODO: Update blank fragment layout -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cvSaldo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="16dp"
+            android:layout_marginBottom="10dp"
+            android:backgroundTint="@color/transparan"
+            android:layout_below="@+id/tvSelamatDatang">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/gradient_secondarycolor"
+                android:padding="20dp">
+
+                <RelativeLayout
+                    android:id="@+id/rlTanggal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:background="@drawable/rounded_abu">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvTanggal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="12 Feb 2022"
+                        android:textColor="@color/primaryTextColor"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+                </RelativeLayout>
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvSaldo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Saldo"
+                    android:layout_below="@id/rlTanggal"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="8dp"
+                    android:textSize="22sp"
+                    android:textColor="@color/primaryTextColor"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvJmlSaldo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvSaldo"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="16dp"
+                    android:text="Rp. 8.500.000"
+                    android:textColor="@color/primaryTextColor"
+                    android:textSize="36sp"
+                    android:textStyle="bold" />
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/transparan"
+                    app:cardCornerRadius="16dp"
+                    android:layout_below="@+id/tvJmlSaldo">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/rounded_white"
+                        android:padding="10dp">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvCtBlnTerakhir"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dp"
+                            android:text="Catatan Bulan Februari"
+                            android:textColor="@color/primaryTextColor"
+                            android:textSize="20sp" />
+
+
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/cvPemasukan"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_below="@id/tvCtBlnTerakhir"
+                            android:layout_marginEnd="16dp"
+                            android:layout_marginBottom="8dp"
+                            android:layout_marginTop="4dp"
+                            android:backgroundTint="@color/jmlPemasukan"
+                            app:cardCornerRadius="40dp">
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <androidx.appcompat.widget.AppCompatImageView
+                                    android:id="@+id/ivPemasukan"
+                                    android:layout_width="24dp"
+                                    android:layout_height="24dp"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_centerVertical="true"
+                                    android:src="@drawable/ic_bullish" />
+
+                            </RelativeLayout>
+
+
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvPemasukan"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/tvCtBlnTerakhir"
+                            android:layout_marginBottom="2dp"
+                            android:layout_toEndOf="@id/cvPemasukan"
+                            android:text="Pemasukan"
+                            android:textColor="@color/primaryTextColor"
+                            android:textSize="18sp" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvTglPemasukan"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/tvPemasukan"
+                            android:layout_marginBottom="6dp"
+                            android:layout_toEndOf="@id/cvPemasukan"
+                            android:text="12 Agt 2022, 18.00"
+                            android:textColor="@color/primaryTextColor"
+                            android:textSize="11sp" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvJmlPemasukan"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/tvCtBlnTerakhir"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginTop="4dp"
+                            android:text="Rp. 250.000"
+                            android:textColor="@color/jmlPemasukan"
+                            android:textSize="20sp" />
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/cvPengeluaran"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_below="@id/cvPemasukan"
+                            android:layout_marginEnd="16dp"
+                            android:layout_marginTop="6dp"
+                            android:layout_marginBottom="4dp"
+                            android:backgroundTint="@color/jmlPengeluaran"
+                            app:cardCornerRadius="40dp">
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <androidx.appcompat.widget.AppCompatImageView
+                                    android:id="@+id/ivPengeluaran"
+                                    android:layout_width="24dp"
+                                    android:layout_height="24dp"
+                                    android:layout_centerInParent="true"
+                                    android:src="@drawable/ic_bearish" />
+
+                            </RelativeLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvPengeluaran"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/tvTglPemasukan"
+                            android:layout_marginBottom="2dp"
+                            android:layout_toEndOf="@id/cvPengeluaran"
+                            android:text="Pengeluaran"
+                            android:layout_marginTop="4dp"
+                            android:textColor="@color/primaryTextColor"
+                            android:textSize="18sp" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvTglPengeluaran"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/tvPengeluaran"
+                            android:layout_toEndOf="@id/cvPengeluaran"
+                            android:text="12 Agt 2022, 18.00"
+                            android:textColor="@color/primaryTextColor"
+                            android:textSize="11sp" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvJmlPengeluaran"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/tvJmlPemasukan"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginTop="24dp"
+                            android:text="Rp. 250.000"
+                            android:textColor="@color/jmlPengeluaran"
+                            android:textSize="20sp" />
+                    </RelativeLayout>
+                </androidx.cardview.widget.CardView>
+
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
+        <TableLayout
+            android:id="@+id/simpleTableLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/cvSaldo">
+            <TableRow
+                android:id="@+id/firstRow">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cvTambahCatatan"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="16dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/transparan"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="10dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/gradient_hijau"
+                        android:padding="16dp">
+
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/cvIconTambahCatatan"
+                            android:layout_width="38dp"
+                            android:layout_height="38dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="6dp"
+                            android:backgroundTint="@color/white"
+                            app:cardCornerRadius="40dp">
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <androidx.appcompat.widget.AppCompatImageView
+                                    android:id="@+id/ivTambahCatatan"
+                                    android:layout_width="24dp"
+                                    android:layout_height="24dp"
+                                    android:layout_centerInParent="true"
+                                    android:src="@drawable/ic_catat" />
+
+                            </RelativeLayout>
+
+
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/cvIconTambahCatatan"
+                            android:layout_marginBottom="8dp"
+                            android:text="Catat\nKeuangan"
+                            android:textAlignment="viewStart"
+                            android:textColor="@color/white"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                    </RelativeLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cvTambahKegiatan"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/transparan"
+                    app:cardCornerRadius="16dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/gradient_biru"
+                        android:padding="16dp">
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/cvIcontambahKegiatan"
+                            android:layout_width="38dp"
+                            android:layout_height="38dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="6dp"
+                            android:backgroundTint="@color/white"
+                            app:cardCornerRadius="40dp">
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <androidx.appcompat.widget.AppCompatImageView
+                                    android:id="@+id/ivTambahKegiatan"
+                                    android:layout_width="24dp"
+                                    android:layout_height="24dp"
+                                    android:layout_centerInParent="true"
+                                    android:src="@drawable/ic_tambahkegiatan" />
+
+                            </RelativeLayout>
+
+
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/cvIcontambahKegiatan"
+                            android:layout_marginBottom="8dp"
+                            android:text="Tambah\nKegiatan"
+                            android:textAlignment="viewStart"
+                            android:textColor="@color/white"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                    </RelativeLayout>
+                </androidx.cardview.widget.CardView>
+
+            </TableRow>
+            <TableRow
+                android:id="@+id/secondRow">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cvRiwayatKeuangan"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="16dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/transparan"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="10dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/gradient_merah"
+                        android:padding="16dp">
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/cvIconRiwayat"
+                            android:layout_width="38dp"
+                            android:layout_height="38dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="6dp"
+                            android:backgroundTint="@color/white"
+                            app:cardCornerRadius="40dp">
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <androidx.appcompat.widget.AppCompatImageView
+                                    android:id="@+id/ivRiwayat"
+                                    android:layout_width="24dp"
+                                    android:layout_height="24dp"
+                                    android:layout_centerInParent="true"
+                                    android:src="@drawable/ic_clock" />
+
+                            </RelativeLayout>
+
+
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/cvIconRiwayat"
+                            android:layout_marginBottom="8dp"
+                            android:text="Riwayat\nKeuangan"
+                            android:textAlignment="viewStart"
+                            android:textColor="@color/white"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                    </RelativeLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cvJadwalKegiatan"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/transparan"
+                    app:cardCornerRadius="16dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/gradient_kuning"
+                        android:padding="16dp">
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/cvIconKegiatan"
+                            android:layout_width="38dp"
+                            android:layout_height="38dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="6dp"
+                            android:backgroundTint="@color/white"
+                            app:cardCornerRadius="40dp">
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <androidx.appcompat.widget.AppCompatImageView
+                                    android:id="@+id/ivKegiatan"
+                                    android:layout_width="24dp"
+                                    android:layout_height="24dp"
+                                    android:layout_centerInParent="true"
+                                    android:src="@drawable/ic_activity_kuning" />
+
+                            </RelativeLayout>
+
+
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/cvIconKegiatan"
+                            android:layout_marginBottom="8dp"
+                            android:text="Jadwal\nKegiatan"
+                            android:textAlignment="viewStart"
+                            android:textColor="@color/white"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                    </RelativeLayout>
+                </androidx.cardview.widget.CardView>
+
+            </TableRow>
+
+        </TableLayout>
+    </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>
