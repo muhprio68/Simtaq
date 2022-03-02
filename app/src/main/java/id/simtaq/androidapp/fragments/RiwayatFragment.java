@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import id.simtaq.androidapp.MainActivity;
 import id.simtaq.androidapp.R;
 import id.simtaq.androidapp.adapter.RiwayatListAdapter;
 
@@ -70,7 +71,7 @@ public class RiwayatFragment extends Fragment {
         rvRiwayat = view.findViewById(R.id.rvRiwayat);
         rvRiwayat.setHasFixedSize(true);
         rvRiwayat.setLayoutManager(new LinearLayoutManager(view.getContext()));
-        rvRiwayat.setAdapter(new RiwayatListAdapter(1234));
+        rvRiwayat.setAdapter(new RiwayatListAdapter(1234, getContext()));
 
         return view;
     }

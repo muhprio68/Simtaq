@@ -1,6 +1,7 @@
 package id.simtaq.androidapp.viewholder;
 
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -10,6 +11,7 @@ import id.simtaq.androidapp.R;
 
 public class RiwayatViewHolder extends RecyclerView.ViewHolder {
 
+    public ImageView ivIconRiwayat;
     public TextView tvKeteranganRiwayat;
     public TextView tvTanggalRiwayat;
     public TextView tvJmlUang;
@@ -17,6 +19,7 @@ public class RiwayatViewHolder extends RecyclerView.ViewHolder {
 
     public RiwayatViewHolder(@NonNull View itemView) {
         super(itemView);
+        ivIconRiwayat = itemView.findViewById(R.id.ivIcRiwayat);
         tvKeteranganRiwayat = itemView.findViewById(R.id.tvKeteranganRiwayat);
         tvTanggalRiwayat = itemView.findViewById(R.id.tvTanggalRiwayat);
         tvJmlUang = itemView.findViewById(R.id.randomText);
