@@ -82,9 +82,9 @@ public class PengaturanFragment extends Fragment {
 
     void addData(){
         pengaturanList = new ArrayList<>();
-        pengaturanList.add(new Pengaturan(0, R.drawable.ic_circled_up, "Ganti kata sandi"));
-        pengaturanList.add(new Pengaturan(1, R.drawable.ic_activity_kuning, "Laporkan Bug"));
-        pengaturanList.add(new Pengaturan(2, R.drawable.ic_circled_up, "Tentang"));
-        pengaturanList.add(new Pengaturan(3, R.drawable.ic_add, "Keluar"));
+        pengaturanList.add(new Pengaturan(0, R.drawable.ic_lock_primarytext, "Ganti kata sandi"));
+        pengaturanList.add(new Pengaturan(1, R.drawable.ic_document_bug, "Laporkan Bug"));
+        pengaturanList.add(new Pengaturan(2, R.drawable.ic_info_squared, "Tentang"));
+        pengaturanList.add(new Pengaturan(3, R.drawable.ic_shutdown, "Keluar"));
     }
 }
