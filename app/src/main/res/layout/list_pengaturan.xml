@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rlListPengaturan"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivIcPengaturan"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="8dp"
+        android:layout_marginRight="14dp"
+        android:src="@drawable/ic_circled_up" />
+    <TextView
+        android:id="@+id/tvNamaListPengaturan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:layout_marginTop="6dp"
+        android:layout_toRightOf="@id/ivIcPengaturan"
+        android:textColor="@color/primaryTextColor"
+        tools:text="Kotak Amal" />
+
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivArrowRight"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/ic_chevron_right" />
+
+    <View
+        android:id="@+id/garisListPengaturan"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_below="@id/ivIcPengaturan"
+        android:background="@color/primaryTextColor" />
+
+</RelativeLayout>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivIcRiwayat"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="14dp"
+        android:src="@drawable/ic_circled_up" />
+    <TextView
+        android:id="@+id/tvKeteranganRiwayat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:layout_toRightOf="@id/ivIcRiwayat"
+        android:textColor="@color/primaryTextColor"
+        tools:text="Kotak Amal" />
+
+    <TextView
+        android:id="@+id/tvTanggalRiwayat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvKeteranganRiwayat"
+        android:layout_toRightOf="@id/ivIcRiwayat"
+        android:textColor="@color/primaryTextColor"
+        android:layout_marginBottom="8dp"
+        android:textSize="12sp"
+        tools:text="12 Feb, 2022" />
+
+
+    <TextView
+        android:id="@+id/randomText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:textColor="@color/jmlPemasukan"
+        tools:text="+ Rp. 80.000" />
+
+    <View
+        android:id="@+id/garisListRiwayat"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_below="@id/tvTanggalRiwayat"
+        android:background="@color/primaryTextColor" />
+
+</RelativeLayout>
