@@ -3,6 +3,8 @@ package id.simtaq.androidapp.fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,21 +22,16 @@ import id.simtaq.androidapp.models.CalendarModel;
 
 public class KegiatanFragment extends Fragment {
 
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    private String mParam1;
-    private String mParam2;
-
-    private int DAYS_COUNT = 42;
+    private final int DAYS_COUNT = 42;
     private ArrayList<CalendarModel> calendarList;
-    private Calendar calendar = Calendar.getInstance();
+    private Calendar calendar;
     private int tahun = -1;
     private int monthOfYear = -1;
     private JadwalKegiatanAdapter adapter;
 
     private TextView tvMonth;
     private TextView tvYear;
+    private RecyclerView recyclerView;
 
     public KegiatanFragment() {
 
@@ -43,8 +40,6 @@ public class KegiatanFragment extends Fragment {
     public static KegiatanFragment newInstance(String param1, String param2) {
         KegiatanFragment fragment = new KegiatanFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -53,8 +48,6 @@ public class KegiatanFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
 
@@ -65,14 +58,21 @@ public class KegiatanFragment extends Fragment {
         View view =  inflater.inflate(R.layout.fragment_kegiatan, container, false);
         tvMonth = view.findViewById(R.id.month);
         tvYear = view.findViewById(R.id.year);
+        recyclerView = view.findViewById(R.id.recyclerView);
+        calendarList = new ArrayList<>();
+        calendar = Calendar.getInstance();
         adapter = new JadwalKegiatanAdapter(getContext(), calendarList);
-
+        loadCalendar();
+        recyclerView.setLayoutManager(new GridLayoutManager(view.getContext(),7));
+        recyclerView.setAdapter(adapter);
         return view;
     }
 
 
     private void loadCalendar() {
         //ubah val ke var
+        //calendarList = new ArrayList<>();
+
         ArrayList<CalendarModel> cells = new ArrayList<>(); // inisialisasi variabel untuk setiap tanggal kalender
         if (tahun != -1 && monthOfYear != -1) {     // pengecekan bila varuiabel tahun dan monthOfYear kosong (-1 hanya pengecoh)
             //ubah obyek kalender ke tahun dan bulan yang diterima
@@ -87,7 +87,7 @@ public class KegiatanFragment extends Fragment {
         SimpleDateFormat sdf;
         sdf = new SimpleDateFormat("MMMM,yyyy", locale);  // obyek untuk parse bulan dan tahun
         String[] dateToday = sdf.format(calendar.getTime()).split(","); //format obyek calendar lalu split berdasarkan ,
-        tvMonth.setText(dateToday[0]); //settext bulan ke textview month
+        tvMonth.setText(dateToday[0]+","); //settext bulan ke textview month
         tvYear.setText(dateToday[1]); //settext bulan ke textview year
 
         //calendarToday
@@ -109,10 +109,10 @@ public class KegiatanFragment extends Fragment {
 
         // isi tanggal
         while (cells.size() < DAYS_COUNT) {
-            if (sdf.format(calendar.getTime()).equals("13-05-2019")) {
+            if (sdf.format(calendar.getTime()).equals("19-03-2022")) {
                 cells.add(new CalendarModel( calendar.get(Calendar.DATE), calendar.get(Calendar.MONTH), calendar.get(Calendar.YEAR), calendarCompare, "hijau"));
             } else {
-                cells.add(new CalendarModel( calendar.get(Calendar.DATE), calendar.get(Calendar.MONTH), calendar.get(Calendar.YEAR), calendarCompare, null));
+               cells.add(new CalendarModel( calendar.get(Calendar.DATE), calendar.get(Calendar.MONTH), calendar.get(Calendar.YEAR), calendarCompare, null));
             }
             calendar.add(Calendar.DAY_OF_MONTH, 1);
         }
