@@ -48,7 +48,6 @@ public class RiwayatListAdapter extends RecyclerView.Adapter<RiwayatViewHolder> 
             holder.tvJmlUang.setTextColor(ContextCompat.getColor(context, R.color.jmlPengeluaran));
         }
 
-
         holder.tvKeteranganRiwayat.setText("Kotak Amal "+String.valueOf((int)1+position));
         holder.tvTanggalRiwayat.setText(position+1+" Jan, 2022");
     }

@@ -7,38 +7,39 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Locale;
 
 import id.simtaq.androidapp.R;
+import id.simtaq.androidapp.adapter.JadwalKegiatanAdapter;
+import id.simtaq.androidapp.models.CalendarModel;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link KegiatanFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class KegiatanFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
+    private int DAYS_COUNT = 42;
+    private ArrayList<CalendarModel> calendarList;
+    private Calendar calendar = Calendar.getInstance();
+    private int tahun = -1;
+    private int monthOfYear = -1;
+    private JadwalKegiatanAdapter adapter;
+
+    private TextView tvMonth;
+    private TextView tvYear;
+
     public KegiatanFragment() {
-        // Required empty public constructor
+
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment KegiatanFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static KegiatanFragment newInstance(String param1, String param2) {
         KegiatanFragment fragment = new KegiatanFragment();
         Bundle args = new Bundle();
@@ -61,6 +62,65 @@ public class KegiatanFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_kegiatan, container, false);
+        View view =  inflater.inflate(R.layout.fragment_kegiatan, container, false);
+        tvMonth = view.findViewById(R.id.month);
+        tvYear = view.findViewById(R.id.year);
+        adapter = new JadwalKegiatanAdapter(getContext(), calendarList);
+
+        return view;
     }
+
+
+    private void loadCalendar() {
+        //ubah val ke var
+        ArrayList<CalendarModel> cells = new ArrayList<>(); // inisialisasi variabel untuk setiap tanggal kalender
+        if (tahun != -1 && monthOfYear != -1) {     // pengecekan bila varuiabel tahun dan monthOfYear kosong (-1 hanya pengecoh)
+            //ubah obyek kalender ke tahun dan bulan yang diterima
+            calendar.set(Calendar.MONTH, monthOfYear);
+            calendar.set(Calendar.YEAR, tahun);
+        } else {
+            // set variabel tahun dan monthOfYear ke tahun dan bulan sekarang
+            tahun = calendar.get(Calendar.YEAR);
+            monthOfYear = calendar.get(Calendar.MONTH);
+        }
+        Locale locale = new Locale("in", "ID");
+        SimpleDateFormat sdf;
+        sdf = new SimpleDateFormat("MMMM,yyyy", locale);  // obyek untuk parse bulan dan tahun
+        String[] dateToday = sdf.format(calendar.getTime()).split(","); //format obyek calendar lalu split berdasarkan ,
+        tvMonth.setText(dateToday[0]); //settext bulan ke textview month
+        tvYear.setText(dateToday[1]); //settext bulan ke textview year
+
+        //calendarToday
+        Calendar calendarCompare= Calendar.getInstance(); //instansiasi obyek calendar pembanding
+
+        calendarCompare.set(Calendar.MONTH, monthOfYear); //set bulan pada calendar pembanding ke monthOfYear
+        calendarCompare.set(Calendar.YEAR, tahun); //set tahun pada calendar pembanding ke tahun
+
+
+        // memnentukan kapan tanggal dimulai pada bulan
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+        int monthBeginningCell = calendar.get(Calendar.DAY_OF_WEEK) - 1;
+
+        // pindah calendar ke awal minggu
+        calendar.add(Calendar.DAY_OF_MONTH, -monthBeginningCell);
+
+        //obyek untuk parse tanggal
+        sdf = new SimpleDateFormat("dd-MM-yyyy", locale);
+
+        // isi tanggal
+        while (cells.size() < DAYS_COUNT) {
+            if (sdf.format(calendar.getTime()).equals("13-05-2019")) {
+                cells.add(new CalendarModel( calendar.get(Calendar.DATE), calendar.get(Calendar.MONTH), calendar.get(Calendar.YEAR), calendarCompare, "hijau"));
+            } else {
+                cells.add(new CalendarModel( calendar.get(Calendar.DATE), calendar.get(Calendar.MONTH), calendar.get(Calendar.YEAR), calendarCompare, null));
+            }
+            calendar.add(Calendar.DAY_OF_MONTH, 1);
+        }
+
+        calendarList.clear();
+        calendarList.addAll(cells);
+        adapter.notifyDataSetChanged();
+    }
+
 }
+
