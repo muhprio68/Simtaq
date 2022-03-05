@@ -12,11 +12,13 @@ public class PengaturanViewHolder extends RecyclerView.ViewHolder {
     public ImageView ivIconPengaturan;
     public TextView tvNamaPengaturan;
     public RelativeLayout rlListPengaturan;
+    public View vGaris;
 
     public PengaturanViewHolder(@NonNull View itemView) {
         super(itemView);
         ivIconPengaturan = itemView.findViewById(R.id.ivIcPengaturan);
         tvNamaPengaturan = itemView.findViewById(R.id.tvNamaListPengaturan);
         rlListPengaturan = itemView.findViewById(R.id.rlListPengaturan);
+        vGaris = itemView.findViewById(R.id.garisListPengaturan);
     }
 }

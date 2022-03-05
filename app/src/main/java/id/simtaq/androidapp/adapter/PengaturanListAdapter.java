@@ -44,6 +44,9 @@ public class PengaturanListAdapter extends RecyclerView.Adapter<PengaturanViewHo
         final int idPengaturan = pengaturan.getIdPengaturan();
         holder.ivIconPengaturan.setImageResource(pengaturan.getIconPengaturan());
         holder.tvNamaPengaturan.setText(pengaturan.getNamaPengaturan());
+        if (position == pengaturanList.size()-1){
+            holder.vGaris.setVisibility(View.GONE);
+        }
 //        holder.rlListPengaturan.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {

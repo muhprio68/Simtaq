@@ -3,9 +3,12 @@
     <color name="primaryColor">#07b846</color>
     <color name="primaryLightColor">#5cec75</color>
     <color name="primaryDarkColor">#008715</color>
-    <color name="secondaryColor">#0e5cad</color>
-    <color name="secondaryLightColor">#5788df</color>
-    <color name="secondaryDarkColor">#00347d</color>
+    <color name="secondaryColor">#0b897b</color>
+    <color name="secondaryLightColor">#50baaa</color>
+    <color name="secondaryDarkColor">#005b4f</color>
+<!--    <color name="secondaryColor">#0e5cad</color>-->
+<!--    <color name="secondaryLightColor">#5788df</color>-->
+<!--    <color name="secondaryDarkColor">#00347d</color>-->
     <color name="primaryTextColor">#0D4C24</color>
     <color name="secondaryTextColor">#ffffff</color>
 <!--    <color name="purple_200">#FFBB86FC</color>-->
