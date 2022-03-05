@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#EFEFEF"
+    tools:context=".fragments.InfoKasFragment">
+
+    <View
+        android:id="@+id/topViewHome"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_alignParentTop="true"
+        android:background="@color/primaryColor" />
+
+    <TextView
+        android:id="@+id/tvAppBarInfoKas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="24dp"
+        android:text="Uang Kas Masjid"
+        android:textColor="@color/secondaryTextColor"
+        android:layout_centerHorizontal="true"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        android:layout_marginTop="16dp"
+        android:textStyle="bold" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvAppBarInfoKas">
+
+
+
+
+
+                <!-- TODO: Update blank fragment layout -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cvSaldo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="24dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginBottom="10dp"
+                    android:backgroundTint="@color/white">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="20dp">
+
+                        <RelativeLayout
+                            android:id="@+id/rlTanggal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="16dp"
+                            android:background="@drawable/rounded_abu">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvTanggal"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="12 Feb 2022"
+                                android:textColor="@color/primaryColor"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
+                        </RelativeLayout>
+
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvSaldo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Jumlah Uang Kas"
+                            android:layout_below="@id/rlTanggal"
+                            android:textStyle="bold"
+                            android:layout_marginBottom="16dp"
+                            android:textSize="24sp"
+                            android:textColor="@color/primaryTextColor"/>
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvJmlSaldo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/tvSaldo"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginBottom="14dp"
+                            android:text="Rp. 8.500.000"
+                            android:textColor="@color/primaryTextColor"
+                            android:textSize="38sp"
+                            android:textStyle="bold" />
+                    </RelativeLayout>
+                </androidx.cardview.widget.CardView>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/cvSaldo"
+                android:padding="16dp">
+
+                <RelativeLayout
+                    android:id="@+id/rlRecyclerViewRiwayat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvRiwayatUangKas"
+                    android:layout_marginBottom="20dp">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:visibility="gone" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rlCatatPemasukan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvTambahData"
+                    android:layout_marginEnd="16dp">
+
+                    <RelativeLayout
+                        android:id="@+id/rlButtonCatatPemasukan"
+                        android:layout_width="92dp"
+                        android:layout_height="84dp"
+                        android:background="@drawable/rounded_hijau">
+
+                        <ImageView
+                            android:layout_width="42dp"
+                            android:layout_height="42dp"
+                            android:layout_centerHorizontal="true"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/ic_catat" />
+
+                    </RelativeLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/rlButtonCatatPemasukan"
+                        android:layout_centerHorizontal="true"
+                        android:text="Catat\nPemasukan"
+                        android:textAlignment="center"
+                        android:textColor="@color/primaryTextColor"
+                        android:textSize="14sp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvTambahData"
+                    android:layout_toEndOf="@id/rlCatatPemasukan">
+
+                    <RelativeLayout
+                        android:id="@+id/rlButtonCatatPengeluaran"
+                        android:layout_width="92dp"
+                        android:layout_height="84dp"
+                        android:background="@drawable/rounded_merah">
+
+                        <ImageView
+                            android:id="@+id/ivButtonCatatPengeluaran"
+                            android:layout_width="42dp"
+                            android:layout_height="42dp"
+                            android:layout_centerHorizontal="true"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/ic_catat_merah" />
+
+                    </RelativeLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/rlButtonCatatPengeluaran"
+                        android:layout_centerHorizontal="true"
+                        android:text="Catat\nPengeluaran"
+                        android:textAlignment="center"
+                        android:textColor="@color/primaryTextColor"
+                        android:textSize="14sp" />
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/tvInfoKasBlnIni"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/rlRecyclerViewRiwayat"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginBottom="8dp"
+                    android:text="Info Uang Kas bulan Ini"
+                    android:textColor="@color/primaryTextColor"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/tvTambahData"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/cvPemasukanBlnIni"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginBottom="8dp"
+                    android:text="Tambah Data"
+                    android:textColor="@color/primaryTextColor"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/tvLihatSemuaRiwayat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:text="Lihat Semua"
+                    android:textColor="@color/primaryTextColor"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/tvRiwayatUangKas"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginBottom="8dp"
+                    android:text="Riwayat Uang Kas"
+                    android:textColor="@color/primaryTextColor"
+                    android:textSize="18sp" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cvPengeluaranBlnIni"
+                    android:layout_width="wrap_content"
+                    android:layout_height="38dp"
+                    android:layout_below="@id/tvInfoKasBlnIni"
+                    android:layout_marginBottom="20dp"
+                    android:layout_toEndOf="@+id/cvPemasukanBlnIni"
+                    android:backgroundTint="@color/white"
+                    app:cardCornerRadius="8dp">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:paddingStart="4dp"
+                        android:paddingEnd="4dp">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvPengeluaranBlnIni"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_toEndOf="@+id/cvIcPengeluaranBlnIni"
+                            android:text="- Rp. 800.000"
+                            android:textColor="@color/jmlPengeluaran"
+                            android:textSize="16sp" />
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/cvIcPengeluaranBlnIni"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_centerVertical="true"
+                            android:layout_marginEnd="8dp"
+                            android:backgroundTint="@color/jmlPengeluaran"
+                            app:cardCornerRadius="40dp">
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <androidx.appcompat.widget.AppCompatImageView
+                                    android:id="@+id/ivIcPengeluaranBlnIni"
+                                    android:layout_width="14dp"
+                                    android:layout_height="14dp"
+                                    android:layout_centerInParent="true"
+                                    android:src="@drawable/ic_bullish" />
+
+                            </RelativeLayout>
+                        </androidx.cardview.widget.CardView>
+                    </RelativeLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cvPemasukanBlnIni"
+                    android:layout_width="wrap_content"
+                    android:layout_height="38dp"
+                    android:layout_below="@id/tvInfoKasBlnIni"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="20dp"
+                    android:backgroundTint="@color/white"
+                    app:cardCornerRadius="8dp">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:paddingStart="4dp"
+                        android:paddingEnd="4dp">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvPemasukanBlnIni"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_toEndOf="@+id/cvIcPemasukanBlnIni"
+                            android:text="+ Rp. 800.000"
+                            android:textColor="@color/jmlPemasukan"
+                            android:textSize="16sp" />
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/cvIcPemasukanBlnIni"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_centerVertical="true"
+                            android:layout_marginEnd="8dp"
+                            android:backgroundTint="@color/jmlPemasukan"
+                            app:cardCornerRadius="40dp">
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <androidx.appcompat.widget.AppCompatImageView
+                                    android:id="@+id/ivIcPemasukanBlnIni"
+                                    android:layout_width="14dp"
+                                    android:layout_height="14dp"
+                                    android:layout_centerInParent="true"
+                                    android:src="@drawable/ic_bullish" />
+
+                            </RelativeLayout>
+                        </androidx.cardview.widget.CardView>
+                    </RelativeLayout>
+
+                </androidx.cardview.widget.CardView>
+
+            </RelativeLayout>
+        </RelativeLayout>
+</RelativeLayout>

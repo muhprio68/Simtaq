@@ -6,14 +6,14 @@
         android:title="@string/menu_home" />
 
     <item
-        android:id="@+id/menu_riwayatkeuangan"
-        android:icon="@drawable/ic_clock"
-        android:title="@string/menu_riwayat" />
+        android:id="@+id/menu_infokas"
+        android:icon="@drawable/ic_card_wallet"
+        android:title="@string/menu_infokas" />
 
     <item
-        android:id="@+id/menu_jadwalkegiatan"
+        android:id="@+id/menu_kegiatan"
         android:icon="@drawable/ic_activity"
-        android:title="@string/menu_jadwal" />
+        android:title="@string/menu_kegiatan" />
 
     <item
         android:id="@+id/menu_pengaturan"

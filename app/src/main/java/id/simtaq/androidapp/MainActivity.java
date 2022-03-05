@@ -13,7 +13,7 @@ import com.google.android.material.navigation.NavigationBarView;
 import id.simtaq.androidapp.fragments.HomeFragment;
 import id.simtaq.androidapp.fragments.KegiatanFragment;
 import id.simtaq.androidapp.fragments.PengaturanFragment;
-import id.simtaq.androidapp.fragments.RiwayatFragment;
+import id.simtaq.androidapp.fragments.InfoKasFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,10 +34,10 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.menu_home:
                         selectedFragment = new HomeFragment();
                         break;
-                    case R.id.menu_riwayatkeuangan:
-                        selectedFragment = new RiwayatFragment();
+                    case R.id.menu_infokas:
+                        selectedFragment = new InfoKasFragment();
                         break;
-                    case R.id.menu_jadwalkegiatan:
+                    case R.id.menu_kegiatan:
                         selectedFragment = new KegiatanFragment();
                         break;
                     case R.id.menu_pengaturan:
