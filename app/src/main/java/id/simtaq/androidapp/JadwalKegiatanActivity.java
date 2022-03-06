@@ -32,6 +32,7 @@ public class JadwalKegiatanActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_jadwal_kegiatan);
+        getSupportActionBar().hide();
         tvMonth = findViewById(R.id.month);
         tvYear = findViewById(R.id.year);
         recyclerView = findViewById(R.id.recyclerView);

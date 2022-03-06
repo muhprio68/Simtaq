@@ -17,6 +17,7 @@ public class RiwayatActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_riwayat);
+        getSupportActionBar().hide();
         rvRiwayat = findViewById(R.id.rvRiwayat);
         rvRiwayat.setHasFixedSize(true);
         rvRiwayat.setLayoutManager(new LinearLayoutManager(RiwayatActivity.this));
