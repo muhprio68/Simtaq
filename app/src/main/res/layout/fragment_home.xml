@@ -42,29 +42,35 @@
                 android:layout_alignParentStart="true"
                 android:textAlignment="viewStart" />
 
-            <RelativeLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clMenuRow1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="16dp"
                 android:layout_below="@id/tvMenu">
+
                 <RelativeLayout
                     android:id="@+id/rlRiwayatUangKas"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true">
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <RelativeLayout
                         android:id="@+id/rlButtonRiwayatUangKas"
                         android:layout_width="92dp"
                         android:layout_height="84dp"
-                        android:gravity="center"
-                        android:background="@drawable/rounded_hijau">
+                        android:background="@drawable/rounded_riwayatuangkas"
+                        android:gravity="center">
 
                         <ImageView
                             android:layout_width="42dp"
                             android:layout_height="42dp"
                             android:layout_centerHorizontal="true"
                             android:layout_centerVertical="true"
-                            android:src="@drawable/ic_catat" />
+                            android:src="@drawable/ic_home_riwayatuangkas" />
 
                     </RelativeLayout>
 
@@ -72,30 +78,33 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/rlButtonRiwayatUangKas"
+                        android:layout_centerHorizontal="true"
                         android:text="Riwayat\nUang Kas"
                         android:textAlignment="center"
-                        android:layout_centerHorizontal="true"
                         android:textColor="@color/primaryTextColor"
                         android:textSize="14sp" />
                 </RelativeLayout>
+
                 <RelativeLayout
                     android:id="@+id/rlJadwalKegiatan"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true">
+                    app:layout_constraintStart_toEndOf="@id/rlRiwayatUangKas"
+                    app:layout_constraintEnd_toStartOf="@id/rlLokasiKegiatan"
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <RelativeLayout
                         android:id="@+id/rlButtonJadwalKegiatan"
                         android:layout_width="92dp"
                         android:layout_height="84dp"
-                        android:background="@drawable/rounded_hijau">
+                        android:background="@drawable/rounded_jadwalkegiatan">
 
                         <ImageView
                             android:layout_width="42dp"
                             android:layout_height="42dp"
                             android:layout_centerHorizontal="true"
                             android:layout_centerVertical="true"
-                            android:src="@drawable/ic_catat" />
+                            android:src="@drawable/ic_home_jadwalkegiatan" />
 
                     </RelativeLayout>
 
@@ -103,30 +112,76 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_below="@id/rlButtonJadwalKegiatan"
+                        android:layout_centerHorizontal="true"
                         android:text="Jadwal\nKegiatan"
                         android:textAlignment="center"
-                        android:layout_centerHorizontal="true"
                         android:textColor="@color/primaryTextColor"
                         android:textSize="14sp" />
                 </RelativeLayout>
+
                 <RelativeLayout
-                    android:id="@+id/rlCatatPemasukan"
+                    android:id="@+id/rlLokasiKegiatan"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true">
+                    android:layout_height="0dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <RelativeLayout
-                        android:id="@+id/rlButtonCatatPemasukan"
+                        android:id="@+id/rlButtonLokasiKegiatan"
                         android:layout_width="92dp"
                         android:layout_height="84dp"
-                        android:background="@drawable/rounded_hijau">
+                        android:background="@drawable/rounded_lokasikegiatan">
 
                         <ImageView
                             android:layout_width="42dp"
                             android:layout_height="42dp"
                             android:layout_centerHorizontal="true"
                             android:layout_centerVertical="true"
-                            android:src="@drawable/ic_catat" />
+                            android:src="@drawable/ic_home_lokasikegiatan" />
+
+                    </RelativeLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/rlButtonLokasiKegiatan"
+                        android:layout_centerHorizontal="true"
+                        android:text="Lokasi\nKegiatan"
+                        android:textAlignment="center"
+                        android:textColor="@color/primaryTextColor"
+                        android:textSize="14sp" />
+                </RelativeLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clMenuRow2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="16dp"
+                android:layout_below="@id/clMenuRow1">
+
+                <RelativeLayout
+                    android:id="@+id/rlCatatPemasukan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <RelativeLayout
+                        android:id="@+id/rlButtonCatatPemasukan"
+                        android:layout_width="92dp"
+                        android:layout_height="84dp"
+                        android:background="@drawable/rounded_catatpemasukan"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:layout_width="42dp"
+                            android:layout_height="42dp"
+                            android:layout_centerHorizontal="true"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/ic_home_catatpemasukan" />
 
                     </RelativeLayout>
 
@@ -134,14 +189,193 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/rlButtonCatatPemasukan"
+                        android:layout_centerHorizontal="true"
                         android:text="Catat\nPemasukan"
                         android:textAlignment="center"
-                        android:layout_centerHorizontal="true"
                         android:textColor="@color/primaryTextColor"
                         android:textSize="14sp" />
                 </RelativeLayout>
 
-            </RelativeLayout>
+                <RelativeLayout
+                    android:id="@+id/rlCatatPengeluaran"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toEndOf="@id/rlCatatPemasukan"
+                    app:layout_constraintEnd_toStartOf="@id/rlTambahKegiatan"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <RelativeLayout
+                        android:id="@+id/rlButtonCatatPengeluaran"
+                        android:layout_width="92dp"
+                        android:layout_height="84dp"
+                        android:background="@drawable/rounded_catatpengeluaran">
+
+                        <ImageView
+                            android:layout_width="42dp"
+                            android:layout_height="42dp"
+                            android:layout_centerHorizontal="true"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/ic_home_catatpengeluaran" />
+
+                    </RelativeLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_below="@id/rlButtonCatatPengeluaran"
+                        android:layout_centerHorizontal="true"
+                        android:text="Catat\nPengeluaran"
+                        android:textAlignment="center"
+                        android:textColor="@color/primaryTextColor"
+                        android:textSize="14sp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rlTambahKegiatan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <RelativeLayout
+                        android:id="@+id/rlButtonTambahKegiatan"
+                        android:layout_width="92dp"
+                        android:layout_height="84dp"
+                        android:background="@drawable/rounded_tambahkegiatan">
+
+                        <ImageView
+                            android:layout_width="42dp"
+                            android:layout_height="42dp"
+                            android:layout_centerHorizontal="true"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/ic_home_tambahkegiatan" />
+
+                    </RelativeLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/rlButtonTambahKegiatan"
+                        android:layout_centerHorizontal="true"
+                        android:text="Tambah\nKegiatan"
+                        android:textAlignment="center"
+                        android:textColor="@color/primaryTextColor"
+                        android:textSize="14sp" />
+                </RelativeLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clMenuRow3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:layout_below="@id/clMenuRow2">
+
+                <RelativeLayout
+                    android:id="@+id/rlMasjidAtTaqwa"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <RelativeLayout
+                        android:id="@+id/rlButtonMasjidAtTaqwa"
+                        android:layout_width="92dp"
+                        android:layout_height="84dp"
+                        android:background="@drawable/rounded_masjidattaqwa"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:layout_width="42dp"
+                            android:layout_height="42dp"
+                            android:layout_centerHorizontal="true"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/ic_home_masjidattaqwa" />
+
+                    </RelativeLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/rlButtonMasjidAtTaqwa"
+                        android:layout_centerHorizontal="true"
+                        android:text="Masjid\nAt-Taqwa"
+                        android:textAlignment="center"
+                        android:textColor="@color/primaryTextColor"
+                        android:textSize="14sp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rlPengurusTakmir"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toEndOf="@id/rlMasjidAtTaqwa"
+                    app:layout_constraintEnd_toStartOf="@id/rlTentangSimtaq"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <RelativeLayout
+                        android:id="@+id/rlButtonPengurusTakmir"
+                        android:layout_width="92dp"
+                        android:layout_height="84dp"
+                        android:background="@drawable/rounded_pengurustakmir">
+
+                        <ImageView
+                            android:layout_width="42dp"
+                            android:layout_height="42dp"
+                            android:layout_centerHorizontal="true"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/ic_home_pengurustakmir" />
+
+                    </RelativeLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_below="@id/rlButtonPengurusTakmir"
+                        android:layout_centerHorizontal="true"
+                        android:text="Pengurus\nTakmir"
+                        android:textAlignment="center"
+                        android:textColor="@color/primaryTextColor"
+                        android:textSize="14sp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rlTentangSimtaq"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <RelativeLayout
+                        android:id="@+id/rlButtonTentangSimtaq"
+                        android:layout_width="92dp"
+                        android:layout_height="84dp"
+                        android:background="@drawable/rounded_tentangsimtaq">
+
+                        <ImageView
+                            android:layout_width="42dp"
+                            android:layout_height="42dp"
+                            android:layout_centerHorizontal="true"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/ic_home_tentangsimtaq" />
+
+                    </RelativeLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/rlButtonTentangSimtaq"
+                        android:layout_centerHorizontal="true"
+                        android:text="Tentang\nSimtaq"
+                        android:textAlignment="center"
+                        android:textColor="@color/primaryTextColor"
+                        android:textSize="14sp" />
+                </RelativeLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </RelativeLayout>
     </ScrollView>

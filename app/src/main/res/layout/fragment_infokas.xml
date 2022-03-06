@@ -57,7 +57,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="16dp"
-                            android:background="@drawable/rounded_abu">
+                            android:background="@drawable/rounded_primarytransparan">
 
                             <androidx.appcompat.widget.AppCompatTextView
                                 android:id="@+id/tvTanggal"
@@ -127,14 +127,14 @@
                         android:id="@+id/rlButtonCatatPemasukan"
                         android:layout_width="92dp"
                         android:layout_height="84dp"
-                        android:background="@drawable/rounded_hijau">
+                        android:background="@drawable/rounded_catatpemasukan">
 
                         <ImageView
                             android:layout_width="42dp"
                             android:layout_height="42dp"
                             android:layout_centerHorizontal="true"
                             android:layout_centerVertical="true"
-                            android:src="@drawable/ic_catat" />
+                            android:src="@drawable/ic_home_catatpemasukan" />
 
                     </RelativeLayout>
 
@@ -159,7 +159,7 @@
                         android:id="@+id/rlButtonCatatPengeluaran"
                         android:layout_width="92dp"
                         android:layout_height="84dp"
-                        android:background="@drawable/rounded_merah">
+                        android:background="@drawable/rounded_catatpengeluaran">
 
                         <ImageView
                             android:id="@+id/ivButtonCatatPengeluaran"
@@ -167,7 +167,7 @@
                             android:layout_height="42dp"
                             android:layout_centerHorizontal="true"
                             android:layout_centerVertical="true"
-                            android:src="@drawable/ic_catat_merah" />
+                            android:src="@drawable/ic_home_catatpengeluaran" />
 
                     </RelativeLayout>
 

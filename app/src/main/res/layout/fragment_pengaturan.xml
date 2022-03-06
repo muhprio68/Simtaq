@@ -103,7 +103,7 @@
                     android:layout_below="@id/tvTipePengguna"
                     android:layout_centerHorizontal="true"
                     android:layout_marginBottom="32dp"
-                    android:background="@drawable/gradient_primary">
+                    android:background="@drawable/rounded_masjidattaqwa">
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvTanggal"
