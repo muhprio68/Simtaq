@@ -39,7 +39,7 @@
             android:text="Pengaturan"
             android:layout_centerHorizontal="true"
             android:textColor="@color/white"
-            android:textSize="20sp"
+            android:textSize="22sp"
             android:textStyle="bold" />
 
         <androidx.cardview.widget.CardView
@@ -103,7 +103,7 @@
                     android:layout_below="@id/tvTipePengguna"
                     android:layout_centerHorizontal="true"
                     android:layout_marginBottom="32dp"
-                    android:background="@drawable/rounded_masjidattaqwa">
+                    android:background="@drawable/rounded_btn_editprofil">
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvTanggal"

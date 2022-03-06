@@ -50,6 +50,10 @@ public class RiwayatListAdapter extends RecyclerView.Adapter<RiwayatViewHolder> 
 
         holder.tvKeteranganRiwayat.setText("Kotak Amal "+String.valueOf((int)1+position));
         holder.tvTanggalRiwayat.setText(position+1+" Jan, 2022");
+
+        if (position == getItemCount()-1){
+            holder.vGaris.setVisibility(View.GONE);
+        }
     }
 
     @Override
