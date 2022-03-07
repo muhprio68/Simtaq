@@ -80,7 +80,7 @@ public class InfoKasFragment extends Fragment implements View.OnClickListener {
         riwayatKasArrayList.add(new RiwayatKas("RK000014","Renovasi Dinding", false,"26/02/2022","Pengecatan",500000));
         riwayatKasArrayList.add(new RiwayatKas("RK000015","Kotak Amal", true,"26/02/2022","Kotak Amal Sholat Jum'at",900000));
     }
-
+//
     @Override
     public void onClick(View v) {
         if (v == tvSemuaRiwayat){
