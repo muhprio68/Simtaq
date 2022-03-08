@@ -197,7 +197,7 @@
                 android:textSize="18sp" />
 
             <TextView
-                android:id="@+id/tvLihatSemuaRiwayat"
+                android:id="@+id/tvLihatSemuaKegiatan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
@@ -213,10 +213,10 @@
                 android:layout_marginBottom="20dp">
 
                 <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvJadwalKegiatan"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:visibility="gone" />
+                    android:orientation="horizontal" />
             </RelativeLayout>
 
             <TextView

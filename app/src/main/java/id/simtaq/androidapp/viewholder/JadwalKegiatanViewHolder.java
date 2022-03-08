@@ -14,6 +14,8 @@ public class JadwalKegiatanViewHolder extends RecyclerView.ViewHolder {
     public ImageView ivDot;
     public TextView tvValueDescTanggal;
     public Context context;
+    public TextView tvKetInfoKegiatan;
+    public TextView tvTglInfoKegiatan;
 
     public JadwalKegiatanViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -21,5 +23,7 @@ public class JadwalKegiatanViewHolder extends RecyclerView.ViewHolder {
         ivDot = itemView.findViewById(R.id.dot);
         tvValueDescTanggal = itemView.findViewById(R.id.tvValueDescTanggal);
         context = itemView.getContext();
+        tvKetInfoKegiatan = itemView.findViewById(R.id.tvKeteranganInfoKegiatan);
+        tvTglInfoKegiatan = itemView.findViewById(R.id.tvTglInfoKegiatan);
     }
 }

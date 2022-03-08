@@ -8,7 +8,7 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="150dp"
-        android:layout_height="100dp"
+        android:layout_height="80dp"
         android:backgroundTint="@color/white"
         app:cardCornerRadius="8dp">
 
@@ -18,31 +18,21 @@
             android:padding="8dp">
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvKeteranganInfoKas"
+                android:id="@+id/tvKeteranganInfoKegiatan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Pembayaran Listrik"
-                android:textSize="14sp"
+                android:text="Sholawat Diba'"
+                android:textSize="16sp"
                 android:textColor="@color/primaryTextColor"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentStart="true"/>
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvJmlInfoKas"
+                android:id="@+id/tvTglInfoKegiatan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:text="- Rp. 800.00"
-                android:textColor="@color/jmlPengeluaran"
-                android:textSize="14sp" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvTglInfoKas"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="24/18/22"
-                android:textSize="10sp"
+                android:text="Senin, 24/18/22"
+                android:textSize="12sp"
                 android:textColor="@color/primaryTextColor"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentEnd="true" />
