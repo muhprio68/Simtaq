@@ -28,7 +28,7 @@ public class RiwayatViewHolder extends RecyclerView.ViewHolder {
         ivIconRiwayat = itemView.findViewById(R.id.ivIcRiwayat);
         tvKeteranganRiwayat = itemView.findViewById(R.id.tvKeteranganRiwayat);
         tvTanggalRiwayat = itemView.findViewById(R.id.tvTanggalRiwayat);
-        tvJmlUang = itemView.findViewById(R.id.randomText);
+        tvJmlUang = itemView.findViewById(R.id.tvJmlUang);
         vGaris = itemView.findViewById(R.id.garisListRiwayat);
         tvKeteranganInfoKas = itemView.findViewById(R.id.tvKeteranganInfoKas);
         tvJmlInfoKas = itemView.findViewById(R.id.tvJmlInfoKas);

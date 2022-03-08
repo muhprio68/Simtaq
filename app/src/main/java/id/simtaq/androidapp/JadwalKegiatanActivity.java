@@ -2,6 +2,7 @@ package id.simtaq.androidapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import java.util.Calendar;
 import java.util.Locale;
 
 import id.simtaq.androidapp.adapter.JadwalKegiatanAdapter;
+import id.simtaq.androidapp.adapter.RiwayatListAdapter;
 import id.simtaq.androidapp.models.CalendarModel;
 import id.simtaq.androidapp.models.Kegiatan;
 
@@ -22,23 +24,26 @@ public class JadwalKegiatanActivity extends AppCompatActivity {
     private ArrayList<Kegiatan> kegiatanList;
     private JadwalKegiatanAdapter adapter;
 
-    private TextView tvMonth;
-    private TextView tvYear;
-    private RecyclerView recyclerView;
+    private TextView tvFilterBulanKegiatan;
+    private TextView tvFilterTahunKegiatan;
+    private RecyclerView rvJadwalKegiatan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_jadwal_kegiatan);
         getSupportActionBar().hide();
-        tvMonth = findViewById(R.id.month);
-        tvYear = findViewById(R.id.year);
-        recyclerView = findViewById(R.id.recyclerView);
-//        addData();
-//        adapter = new JadwalKegiatanAdapter(JadwalKegiatanActivity.this, kegiatanList, 2);
-//        loadCalendar();
-//        recyclerView.setLayoutManager(new GridLayoutManager(JadwalKegiatanActivity.this,7));
-//        recyclerView.setAdapter(adapter);
+        initViews();
+        addData();
+        rvJadwalKegiatan.setHasFixedSize(true);
+        rvJadwalKegiatan.setLayoutManager(new LinearLayoutManager(JadwalKegiatanActivity.this));
+        rvJadwalKegiatan.setAdapter(new JadwalKegiatanAdapter(JadwalKegiatanActivity.this,kegiatanList, 2));
+    }
+
+    public void initViews(){
+        tvFilterBulanKegiatan = findViewById(R.id.tvFilterBulanKegiatan);
+        tvFilterTahunKegiatan = findViewById(R.id.tvFilterTahunKegiatan);
+        rvJadwalKegiatan = findViewById(R.id.rvJadwalKegiatan);
     }
 
     public void addData(){

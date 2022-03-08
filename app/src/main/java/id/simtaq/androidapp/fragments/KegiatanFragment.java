@@ -29,7 +29,7 @@ import id.simtaq.androidapp.models.Kegiatan;
 public class KegiatanFragment extends Fragment implements View.OnClickListener {
 
     private ArrayList<Kegiatan> kegiatanList;
-    private RecyclerView rvJadwalKegiatan;
+    private RecyclerView rvKegiatan;
     private TextView tvLihatSemuaKegiatan;
 
     public KegiatanFragment() {
@@ -57,16 +57,16 @@ public class KegiatanFragment extends Fragment implements View.OnClickListener {
         View view =  inflater.inflate(R.layout.fragment_kegiatan, container, false);
         initViews(view);
         tvLihatSemuaKegiatan.setOnClickListener(this);
-        rvJadwalKegiatan.setHasFixedSize(true);
+        rvKegiatan.setHasFixedSize(true);
         addData();
         LinearLayoutManager layoutManager = new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false);
-        rvJadwalKegiatan.setLayoutManager(layoutManager);
-        rvJadwalKegiatan.setAdapter(new JadwalKegiatanAdapter(view.getContext(), kegiatanList, 1));
+        rvKegiatan.setLayoutManager(layoutManager);
+        rvKegiatan.setAdapter(new JadwalKegiatanAdapter(view.getContext(), kegiatanList, 1));
         return view;
     }
 
     public void initViews(View v){
-        rvJadwalKegiatan = v.findViewById(R.id.rvJadwalKegiatan);
+        rvKegiatan = v.findViewById(R.id.rvKegiatan);
         tvLihatSemuaKegiatan = v.findViewById(R.id.tvLihatSemuaKegiatan);
     }
 

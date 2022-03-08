@@ -10,8 +10,13 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 import id.simtaq.androidapp.R;
 import id.simtaq.androidapp.models.CalendarModel;
@@ -34,7 +39,7 @@ public class JadwalKegiatanAdapter extends RecyclerView.Adapter<JadwalKegiatanVi
         if (tipe == 1){
             return R.layout.list_infokegiatan;
         } else{
-            return R.layout.item_date;
+            return R.layout.list_kegiatan;
         }
     }
 
@@ -51,10 +56,30 @@ public class JadwalKegiatanAdapter extends RecyclerView.Adapter<JadwalKegiatanVi
         if (tipe == 1) {
             holder.tvKetInfoKegiatan.setText(kegiatan.getNamaKegiatan());
             holder.tvTglInfoKegiatan.setText(kegiatan.getTanggalKegiatan());
+        } else {
+            holder.tvTanggalKegiatan.setText(dateFormat(kegiatan.getTanggalKegiatan()));
+            holder.tvNamaKegiatan.setText(kegiatan.getNamaKegiatan());
+            holder.tvJamKegiatan.setText(kegiatan.getWaktuKegiatan());
         }
     }
     @Override
     public int getItemCount() {
         return (kegiatanList != null) ? kegiatanList.size() : 0;
     }
+
+    private String dateFormat(String tanggal){
+        String tgl = tanggal;
+        Locale locale = new Locale("in", "ID");
+        DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy", locale);
+        Date date = null;
+        try {
+            date = (Date)formatter.parse(tgl);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        SimpleDateFormat newFormat = new SimpleDateFormat("dd", locale);
+        String tglBaru = newFormat.format(date);
+        return tglBaru;
+    }
+
 }

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="8dp">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvTanggalKegiatan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:text="01"
+        android:layout_marginTop="-8dp"
+        android:layout_marginEnd="8dp"
+        android:textColor="@color/primaryTextColor"
+        android:textSize="40sp" />
+
+    <TextView
+        android:id="@+id/tvNamaKegiatan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@id/tvTanggalKegiatan"
+        android:textColor="@color/primaryTextColor"
+        tools:text="Pengajian Rutin" />
+
+    <TextView
+        android:id="@+id/tvJamKegiatan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvNamaKegiatan"
+        android:layout_toRightOf="@id/tvTanggalKegiatan"
+        android:textColor="@color/primaryTextColor"
+        android:layout_marginBottom="8dp"
+        android:textSize="12sp"
+        tools:text="12 Feb, 2022" />
+
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivArrowKegiatan"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="4dp"
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/ic_chevron_right" />
+
+    <View
+        android:id="@+id/garisListKegiatan"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_below="@id/tvJamKegiatan"
+        android:background="@color/primaryTextColor" />
+
+</RelativeLayout>
