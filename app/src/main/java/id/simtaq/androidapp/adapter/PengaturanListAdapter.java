@@ -21,10 +21,10 @@ public class PengaturanListAdapter extends RecyclerView.Adapter<PengaturanViewHo
     ArrayList<Pengaturan> pengaturanList;
     IPengaturanAdapter iPengaturanAdapter;
 
-    public PengaturanListAdapter(Context mContext, ArrayList<Pengaturan> pengaturanList) {
+    public PengaturanListAdapter(Context mContext, ArrayList<Pengaturan> pengaturanList, IPengaturanAdapter iPengaturanAdapter) {
         this.mContext = mContext;
         this.pengaturanList = pengaturanList;
-        //this.iPengaturanAdapter = iPengaturanAdapter;
+        this.iPengaturanAdapter = iPengaturanAdapter;
     }
 
     public int getItemViewType(final int position){
@@ -47,12 +47,12 @@ public class PengaturanListAdapter extends RecyclerView.Adapter<PengaturanViewHo
         if (position == pengaturanList.size()-1){
             holder.vGaris.setVisibility(View.GONE);
         }
-//        holder.rlListPengaturan.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                iPengaturanAdapter.doClick(idPengaturan);
-//            }
-//        });
+        holder.rlListPengaturan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                iPengaturanAdapter.doClick(idPengaturan);
+            }
+        });
     }
 
     @Override

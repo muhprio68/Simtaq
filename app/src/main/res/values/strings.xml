@@ -4,6 +4,12 @@
     <string name="menu_infokas">Info Kas</string>
     <string name="menu_kegiatan">Kegiatan</string>
     <string name="menu_pengaturan">Pengaturan</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="email">Email</string>
+    <string name="kata_sandi">Kata sandi</string>
+    <string name="masuk">Masuk</string>
+    <string name="google_icon">google_icon</string>
+    <string name="nama">Nama</string>
+    <string name="password">Password</string>
+    <string name="ulangi_password">Ulangi Password</string>
+    <string name="daftar">DAFTAR</string>
 </resources>

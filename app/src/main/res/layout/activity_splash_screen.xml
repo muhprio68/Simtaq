@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_primary"
+    tools:context=".SplashScreenActivity">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/hiasantrans" />
+    <ImageView
+        android:id="@+id/ivMosqueSplash"
+        android:layout_width="220dp"
+        android:layout_height="245dp"
+        android:src="@drawable/ic_mosque"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@id/rlIkatTengah"/>
+    <RelativeLayout
+        android:id="@+id/rlIkatTengah"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"/>
+    <TextView
+        android:id="@+id/tvSimTaqSplash"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="110sp"
+        android:layout_below="@id/rlIkatTengah"
+        android:text="SimTaq"
+        android:textColor="@color/secondaryTextColor"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="@font/blessed_eid_demo"/>
+
+</RelativeLayout>

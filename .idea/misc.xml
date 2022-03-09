@@ -38,14 +38,20 @@
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/drawable/ic_home_pengurustakmir.xml" value="0.161" />
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/drawable/ic_home_tambahkegiatan.xml" value="0.161" />
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/drawable/ic_home_tentangsimtaq.xml" value="0.161" />
+        <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/drawable/ic_lock.xml" value="0.161" />
+        <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/drawable/ic_message_filled.xml" value="0.161" />
+        <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/drawable/ic_name.xml" value="0.161" />
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/drawable/ic_settings.xml" value="0.207" />
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/drawable/ic_tambahkegiatan.xml" value="0.1555" />
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/drawable/nav_rounded.xml" value="0.2105" />
+        <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/drawable/round_bg.xml" value="0.161" />
+        <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/drawable/round_border.xml" value="0.161" />
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/drawable/rounded_abu.xml" value="0.1605" />
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/drawable/rounded_btn_editprofil.xml" value="0.161" />
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/drawable/rounded_catatpemasukan.xml" value="0.161" />
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/drawable/rounded_catatpengeluaran.xml" value="0.161" />
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/drawable/rounded_homeheader.xml" value="0.1" />
+        <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/drawable/rounded_jadwalkegiatan.xml" value="0.161" />
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/drawable/rounded_lokasikegiatan.xml" value="0.161" />
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/drawable/rounded_merah.xml" value="0.161" />
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/drawable/rounded_pengurustakmir.xml" value="0.161" />
@@ -55,9 +61,12 @@
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/drawable/rounded_tentangsimtaq.xml" value="0.161" />
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/drawable/rounded_white.xml" value="0.1555" />
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/drawable/rounded_whiteriwayat.xml" value="0.1555" />
+        <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/layout/activity_daftar.xml" value="0.67" />
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/layout/activity_jadwal_kegiatan.xml" value="0.1675929884566054" />
+        <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/layout/activity_login.xml" value="0.33" />
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/layout/activity_riwayat.xml" value="0.1675929884566054" />
+        <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/layout/activity_splash_screen.xml" value="0.33" />
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/layout/fragment_home.xml" value="0.33" />
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/layout/fragment_infokas.xml" value="0.22" />
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/layout/fragment_kegiatan.xml" value="0.27613412228796846" />
@@ -70,6 +79,8 @@
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/layout/list_pengaturan.xml" value="0.22" />
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/layout/list_riwayat.xml" value="0.33" />
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/menu/menu.xml" value="0.1" />
+        <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.161" />
+        <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.161" />
       </map>
     </option>
   </component>

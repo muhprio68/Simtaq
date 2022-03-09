@@ -4,11 +4,32 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_new_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_new_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Simtaq">
+        <activity
+            android:name=".DaftarActivity"
+            android:exported="false" />
+        <activity
+            android:name=".LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SplashScreenActivity"
+            android:exported="false" />
+        <activity
+            android:name=".DetailKegiatanActivity"
+            android:exported="false" />
+        <activity
+            android:name=".DetailRiwayatKasActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CatatPengeluaranActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CatatPemasukanActivity"
+            android:exported="false" />
         <activity
             android:name=".JadwalKegiatanActivity"
             android:exported="false" />
