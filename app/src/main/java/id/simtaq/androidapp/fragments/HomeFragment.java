@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
+import id.simtaq.androidapp.CatatPemasukanActivity;
 import id.simtaq.androidapp.JadwalKegiatanActivity;
 import id.simtaq.androidapp.R;
 import id.simtaq.androidapp.RiwayatActivity;
@@ -19,6 +20,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     RelativeLayout rlRiwayatUangKas;
     RelativeLayout rlJadwalKegiatan;
+    RelativeLayout rlCatatPemasukan;
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -50,6 +52,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     public void initViews(View v){
         rlRiwayatUangKas = v.findViewById(R.id.rlButtonRiwayatUangKas);
         rlJadwalKegiatan = v.findViewById(R.id.rlButtonJadwalKegiatan);
+        rlCatatPemasukan = v.findViewById(R.id.rlCatatPemasukan);
     }
 
     @Override
@@ -58,6 +61,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             startActivity(new Intent(getContext(), RiwayatActivity.class));
         } else if (v== rlJadwalKegiatan){
             startActivity(new Intent(getContext(), JadwalKegiatanActivity.class));
+        } else if (v== rlCatatPemasukan){
+            startActivity(new Intent(getContext(), CatatPemasukanActivity.class));
         }
     }
 }
