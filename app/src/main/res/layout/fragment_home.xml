@@ -6,13 +6,80 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#EFEFEF"
     tools:context=".fragments.HomeFragment">
+    <View
+        android:id="@+id/topView"
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        android:background="@color/primaryColor"
+        android:layout_alignParentTop="true"/>
+
+    <View
+        android:id="@+id/view5"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_below="@+id/topView"
+        android:background="@drawable/wave"/>
 
     <RelativeLayout
         android:id="@+id/rlHeaderHome"
         android:layout_width="match_parent"
         android:layout_height="250dp"
-        android:background="@drawable/rounded_homeheader">
+        android:background="@color/transparan"
+        android:paddingTop="24dp"
+        android:paddingRight="16dp"
+        android:paddingLeft="16dp"
+        android:paddingBottom="24dp">
 
+        <ImageView
+            android:id="@+id/ivSimtaqLogo"
+            android:layout_width="120dp"
+            android:layout_height="96dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            app:srcCompat="@drawable/ic_mosque" />
+
+        <TextView
+            android:id="@+id/tvSimTaqLogo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ivSimtaqLogo"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:fontFamily="@font/blessed_eid_demo"
+            android:text="SimTaq"
+            android:textColor="@android:color/white"
+            android:textSize="50sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvSelamatDatang"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="16dp"
+            android:layout_toLeftOf="@id/ivSimtaqLogo"
+            android:fontFamily="@font/opensans_bold"
+            android:text="Selamat Datang di SimTaq"
+            android:textColor="@android:color/white"
+            android:textSize="28sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvDeskripsiSimtaq"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvSelamatDatang"
+            android:layout_alignParentStart="true"
+            android:layout_marginEnd="8dp"
+            android:layout_toLeftOf="@id/ivSimtaqLogo"
+            android:fontFamily="@font/opensans_regular"
+            android:text="Aplikasi Sistem Informasi Masjid At-Taqwa"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:textStyle="normal" />
 
     </RelativeLayout>
 
@@ -36,10 +103,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Menu"
-                android:textSize="20sp"
+                android:textSize="24sp"
                 android:layout_marginBottom="16dp"
                 android:textColor="@color/primaryTextColor"
                 android:layout_alignParentStart="true"
+                android:layout_marginStart="8dp"
                 android:textAlignment="viewStart" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
