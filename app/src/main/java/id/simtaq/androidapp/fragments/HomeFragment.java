@@ -46,6 +46,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         initViews(view);
         rlRiwayatUangKas.setOnClickListener(this);
         rlJadwalKegiatan.setOnClickListener(this);
+        rlCatatPemasukan.setOnClickListener(this);
         return view;
     }
 
