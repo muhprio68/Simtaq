@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Simtaq">
         <activity
+            android:name=".TambahKegiatanActivity"
+            android:exported="false" />
+        <activity
             android:name=".DaftarActivity"
             android:exported="false" />
         <activity
