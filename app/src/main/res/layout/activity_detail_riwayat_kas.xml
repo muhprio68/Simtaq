@@ -17,6 +17,7 @@
         android:background="@drawable/rounded_border_tambahdata">
 
         <TextView
+            android:id="@+id/tvValueNominalCatatanKas"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="+ Rp. 250.000"
@@ -154,7 +155,7 @@
                     android:textSize="18sp"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvValueTempatKegiatan"
+                    android:id="@+id/tvValueDeskripsiCatanKas"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Pembayaran Listrik untuk bulan desember"
@@ -169,7 +170,7 @@
     </RelativeLayout>
 
     <TextView
-        android:id="@+id/tvDetailJmlCatatan"
+        android:id="@+id/tvJudulDetailPenjumlahan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/rlInfoCatatan"
@@ -218,7 +219,7 @@
             android:layout_marginTop="20dip" >
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvTipeRiwayatKas"
+                android:id="@+id/tvNominalDetailPenjumlahan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Jumlah Pemasukan"
@@ -227,7 +228,7 @@
                 android:textSize="18sp"/>
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvValueNominalRiwayatKas"
+                android:id="@+id/tvValueNominalDetailPenjumlahan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Rp. 250.000"

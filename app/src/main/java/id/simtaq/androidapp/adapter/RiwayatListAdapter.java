@@ -71,6 +71,13 @@ public class RiwayatListAdapter extends RecyclerView.Adapter<RiwayatViewHolder> 
             } else {
                 holder.vGaris.setVisibility(View.VISIBLE);
             }
+
+            holder.rlLisRiwayat.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    iRiwayatListAdapter.doClick(riwayatKas.getId());
+                }
+            });
         } else {
             if (riwayatKas.isPemasukan() == true){
                 holder.tvJmlInfoKas.setText("+ Rp. "+String.valueOf(riwayatKas.getNominal()));
@@ -98,6 +105,6 @@ public class RiwayatListAdapter extends RecyclerView.Adapter<RiwayatViewHolder> 
     }
 
     public interface IRiwayatListAdapter{
-        void doClick(int id);
+        void doClick(String id);
     }
 }

@@ -49,19 +49,25 @@ public class RiwayatActivity extends AppCompatActivity implements RiwayatListAda
     }
 
     @Override
-    public void doClick(int id) {
-        final RiwayatKas riwayatKas = riwayatKasArrayList.get(id);
-        Bundle bundle = new Bundle();
-        bundle.putString("noCatatan", riwayatKas.getId());
-        bundle.putBoolean("tipe", riwayatKas.isPemasukan());
-        bundle.putString("tgl", riwayatKas.getTanggal());
-        bundle.putString("keterangan", riwayatKas.getKeterangan());
-        bundle.putString("deskripsi", riwayatKas.getDeskripsi());
-        bundle.putInt("totalKasAwal", riwayatKas.getJmlKasAwal());
-        bundle.putInt("nominalCatatan", riwayatKas.getNominal());
-        bundle.putInt("totalKasAkhir", riwayatKas.getJmlKasAkhir());
-        Intent intent = new Intent(RiwayatActivity.this, DetailRiwayatKasActivity.class);
-        intent.putExtras(bundle);
-        startActivity(intent);
+    public void doClick(String id) {
+        for (int i = 0 ; i < riwayatKasArrayList.size() ; i++){
+            final RiwayatKas riwayatKas = riwayatKasArrayList.get(i);
+            if (riwayatKas.getId().equals(id)){
+                Bundle bundle = new Bundle();
+                bundle.putString("noCatatan", riwayatKas.getId());
+                bundle.putBoolean("tipe", riwayatKas.isPemasukan());
+                bundle.putString("tgl", riwayatKas.getTanggal());
+                bundle.putString("keterangan", riwayatKas.getKeterangan());
+                bundle.putString("deskripsi", riwayatKas.getDeskripsi());
+                bundle.putInt("totalKasAwal", riwayatKas.getJmlKasAwal());
+                bundle.putInt("nominalCatatan", riwayatKas.getNominal());
+                bundle.putInt("totalKasAkhir", riwayatKas.getJmlKasAkhir());
+                Intent intent = new Intent(RiwayatActivity.this, DetailRiwayatKasActivity.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        }
+//        final RiwayatKas riwayatKas = riwayatKasArrayList.get(id);
+
     }
 }

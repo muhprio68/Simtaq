@@ -89,7 +89,7 @@ public class InfoKasFragment extends Fragment implements View.OnClickListener, R
     }
 
     @Override
-    public void doClick(int id) {
+    public void doClick(String id) {
 
     }
 }
