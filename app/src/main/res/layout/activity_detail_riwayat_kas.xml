@@ -14,7 +14,7 @@
         android:layout_height="52dp"
         android:layout_alignParentTop="true"
         android:layout_marginBottom="24dp"
-        android:background="@drawable/rounded_bg_detail">
+        android:background="@drawable/rounded_border_detail">
 
         <TextView
             android:id="@+id/tvValueNominalCatatanKas"
@@ -33,7 +33,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/rlJmlDetailUangKas"
-        android:text="Informasi catatan"
+        android:text="Informasi Catatan"
         android:textSize="20sp"
         android:textColor="@color/primaryTextColor"
         android:layout_marginBottom="8dp"/>
@@ -45,7 +45,7 @@
         android:padding="16dp"
         android:layout_marginBottom="24dp"
         android:layout_below="@+id/tvInfoCatatan"
-        android:background="@drawable/rounded_bg_detail">
+        android:background="@drawable/rounded_border_detail">
 
         <TableLayout
             android:layout_width="match_parent"
@@ -187,7 +187,7 @@
         android:padding="16dp"
         android:layout_marginBottom="24dp"
         android:layout_below="@+id/tvJudulDetailPenjumlahan"
-        android:background="@drawable/rounded_bg_detail">
+        android:background="@drawable/rounded_border_detail">
 
         <TableLayout
             android:layout_width="match_parent"
