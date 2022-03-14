@@ -23,11 +23,13 @@ public class RiwayatListAdapter extends RecyclerView.Adapter<RiwayatViewHolder> 
     ArrayList<RiwayatKas> riwayatKasList;
     Context context;
     int tipe;
+    IRiwayatListAdapter iRiwayatListAdapter;
 
-    public RiwayatListAdapter(ArrayList<RiwayatKas> riwayatKasList, Context context, int tipe) {
+    public RiwayatListAdapter(ArrayList<RiwayatKas> riwayatKasList, Context context, int tipe, IRiwayatListAdapter iRiwayatListAdapter) {
         this.riwayatKasList = riwayatKasList;
         this.context = context;
         this.tipe = tipe;
+        this.iRiwayatListAdapter = iRiwayatListAdapter;
     }
 
     public int getItemViewType(final int position){
@@ -93,6 +95,9 @@ public class RiwayatListAdapter extends RecyclerView.Adapter<RiwayatViewHolder> 
                 return 5;
             }
         }
+    }
 
+    public interface IRiwayatListAdapter{
+        void doClick(int id);
     }
 }

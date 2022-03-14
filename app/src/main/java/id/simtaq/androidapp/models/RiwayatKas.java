@@ -7,14 +7,18 @@ public class RiwayatKas {
     private String tanggal;
     private String deskripsi;
     private int nominal;
+    private int jmlKasAwal;
+    private int jmlKasAkhir;
 
-    public RiwayatKas(String id, String keterangan, boolean isPemasukan, String tanggal, String deskripsi, int nominal) {
+    public RiwayatKas(String id, String keterangan, boolean isPemasukan, String tanggal, String deskripsi, int nominal, int jmlKasAwal, int jmlKasAkhir) {
         this.id = id;
         this.keterangan = keterangan;
         this.isPemasukan = isPemasukan;
         this.tanggal = tanggal;
         this.deskripsi = deskripsi;
         this.nominal = nominal;
+        this.jmlKasAwal = jmlKasAwal;
+        this.jmlKasAkhir = jmlKasAkhir;
     }
 
     public String getId() {
@@ -63,5 +67,21 @@ public class RiwayatKas {
 
     public void setNominal(int nominal) {
         this.nominal = nominal;
+    }
+
+    public int getJmlKasAwal() {
+        return jmlKasAwal;
+    }
+
+    public void setJmlKasAwal(int jmlKasAwal) {
+        this.jmlKasAwal = jmlKasAwal;
+    }
+
+    public int getJmlKasAkhir() {
+        return jmlKasAkhir;
+    }
+
+    public void setJmlKasAkhir(int jmlKasAkhir) {
+        this.jmlKasAkhir = jmlKasAkhir;
     }
 }
