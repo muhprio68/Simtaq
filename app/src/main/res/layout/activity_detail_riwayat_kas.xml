@@ -5,24 +5,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
+    android:background="@color/background"
     tools:context=".DetailRiwayatKasActivity">
 
     <RelativeLayout
         android:id="@+id/rlJmlDetailUangKas"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="8dp"
+        android:layout_height="52dp"
         android:layout_alignParentTop="true"
         android:layout_marginBottom="24dp"
-        android:background="@drawable/rounded_border_tambahdata">
+        android:background="@drawable/rounded_bg_detail">
 
         <TextView
             android:id="@+id/tvValueNominalCatatanKas"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="+ Rp. 250.000"
+            android:layout_centerVertical="true"
             android:textColor="@color/jmlPemasukan"
-            android:textSize="28sp"
+            android:textSize="20sp"
             android:layout_centerHorizontal="true"/>
 
     </RelativeLayout>
@@ -33,7 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/rlJmlDetailUangKas"
         android:text="Informasi catatan"
-        android:textSize="24sp"
+        android:textSize="20sp"
         android:textColor="@color/primaryTextColor"
         android:layout_marginBottom="8dp"/>
 
@@ -41,26 +42,26 @@
         android:id="@+id/rlInfoCatatan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp"
+        android:padding="16dp"
         android:layout_marginBottom="24dp"
         android:layout_below="@+id/tvInfoCatatan"
-        android:background="@drawable/rounded_border_tambahdata">
+        android:background="@drawable/rounded_bg_detail">
 
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <TableRow
-                android:layout_marginTop="20dip" >
+                android:layout_marginTop="8dp" >
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvNoCatatan"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="No Catatatan"
+                    android:text="No Catatan"
                     android:textColor="@color/primaryTextColor"
-                    android:textSize="18sp" />
+                    android:textSize="16sp" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvValueNoCatatan"
@@ -69,13 +70,13 @@
                     android:text="CTK00005"
                     android:layout_weight="1"
                     android:textColor="@color/primaryTextColor"
-                    android:textSize="18sp"/>
+                    android:textSize="16sp"/>
 
             </TableRow>
 
 
             <TableRow
-                android:layout_marginTop="20dip" >
+                android:layout_marginTop="8dp" >
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvTipeCatatanKas"
@@ -84,7 +85,7 @@
                     android:text="Tipe"
                     android:textColor="@color/primaryTextColor"
                     android:layout_weight="1"
-                    android:textSize="18sp"/>
+                    android:textSize="16sp"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvValueTipeCatatanKas"
@@ -93,12 +94,12 @@
                     android:text="Pemasukan"
                     android:layout_weight="1"
                     android:textColor="@color/primaryTextColor"
-                    android:textSize="18sp"/>
+                    android:textSize="16sp"/>
 
             </TableRow>
 
             <TableRow
-                android:layout_marginTop="20dip" >
+                android:layout_marginTop="8dp" >
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvTglCatatanKas"
@@ -107,7 +108,7 @@
                     android:layout_weight="1"
                     android:text="Tanggal"
                     android:textColor="@color/primaryTextColor"
-                    android:textSize="18sp" />
+                    android:textSize="16sp" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvValueTglCatatanKas"
@@ -116,21 +117,21 @@
                     android:text="06 Jan, 2022"
                     android:textColor="@color/primaryTextColor"
                     android:layout_weight="1"
-                    android:textSize="18sp"/>
+                    android:textSize="16sp"/>
 
             </TableRow>
 
             <TableRow
-                android:layout_marginTop="20dip" >
+                android:layout_marginTop="8dp" >
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvKeteranganCatatanKas"
-                    android:layout_width="260dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Keterangan"
                     android:textColor="@color/primaryTextColor"
-                    android:textSize="18sp" />
+                    android:textSize="16sp" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvValueKeteranganCatatanKas"
@@ -139,11 +140,11 @@
                     android:text="Infaq Sholat Jum'at"
                     android:layout_weight="1"
                     android:textColor="@color/primaryTextColor"
-                    android:textSize="18sp"/>
+                    android:textSize="16sp"/>
 
             </TableRow>
             <TableRow
-                android:layout_marginTop="20dip" >
+                android:layout_marginTop="8dp" >
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvDeskripsiCatatanKas"
@@ -152,16 +153,16 @@
                     android:text="Deskripsi"
                     android:layout_weight="1"
                     android:textColor="@color/primaryTextColor"
-                    android:textSize="18sp"/>
+                    android:textSize="16sp"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvValueDeskripsiCatanKas"
-                    android:layout_width="wrap_content"
+                    android:layout_width="75dp"
                     android:layout_height="wrap_content"
                     android:text="Pembayaran Listrik untuk bulan desember"
                     android:layout_weight="1"
                     android:textColor="@color/primaryTextColor"
-                    android:textSize="18sp"/>
+                    android:textSize="16sp"/>
 
             </TableRow>
 
@@ -175,24 +176,25 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/rlInfoCatatan"
         android:text="Detail Jumlah Pemasukan"
-        android:textSize="24sp"
-        android:textColor="@color/primaryTextColor"/>
+        android:textSize="20sp"
+        android:textColor="@color/primaryTextColor"
+        android:layout_marginBottom="8dp"/>
 
     <RelativeLayout
         android:id="@+id/rlJmlCatatan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp"
+        android:padding="16dp"
         android:layout_marginBottom="24dp"
-        android:layout_below="@+id/tvDetailJmlCatatan"
-        android:background="@drawable/rounded_border_tambahdata">
+        android:layout_below="@+id/tvJudulDetailPenjumlahan"
+        android:background="@drawable/rounded_bg_detail">
 
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
         <TableRow
-            android:layout_marginTop="20dip" >
+            android:layout_marginTop="8dp" >
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvDetailTotalKasAwal"
@@ -201,22 +203,22 @@
                 android:layout_weight="1"
                 android:text="Total Kas Awal"
                 android:textColor="@color/primaryTextColor"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvValueDetailTotalKasAwasl"
+                android:id="@+id/tvValueTotalKasAwal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Rp. 8.550.000"
                 android:layout_weight="1"
                 android:textColor="@color/primaryTextColor"
-                android:textSize="18sp"/>
+                android:textSize="16sp"/>
 
         </TableRow>
 
 
         <TableRow
-            android:layout_marginTop="20dip" >
+            android:layout_marginTop="8dp" >
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvNominalDetailPenjumlahan"
@@ -225,7 +227,7 @@
                 android:text="Jumlah Pemasukan"
                 android:textColor="@color/primaryTextColor"
                 android:layout_weight="1"
-                android:textSize="18sp"/>
+                android:textSize="16sp"/>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvValueNominalDetailPenjumlahan"
@@ -234,12 +236,12 @@
                 android:text="Rp. 250.000"
                 android:layout_weight="1"
                 android:textColor="@color/primaryTextColor"
-                android:textSize="18sp"/>
+                android:textSize="16sp"/>
 
         </TableRow>
 
         <TableRow
-            android:layout_marginTop="20dip" >
+            android:layout_marginTop="8dp" >
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvTotalKasAkhir"
@@ -248,7 +250,7 @@
                 android:layout_weight="1"
                 android:text="Total Kas Akhir"
                 android:textColor="@color/primaryTextColor"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvValueTotalKasAkhir"
@@ -257,7 +259,7 @@
                 android:text="Rp. 8.800.000"
                 android:textColor="@color/primaryTextColor"
                 android:layout_weight="1"
-                android:textSize="18sp"/>
+                android:textSize="16sp"/>
 
         </TableRow>
         </TableLayout>

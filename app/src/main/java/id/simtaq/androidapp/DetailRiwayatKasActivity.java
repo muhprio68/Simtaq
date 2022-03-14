@@ -39,9 +39,9 @@ public class DetailRiwayatKasActivity extends AppCompatActivity {
         tvTglCatatan.setText(bundle.getString("tgl"));
         tvKeteranganCatatan.setText(bundle.getString("keterangan"));
         tvDeskripsiCatatan.setText(bundle.getString("deskripsi"));
-        tvTotalKasAwal.setText(bundle.getInt("totalKasAwal"));
-        tvDetailNominalCatatan.setText(bundle.getInt("nominalCatatan"));
-        tvTotalKasAkhir.setText(bundle.getInt("totalKasAkhir"));
+        tvTotalKasAwal.setText("Rp. "+bundle.getInt("totalKasAwal"));
+        tvDetailNominalCatatan.setText("Rp. "+bundle.getInt("nominalCatatan"));
+        tvTotalKasAkhir.setText("Rp. "+bundle.getInt("totalKasAkhir"));
     }
 
     public void initViews(){
@@ -52,7 +52,7 @@ public class DetailRiwayatKasActivity extends AppCompatActivity {
         tvKeteranganCatatan = findViewById(R.id.tvValueKeteranganCatatanKas);
         tvDeskripsiCatatan = findViewById(R.id.tvValueDeskripsiCatanKas);
         tvJudulDetailPenjumlahan = findViewById(R.id.tvJudulDetailPenjumlahan);
-        tvTotalKasAwal = findViewById(R.id.tvDetailTotalKasAwal);
+        tvTotalKasAwal = findViewById(R.id.tvValueTotalKasAwal);
         tvDetailNominalCatatan = findViewById(R.id.tvValueNominalDetailPenjumlahan);
         tvTotalKasAkhir = findViewById(R.id.tvValueTotalKasAkhir);
     }
