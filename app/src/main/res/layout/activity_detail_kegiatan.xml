@@ -103,10 +103,10 @@
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvHariTglKegiatan"
-                    android:layout_width="wrap_content"
+                    android:layout_width="136dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Tanggal"
+                    android:text="Hari/Tanggal"
                     android:textColor="@color/primaryTextColor"
                     android:textSize="16sp" />
 
@@ -129,7 +129,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Waktu Kegiatan"
+                    android:text="Waktu"
                     android:textColor="@color/primaryTextColor"
                     android:textSize="16sp" />
 
@@ -157,7 +157,7 @@
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvValueDetailTempatKegiatan"
-                    android:layout_width="75dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Masjid At-Taqwa"
                     android:layout_weight="1"
@@ -180,7 +180,7 @@
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvValueDetailPembicaraKegiatan"
-                    android:layout_width="75dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="KH. Abdul Kholiq Hasan, M.HI."
                     android:layout_weight="1"
@@ -202,7 +202,7 @@
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvValueDetailDeskripsiKegiatan"
-                    android:layout_width="75dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Pengajian Rutin sabtu Pahing"
                     android:layout_weight="1"

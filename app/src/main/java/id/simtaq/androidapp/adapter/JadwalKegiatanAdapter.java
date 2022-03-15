@@ -39,9 +39,9 @@ public class JadwalKegiatanAdapter extends RecyclerView.Adapter<JadwalKegiatanVi
 
     public int getItemViewType(final int position){
         if (tipe == 1){
-            return R.layout.list_infokegiatan;
-        } else{
             return R.layout.list_kegiatan;
+        } else{
+            return R.layout.list_infokegiatan;
         }
     }
 
@@ -56,12 +56,18 @@ public class JadwalKegiatanAdapter extends RecyclerView.Adapter<JadwalKegiatanVi
     public void onBindViewHolder(@NonNull JadwalKegiatanViewHolder holder, int position) {
         final Kegiatan kegiatan = kegiatanList.get(position);
         if (tipe == 1) {
+            holder.tvTanggalKegiatan.setText(fullDateToDate(kegiatan.getTanggalKegiatan()));
+            holder.tvNamaKegiatan.setText(kegiatan.getNamaKegiatan());
+            holder.tvJamKegiatan.setText(kegiatan.getWaktuKegiatan()+" WIB, "+kegiatan.getTempatKegiatan());
+            holder.rlListKegiatan.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    iJadwalKegiatanAdapter.doClick(kegiatan.getIdKegiatan());
+                }
+            });
+        } else {
             holder.tvKetInfoKegiatan.setText(kegiatan.getNamaKegiatan());
             holder.tvTglInfoKegiatan.setText(kegiatan.getTanggalKegiatan());
-        } else {
-            holder.tvTanggalKegiatan.setText(dateFormat(kegiatan.getTanggalKegiatan()));
-            holder.tvNamaKegiatan.setText(kegiatan.getNamaKegiatan());
-            holder.tvJamKegiatan.setText(kegiatan.getWaktuKegiatan());
         }
     }
     @Override
@@ -69,7 +75,7 @@ public class JadwalKegiatanAdapter extends RecyclerView.Adapter<JadwalKegiatanVi
         return (kegiatanList != null) ? kegiatanList.size() : 0;
     }
 
-    private String dateFormat(String tanggal){
+    private String fullDateToDate(String tanggal){
         String tgl = tanggal;
         Locale locale = new Locale("in", "ID");
         DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy", locale);

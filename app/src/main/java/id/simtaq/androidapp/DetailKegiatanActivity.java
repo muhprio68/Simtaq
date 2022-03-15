@@ -6,6 +6,12 @@ import androidx.core.content.ContextCompat;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 public class DetailKegiatanActivity extends AppCompatActivity {
 
     TextView tvDetailNamaKegiatan;
@@ -30,8 +36,8 @@ public class DetailKegiatanActivity extends AppCompatActivity {
         } else{
             tvTipeKegiatan.setText("Undangan");
         }
-        tvTglKegiatan.setText(bundle.getString("tgl"));
-        tvWaktuKegiatan.setText(bundle.getString("waktu"));
+        tvTglKegiatan.setText(fullDatePlusDay(bundle.getString("tgl")));
+        tvWaktuKegiatan.setText(bundle.getString("waktu")+" WIB");
         tvTempatKegiatan.setText(bundle.getString("tempat"));
         tvPembicaraKegiatan.setText(bundle.getString("pembicara"));
         tvDeskripsiKegiatan.setText(bundle.getString("deskripsi"));
@@ -46,5 +52,20 @@ public class DetailKegiatanActivity extends AppCompatActivity {
         tvTempatKegiatan = findViewById(R.id.tvValueDetailTempatKegiatan);
         tvPembicaraKegiatan = findViewById(R.id.tvValueDetailPembicaraKegiatan);
         tvDeskripsiKegiatan =findViewById(R.id.tvValueDetailDeskripsiKegiatan);
+    }
+
+    private String fullDatePlusDay(String tanggal){
+        String tgl = tanggal;
+        Locale locale = new Locale("in", "ID");
+        DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy", locale);
+        Date date = null;
+        try {
+            date = (Date)formatter.parse(tgl);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        SimpleDateFormat newFormat = new SimpleDateFormat("EEEE, dd MMMM yyyy", locale);
+        String tglBaru = newFormat.format(date);
+        return tglBaru;
     }
 }

@@ -61,7 +61,7 @@ public class KegiatanFragment extends Fragment implements View.OnClickListener, 
         addData();
         LinearLayoutManager layoutManager = new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false);
         rvKegiatan.setLayoutManager(layoutManager);
-        rvKegiatan.setAdapter(new JadwalKegiatanAdapter(view.getContext(), kegiatanList, 1, this));
+        rvKegiatan.setAdapter(new JadwalKegiatanAdapter(view.getContext(), kegiatanList, 2, this));
         return view;
     }
 

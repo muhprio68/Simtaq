@@ -39,7 +39,7 @@ public class JadwalKegiatanActivity extends AppCompatActivity implements JadwalK
         addData();
         rvJadwalKegiatan.setHasFixedSize(true);
         rvJadwalKegiatan.setLayoutManager(new LinearLayoutManager(JadwalKegiatanActivity.this));
-        rvJadwalKegiatan.setAdapter(new JadwalKegiatanAdapter(JadwalKegiatanActivity.this,kegiatanList, 2, this));
+        rvJadwalKegiatan.setAdapter(new JadwalKegiatanAdapter(JadwalKegiatanActivity.this,kegiatanList, 1, this));
     }
 
     public void initViews(){
