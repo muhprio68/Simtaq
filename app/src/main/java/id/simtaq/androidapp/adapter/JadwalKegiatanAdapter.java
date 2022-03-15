@@ -28,11 +28,13 @@ public class JadwalKegiatanAdapter extends RecyclerView.Adapter<JadwalKegiatanVi
     Context context;
     ArrayList <Kegiatan> kegiatanList;
     int tipe;
+    IJadwalKegiatanAdapter iJadwalKegiatanAdapter;
 
-    public JadwalKegiatanAdapter(Context context, ArrayList<Kegiatan> kegiatanList, int tipe) {
+    public JadwalKegiatanAdapter(Context context, ArrayList<Kegiatan> kegiatanList, int tipe, IJadwalKegiatanAdapter iJadwalKegiatanAdapter) {
         this.context = context;
         this.kegiatanList = kegiatanList;
         this.tipe = tipe;
+        this.iJadwalKegiatanAdapter = iJadwalKegiatanAdapter;
     }
 
     public int getItemViewType(final int position){
@@ -82,4 +84,7 @@ public class JadwalKegiatanAdapter extends RecyclerView.Adapter<JadwalKegiatanVi
         return tglBaru;
     }
 
+    public interface IJadwalKegiatanAdapter{
+        void doClick(String id);
+    }
 }

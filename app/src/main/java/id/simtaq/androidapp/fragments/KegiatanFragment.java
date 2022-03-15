@@ -26,7 +26,7 @@ import id.simtaq.androidapp.adapter.RiwayatListAdapter;
 import id.simtaq.androidapp.models.CalendarModel;
 import id.simtaq.androidapp.models.Kegiatan;
 
-public class KegiatanFragment extends Fragment implements View.OnClickListener {
+public class KegiatanFragment extends Fragment implements View.OnClickListener, JadwalKegiatanAdapter.IJadwalKegiatanAdapter {
 
     private ArrayList<Kegiatan> kegiatanList;
     private RecyclerView rvKegiatan;
@@ -61,7 +61,7 @@ public class KegiatanFragment extends Fragment implements View.OnClickListener {
         addData();
         LinearLayoutManager layoutManager = new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false);
         rvKegiatan.setLayoutManager(layoutManager);
-        rvKegiatan.setAdapter(new JadwalKegiatanAdapter(view.getContext(), kegiatanList, 1));
+        rvKegiatan.setAdapter(new JadwalKegiatanAdapter(view.getContext(), kegiatanList, 1, this));
         return view;
     }
 
@@ -84,6 +84,11 @@ public class KegiatanFragment extends Fragment implements View.OnClickListener {
         if (v == tvLihatSemuaKegiatan){
             startActivity(new Intent(v.getContext(), JadwalKegiatanActivity.class));
         }
+    }
+
+    @Override
+    public void doClick(String id) {
+
     }
 }
 
