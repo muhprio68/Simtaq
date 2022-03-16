@@ -1,6 +1,7 @@
 package id.simtaq.androidapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -14,6 +15,7 @@ import id.simtaq.androidapp.models.RiwayatKas;
 
 public class RiwayatActivity extends AppCompatActivity implements RiwayatListAdapter.IRiwayatListAdapter {
 
+    private Toolbar toolbar;
     RecyclerView rvRiwayat;
     private ArrayList<RiwayatKas> riwayatKasArrayList;
 
@@ -21,11 +23,21 @@ public class RiwayatActivity extends AppCompatActivity implements RiwayatListAda
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_riwayat);
+        initViews();
         addData();
-        rvRiwayat = findViewById(R.id.rvRiwayat);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Riwayat Uang Kas");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
         rvRiwayat.setHasFixedSize(true);
         rvRiwayat.setLayoutManager(new LinearLayoutManager(RiwayatActivity.this));
         rvRiwayat.setAdapter(new RiwayatListAdapter(riwayatKasArrayList, RiwayatActivity.this, 1, this));
+    }
+
+    public void initViews(){
+        toolbar = findViewById(R.id.tbRiwayatKas);
+        rvRiwayat = findViewById(R.id.rvRiwayat);
     }
 
     public void addData(){

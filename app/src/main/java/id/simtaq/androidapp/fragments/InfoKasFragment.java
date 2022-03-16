@@ -51,7 +51,6 @@ public class InfoKasFragment extends Fragment implements View.OnClickListener, R
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_infokas, container, false);
         initViews(view);
-        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
         tvSemuaRiwayat.setOnClickListener(this);
         rvRiwayatInfoKas.setHasFixedSize(true);
         addData();

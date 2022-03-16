@@ -1,6 +1,7 @@
 package id.simtaq.androidapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,7 +23,7 @@ import id.simtaq.androidapp.models.RiwayatKas;
 
 public class JadwalKegiatanActivity extends AppCompatActivity implements JadwalKegiatanAdapter.IJadwalKegiatanAdapter {
 
-
+    private Toolbar toolbar;
     private ArrayList<Kegiatan> kegiatanList;
     private JadwalKegiatanAdapter adapter;
 
@@ -36,12 +37,18 @@ public class JadwalKegiatanActivity extends AppCompatActivity implements JadwalK
         setContentView(R.layout.activity_jadwal_kegiatan);
         initViews();
         addData();
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Jadwal Kegiatan");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
         rvJadwalKegiatan.setHasFixedSize(true);
         rvJadwalKegiatan.setLayoutManager(new LinearLayoutManager(JadwalKegiatanActivity.this));
         rvJadwalKegiatan.setAdapter(new JadwalKegiatanAdapter(JadwalKegiatanActivity.this,kegiatanList, 1, this));
     }
 
     public void initViews(){
+        toolbar = findViewById(R.id.tbJadwalKegiatan);
         tvFilterBulanKegiatan = findViewById(R.id.tvFilterBulanKegiatan);
         tvFilterTahunKegiatan = findViewById(R.id.tvFilterTahunKegiatan);
         rvJadwalKegiatan = findViewById(R.id.rvJadwalKegiatan);

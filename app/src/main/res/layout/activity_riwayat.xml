@@ -7,44 +7,32 @@
     android:background="#EFEFEF"
     tools:context=".RiwayatActivity">
 
-    <View
-        android:id="@+id/topViewRiwayat"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/tbRiwayatKas"
         android:layout_width="match_parent"
-        android:layout_height="75dp"
-        android:background="@color/primaryColor"
-        android:layout_alignParentTop="true"/>
+        android:layout_height="wrap_content"
+        android:minHeight="?attr/actionBarSize"
+        style="@style/AppTheme.Toolbar" />
     <View
         android:id="@+id/topViewRiwayatWave"
         android:layout_width="match_parent"
         android:layout_height="220dp"
-        android:layout_below="@id/topViewRiwayat"
+        android:layout_below="@id/tbRiwayatKas"
         android:background="@drawable/wave"
         android:layout_marginTop="-1dp"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="16dp"
+        android:layout_below="@+id/tbRiwayatKas"
         android:paddingLeft="12dp"
         android:paddingRight="12dp"
         android:paddingBottom="8dp">
 
-        <TextView
-            android:id="@+id/tvAppBarRiwayat"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginBottom="24dp"
-            android:text="Riwayat Keuangan"
-            android:textColor="@color/white"
-            android:textSize="24sp"
-            android:textStyle="bold" />
-
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/tvAppBarRiwayat"
+            android:layout_alignParentTop="true"
             android:backgroundTint="@color/transparan"
             app:cardElevation="0dp">
 

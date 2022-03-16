@@ -7,45 +7,33 @@
     android:background="#EFEFEF"
     tools:context=".JadwalKegiatanActivity">
 
-    <View
-        android:id="@+id/topViewRiwayat"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/tbJadwalKegiatan"
         android:layout_width="match_parent"
-        android:layout_height="75dp"
-        android:background="@color/primaryColor"
-        android:layout_alignParentTop="true"/>
+        android:layout_height="wrap_content"
+        android:minHeight="?attr/actionBarSize"
+        style="@style/AppTheme.Toolbar" />
     <View
         android:id="@+id/topViewRiwayatWave"
         android:layout_width="match_parent"
         android:layout_height="220dp"
-        android:layout_below="@id/topViewRiwayat"
+        android:layout_below="@id/tbJadwalKegiatan"
         android:background="@drawable/wave"/>
 
     <RelativeLayout
-        android:id="@+id/rlAppBarKegiatan"
+        android:id="@+id/rlJadwalKegiatan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/tbJadwalKegiatan"
         android:paddingLeft="12dp"
-        android:paddingTop="16dp"
         android:paddingRight="12dp"
         android:paddingBottom="8dp">
-
-        <TextView
-            android:id="@+id/tvAppBarKegiatan"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginBottom="24dp"
-            android:text="Jadwal Kegiatan"
-            android:textColor="@color/white"
-            android:textSize="24sp"
-            android:textStyle="bold" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cvKalender"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tvAppBarKegiatan"
+            android:layout_alignParentTop="true"
             android:backgroundTint="@color/transparan"
             app:cardElevation="0dp">
 

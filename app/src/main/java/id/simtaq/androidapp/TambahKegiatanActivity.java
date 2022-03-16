@@ -18,6 +18,7 @@ public class TambahKegiatanActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Tambah Kegiatan");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
     }
 
     public void initViews(){

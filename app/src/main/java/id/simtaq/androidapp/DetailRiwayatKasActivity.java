@@ -30,6 +30,7 @@ public class DetailRiwayatKasActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Detail Catatan Kas");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
         Bundle bundle = getIntent().getExtras();
         tvNominalCatatan.setText("+ Rp. "+bundle.getInt("nominalCatatan"));
         tvNoCatatan.setText(bundle.getString("noCatatan"));

@@ -19,6 +19,7 @@ public class CatatPengeluaranActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Catat Pengeluaran");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
     }
 
     public void initViews(){

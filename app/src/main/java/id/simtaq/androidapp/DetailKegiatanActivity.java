@@ -34,6 +34,7 @@ public class DetailKegiatanActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Detail Kegiatan");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
         Bundle bundle = getIntent().getExtras();
         tvDetailNamaKegiatan.setText(bundle.getString("namaKegiatan"));
         tvNoKegiatan.setText(bundle.getString("noKegiatan"));
