@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -26,6 +28,7 @@ public class InfoKasFragment extends Fragment implements View.OnClickListener, R
     private RecyclerView rvRiwayatInfoKas;
     private ArrayList<RiwayatKas> riwayatKasArrayList;
     private TextView tvSemuaRiwayat;
+    private Toolbar toolbar;
 
     public InfoKasFragment() {
 
@@ -48,6 +51,7 @@ public class InfoKasFragment extends Fragment implements View.OnClickListener, R
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_infokas, container, false);
         initViews(view);
+        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
         tvSemuaRiwayat.setOnClickListener(this);
         rvRiwayatInfoKas.setHasFixedSize(true);
         addData();
@@ -60,6 +64,7 @@ public class InfoKasFragment extends Fragment implements View.OnClickListener, R
     private void initViews(View view){
         rvRiwayatInfoKas = view.findViewById(R.id.rvRiwayatInfoKas);
         tvSemuaRiwayat = view.findViewById(R.id.tvLihatSemuaRiwayat);
+        toolbar = view.findViewById(R.id.tbInfoKas);
     }
 
     public void addData(){

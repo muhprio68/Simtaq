@@ -17,7 +17,6 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        getSupportActionBar().hide();
         btnLogin = (Button) findViewById(R.id.btnLogin);
         tvBelumPunyaAkun = (TextView) findViewById(R.id.tvBelumPunyaAkun);
 

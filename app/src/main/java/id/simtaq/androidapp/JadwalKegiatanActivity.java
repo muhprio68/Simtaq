@@ -34,7 +34,6 @@ public class JadwalKegiatanActivity extends AppCompatActivity implements JadwalK
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_jadwal_kegiatan);
-        getSupportActionBar().hide();
         initViews();
         addData();
         rvJadwalKegiatan.setHasFixedSize(true);

@@ -7,17 +7,30 @@
     android:background="@color/background"
     tools:context=".fragments.PengaturanFragment">
 
-    <View
-        android:id="@+id/topViewPengaturan"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/tbPengaturan"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:background="@color/primaryColor"
-        android:layout_alignParentTop="true"/>
+        android:layout_height="wrap_content"
+        android:minHeight="?attr/actionBarSize"
+        style="@style/AppTheme.Toolbar">
+
+        <TextView
+            android:id="@+id/tvAppBarPengaturan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pengaturan"
+            android:textColor="@color/secondaryTextColor"
+            android:layout_gravity="center"
+            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+            android:textStyle="bold" />
+
+    </androidx.appcompat.widget.Toolbar>
+
     <View
         android:id="@+id/topViewPengaturanWave"
         android:layout_width="match_parent"
         android:layout_height="220dp"
-        android:layout_below="@id/topViewPengaturan"
+        android:layout_below="@id/tbPengaturan"
         android:background="@drawable/wave"
         android:layout_marginTop="-1dp"/>
 
@@ -25,27 +38,15 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingLeft="12dp"
+        android:paddingLeft="16dp"
         android:paddingTop="16dp"
-        android:paddingRight="12dp"
-        android:paddingBottom="8dp">
-
-        <TextView
-            android:id="@+id/tvAppBarPengaturan"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_marginBottom="40dp"
-            android:text="Pengaturan"
-            android:layout_centerHorizontal="true"
-            android:textColor="@color/white"
-            android:textSize="22sp"
-            android:textStyle="bold" />
+        android:paddingRight="16dp"
+        android:paddingBottom="8dp"
+        android:layout_below="@id/tbPengaturan">
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tvAppBarPengaturan"
             android:layout_marginTop="70dp"
             android:backgroundTint="@color/transparan"
             app:cardCornerRadius="16dp">
@@ -151,7 +152,6 @@
         <androidx.cardview.widget.CardView
             android:layout_width="140dp"
             android:layout_height="140dp"
-            android:layout_below="@id/tvAppBarPengaturan"
             android:layout_centerHorizontal="true"
             app:cardCornerRadius="150dp">
 

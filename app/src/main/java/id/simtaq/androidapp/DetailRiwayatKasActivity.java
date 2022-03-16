@@ -1,6 +1,7 @@
 package id.simtaq.androidapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.widget.TextView;
 
 public class DetailRiwayatKasActivity extends AppCompatActivity {
 
+    private Toolbar toolbar;
     TextView tvNominalCatatan;
     TextView tvNoCatatan;
     TextView tvTipeCatatan;
@@ -24,6 +26,10 @@ public class DetailRiwayatKasActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_riwayat_kas);
         initViews();
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Detail Catatan Kas");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
         Bundle bundle = getIntent().getExtras();
         tvNominalCatatan.setText("+ Rp. "+bundle.getInt("nominalCatatan"));
         tvNoCatatan.setText(bundle.getString("noCatatan"));
@@ -45,6 +51,7 @@ public class DetailRiwayatKasActivity extends AppCompatActivity {
     }
 
     public void initViews(){
+        toolbar = findViewById(R.id.tbDetailCatatanKas);
         tvNominalCatatan = findViewById(R.id.tvValueNominalCatatanKas);
         tvNoCatatan = findViewById(R.id.tvValueNoCatatan);
         tvTipeCatatan = findViewById(R.id.tvValueTipeCatatanKas);
@@ -55,5 +62,16 @@ public class DetailRiwayatKasActivity extends AppCompatActivity {
         tvTotalKasAwal = findViewById(R.id.tvValueTotalKasAwal);
         tvDetailNominalCatatan = findViewById(R.id.tvValueNominalDetailPenjumlahan);
         tvTotalKasAkhir = findViewById(R.id.tvValueTotalKasAkhir);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }

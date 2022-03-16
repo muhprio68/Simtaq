@@ -15,7 +15,6 @@ public class DaftarActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_daftar);
-        getSupportActionBar().hide();
         tvSudahPunyaAkun = (TextView) findViewById(R.id.tvSudahPunyaAkun);
 
         tvSudahPunyaAkun.setOnClickListener(new View.OnClickListener() {

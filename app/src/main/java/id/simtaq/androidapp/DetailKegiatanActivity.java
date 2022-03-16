@@ -1,6 +1,7 @@
 package id.simtaq.androidapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import java.util.Locale;
 
 public class DetailKegiatanActivity extends AppCompatActivity {
 
+    private Toolbar toolbar;
     TextView tvDetailNamaKegiatan;
     TextView tvNoKegiatan;
     TextView tvTipeKegiatan;
@@ -28,6 +30,10 @@ public class DetailKegiatanActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_kegiatan);
         initViews();
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Detail Kegiatan");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
         Bundle bundle = getIntent().getExtras();
         tvDetailNamaKegiatan.setText(bundle.getString("namaKegiatan"));
         tvNoKegiatan.setText(bundle.getString("noKegiatan"));
@@ -44,6 +50,7 @@ public class DetailKegiatanActivity extends AppCompatActivity {
     }
 
     public void initViews(){
+        toolbar = findViewById(R.id.tbDetailKegiatan);
         tvDetailNamaKegiatan = findViewById(R.id.tvValueNamaKegiatan);
         tvNoKegiatan = findViewById(R.id.tvValueNoKegiatan);
         tvTipeKegiatan = findViewById(R.id.tvValueDetailTipeKegiatan);
@@ -52,6 +59,17 @@ public class DetailKegiatanActivity extends AppCompatActivity {
         tvTempatKegiatan = findViewById(R.id.tvValueDetailTempatKegiatan);
         tvPembicaraKegiatan = findViewById(R.id.tvValueDetailPembicaraKegiatan);
         tvDeskripsiKegiatan =findViewById(R.id.tvValueDetailDeskripsiKegiatan);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 
     private String fullDatePlusDay(String tanggal){

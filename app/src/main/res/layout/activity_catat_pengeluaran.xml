@@ -1,148 +1,159 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    android:padding="32dp"
     tools:context=".CatatPengeluaranActivity">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvTglPengeluaran"
-        android:layout_width="0dp"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/tbCatatPengeluaran"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Tanggal Pengeluaran"
-        android:textSize="18sp"
-        android:textColor="@color/primaryTextColor"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        android:minHeight="?attr/actionBarSize"
+        style="@style/AppTheme.Toolbar" />
 
-    <EditText
-        android:id="@+id/etTanggalPengeluaran"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/rounded_border_tambahdata"
-        android:drawablePadding="16dp"
-        android:ems="10"
-        android:hint="Masukkan Tanggal"
-        android:inputType="date"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:padding="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvTglPengeluaran" />
+        android:layout_below="@+id/tbCatatPengeluaran">
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvTglPengeluaran"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Tanggal Pengeluaran"
+            android:textSize="18sp"
+            android:textColor="@color/primaryTextColor"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvKetPengeluaran"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Keterangan Pengeluaran"
-        android:textSize="18sp"
-        android:textColor="@color/primaryTextColor"
-        android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@+id/etTanggalPengeluaran"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        <EditText
+            android:id="@+id/etTanggalPengeluaran"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/rounded_border_tambahdata"
+            android:drawablePadding="16dp"
+            android:ems="10"
+            android:hint="Masukkan Tanggal"
+            android:inputType="date"
+            android:padding="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvTglPengeluaran" />
 
-    <EditText
-        android:id="@+id/etKeteranganPengeluaran"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/rounded_border_tambahdata"
-        android:drawablePadding="16dp"
-        android:ems="10"
-        android:hint="Masukkan Keterangan"
-        android:inputType="text"
-        android:padding="16dp"
-        app:layout_constraintTop_toBottomOf="@id/tvKetPengeluaran"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvKetPengeluaran"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Keterangan Pengeluaran"
+            android:textSize="18sp"
+            android:textColor="@color/primaryTextColor"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/etTanggalPengeluaran"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvNominalPengeluaran"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Nominal Pengeluaran"
-        android:textSize="18sp"
-        android:textColor="@color/primaryTextColor"
-        android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@+id/etKeteranganPengeluaran"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        <EditText
+            android:id="@+id/etKeteranganPengeluaran"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/rounded_border_tambahdata"
+            android:drawablePadding="16dp"
+            android:ems="10"
+            android:hint="Masukkan Keterangan"
+            android:inputType="text"
+            android:padding="16dp"
+            app:layout_constraintTop_toBottomOf="@id/tvKetPengeluaran"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
-    <EditText
-        android:id="@+id/etNominalPengeluaran"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/rounded_border_tambahdata"
-        android:drawablePadding="16dp"
-        android:ems="10"
-        android:hint="Masukkan Nominal"
-        android:inputType="date"
-        android:padding="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvNominalPengeluaran" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvNominalPengeluaran"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Nominal Pengeluaran"
+            android:textSize="18sp"
+            android:textColor="@color/primaryTextColor"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/etKeteranganPengeluaran"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvDeskripsiPengeluaran"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Deskripsi Pengeluaran"
-        android:textSize="18sp"
-        android:textColor="@color/primaryTextColor"
-        android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@+id/etNominalPengeluaran"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        <EditText
+            android:id="@+id/etNominalPengeluaran"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/rounded_border_tambahdata"
+            android:drawablePadding="16dp"
+            android:ems="10"
+            android:hint="Masukkan Nominal"
+            android:inputType="date"
+            android:padding="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvNominalPengeluaran" />
 
-    <EditText
-        android:id="@+id/etDeskripsiPengeluaran"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/rounded_border_tambahdata"
-        android:ems="10"
-        android:lines="3"
-        android:hint="Masukkan Deskripsi (opsional)"
-        android:padding="16dp"
-        android:gravity="top"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvDeskripsiPengeluaran" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvDeskripsiPengeluaran"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Deskripsi Pengeluaran"
+            android:textSize="18sp"
+            android:textColor="@color/primaryTextColor"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/etNominalPengeluaran"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <EditText
+            android:id="@+id/etDeskripsiPengeluaran"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/rounded_border_tambahdata"
+            android:ems="10"
+            android:lines="3"
+            android:hint="Masukkan Deskripsi (opsional)"
+            android:padding="16dp"
+            android:gravity="top"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvDeskripsiPengeluaran" />
 
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnBatal"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="4dp"
-        android:background="@drawable/rounded_bg_orange"
-        android:text="Batal"
-        android:textColor="@android:color/white"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/btnSimpan"
-        app:layout_constraintTop_toBottomOf="@+id/etDeskripsiPengeluaran" />
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnSimpan"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/rounded_bg_primary"
-        android:text="Simpan"
-        android:textColor="@android:color/white"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@id/btnBatal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etDeskripsiPengeluaran" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnBatal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="4dp"
+            android:background="@drawable/rounded_bg_orange"
+            android:text="Batal"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btnSimpan"
+            app:layout_constraintTop_toBottomOf="@+id/etDeskripsiPengeluaran" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnSimpan"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/rounded_bg_primary"
+            android:text="Simpan"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/btnBatal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etDeskripsiPengeluaran" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

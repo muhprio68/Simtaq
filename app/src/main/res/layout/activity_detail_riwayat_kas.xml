@@ -4,10 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
     android:background="@color/background"
     tools:context=".DetailRiwayatKasActivity">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/tbDetailCatatanKas"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="?attr/actionBarSize"
+        style="@style/AppTheme.Toolbar" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        android:layout_below="@+id/tbDetailCatatanKas">
     <RelativeLayout
         android:id="@+id/rlJmlDetailUangKas"
         android:layout_width="match_parent"
@@ -265,5 +276,5 @@
         </TableLayout>
 
     </RelativeLayout>
-    
+    </RelativeLayout>
 </RelativeLayout>

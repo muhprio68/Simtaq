@@ -21,7 +21,6 @@ public class RiwayatActivity extends AppCompatActivity implements RiwayatListAda
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_riwayat);
-        getSupportActionBar().hide();
         addData();
         rvRiwayat = findViewById(R.id.rvRiwayat);
         rvRiwayat.setHasFixedSize(true);
