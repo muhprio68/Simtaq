@@ -124,6 +124,7 @@
                 android:hint="Masukkan tanggal"
                 android:inputType="text"
                 android:padding="16dp"
+                android:drawableEnd="@drawable/ic_date"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvTglKegiatan" />
@@ -149,6 +150,7 @@
                 android:drawablePadding="16dp"
                 android:ems="10"
                 android:focusable="false"
+                android:drawableEnd="@drawable/ic_time"
                 android:hint="Masukkan waktu"
                 android:inputType="text"
                 android:padding="16dp"
