@@ -12,6 +12,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -31,6 +43,9 @@ public class KegiatanFragment extends Fragment implements View.OnClickListener, 
     private ArrayList<Kegiatan> kegiatanList;
     private RecyclerView rvKegiatan;
     private TextView tvLihatSemuaKegiatan;
+    private JadwalKegiatanAdapter adapter;
+
+    String url = "http://192.168.0.27:8080/restfulapi/public/kegiatan";
 
     public KegiatanFragment() {
 
@@ -57,11 +72,10 @@ public class KegiatanFragment extends Fragment implements View.OnClickListener, 
         View view =  inflater.inflate(R.layout.fragment_kegiatan, container, false);
         initViews(view);
         tvLihatSemuaKegiatan.setOnClickListener(this);
-        rvKegiatan.setHasFixedSize(true);
-        addData();
-        LinearLayoutManager layoutManager = new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false);
-        rvKegiatan.setLayoutManager(layoutManager);
-        rvKegiatan.setAdapter(new JadwalKegiatanAdapter(view.getContext(), kegiatanList, 2, this));
+        kegiatanList = new ArrayList<>();
+//        addData();
+        getData(view);
+        buildRecyclerView(view);
         return view;
     }
 
@@ -71,12 +85,61 @@ public class KegiatanFragment extends Fragment implements View.OnClickListener, 
     }
 
     public void addData(){
-        kegiatanList = new ArrayList<>();
         kegiatanList.add(new Kegiatan("KEG00001", true, "Pengajian Rutin", "22/03/2022","19.30", "Pengajuan Rutin Sabtu Pon","Masjid At-Taqwa","KH.Abdul Kholiq Hasan, M.HI."));
         kegiatanList.add(new Kegiatan("KEG00002", true, "Sholawat Diba' Rutin", "22/03/2022","19.30", "Pengajuan Rutin Sabtu Pon","Masjid At-Taqwa","Bpk. Suhardiman"));
         kegiatanList.add(new Kegiatan("KEG00003", false, "Rapat takmir", "18/03/2022","19.30", "Pengajuan Rutin Sabtu Pon","Masjid At-Taqwa","Bpk. H.M.Supeno"));
         kegiatanList.add(new Kegiatan("KEG00004", true, "Istighosah Rutin", "25/03/2022","19.30", "Pengajuan Rutin Sabtu Pon","Masjid At-Taqwa","Bpk. H.M.Supeno"));
         kegiatanList.add(new Kegiatan("KEG00005", true, "Sholawat Diba'", "29/03/2022","19.30", "Pengajuan Rutin Sabtu Pon","Masjid At-Taqwa","Bpk. M. Khoirul Huda"));
+    }
+
+    public void getData(View view){
+        RequestQueue queue = Volley.newRequestQueue(view.getContext());
+
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                //pbJadwalKegiatan.setVisibility(View.GONE);
+                rvKegiatan.setVisibility(View.VISIBLE);
+                for (int i = 0; i < response.length(); i++) {
+                    try {
+                        JSONObject responseObj = response.getJSONObject(i);
+                        String idKegiatan = responseObj.getString("id_kegiatan");
+                        String namaKegiatan = responseObj.getString("nama_kegiatan");
+                        String kegiatanUmum = responseObj.getString("kegiatan_umum");
+                        boolean isUmum;
+                        if (kegiatanUmum == "0"){
+                            isUmum = false;
+                        }else{
+                            isUmum = true;
+                        }
+                        String tglKegiatan = responseObj.getString("tgl_kegiatan");
+                        String waktuKegiatan = responseObj.getString("waktu_kegiatan");
+                        String tempatKegiatan = responseObj.getString("tempat_kegiatan");
+                        String pembicaraKegiatan = responseObj.getString("pembicara_kegiatan");
+                        String deskripsiKegiatan = responseObj.getString("deskripsi_kegiatan");
+                        kegiatanList.add(new Kegiatan(idKegiatan, isUmum, namaKegiatan, tglKegiatan, waktuKegiatan, tempatKegiatan, pembicaraKegiatan, deskripsiKegiatan));
+                        buildRecyclerView(view);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(view.getContext(), "Fail to get the data..", Toast.LENGTH_SHORT).show();
+            }
+        });
+        queue.add(jsonArrayRequest);
+    }
+
+    public void buildRecyclerView(View view) {
+        adapter = new JadwalKegiatanAdapter(view.getContext(), kegiatanList, 2, this);
+        LinearLayoutManager manager = new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false);
+        rvKegiatan.setHasFixedSize(true);
+        rvKegiatan.setLayoutManager(manager);
+        rvKegiatan.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
     }
 
     @Override

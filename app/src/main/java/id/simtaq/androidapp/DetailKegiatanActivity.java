@@ -5,13 +5,29 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+
+import id.simtaq.androidapp.models.Kegiatan;
 
 public class DetailKegiatanActivity extends AppCompatActivity {
 
@@ -24,6 +40,10 @@ public class DetailKegiatanActivity extends AppCompatActivity {
     TextView tvTempatKegiatan;
     TextView tvPembicaraKegiatan;
     TextView tvDeskripsiKegiatan;
+    ProgressBar pbDetailKegiatan;
+    int idKegiatan;
+    String url = "http://192.168.0.27:8080/restfulapi/public/kegiatan";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,23 +55,13 @@ public class DetailKegiatanActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
-        Bundle bundle = getIntent().getExtras();
-        tvDetailNamaKegiatan.setText(bundle.getString("namaKegiatan"));
-        tvNoKegiatan.setText(bundle.getString("noKegiatan"));
-        if (bundle.getBoolean("tipe")==true){
-            tvTipeKegiatan.setText("Umum");
-        } else{
-            tvTipeKegiatan.setText("Undangan");
-        }
-        tvTglKegiatan.setText(fullDatePlusDay(bundle.getString("tgl")));
-        tvWaktuKegiatan.setText(bundle.getString("waktu")+" WIB");
-        tvTempatKegiatan.setText(bundle.getString("tempat"));
-        tvPembicaraKegiatan.setText(bundle.getString("pembicara"));
-        tvDeskripsiKegiatan.setText(bundle.getString("deskripsi"));
+        idKegiatan = Integer.valueOf(getIntent().getStringExtra("idKegiatan"));
+        getData();
     }
 
     public void initViews(){
         toolbar = findViewById(R.id.tbDetailKegiatan);
+        pbDetailKegiatan = findViewById(R.id.pbDetailKegiatan);
         tvDetailNamaKegiatan = findViewById(R.id.tvValueNamaKegiatan);
         tvNoKegiatan = findViewById(R.id.tvValueNoKegiatan);
         tvTipeKegiatan = findViewById(R.id.tvValueDetailTipeKegiatan);
@@ -60,6 +70,42 @@ public class DetailKegiatanActivity extends AppCompatActivity {
         tvTempatKegiatan = findViewById(R.id.tvValueDetailTempatKegiatan);
         tvPembicaraKegiatan = findViewById(R.id.tvValueDetailPembicaraKegiatan);
         tvDeskripsiKegiatan =findViewById(R.id.tvValueDetailDeskripsiKegiatan);
+    }
+
+    public void getData(){
+        RequestQueue queue = Volley.newRequestQueue(DetailKegiatanActivity.this);
+
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url+"/"+idKegiatan, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                pbDetailKegiatan.setVisibility(View.GONE);
+                for (int i = 0; i < response.length(); i++) {
+                    try {
+                        JSONObject responseObj = response.getJSONObject(0);
+                        tvDetailNamaKegiatan.setText(responseObj.getString("nama_kegiatan"));
+                        tvNoKegiatan.setText(responseObj.getString("id_kegiatan"));
+                        if (responseObj.getString("kegiatan_umum").equals(0)){
+                            tvTipeKegiatan.setText("Undangan");
+                        } else{
+                            tvTipeKegiatan.setText("Umum");
+                        }
+                        tvTglKegiatan.setText(fullDatePlusDay(responseObj.getString("tgl_kegiatan")));
+                        tvWaktuKegiatan.setText(formatWaktu(responseObj.getString("waktu_kegiatan"))+" WIB");
+                        tvTempatKegiatan.setText(responseObj.getString("tempat_kegiatan"));
+                        tvPembicaraKegiatan.setText(responseObj.getString("pembicara_kegiatan"));
+                        tvDeskripsiKegiatan.setText(responseObj.getString("deskripsi_kegiatan"));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(DetailKegiatanActivity.this, "Fail to get the data..", Toast.LENGTH_SHORT).show();
+            }
+        });
+        queue.add(jsonArrayRequest);
     }
 
     @Override
@@ -76,7 +122,7 @@ public class DetailKegiatanActivity extends AppCompatActivity {
     private String fullDatePlusDay(String tanggal){
         String tgl = tanggal;
         Locale locale = new Locale("in", "ID");
-        DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy", locale);
+        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", locale);//"dd/MM/yyyy" "yyyy-MM-dd"
         Date date = null;
         try {
             date = (Date)formatter.parse(tgl);
@@ -86,5 +132,20 @@ public class DetailKegiatanActivity extends AppCompatActivity {
         SimpleDateFormat newFormat = new SimpleDateFormat("EEEE, dd MMMM yyyy", locale);
         String tglBaru = newFormat.format(date);
         return tglBaru;
+    }
+
+    private String formatWaktu(String waktu){
+        String wkt = waktu;
+        Locale locale = new Locale("in", "ID");
+        DateFormat formatter = new SimpleDateFormat("hh:mm:ss", locale);
+        Date date = null;
+        try {
+            date = (Date)formatter.parse(wkt);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        SimpleDateFormat newFormat = new SimpleDateFormat("hh:mm", locale);
+        String wktBaru = newFormat.format(date);
+        return wktBaru;
     }
 }

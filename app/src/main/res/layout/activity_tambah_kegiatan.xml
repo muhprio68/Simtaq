@@ -23,14 +23,42 @@
             android:layout_height="wrap_content"
             android:padding="16dp"
             android:layout_marginBottom="8dp">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvNamaKegiatan"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Nama Kegiatan"
+                android:textColor="@color/primaryTextColor"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/etNamaKegiatan"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/rounded_border_tambahdata"
+                android:drawablePadding="8dp"
+                android:ems="10"
+                android:hint="Masukkan Nama Kegiatan"
+                android:inputType="text"
+                android:padding="16dp"
+                app:layout_constraintTop_toBottomOf="@id/tvNamaKegiatan"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvTipeKegiatan"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="Tipe Kegiatan"
+                android:layout_marginTop="16dp"
                 android:textSize="18sp"
                 android:textColor="@color/primaryTextColor"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/etNamaKegiatan"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>
 
@@ -47,7 +75,7 @@
                 app:layout_constraintTop_toBottomOf="@id/tvTipeKegiatan">
 
                 <Spinner
-                    android:id="@+id/spinner2"
+                    android:id="@+id/spTipeKegiatan"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -126,33 +154,6 @@
                 app:layout_constraintTop_toBottomOf="@id/tvWaktuKegiatan" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvKetKegiatan"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="Keterangan Kegiatan"
-                android:textSize="18sp"
-                android:textColor="@color/primaryTextColor"
-                android:layout_marginTop="16dp"
-                app:layout_constraintTop_toBottomOf="@+id/etWaktuKegiatan"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
-
-            <EditText
-                android:id="@+id/etKeteranganKegiatan"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/rounded_border_tambahdata"
-                android:drawablePadding="16dp"
-                android:ems="10"
-                android:hint="Masukkan keterangan"
-                android:inputType="text"
-                android:padding="16dp"
-                app:layout_constraintTop_toBottomOf="@id/tvKetKegiatan"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvTempatKegiatan"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -160,7 +161,7 @@
                 android:textSize="18sp"
                 android:textColor="@color/primaryTextColor"
                 android:layout_marginTop="16dp"
-                app:layout_constraintTop_toBottomOf="@+id/etKeteranganKegiatan"
+                app:layout_constraintTop_toBottomOf="@+id/etWaktuKegiatan"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>
 

@@ -58,7 +58,7 @@ public class JadwalKegiatanAdapter extends RecyclerView.Adapter<JadwalKegiatanVi
         if (tipe == 1) {
             holder.tvTanggalKegiatan.setText(fullDateToDate(kegiatan.getTanggalKegiatan()));
             holder.tvNamaKegiatan.setText(kegiatan.getNamaKegiatan());
-            holder.tvJamKegiatan.setText(kegiatan.getWaktuKegiatan()+" WIB, "+kegiatan.getTempatKegiatan());
+            holder.tvJamKegiatan.setText(timeFormat(kegiatan.getWaktuKegiatan())+" WIB, "+kegiatan.getTempatKegiatan());
             holder.rlListKegiatan.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -78,7 +78,7 @@ public class JadwalKegiatanAdapter extends RecyclerView.Adapter<JadwalKegiatanVi
     private String fullDateToDate(String tanggal){
         String tgl = tanggal;
         Locale locale = new Locale("in", "ID");
-        DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy", locale);
+        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", locale); //dd/MM/yyyy  yyyy-MM-dd
         Date date = null;
         try {
             date = (Date)formatter.parse(tgl);
@@ -88,6 +88,21 @@ public class JadwalKegiatanAdapter extends RecyclerView.Adapter<JadwalKegiatanVi
         SimpleDateFormat newFormat = new SimpleDateFormat("dd", locale);
         String tglBaru = newFormat.format(date);
         return tglBaru;
+    }
+
+    private String timeFormat(String waktu){
+        String wkt = waktu;
+        Locale locale = new Locale("in", "ID");
+        DateFormat formatter = new SimpleDateFormat("hh:mm:ss", locale); //dd/MM/yyyy  yyyy-MM-dd
+        Date date = null;
+        try {
+            date = (Date)formatter.parse(wkt);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        SimpleDateFormat newFormat = new SimpleDateFormat("hh:mm", locale);
+        String wktBaru = newFormat.format(date);
+        return wktBaru;
     }
 
     public interface IJadwalKegiatanAdapter{
