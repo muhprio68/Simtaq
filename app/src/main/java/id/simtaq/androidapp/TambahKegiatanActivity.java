@@ -5,6 +5,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.util.Log;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -21,21 +23,27 @@ import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
 public class TambahKegiatanActivity extends AppCompatActivity {
 
+    private RelativeLayout rlTambahKegiatan;
+
     private DatePickerDialog datePickerDialog;
     private SimpleDateFormat dateFormatter;
     private TimePickerDialog timePickerDialog;
+    private SimpleDateFormat timeFormatter;
 
     private Toolbar toolbar;
     private EditText etNamaKegiatan;
@@ -98,6 +106,7 @@ public class TambahKegiatanActivity extends AppCompatActivity {
 
     public void initViews(){
         toolbar = findViewById(R.id.tbTambahKegiatan);
+        rlTambahKegiatan = findViewById(R.id.rlTambahKegiatan);
         etNamaKegiatan = findViewById(R.id.etNamaKegiatan);
         spTipeKegiatan = findViewById(R.id.spTipeKegiatan);
         etTglKegiatan = findViewById(R.id.etTglKegiatan);
@@ -125,7 +134,9 @@ public class TambahKegiatanActivity extends AppCompatActivity {
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     // on below line we are displaying a success toast message.
-                    Toast.makeText(TambahKegiatanActivity.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+                    snackbarWithAction();
+
+                    //Toast.makeText(TambahKegiatanActivity.this, "Data berhasil disimpan", Toast.LENGTH_SHORT).show();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -232,7 +243,8 @@ public class TambahKegiatanActivity extends AppCompatActivity {
                 /**
                  * Method ini dipanggil saat kita selesai memilih waktu di DatePicker
                  */
-                etWaktuKegiatan.setText(hourOfDay+":"+minute);
+
+                etWaktuKegiatan.setText(timeFormat(hourOfDay+":"+minute));
             }
         },
                 /**
@@ -246,6 +258,39 @@ public class TambahKegiatanActivity extends AppCompatActivity {
                 DateFormat.is24HourFormat(this));
 
         timePickerDialog.show();
+    }
+
+    private String timeFormat(String waktu){
+        String wkt = waktu;
+        Locale locale = new Locale("in", "ID");
+        java.text.DateFormat formatter = new SimpleDateFormat("hh:mm", locale); //dd/MM/yyyy  yyyy-MM-dd
+        Date date = null;
+        try {
+            date = (Date)formatter.parse(wkt);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        SimpleDateFormat newFormat = new SimpleDateFormat("HH:mm", locale);
+        String wktBaru = newFormat.format(date);
+        return wktBaru;
+    }
+
+    public void snackbarWithAction(){
+        Snackbar snackbar = Snackbar.make(rlTambahKegiatan ,"Data berhasil disimpan",Snackbar.LENGTH_SHORT);
+        snackbar.setAction("Lihat", new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                lihatTambahData();
+                Toast.makeText(getApplicationContext(),"Lahhhh",Toast.LENGTH_SHORT).show();
+            }
+        });
+        snackbar.show();
+    }
+
+    public void lihatTambahData() {
+        Intent intent = new Intent(TambahKegiatanActivity.this, DetailKegiatanActivity.class);
+        intent.putExtra("intentDari", "tambah kegiatan");
+        startActivity(intent);
     }
 
     @Override

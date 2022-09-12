@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rlTambahKegiatan"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -147,6 +148,7 @@
                 android:background="@drawable/rounded_border_tambahdata"
                 android:drawablePadding="16dp"
                 android:ems="10"
+                android:focusable="false"
                 android:hint="Masukkan waktu"
                 android:inputType="text"
                 android:padding="16dp"

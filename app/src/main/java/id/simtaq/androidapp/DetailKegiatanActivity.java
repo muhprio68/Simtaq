@@ -42,6 +42,7 @@ public class DetailKegiatanActivity extends AppCompatActivity {
     TextView tvDeskripsiKegiatan;
     ProgressBar pbDetailKegiatan;
     int idKegiatan;
+    String intentDari;
     String url = "http://192.168.0.27:8080/restfulapi/public/kegiatan";
 
 
@@ -55,8 +56,15 @@ public class DetailKegiatanActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
-        idKegiatan = Integer.valueOf(getIntent().getStringExtra("idKegiatan"));
-        getData();
+
+        intentDari = String.valueOf(getIntent().getStringExtra("intentDari"));
+        if (intentDari.equals("tambah kegiatan")){
+            lihatTambah();
+        } else {
+            idKegiatan = Integer.valueOf(getIntent().getStringExtra("idKegiatan"));
+            getData();
+        }
+
     }
 
     public void initViews(){
@@ -74,7 +82,6 @@ public class DetailKegiatanActivity extends AppCompatActivity {
 
     public void getData(){
         RequestQueue queue = Volley.newRequestQueue(DetailKegiatanActivity.this);
-
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url+"/"+idKegiatan, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
@@ -82,6 +89,41 @@ public class DetailKegiatanActivity extends AppCompatActivity {
                 for (int i = 0; i < response.length(); i++) {
                     try {
                         JSONObject responseObj = response.getJSONObject(0);
+                        tvDetailNamaKegiatan.setText(responseObj.getString("nama_kegiatan"));
+                        tvNoKegiatan.setText(responseObj.getString("id_kegiatan"));
+                        if (responseObj.getString("kegiatan_umum").equals("0")){
+                            tvTipeKegiatan.setText("Undangan");
+                        } else{
+                            tvTipeKegiatan.setText("Umum");
+                        }
+                        tvTglKegiatan.setText(fullDatePlusDay(responseObj.getString("tgl_kegiatan")));
+                        tvWaktuKegiatan.setText(formatWaktu(responseObj.getString("waktu_kegiatan"))+" WIB");
+                        tvTempatKegiatan.setText(responseObj.getString("tempat_kegiatan"));
+                        tvPembicaraKegiatan.setText(responseObj.getString("pembicara_kegiatan"));
+                        tvDeskripsiKegiatan.setText(responseObj.getString("deskripsi_kegiatan"));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(DetailKegiatanActivity.this, "Fail to get the data..", Toast.LENGTH_SHORT).show();
+            }
+        });
+        queue.add(jsonArrayRequest);
+    }
+
+    public void lihatTambah(){
+        RequestQueue queue = Volley.newRequestQueue(DetailKegiatanActivity.this);
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                pbDetailKegiatan.setVisibility(View.GONE);
+                for (int i = 0; i < response.length(); i++) {
+                    try {
+                        JSONObject responseObj = response.getJSONObject(response.length()-1);
                         tvDetailNamaKegiatan.setText(responseObj.getString("nama_kegiatan"));
                         tvNoKegiatan.setText(responseObj.getString("id_kegiatan"));
                         if (responseObj.getString("kegiatan_umum").equals("0")){
