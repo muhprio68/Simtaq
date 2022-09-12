@@ -3,12 +3,17 @@ package id.simtaq.androidapp;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -20,10 +25,17 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class TambahKegiatanActivity extends AppCompatActivity {
+
+    private DatePickerDialog datePickerDialog;
+    private SimpleDateFormat dateFormatter;
+    private TimePickerDialog timePickerDialog;
 
     private Toolbar toolbar;
     private EditText etNamaKegiatan;
@@ -35,8 +47,7 @@ public class TambahKegiatanActivity extends AppCompatActivity {
     private EditText etDeskripsiKegiatan;
     private Button btnSimpanKegiatan;
 
-    private String namaKegiatan, tipeKegiatan, tglKegiatan, wktKegiatan, tempatKegiatan, pembiacaraKegiatan, deskripsiKegiatan;
-
+    private String namaKegiatan, tipeKegiatan, tglKegiatan, wktKegiatan, tempatKegiatan, pembicaraKegiatan, deskripsiKegiatan;
     String url = "http://192.168.0.27:8080/restfulapi/public/kegiatan";
 
 
@@ -51,10 +62,36 @@ public class TambahKegiatanActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
+        dateFormatter = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+        etTglKegiatan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDateDialog();
+            }
+        });
+        etWaktuKegiatan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showTimeDialog();
+            }
+        });
 
         btnSimpanKegiatan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                namaKegiatan = etNamaKegiatan.getText().toString();
+                String valueSpinner = spTipeKegiatan.getSelectedItem().toString();
+                if (valueSpinner.equals("Umum")){
+                    tipeKegiatan = "1";
+                } else {
+                    tipeKegiatan = "0";
+                }
+                tglKegiatan = etTglKegiatan.getText().toString();
+                wktKegiatan = etWaktuKegiatan.getText().toString();
+                tempatKegiatan = etTempatKegiatan.getText().toString();
+                pembicaraKegiatan = etPembicaraKegiatan.getText().toString();
+                deskripsiKegiatan = etDeskripsiKegiatan.getText().toString();
+                addDataToDatabase(namaKegiatan, tipeKegiatan, tglKegiatan,wktKegiatan,tempatKegiatan,pembicaraKegiatan,deskripsiKegiatan);
             }
         });
     }
@@ -71,7 +108,7 @@ public class TambahKegiatanActivity extends AppCompatActivity {
         btnSimpanKegiatan = findViewById(R.id.btnSimpanKegiatan);
     }
 
-    private void addDataToDatabase(String namaKegiatan, String tipeKegiatan, String tglKegiatan, String wktKegiatan, String tempatKegiatan, String pembiacaraKegiatan, String deskripsiKegiatan) {
+    private void addDataToDatabase(String namaKegiatan, String tipeKegiatan, String tglKegiatan, String wktKegiatan, String tempatKegiatan, String pembicaraKegiatan, String deskripsiKegiatan) {
 
         // url to post our data
 
@@ -126,9 +163,9 @@ public class TambahKegiatanActivity extends AppCompatActivity {
                 params.put("nama_kegiatan", namaKegiatan);
                 params.put("kegiatan_umum", tipeKegiatan);
                 params.put("tgl_kegiatan", tglKegiatan);
-                params.put("waktu_kegiatan", wktKegiatan);
+                params.put("waktu_kegiatan", wktKegiatan+":00");
                 params.put("tempat_kegiatan", tempatKegiatan);
-                params.put("pembicara_kegiatan", pembiacaraKegiatan);
+                params.put("pembicara_kegiatan", pembicaraKegiatan);
                 params.put("deskripsi_kegiatan", deskripsiKegiatan);
 
                 // at last we are returning our params.
@@ -138,6 +175,77 @@ public class TambahKegiatanActivity extends AppCompatActivity {
         // below line is to make
         // a json object request.
         queue.add(request);
+    }
+
+    private void showDateDialog(){
+
+        /**
+         * Calendar untuk mendapatkan tanggal sekarang
+         */
+        Calendar newCalendar = Calendar.getInstance();
+
+        /**
+         * Initiate DatePicker dialog
+         */
+        datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+
+                /**
+                 * Method ini dipanggil saat kita selesai memilih tanggal di DatePicker
+                 */
+
+                /**
+                 * Set Calendar untuk menampung tanggal yang dipilih
+                 */
+                Calendar newDate = Calendar.getInstance();
+                newDate.set(year, monthOfYear, dayOfMonth);
+
+                /**
+                 * Update TextView dengan tanggal yang kita pilih
+                 */
+                etTglKegiatan.setText(dateFormatter.format(newDate.getTime()));
+            }
+
+        },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
+
+        /**
+         * Tampilkan DatePicker dialog
+         */
+        datePickerDialog.show();
+    }
+
+    private void showTimeDialog() {
+
+        /**
+         * Calendar untuk mendapatkan waktu saat ini
+         */
+        Calendar calendar = Calendar.getInstance();
+
+        /**
+         * Initialize TimePicker Dialog
+         */
+        timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                /**
+                 * Method ini dipanggil saat kita selesai memilih waktu di DatePicker
+                 */
+                etWaktuKegiatan.setText(hourOfDay+":"+minute);
+            }
+        },
+                /**
+                 * Tampilkan jam saat ini ketika TimePicker pertama kali dibuka
+                 */
+                calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE),
+
+                /**
+                 * Cek apakah format waktu menggunakan 24-hour format
+                 */
+                DateFormat.is24HourFormat(this));
+
+        timePickerDialog.show();
     }
 
     @Override

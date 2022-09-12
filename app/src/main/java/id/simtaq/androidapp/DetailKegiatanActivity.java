@@ -84,7 +84,7 @@ public class DetailKegiatanActivity extends AppCompatActivity {
                         JSONObject responseObj = response.getJSONObject(0);
                         tvDetailNamaKegiatan.setText(responseObj.getString("nama_kegiatan"));
                         tvNoKegiatan.setText(responseObj.getString("id_kegiatan"));
-                        if (responseObj.getString("kegiatan_umum").equals(0)){
+                        if (responseObj.getString("kegiatan_umum").equals("0")){
                             tvTipeKegiatan.setText("Undangan");
                         } else{
                             tvTipeKegiatan.setText("Umum");
