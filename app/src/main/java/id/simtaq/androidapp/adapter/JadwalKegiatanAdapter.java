@@ -108,4 +108,18 @@ public class JadwalKegiatanAdapter extends RecyclerView.Adapter<JadwalKegiatanVi
     public interface IJadwalKegiatanAdapter{
         void doClick(String id);
     }
+
+    public void removeItem(int position) {
+        kegiatanList.remove(position);
+        notifyItemRemoved(position);
+    }
+
+    public void restoreItem(Kegiatan item, int position) {
+        kegiatanList.add(position, item);
+        notifyItemInserted(position);
+    }
+
+    public ArrayList<Kegiatan> getData() {
+        return kegiatanList;
+    }
 }

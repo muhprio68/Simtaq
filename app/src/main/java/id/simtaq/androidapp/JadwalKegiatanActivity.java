@@ -1,15 +1,19 @@
 package id.simtaq.androidapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +23,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,6 +42,7 @@ import id.simtaq.androidapp.models.RiwayatKas;
 
 public class JadwalKegiatanActivity extends AppCompatActivity implements JadwalKegiatanAdapter.IJadwalKegiatanAdapter {
 
+    private RelativeLayout rlJadwalKegitan;
     private Toolbar toolbar;
     private ArrayList<Kegiatan> kegiatanList;
     private JadwalKegiatanAdapter adapter;
@@ -70,6 +76,7 @@ public class JadwalKegiatanActivity extends AppCompatActivity implements JadwalK
 
     public void initViews(){
         toolbar = findViewById(R.id.tbJadwalKegiatan);
+        rlJadwalKegitan = findViewById(R.id.rlJadwalKegiatan);
         pbJadwalKegiatan = findViewById(R.id.pbJadwalKegiatan);
         tvFilterBulanKegiatan = findViewById(R.id.tvFilterBulanKegiatan);
         tvFilterTahunKegiatan = findViewById(R.id.tvFilterTahunKegiatan);
@@ -133,6 +140,39 @@ public class JadwalKegiatanActivity extends AppCompatActivity implements JadwalK
         rvJadwalKegiatan.setLayoutManager(manager);
         rvJadwalKegiatan.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+    }
+
+    private void enableSwipeToDeleteAndUndo() {
+        SwipeToDeleteCallback swipeToDeleteCallback = new SwipeToDeleteCallback(this) {
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
+
+
+                final int position = viewHolder.getAdapterPosition();
+                final Kegiatan item = adapter.getData().get(position);
+
+                adapter.removeItem(position);
+
+
+                Snackbar snackbar = Snackbar
+                        .make(rlJadwalKegitan, "Item was removed from the list.", Snackbar.LENGTH_LONG);
+                snackbar.setAction("UNDO", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        adapter.restoreItem(item, position);
+                        rvJadwalKegiatan.scrollToPosition(position);
+                    }
+                });
+
+                snackbar.setActionTextColor(Color.YELLOW);
+                snackbar.show();
+
+            }
+        };
+
+        ItemTouchHelper itemTouchhelper = new ItemTouchHelper(swipeToDeleteCallback);
+        itemTouchhelper.attachToRecyclerView(rvJadwalKegiatan);
     }
 
     @Override

@@ -7,6 +7,7 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
@@ -54,6 +55,7 @@ public class TambahKegiatanActivity extends AppCompatActivity {
     private EditText etPembicaraKegiatan;
     private EditText etDeskripsiKegiatan;
     private Button btnSimpanKegiatan;
+    private Button btnBatal;
 
     private String namaKegiatan, tipeKegiatan, tglKegiatan, wktKegiatan, tempatKegiatan, pembicaraKegiatan, deskripsiKegiatan;
     String url = "http://192.168.0.27:8080/restfulapi/public/kegiatan";
@@ -99,7 +101,33 @@ public class TambahKegiatanActivity extends AppCompatActivity {
                 tempatKegiatan = etTempatKegiatan.getText().toString();
                 pembicaraKegiatan = etPembicaraKegiatan.getText().toString();
                 deskripsiKegiatan = etDeskripsiKegiatan.getText().toString();
-                addDataToDatabase(namaKegiatan, tipeKegiatan, tglKegiatan,wktKegiatan,tempatKegiatan,pembicaraKegiatan,deskripsiKegiatan);
+
+                if (TextUtils.isEmpty(namaKegiatan)) {
+                    etNamaKegiatan.setError("Masukkan nama kegiatan");
+                } else if (TextUtils.isEmpty(tglKegiatan)){
+                    etTglKegiatan.setError("Masukkan tanggal kegiatan");
+                } else if (TextUtils.isEmpty(wktKegiatan)){
+                    etWaktuKegiatan.setError("Masukkan waktu kegiatan");
+                } else if (TextUtils.isEmpty(tempatKegiatan)){
+                    etTempatKegiatan.setError("Masukkan tempat kegiatan");
+                } else if (TextUtils.isEmpty(pembicaraKegiatan)){
+                    etPembicaraKegiatan.setError("Masukkan pembicara kegiatan");
+                } else {
+                    addDataToDatabase(namaKegiatan, tipeKegiatan, tglKegiatan,wktKegiatan,tempatKegiatan,pembicaraKegiatan,deskripsiKegiatan);
+                }
+            }
+        });
+
+        btnBatal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                etNamaKegiatan.setText("");
+                etTglKegiatan.setText("");
+                etWaktuKegiatan.setText("");
+                etTempatKegiatan.setText("");
+                etPembicaraKegiatan.setText("");
+                etDeskripsiKegiatan.setText("");
+                Toast.makeText(TambahKegiatanActivity.this, "Tambah keegiatan dibatalkan", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -115,18 +143,12 @@ public class TambahKegiatanActivity extends AppCompatActivity {
         etPembicaraKegiatan = findViewById(R.id.etPembicaraKegiatan);
         etDeskripsiKegiatan = findViewById(R.id.etDeskripsiKegiatan);
         btnSimpanKegiatan = findViewById(R.id.btnSimpanKegiatan);
+        btnBatal = findViewById(R.id.btnBatalKegiatan);
     }
 
     private void addDataToDatabase(String namaKegiatan, String tipeKegiatan, String tglKegiatan, String wktKegiatan, String tempatKegiatan, String pembicaraKegiatan, String deskripsiKegiatan) {
-
-        // url to post our data
-
-        // creating a new variable for our request queue
         RequestQueue queue = Volley.newRequestQueue(TambahKegiatanActivity.this);
 
-        // on below line we are calling a string
-        // request method to post the data to our API
-        // in this we are calling a post method.
         StringRequest request = new StringRequest(Request.Method.POST, url, new com.android.volley.Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -281,7 +303,7 @@ public class TambahKegiatanActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 lihatTambahData();
-                Toast.makeText(getApplicationContext(),"Lahhhh",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(),"Lahhhh",Toast.LENGTH_SHORT).show();
             }
         });
         snackbar.show();
