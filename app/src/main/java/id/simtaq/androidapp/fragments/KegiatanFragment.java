@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,14 +39,16 @@ import id.simtaq.androidapp.adapter.RiwayatListAdapter;
 import id.simtaq.androidapp.models.CalendarModel;
 import id.simtaq.androidapp.models.Kegiatan;
 
+import static id.simtaq.androidapp.helper.config.url;
+
 public class KegiatanFragment extends Fragment implements View.OnClickListener, JadwalKegiatanAdapter.IJadwalKegiatanAdapter {
 
     private ArrayList<Kegiatan> kegiatanList;
     private RecyclerView rvKegiatan;
     private TextView tvLihatSemuaKegiatan;
     private JadwalKegiatanAdapter adapter;
-
-    String url = "http://192.168.0.27:8080/restfulapi/public/kegiatan";
+    private RequestQueue queue;
+    private RelativeLayout rlMenuKegiatan;
 
     public KegiatanFragment() {
 
@@ -73,6 +76,7 @@ public class KegiatanFragment extends Fragment implements View.OnClickListener, 
         initViews(view);
         tvLihatSemuaKegiatan.setOnClickListener(this);
         kegiatanList = new ArrayList<>();
+        queue = Volley.newRequestQueue(view.getContext());
 //        addData();
         getData(view);
         buildRecyclerView(view);
@@ -80,6 +84,7 @@ public class KegiatanFragment extends Fragment implements View.OnClickListener, 
     }
 
     public void initViews(View v){
+        rlMenuKegiatan = v.findViewById(R.id.rlMenuKegiatan);
         rvKegiatan = v.findViewById(R.id.rvKegiatan);
         tvLihatSemuaKegiatan = v.findViewById(R.id.tvLihatSemuaKegiatan);
     }
@@ -93,8 +98,6 @@ public class KegiatanFragment extends Fragment implements View.OnClickListener, 
     }
 
     public void getData(View view){
-        RequestQueue queue = Volley.newRequestQueue(view.getContext());
-
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
@@ -134,7 +137,7 @@ public class KegiatanFragment extends Fragment implements View.OnClickListener, 
     }
 
     public void buildRecyclerView(View view) {
-        adapter = new JadwalKegiatanAdapter(view.getContext(), kegiatanList, 2, this);
+        adapter = new JadwalKegiatanAdapter(view.getContext(), kegiatanList, 2, this, queue, rlMenuKegiatan);
         LinearLayoutManager manager = new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false);
         rvKegiatan.setHasFixedSize(true);
         rvKegiatan.setLayoutManager(manager);

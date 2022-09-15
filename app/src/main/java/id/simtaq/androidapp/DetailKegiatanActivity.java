@@ -29,6 +29,8 @@ import java.util.Locale;
 
 import id.simtaq.androidapp.models.Kegiatan;
 
+import static id.simtaq.androidapp.helper.config.url;
+
 public class DetailKegiatanActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
@@ -43,7 +45,6 @@ public class DetailKegiatanActivity extends AppCompatActivity {
     ProgressBar pbDetailKegiatan;
     int idKegiatan;
     String intentDari;
-    String url = "http://192.168.0.27:8080/restfulapi/public/kegiatan";
 
 
     @Override

@@ -37,6 +37,8 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import static id.simtaq.androidapp.helper.config.url;
+
 public class TambahKegiatanActivity extends AppCompatActivity {
 
     private RelativeLayout rlTambahKegiatan;
@@ -58,8 +60,6 @@ public class TambahKegiatanActivity extends AppCompatActivity {
     private Button btnBatal;
 
     private String namaKegiatan, tipeKegiatan, tglKegiatan, wktKegiatan, tempatKegiatan, pembicaraKegiatan, deskripsiKegiatan;
-    String url = "http://192.168.0.27:8080/restfulapi/public/kegiatan";
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -225,19 +225,9 @@ public class TambahKegiatanActivity extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 
-                /**
-                 * Method ini dipanggil saat kita selesai memilih tanggal di DatePicker
-                 */
-
-                /**
-                 * Set Calendar untuk menampung tanggal yang dipilih
-                 */
                 Calendar newDate = Calendar.getInstance();
                 newDate.set(year, monthOfYear, dayOfMonth);
 
-                /**
-                 * Update TextView dengan tanggal yang kita pilih
-                 */
                 etTglKegiatan.setText(dateFormatter.format(newDate.getTime()));
             }
 
@@ -251,32 +241,18 @@ public class TambahKegiatanActivity extends AppCompatActivity {
 
     private void showTimeDialog() {
 
-        /**
-         * Calendar untuk mendapatkan waktu saat ini
-         */
+
         Calendar calendar = Calendar.getInstance();
 
-        /**
-         * Initialize TimePicker Dialog
-         */
         timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                /**
-                 * Method ini dipanggil saat kita selesai memilih waktu di DatePicker
-                 */
 
                 etWaktuKegiatan.setText(timeFormat(hourOfDay+":"+minute));
             }
         },
-                /**
-                 * Tampilkan jam saat ini ketika TimePicker pertama kali dibuka
-                 */
-                calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE),
 
-                /**
-                 * Cek apakah format waktu menggunakan 24-hour format
-                 */
+                calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE),
                 DateFormat.is24HourFormat(this));
 
         timePickerDialog.show();

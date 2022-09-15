@@ -4,11 +4,19 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -18,10 +26,13 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import id.simtaq.androidapp.JadwalKegiatanActivity;
 import id.simtaq.androidapp.R;
 import id.simtaq.androidapp.models.CalendarModel;
 import id.simtaq.androidapp.models.Kegiatan;
 import id.simtaq.androidapp.viewholder.JadwalKegiatanViewHolder;
+
+import static id.simtaq.androidapp.helper.config.url;
 
 public class JadwalKegiatanAdapter extends RecyclerView.Adapter<JadwalKegiatanViewHolder> {
 
@@ -29,12 +40,16 @@ public class JadwalKegiatanAdapter extends RecyclerView.Adapter<JadwalKegiatanVi
     ArrayList <Kegiatan> kegiatanList;
     int tipe;
     IJadwalKegiatanAdapter iJadwalKegiatanAdapter;
+    RequestQueue queue;
+    RelativeLayout rlJadwalKegiatan;
 
-    public JadwalKegiatanAdapter(Context context, ArrayList<Kegiatan> kegiatanList, int tipe, IJadwalKegiatanAdapter iJadwalKegiatanAdapter) {
+    public JadwalKegiatanAdapter(Context context, ArrayList<Kegiatan> kegiatanList, int tipe, IJadwalKegiatanAdapter iJadwalKegiatanAdapter, RequestQueue queue, RelativeLayout rlJadwalKegiatan) {
         this.context = context;
         this.kegiatanList = kegiatanList;
         this.tipe = tipe;
         this.iJadwalKegiatanAdapter = iJadwalKegiatanAdapter;
+        this.queue = queue;
+        this.rlJadwalKegiatan = rlJadwalKegiatan;
     }
 
     public int getItemViewType(final int position){
@@ -110,8 +125,34 @@ public class JadwalKegiatanAdapter extends RecyclerView.Adapter<JadwalKegiatanVi
     }
 
     public void removeItem(int position) {
+        deleteData(kegiatanList.get(position).getIdKegiatan());
         kegiatanList.remove(position);
         notifyItemRemoved(position);
+    }
+
+    public void deleteData(String id){
+        StringRequest dr = new StringRequest(Request.Method.DELETE, url+"/"+id,
+                new Response.Listener<String>()
+                {
+                    @Override
+                    public void onResponse(String response) {
+                        Snackbar snackbar = Snackbar
+                                .make(rlJadwalKegiatan, "Kegiatan berhasil dihapus", Snackbar.LENGTH_LONG);
+                        snackbar.show();
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Snackbar snackbar = Snackbar
+                                .make(rlJadwalKegiatan, "Gagal menghapus kegiatan", Snackbar.LENGTH_LONG);
+                        snackbar.show();
+
+                    }
+                }
+        );
+        queue.add(dr);
     }
 
     public void restoreItem(Kegiatan item, int position) {

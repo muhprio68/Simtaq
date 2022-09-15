@@ -22,6 +22,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -40,18 +41,20 @@ import id.simtaq.androidapp.models.CalendarModel;
 import id.simtaq.androidapp.models.Kegiatan;
 import id.simtaq.androidapp.models.RiwayatKas;
 
+import static id.simtaq.androidapp.helper.config.url;
+
 public class JadwalKegiatanActivity extends AppCompatActivity implements JadwalKegiatanAdapter.IJadwalKegiatanAdapter {
 
-    private RelativeLayout rlJadwalKegitan;
+    private RelativeLayout rlJadwalKegiatan;
     private Toolbar toolbar;
     private ArrayList<Kegiatan> kegiatanList;
     private JadwalKegiatanAdapter adapter;
+    private RequestQueue queue;
 
     private TextView tvFilterBulanKegiatan;
     private TextView tvFilterTahunKegiatan;
     private RecyclerView rvJadwalKegiatan;
 
-    String url = "http://192.168.0.27:8080/restfulapi/public/kegiatan";
     //https://run.mocky.io/v3/3d965384-7078-4ee5-8209-a71a4dfc02c0
     private ProgressBar pbJadwalKegiatan;
 
@@ -65,6 +68,7 @@ public class JadwalKegiatanActivity extends AppCompatActivity implements JadwalK
         initViews();
         //addData();
         kegiatanList = new ArrayList<>();
+        queue = Volley.newRequestQueue(JadwalKegiatanActivity.this);
         getData();
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Jadwal Kegiatan");
@@ -72,11 +76,12 @@ public class JadwalKegiatanActivity extends AppCompatActivity implements JadwalK
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
         buildRecyclerView();
+        enableSwipeToDeleteAndUndo();
     }
 
     public void initViews(){
         toolbar = findViewById(R.id.tbJadwalKegiatan);
-        rlJadwalKegitan = findViewById(R.id.rlJadwalKegiatan);
+        rlJadwalKegiatan = findViewById(R.id.rlJadwalKegiatan);
         pbJadwalKegiatan = findViewById(R.id.pbJadwalKegiatan);
         tvFilterBulanKegiatan = findViewById(R.id.tvFilterBulanKegiatan);
         tvFilterTahunKegiatan = findViewById(R.id.tvFilterTahunKegiatan);
@@ -93,8 +98,6 @@ public class JadwalKegiatanActivity extends AppCompatActivity implements JadwalK
     }
 
     public void getData(){
-        RequestQueue queue = Volley.newRequestQueue(JadwalKegiatanActivity.this);
-
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
@@ -134,7 +137,7 @@ public class JadwalKegiatanActivity extends AppCompatActivity implements JadwalK
     }
 
     public void buildRecyclerView(){
-        adapter = new JadwalKegiatanAdapter(JadwalKegiatanActivity.this,kegiatanList, 1, this);
+        adapter = new JadwalKegiatanAdapter(JadwalKegiatanActivity.this,kegiatanList, 1, this, queue, rlJadwalKegiatan);
         LinearLayoutManager manager = new LinearLayoutManager(this);
         rvJadwalKegiatan.setHasFixedSize(true);
         rvJadwalKegiatan.setLayoutManager(manager);
@@ -146,31 +149,10 @@ public class JadwalKegiatanActivity extends AppCompatActivity implements JadwalK
         SwipeToDeleteCallback swipeToDeleteCallback = new SwipeToDeleteCallback(this) {
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
-
-
                 final int position = viewHolder.getAdapterPosition();
-                final Kegiatan item = adapter.getData().get(position);
-
                 adapter.removeItem(position);
-
-
-                Snackbar snackbar = Snackbar
-                        .make(rlJadwalKegitan, "Item was removed from the list.", Snackbar.LENGTH_LONG);
-                snackbar.setAction("UNDO", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-
-                        adapter.restoreItem(item, position);
-                        rvJadwalKegiatan.scrollToPosition(position);
-                    }
-                });
-
-                snackbar.setActionTextColor(Color.YELLOW);
-                snackbar.show();
-
             }
         };
-
         ItemTouchHelper itemTouchhelper = new ItemTouchHelper(swipeToDeleteCallback);
         itemTouchhelper.attachToRecyclerView(rvJadwalKegiatan);
     }
