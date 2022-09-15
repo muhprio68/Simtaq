@@ -4,8 +4,7 @@
     android:id="@+id/rlListKegiatan"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_margin="8dp">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvTanggalKegiatan"
@@ -14,8 +13,9 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:text="01"
-        android:layout_marginTop="-8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginTop="-4dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="8dp"
         android:textColor="@color/primaryTextColor"
         android:textSize="40sp" />
 
@@ -25,6 +25,7 @@
         android:layout_height="wrap_content"
         android:textSize="16sp"
         android:layout_alignParentTop="true"
+        android:layout_marginTop="4dp"
         android:layout_toEndOf="@id/tvTanggalKegiatan"
         android:textColor="@color/primaryTextColor"
         tools:text="Pengajian Rutin" />
@@ -45,7 +46,7 @@
         android:id="@+id/ivArrowKegiatan"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:layout_marginTop="4dp"
+        android:layout_centerVertical="true"
         android:layout_alignParentEnd="true"
         android:src="@drawable/ic_chevron_right" />
 

@@ -60,7 +60,6 @@
                     android:layout_marginStart="1dp"
                     android:layout_marginTop="5dp"
                     android:layout_marginEnd="1dp"
-                    android:layout_marginBottom="8dp"
                     android:background="@color/primaryColor" />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -93,7 +92,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/garisKegiatan"
-                    android:layout_marginTop="1dp" />
+                    android:padding="8dp" />
 
             </RelativeLayout>
         </androidx.cardview.widget.CardView>

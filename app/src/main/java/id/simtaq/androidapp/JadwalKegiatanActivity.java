@@ -1,6 +1,7 @@
 package id.simtaq.androidapp;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -8,6 +9,7 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -55,7 +57,7 @@ public class JadwalKegiatanActivity extends AppCompatActivity implements JadwalK
     private TextView tvFilterTahunKegiatan;
     private RecyclerView rvJadwalKegiatan;
 
-    //https://run.mocky.io/v3/3d965384-7078-4ee5-8209-a71a4dfc02c0
+
     private ProgressBar pbJadwalKegiatan;
 
     public JadwalKegiatanActivity() {
@@ -150,11 +152,46 @@ public class JadwalKegiatanActivity extends AppCompatActivity implements JadwalK
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
                 final int position = viewHolder.getAdapterPosition();
-                adapter.removeItem(position);
+                hapusDialog(position);
+                adapter.notifyDataSetChanged();
             }
         };
         ItemTouchHelper itemTouchhelper = new ItemTouchHelper(swipeToDeleteCallback);
         itemTouchhelper.attachToRecyclerView(rvJadwalKegiatan);
+    }
+
+    public void hapusDialog(int position){
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                this);
+
+        // set title dialog
+        alertDialogBuilder.setTitle("Hapus Data Kegiatan");
+
+        // set pesan dari dialog
+        alertDialogBuilder
+                .setMessage("Yakin menghapus kegiatan ini?")
+                .setCancelable(false)
+                .setPositiveButton("Ya",new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,int id) {
+                        // jika tombol diklik, maka akan menutup activity ini
+                        adapter.removeItem(position);
+                        adapter.notifyDataSetChanged();
+                    }
+                })
+                .setNegativeButton("Tidak",new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // jika tombol ini diklik, akan menutup dialog
+                        // dan tidak terjadi apa2
+                        adapter.notifyDataSetChanged();
+                        dialog.cancel();
+                    }
+                });
+
+        // membuat alert dialog dari builder
+        AlertDialog alertDialog = alertDialogBuilder.create();
+
+        // menampilkan alert dialog
+        alertDialog.show();
     }
 
     @Override

@@ -127,7 +127,7 @@ public class JadwalKegiatanAdapter extends RecyclerView.Adapter<JadwalKegiatanVi
     public void removeItem(int position) {
         deleteData(kegiatanList.get(position).getIdKegiatan());
         kegiatanList.remove(position);
-        notifyItemRemoved(position);
+        //notifyItemRemoved(position);
     }
 
     public void deleteData(String id){
