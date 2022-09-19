@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rlUbahKegiatan"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/background"
+    tools:context=".UbahKegiatanActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/tbUbahKegiatan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="?attr/actionBarSize"
+        style="@style/AppTheme.Toolbar"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tbUbahKegiatan">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:layout_marginBottom="8dp">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvNamaKegiatan"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Nama Kegiatan"
+                android:textColor="@color/primaryTextColor"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/etNamaKegiatan"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/rounded_border_tambahdata"
+                android:drawablePadding="8dp"
+                android:ems="10"
+                android:hint="Masukkan Nama Kegiatan"
+                android:inputType="text"
+                android:padding="16dp"
+                app:layout_constraintTop_toBottomOf="@id/tvNamaKegiatan"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvTipeKegiatan"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Tipe Kegiatan"
+                android:layout_marginTop="16dp"
+                android:textSize="18sp"
+                android:textColor="@color/primaryTextColor"
+                app:layout_constraintTop_toBottomOf="@id/etNamaKegiatan"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <RelativeLayout
+                android:id="@+id/rlSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight=".28"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/rounded_border_tambahdata"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvTipeKegiatan">
+
+                <Spinner
+                    android:id="@+id/spTipeKegiatan"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:background="@android:color/transparent"
+                    android:gravity="center"
+                    android:scrollbarSize="16dp"
+                    android:entries="@array/tipe_kegiatan"
+                    android:minHeight="48dp"
+                    android:padding="16dp"
+                    android:spinnerMode="dropdown" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="16dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_arrow_down" />
+
+            </RelativeLayout>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvTglKegiatan"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Tanggal Kegiatan"
+                android:textSize="18sp"
+                android:layout_marginTop="16dp"
+                android:textColor="@color/primaryTextColor"
+                app:layout_constraintTop_toBottomOf="@+id/rlSpinner"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <EditText
+                android:id="@+id/etTglKegiatan"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/rounded_border_tambahdata"
+                android:drawablePadding="16dp"
+                android:ems="10"
+                android:focusable="false"
+                android:hint="Masukkan tanggal"
+                android:inputType="text"
+                android:padding="16dp"
+                android:drawableEnd="@drawable/ic_date"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvTglKegiatan" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvWaktuKegiatan"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Waktu Kegiatan"
+                android:textSize="18sp"
+                android:layout_marginTop="16dp"
+                android:textColor="@color/primaryTextColor"
+                app:layout_constraintTop_toBottomOf="@+id/etTglKegiatan"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <EditText
+                android:id="@+id/etWaktuKegiatan"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/rounded_border_tambahdata"
+                android:drawablePadding="16dp"
+                android:ems="10"
+                android:focusable="false"
+                android:drawableEnd="@drawable/ic_time"
+                android:hint="Masukkan waktu"
+                android:inputType="text"
+                android:padding="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvWaktuKegiatan" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvTempatKegiatan"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Tempat Kegiatan"
+                android:textSize="18sp"
+                android:textColor="@color/primaryTextColor"
+                android:layout_marginTop="16dp"
+                app:layout_constraintTop_toBottomOf="@+id/etWaktuKegiatan"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <EditText
+                android:id="@+id/etTempatKegiatan"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/rounded_border_tambahdata"
+                android:drawablePadding="16dp"
+                android:ems="10"
+                android:hint="Masukkan tempat"
+                android:inputType="text"
+                android:padding="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvTempatKegiatan" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvPembicaraKegiatan"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Pembicara Kegiatan"
+                android:textSize="18sp"
+                android:textColor="@color/primaryTextColor"
+                android:layout_marginTop="16dp"
+                app:layout_constraintTop_toBottomOf="@+id/etTempatKegiatan"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <EditText
+                android:id="@+id/etPembicaraKegiatan"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/rounded_border_tambahdata"
+                android:drawablePadding="16dp"
+                android:ems="10"
+                android:hint="Masukkan nama pembicara"
+                android:inputType="text"
+                android:padding="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvPembicaraKegiatan" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvDeskripsiKegiatan"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Deskripsi Kegiatan"
+                android:textSize="18sp"
+                android:textColor="@color/primaryTextColor"
+                android:layout_marginTop="16dp"
+                app:layout_constraintTop_toBottomOf="@+id/etPembicaraKegiatan"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <EditText
+                android:id="@+id/etDeskripsiKegiatan"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/rounded_border_tambahdata"
+                android:ems="10"
+                android:lines="3"
+                android:inputType="textMultiLine"
+                android:hint="Masukkan deskripsi (opsional)"
+                android:padding="16dp"
+                android:gravity="top"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvDeskripsiKegiatan" />
+
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnBatalUbahKegiatan"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="4dp"
+                android:background="@drawable/rounded_bg_orange"
+                android:text="Batal"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/btnSimpanUbahKegiatan"
+                app:layout_constraintTop_toBottomOf="@+id/etDeskripsiKegiatan" />
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnSimpanUbahKegiatan"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/rounded_bg_primary"
+                android:text="Simpan"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@id/btnBatalUbahKegiatan"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etDeskripsiKegiatan" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</RelativeLayout>

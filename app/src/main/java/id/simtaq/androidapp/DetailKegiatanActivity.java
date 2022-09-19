@@ -4,7 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -190,5 +193,25 @@ public class DetailKegiatanActivity extends AppCompatActivity {
         SimpleDateFormat newFormat = new SimpleDateFormat("hh:mm", locale);
         String wktBaru = newFormat.format(date);
         return wktBaru;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.detail_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.ubah_kegiatan:
+                Intent intent = new Intent(DetailKegiatanActivity.this, UbahKegiatanActivity.class);
+                intent.putExtra("idKegiatan", idKegiatan);
+                startActivity(intent);
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }
