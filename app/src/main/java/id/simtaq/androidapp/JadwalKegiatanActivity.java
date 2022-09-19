@@ -14,6 +14,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -35,14 +36,19 @@ import org.json.JSONObject;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.Locale;
 
 import id.simtaq.androidapp.adapter.JadwalKegiatanAdapter;
 import id.simtaq.androidapp.adapter.RiwayatListAdapter;
+import id.simtaq.androidapp.models.Bulan;
 import id.simtaq.androidapp.models.CalendarModel;
 import id.simtaq.androidapp.models.Kegiatan;
 import id.simtaq.androidapp.models.RiwayatKas;
 
+import static id.simtaq.androidapp.helper.config.locale;
 import static id.simtaq.androidapp.helper.config.url;
 
 public class JadwalKegiatanActivity extends AppCompatActivity implements JadwalKegiatanAdapter.IJadwalKegiatanAdapter {
@@ -50,13 +56,19 @@ public class JadwalKegiatanActivity extends AppCompatActivity implements JadwalK
     private RelativeLayout rlJadwalKegiatan;
     private Toolbar toolbar;
     private ArrayList<Kegiatan> kegiatanList;
+    private ArrayList<Bulan> bulanList;
     private JadwalKegiatanAdapter adapter;
     private RequestQueue queue;
+    private String sBulanTahun, sBulan, sTahun, sFilterBulanTahun;
+    private SimpleDateFormat bulanTahun, tahun, bulan, filterBulanTahun;
 
     private TextView tvFilterBulanKegiatan;
     private TextView tvFilterTahunKegiatan;
+    private ImageView ivNext;
+    private ImageView ivPrev;
     private RecyclerView rvJadwalKegiatan;
 
+    private Calendar c;
 
     private ProgressBar pbJadwalKegiatan;
 
@@ -68,17 +80,46 @@ public class JadwalKegiatanActivity extends AppCompatActivity implements JadwalK
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_jadwal_kegiatan);
         initViews();
-        //addData();
-        kegiatanList = new ArrayList<>();
-        queue = Volley.newRequestQueue(JadwalKegiatanActivity.this);
-        getData();
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Jadwal Kegiatan");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
-        buildRecyclerView();
+        //addData();
+        kegiatanList = new ArrayList<>();
+        bulanList = new ArrayList<>();
+        queue = Volley.newRequestQueue(JadwalKegiatanActivity.this);
+        c = Calendar.getInstance();
+        bulanTahun = new SimpleDateFormat("yyyy-MM", locale);
+        tahun = new SimpleDateFormat("yyyy", locale);
+        bulan = new SimpleDateFormat("MMMM", locale);
+        filterBulanTahun = new SimpleDateFormat("yyyy-MM", locale);
+
+        sBulanTahun = bulanTahun.format(c.getTime());
+        sTahun = tahun.format(c.getTime());
+        sBulan = bulan.format(c.getTime());
+        sFilterBulanTahun = filterBulanTahun.format(c.getTime());
+
+        getData(sFilterBulanTahun);
+        tvFilterBulanKegiatan.setText(sBulan);
+        tvFilterTahunKegiatan.setText(sTahun);
+        //doNextCurentTime();
+
         enableSwipeToDeleteAndUndo();
+        ivNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                doNextPrev("N");
+            }
+        });
+
+        ivPrev.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                doNextPrev("P");
+            }
+        });
+
     }
 
     public void initViews(){
@@ -87,6 +128,8 @@ public class JadwalKegiatanActivity extends AppCompatActivity implements JadwalK
         pbJadwalKegiatan = findViewById(R.id.pbJadwalKegiatan);
         tvFilterBulanKegiatan = findViewById(R.id.tvFilterBulanKegiatan);
         tvFilterTahunKegiatan = findViewById(R.id.tvFilterTahunKegiatan);
+        ivNext = findViewById(R.id.ivNext);
+        ivPrev = findViewById(R.id.ivPrev);
         rvJadwalKegiatan = findViewById(R.id.rvJadwalKegiatan);
     }
 
@@ -99,7 +142,7 @@ public class JadwalKegiatanActivity extends AppCompatActivity implements JadwalK
         kegiatanList.add(new Kegiatan("KEG00005", true, "Sholawat Diba'", "29/03/2022","19.30", "Pengajuan Rutin Sabtu Pon","Masjid At-Taqwa","Bpk. M. Khoirul Huda"));
     }
 
-    public void getData(){
+    public void getData(String filter){
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
@@ -122,8 +165,17 @@ public class JadwalKegiatanActivity extends AppCompatActivity implements JadwalK
                         String tempatKegiatan = responseObj.getString("tempat_kegiatan");
                         String pembicaraKegiatan = responseObj.getString("pembicara_kegiatan");
                         String deskripsiKegiatan = responseObj.getString("deskripsi_kegiatan");
-                        kegiatanList.add(new Kegiatan(idKegiatan, isUmum, namaKegiatan, tglKegiatan, waktuKegiatan, tempatKegiatan, pembicaraKegiatan, deskripsiKegiatan));
-                        buildRecyclerView();
+                        if (tglKegiatan.contains(filter)){
+                            kegiatanList.add(new Kegiatan(idKegiatan, isUmum, namaKegiatan, tglKegiatan, waktuKegiatan, tempatKegiatan, pembicaraKegiatan, deskripsiKegiatan));
+                            Collections.sort(kegiatanList, new Comparator<Kegiatan>() {
+                                @Override
+                                public int compare(Kegiatan kegiatan, Kegiatan k1) {
+                                    return kegiatan.getTanggalKegiatan().compareTo(k1.getTanggalKegiatan());
+                                }
+                            });
+                            buildRecyclerView();
+                            doNextCurentTime();
+                        }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -192,6 +244,64 @@ public class JadwalKegiatanActivity extends AppCompatActivity implements JadwalK
 
         // menampilkan alert dialog
         alertDialog.show();
+    }
+
+    private void doNextPrev(String o) {
+        try {
+            int step = 8; //pindah sebelum-sesudah
+            if (o.equals("N"))
+                c.add(Calendar.MONTH, 1);
+            else
+                c.add(Calendar.MONTH, -1);
+
+            sBulanTahun = bulanTahun.format(c.getTime());
+            sTahun = tahun.format(c.getTime());
+            sBulan = bulan.format(c.getTime());
+            SimpleDateFormat sdfFilterBulanTahun = new SimpleDateFormat("yyyy-MM", locale);
+            sFilterBulanTahun = sdfFilterBulanTahun.format(c.getTime());
+            bulanList.clear();
+            kegiatanList.clear();
+            tvFilterBulanKegiatan.setText(sBulan);
+            getData(sFilterBulanTahun);
+            tvFilterTahunKegiatan.setText(sTahun);
+            adapter.notifyDataSetChanged();
+            doNextCurentTime();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            Toast.makeText(JadwalKegiatanActivity.this, "Gagal memuat list transaksi" , Toast.LENGTH_LONG).show();
+        }
+    }
+
+
+    public void doNextCurentTime(){
+        try {
+            final Calendar b = Calendar.getInstance();
+            b.add(Calendar.MONTH, 5);
+            if (sBulanTahun.equals(tampilkanTanggalDanWaktu(b.getTime(),"yyyy-MM", locale))) {
+                ivNext.setClickable(false);
+                ivNext.setImageResource(R.drawable.ic_next_abu);
+                ivNext.setEnabled(false);
+            } else {
+                ivNext.setEnabled(true);
+                ivNext.setImageResource(R.drawable.ic_next);
+                ivNext.setClickable(true);
+            }
+        }catch(Exception ex){
+            ex.printStackTrace();
+            Toast.makeText(JadwalKegiatanActivity.this, "Gagal memuat riwayat sebelum atau sesudah", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private String tampilkanTanggalDanWaktu(Date tanggalDanWaktu, String pola, Locale lokal) {
+        String tanggalStr;
+        SimpleDateFormat formatter;
+        if (lokal == null) {
+            formatter = new SimpleDateFormat(pola);
+        } else {
+            formatter = new SimpleDateFormat(pola, lokal);
+        }
+        tanggalStr = formatter.format(tanggalDanWaktu);
+        return tanggalStr;
     }
 
     @Override

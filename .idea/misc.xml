@@ -47,6 +47,9 @@
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/drawable/ic_lock.xml" value="0.161" />
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/drawable/ic_message_filled.xml" value="0.161" />
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/drawable/ic_name.xml" value="0.161" />
+        <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/drawable/ic_next.xml" value="0.172" />
+        <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/drawable/ic_next_abu.xml" value="0.172" />
+        <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/drawable/ic_prev.xml" value="0.172" />
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/drawable/ic_settings.xml" value="0.207" />
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/drawable/ic_tambahkegiatan.xml" value="0.1555" />
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/drawable/nav_rounded.xml" value="0.2105" />
@@ -82,7 +85,7 @@
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/layout/activity_daftar.xml" value="0.6147540983606558" />
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/layout/activity_detail_kegiatan.xml" value="0.25" />
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/layout/activity_detail_riwayat_kas.xml" value="0.22" />
-        <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/layout/activity_jadwal_kegiatan.xml" value="0.1675929884566054" />
+        <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/layout/activity_jadwal_kegiatan.xml" value="0.25" />
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/layout/activity_login.xml" value="0.33" />
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/layout/activity_riwayat.xml" value="0.1675929884566054" />
