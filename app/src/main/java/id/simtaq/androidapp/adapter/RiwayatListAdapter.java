@@ -5,31 +5,46 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 import id.simtaq.androidapp.R;
 import id.simtaq.androidapp.RiwayatActivity;
+import id.simtaq.androidapp.models.Keuangan;
 import id.simtaq.androidapp.models.RiwayatKas;
 import id.simtaq.androidapp.viewholder.RiwayatViewHolder;
 
+import static id.simtaq.androidapp.helper.config.url;
+
 public class RiwayatListAdapter extends RecyclerView.Adapter<RiwayatViewHolder> {
 
-    ArrayList<RiwayatKas> riwayatKasList;
+    ArrayList<Keuangan> keuanganList;
     Context context;
     int tipe;
     IRiwayatListAdapter iRiwayatListAdapter;
+    RequestQueue queue;
+    RelativeLayout rlRiwayatKeuangan;
 
-    public RiwayatListAdapter(ArrayList<RiwayatKas> riwayatKasList, Context context, int tipe, IRiwayatListAdapter iRiwayatListAdapter) {
-        this.riwayatKasList = riwayatKasList;
+    public RiwayatListAdapter(ArrayList<Keuangan> keuanganList, Context context, int tipe, IRiwayatListAdapter iRiwayatListAdapter, RequestQueue queue, RelativeLayout rlRiwayatKeuangan) {
+        this.keuanganList = keuanganList;
         this.context = context;
         this.tipe = tipe;
         this.iRiwayatListAdapter = iRiwayatListAdapter;
+        this.queue = queue;
+        this.rlRiwayatKeuangan = rlRiwayatKeuangan;
     }
 
     public int getItemViewType(final int position){
@@ -49,22 +64,22 @@ public class RiwayatListAdapter extends RecyclerView.Adapter<RiwayatViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull RiwayatViewHolder holder, int position) {
-        final RiwayatKas riwayatKas = riwayatKasList.get(position);
+        final Keuangan keuangan = keuanganList.get(position);
         if (tipe == 1) {
-            if (riwayatKas.isPemasukan() == true ){
+            if (keuangan.getTipeKeuangan().equals("Pemasukan") ){
                 holder.cvIconRiwayat.getBackground().setTint(ContextCompat.getColor(context, R.color.jmlPemasukan));
                 holder.ivIconRiwayat.setImageResource(R.drawable.ic_bullish);
-                holder.tvJmlUang.setText("+ Rp. "+String.valueOf(riwayatKas.getNominal()));
+                holder.tvJmlUang.setText("+ Rp. "+String.valueOf(keuangan.getNominalKeuangan()));
                 holder.tvJmlUang.setTextColor(ContextCompat.getColor(context, R.color.jmlPemasukan));
             } else {
                 holder.cvIconRiwayat.getBackground().setTint(ContextCompat.getColor(context, R.color.jmlPengeluaran));
                 holder.ivIconRiwayat.setImageResource(R.drawable.ic_bearish);
-                holder.tvJmlUang.setText("- Rp. "+String.valueOf(riwayatKas.getNominal()));
+                holder.tvJmlUang.setText("- Rp. "+String.valueOf(keuangan.getNominalKeuangan()));
                 holder.tvJmlUang.setTextColor(ContextCompat.getColor(context, R.color.jmlPengeluaran));
             }
 
-            holder.tvKeteranganRiwayat.setText(riwayatKas.getKeterangan());
-            holder.tvTanggalRiwayat.setText(riwayatKas.getTanggal());
+            holder.tvKeteranganRiwayat.setText(keuangan.getKetKeuangan());
+            holder.tvTanggalRiwayat.setText(keuangan.getTglKeuangan());
 
             if (position == getItemCount()-1){
                 holder.vGaris.setVisibility(View.GONE);
@@ -75,29 +90,29 @@ public class RiwayatListAdapter extends RecyclerView.Adapter<RiwayatViewHolder> 
             holder.rlLisRiwayat.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    iRiwayatListAdapter.doClick(riwayatKas.getId());
+                    iRiwayatListAdapter.doClick(keuangan.getIdKeuangan());
                 }
             });
         } else {
-            if (riwayatKas.isPemasukan() == true){
-                holder.tvJmlInfoKas.setText("+ Rp. "+String.valueOf(riwayatKas.getNominal()));
+            if (keuangan.getTipeKeuangan().equals("Pemasukan")){
+                holder.tvJmlInfoKas.setText("+ Rp. "+String.valueOf(keuangan.getNominalKeuangan()));
                 holder.tvJmlInfoKas.setTextColor(ContextCompat.getColor(context, R.color.jmlPemasukan));
             } else {
-                holder.tvJmlInfoKas.setText("- Rp. "+String.valueOf(riwayatKas.getNominal()));
+                holder.tvJmlInfoKas.setText("- Rp. "+String.valueOf(keuangan.getNominalKeuangan()));
                 holder.tvJmlInfoKas.setTextColor(ContextCompat.getColor(context, R.color.jmlPengeluaran));
             }
-            holder.tvKeteranganInfoKas.setText(riwayatKas.getKeterangan());
-            holder.tvTglInfoKas.setText(riwayatKas.getTanggal());
+            holder.tvKeteranganInfoKas.setText(keuangan.getKetKeuangan());
+            holder.tvTglInfoKas.setText(keuangan.getTglKeuangan());
         }
     }
 
     @Override
     public int getItemCount() {
         if (tipe == 1){
-            return (riwayatKasList != null) ? riwayatKasList.size() : 0;
+            return (keuanganList != null) ? keuanganList.size() : 0;
         } else {
-            if (riwayatKasList.size() < 5){
-                return (riwayatKasList != null) ? riwayatKasList.size() : 0;
+            if (keuanganList.size() < 5){
+                return (keuanganList != null) ? keuanganList.size() : 0;
             } else {
                 return 5;
             }
@@ -105,6 +120,37 @@ public class RiwayatListAdapter extends RecyclerView.Adapter<RiwayatViewHolder> 
     }
 
     public interface IRiwayatListAdapter{
-        void doClick(String id);
+        void doClick(int id);
+    }
+
+    public void removeItem(int position) {
+        deleteData(keuanganList.get(position).getIdKeuangan());
+        keuanganList.remove(position);
+        //notifyItemRemoved(position);
+    }
+
+    public void deleteData(int id){
+        StringRequest dr = new StringRequest(Request.Method.DELETE, url+"/"+id,
+                new Response.Listener<String>()
+                {
+                    @Override
+                    public void onResponse(String response) {
+                        Snackbar snackbar = Snackbar
+                                .make(rlRiwayatKeuangan, "Data keuangan berhasil dihapus", Snackbar.LENGTH_LONG);
+                        snackbar.show();
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Snackbar snackbar = Snackbar
+                                .make(rlRiwayatKeuangan, "Gagal menghapus data keuangan", Snackbar.LENGTH_LONG);
+                        snackbar.show();
+
+                    }
+                }
+        );
+        queue.add(dr);
     }
 }

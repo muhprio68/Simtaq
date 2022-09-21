@@ -56,7 +56,6 @@ public class JadwalKegiatanActivity extends AppCompatActivity implements JadwalK
     private RelativeLayout rlJadwalKegiatan;
     private Toolbar toolbar;
     private ArrayList<Kegiatan> kegiatanList;
-    private ArrayList<Bulan> bulanList;
     private JadwalKegiatanAdapter adapter;
     private RequestQueue queue;
     private String sBulanTahun, sBulan, sTahun, sFilterBulanTahun;
@@ -87,7 +86,6 @@ public class JadwalKegiatanActivity extends AppCompatActivity implements JadwalK
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
         //addData();
         kegiatanList = new ArrayList<>();
-        bulanList = new ArrayList<>();
         queue = Volley.newRequestQueue(JadwalKegiatanActivity.this);
         c = Calendar.getInstance();
         bulanTahun = new SimpleDateFormat("yyyy-MM", locale);
@@ -259,7 +257,6 @@ public class JadwalKegiatanActivity extends AppCompatActivity implements JadwalK
             sBulan = bulan.format(c.getTime());
             SimpleDateFormat sdfFilterBulanTahun = new SimpleDateFormat("yyyy-MM", locale);
             sFilterBulanTahun = sdfFilterBulanTahun.format(c.getTime());
-            bulanList.clear();
             kegiatanList.clear();
             tvFilterBulanKegiatan.setText(sBulan);
             getData(sFilterBulanTahun);

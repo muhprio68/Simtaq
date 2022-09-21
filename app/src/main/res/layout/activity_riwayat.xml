@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rlRiwayatKeuangan"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -45,7 +46,7 @@
                     android:id="@+id/garisRiwayat"
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
-                    android:layout_below="@id/tvBlnRiwayat"
+                    android:layout_below="@id/tvFilterBlnRiwayat"
                     android:layout_marginStart="1dp"
                     android:layout_marginTop="5dp"
                     android:layout_marginEnd="1dp"
@@ -53,16 +54,48 @@
                     android:background="@color/primaryColor" />
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvBlnRiwayat"
+                    android:id="@+id/tvFilterBlnRiwayat"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginBottom="8dp"
-                    android:text="Januari, 2022"
+                    android:text="Januari"
                     android:textColor="@color/primaryColor"
                     android:textSize="22sp"
                     android:textStyle="bold" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvFilterThnRiwayat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_toRightOf="@id/tvFilterBlnRiwayat"
+                    android:text="2022"
+                    android:textColor="@color/primaryColor"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/ivNextKeuangan"
+                    android:layout_width="38dp"
+                    android:layout_height="38dp"
+                    android:src="@drawable/ic_next"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_alignParentEnd="true"/>
+
+                <ImageView
+                    android:id="@+id/ivPrevKeuangan"
+                    android:layout_width="38dp"
+                    android:layout_height="38dp"
+                    android:src="@drawable/ic_prev"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_toStartOf="@id/ivNextKeuangan"/>
 
 
                 <androidx.recyclerview.widget.RecyclerView

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rlCatatPengeluaran"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -38,8 +39,10 @@
             android:background="@drawable/rounded_border_tambahdata"
             android:drawablePadding="16dp"
             android:ems="10"
+            android:drawableEnd="@drawable/ic_date"
             android:hint="Masukkan Tanggal"
             android:inputType="date"
+            android:focusable="false"
             android:padding="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -128,7 +131,7 @@
 
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnBatal"
+            android:id="@+id/btnBatalPengeluaran"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -139,10 +142,10 @@
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/btnSimpan"
+            app:layout_constraintEnd_toStartOf="@id/btnSimpanPengeluaran"
             app:layout_constraintTop_toBottomOf="@+id/etDeskripsiPengeluaran" />
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnSimpan"
+            android:id="@+id/btnSimpanPengeluaran"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
@@ -152,7 +155,7 @@
             android:textColor="@android:color/white"
             android:textSize="16sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@id/btnBatal"
+            app:layout_constraintStart_toEndOf="@id/btnBatalPengeluaran"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/etDeskripsiPengeluaran" />
     </androidx.constraintlayout.widget.ConstraintLayout>

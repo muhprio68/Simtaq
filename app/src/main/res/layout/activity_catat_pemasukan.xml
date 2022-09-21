@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rlCatatPemasukan"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
@@ -40,6 +41,7 @@
         android:drawablePadding="16dp"
         android:ems="10"
         android:hint="Masukkan Tanggal"
+        android:focusable="false"
         android:inputType="date"
         android:padding="16dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -129,7 +131,7 @@
 
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnBatal"
+        android:id="@+id/btnBatalPemasukan"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -140,10 +142,10 @@
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/btnSimpan"
+        app:layout_constraintEnd_toStartOf="@id/btnSimpanPemasukan"
         app:layout_constraintTop_toBottomOf="@+id/etDeskripsiPemasukan" />
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnSimpan"
+        android:id="@+id/btnSimpanPemasukan"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
@@ -153,7 +155,7 @@
         android:textColor="@android:color/white"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@id/btnBatal"
+        app:layout_constraintStart_toEndOf="@id/btnBatalPemasukan"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etDeskripsiPemasukan" />
     </androidx.constraintlayout.widget.ConstraintLayout>
