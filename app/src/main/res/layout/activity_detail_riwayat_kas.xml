@@ -7,6 +7,14 @@
     android:background="@color/background"
     tools:context=".DetailRiwayatKasActivity">
 
+    <ProgressBar
+        android:id="@+id/pbDetailRiwayatKeuangan"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_width="wrap_content"
+        android:outlineAmbientShadowColor="@color/primaryDarkColor"
+        android:layout_height="wrap_content" />
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/tbDetailCatatanKas"
         android:layout_width="match_parent"
@@ -181,15 +189,15 @@
 
     </RelativeLayout>
 
-    <TextView
-        android:id="@+id/tvJudulDetailPenjumlahan"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/rlInfoCatatan"
-        android:text="Detail Jumlah Pemasukan"
-        android:textSize="20sp"
-        android:textColor="@color/primaryTextColor"
-        android:layout_marginBottom="8dp"/>
+        <TextView
+            android:id="@+id/tvJudulDetailPenjumlahan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rlInfoCatatan"
+            android:layout_marginBottom="8dp"
+            android:text="Detail Jumlah Pemasukan"
+            android:textColor="@color/primaryTextColor"
+            android:textSize="20sp" />
 
     <RelativeLayout
         android:id="@+id/rlJmlCatatan"
@@ -232,7 +240,7 @@
             android:layout_marginTop="8dp" >
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvNominalDetailPenjumlahan"
+                android:id="@+id/tvTipeJumlah"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Jumlah Pemasukan"

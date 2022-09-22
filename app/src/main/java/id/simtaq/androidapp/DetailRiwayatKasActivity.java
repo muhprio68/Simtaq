@@ -5,7 +5,26 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.text.NumberFormat;
+
+import static id.simtaq.androidapp.helper.config.locale;
+import static id.simtaq.androidapp.helper.config.url;
+import static id.simtaq.androidapp.helper.config.urlKeuangan;
 
 public class DetailRiwayatKasActivity extends AppCompatActivity {
 
@@ -18,8 +37,13 @@ public class DetailRiwayatKasActivity extends AppCompatActivity {
     TextView tvDeskripsiCatatan;
     TextView tvJudulDetailPenjumlahan;
     TextView tvTotalKasAwal;
+    TextView tvTipeJumlah;
     TextView tvDetailNominalCatatan;
     TextView tvTotalKasAkhir;
+
+    RequestQueue queue;
+    int idKeuangan;
+    String intentDari;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,24 +55,14 @@ public class DetailRiwayatKasActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
-        Bundle bundle = getIntent().getExtras();
-        tvNominalCatatan.setText("+ Rp. "+bundle.getInt("nominalCatatan"));
-        tvNoCatatan.setText(bundle.getString("noCatatan"));
-        if (bundle.getBoolean("tipe")==true){
-            tvNominalCatatan.setTextColor(ContextCompat.getColor(this, R.color.jmlPemasukan));
-            tvTipeCatatan.setText("Pemasukan");
-            tvJudulDetailPenjumlahan.setText("Jumlah Pemasukan");
-        } else{
-            tvNominalCatatan.setTextColor(ContextCompat.getColor(this, R.color.jmlPengeluaran));
-            tvTipeCatatan.setText("Pengeluaran");
-            tvJudulDetailPenjumlahan.setText("Jumlah Pengeluaran");
+        queue = Volley.newRequestQueue(DetailRiwayatKasActivity.this);
+        intentDari = String.valueOf(getIntent().getStringExtra("intentDari"));
+        if (intentDari.equals("riwayat keuangan")){
+            idKeuangan = getIntent().getExtras().getInt("idKeuangan");
+            getData();
+        } else {
+            lihatTambah();
         }
-        tvTglCatatan.setText(bundle.getString("tgl"));
-        tvKeteranganCatatan.setText(bundle.getString("keterangan"));
-        tvDeskripsiCatatan.setText(bundle.getString("deskripsi"));
-        tvTotalKasAwal.setText("Rp. "+bundle.getInt("totalKasAwal"));
-        tvDetailNominalCatatan.setText("Rp. "+bundle.getInt("nominalCatatan"));
-        tvTotalKasAkhir.setText("Rp. "+bundle.getInt("totalKasAkhir"));
     }
 
     public void initViews(){
@@ -61,8 +75,105 @@ public class DetailRiwayatKasActivity extends AppCompatActivity {
         tvDeskripsiCatatan = findViewById(R.id.tvValueDeskripsiCatanKas);
         tvJudulDetailPenjumlahan = findViewById(R.id.tvJudulDetailPenjumlahan);
         tvTotalKasAwal = findViewById(R.id.tvValueTotalKasAwal);
+        tvTipeJumlah = findViewById(R.id.tvTipeJumlah);
         tvDetailNominalCatatan = findViewById(R.id.tvValueNominalDetailPenjumlahan);
         tvTotalKasAkhir = findViewById(R.id.tvValueTotalKasAkhir);
+    }
+
+    public void getData(){
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, urlKeuangan+"/"+idKeuangan, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                //pbDetailKegiatan.setVisibility(View.GONE);
+                for (int i = 0; i < response.length(); i++) {
+                    try {
+                        JSONObject responseObj = response.getJSONObject(0);
+                        tvNoCatatan.setText(responseObj.getString("no_keuangan"));
+                        if (responseObj.getString("tipe_keuangan").equals("Pemasukan")){
+                            tvNominalCatatan.setText("+ Rp."+toRupiah(responseObj.getString("nominal_keuangan")));
+                            tvNominalCatatan.setTextColor(ContextCompat.getColor(DetailRiwayatKasActivity.this, R.color.jmlPemasukan));
+                            tvTipeCatatan.setText("Pemasukan");
+                            tvJudulDetailPenjumlahan.setText("Detail Pemasukan");
+                            tvTipeJumlah.setText("Jumlah Pemasukan");
+                        } else{
+                            tvNominalCatatan.setText("- Rp."+toRupiah(responseObj.getString("nominal_keuangan")));
+                            tvNominalCatatan.setTextColor(ContextCompat.getColor(DetailRiwayatKasActivity.this, R.color.jmlPengeluaran));
+                            tvTipeCatatan.setText("Pengeluaran");
+                            tvJudulDetailPenjumlahan.setText("Detail Pengeluaran");
+                            tvTipeJumlah.setText("Jumlah Pengeluaran");
+                        }
+                        tvTglCatatan.setText(responseObj.getString("tgl_keuangan"));
+                        tvKeteranganCatatan.setText(responseObj.getString("keterangan_keuangan"));
+                        tvDeskripsiCatatan.setText(responseObj.getString("deskripsi_keuangan"));
+                        tvTotalKasAwal.setText("Rp. "+toRupiah(responseObj.getString("jml_kas_awal")));
+                        tvDetailNominalCatatan.setText("Rp. "+toRupiah(responseObj.getString("nominal_keuangan")));
+                        tvTotalKasAkhir.setText("Rp. "+toRupiah(responseObj.getString("jml_kas_akhir")));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(DetailRiwayatKasActivity.this, "Fail to get the data..", Toast.LENGTH_SHORT).show();
+            }
+        });
+        queue.add(jsonArrayRequest);
+    }
+
+    public void lihatTambah(){
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, urlKeuangan, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                //pbDetailKegiatan.setVisibility(View.GONE);
+                for (int i = 0; i < response.length(); i++) {
+                    try {
+                        JSONObject responseObj = response.getJSONObject(response.length()-1);
+                        tvNoCatatan.setText(responseObj.getString("no_keuangan"));
+                        if (responseObj.getString("tipe_keuangan").equals("Pemasukan")){
+                            tvNominalCatatan.setText("+ Rp."+toRupiah(responseObj.getString("nominal_keuangan")));
+                            tvNominalCatatan.setTextColor(ContextCompat.getColor(DetailRiwayatKasActivity.this, R.color.jmlPemasukan));
+                            tvTipeCatatan.setText("Pemasukan");
+                            tvJudulDetailPenjumlahan.setText("Detail Pemasukan");
+                            tvTipeJumlah.setText("Jumlah Pemasukan");
+                        } else{
+                            tvNominalCatatan.setText("- Rp."+toRupiah(responseObj.getString("nominal_keuangan")));
+                            tvNominalCatatan.setTextColor(ContextCompat.getColor(DetailRiwayatKasActivity.this, R.color.jmlPengeluaran));
+                            tvTipeCatatan.setText("Pengeluaran");
+                            tvJudulDetailPenjumlahan.setText("Detail Pengeluaran");
+                            tvTipeJumlah.setText("Jumlah Pengeluaran");
+                        }
+                        tvTglCatatan.setText(responseObj.getString("tgl_keuangan"));
+                        tvKeteranganCatatan.setText(responseObj.getString("keterangan_keuangan"));
+                        tvDeskripsiCatatan.setText(responseObj.getString("deskripsi_keuangan"));
+                        tvTotalKasAwal.setText("Rp. "+toRupiah(responseObj.getString("jml_kas_awal")));
+                        tvDetailNominalCatatan.setText("Rp. "+toRupiah(responseObj.getString("nominal_keuangan")));
+                        tvTotalKasAkhir.setText("Rp. "+toRupiah(responseObj.getString("jml_kas_akhir")));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(DetailRiwayatKasActivity.this, "Fail to get the data..", Toast.LENGTH_SHORT).show();
+            }
+        });
+        queue.add(jsonArrayRequest);
+    }
+
+    private String toRupiah(String nominal){
+        String hasil = "";
+        try {
+            NumberFormat formatRupiah = NumberFormat.getInstance(locale);
+            hasil = (String) formatRupiah.format(Double.valueOf(nominal));
+        }catch (Exception e){
+            e.printStackTrace();
+            Toast.makeText(DetailRiwayatKasActivity.this, "Gagal merubah nilai rupiah", Toast.LENGTH_LONG).show();
+        }
+        return hasil;
     }
 
     @Override

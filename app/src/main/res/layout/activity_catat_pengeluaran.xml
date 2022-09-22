@@ -8,6 +8,14 @@
     android:background="@color/background"
     tools:context=".CatatPengeluaranActivity">
 
+    <ProgressBar
+        android:id="@+id/pbCatatPengeluaran"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_width="wrap_content"
+        android:outlineAmbientShadowColor="@color/primaryDarkColor"
+        android:layout_height="wrap_content" />
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/tbCatatPengeluaran"
         android:layout_width="match_parent"

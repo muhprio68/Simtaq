@@ -28,10 +28,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 
+import id.simtaq.androidapp.CatatPengeluaranActivity;
 import id.simtaq.androidapp.R;
 import id.simtaq.androidapp.RiwayatActivity;
 import id.simtaq.androidapp.adapter.JadwalKegiatanAdapter;
@@ -40,8 +44,10 @@ import id.simtaq.androidapp.models.Kegiatan;
 import id.simtaq.androidapp.models.Keuangan;
 import id.simtaq.androidapp.models.RiwayatKas;
 
+import static id.simtaq.androidapp.helper.config.locale;
 import static id.simtaq.androidapp.helper.config.url;
 import static id.simtaq.androidapp.helper.config.urlKeuangan;
+import static id.simtaq.androidapp.helper.config.urlSaldo;
 
 
 public class InfoKasFragment extends Fragment implements View.OnClickListener, RiwayatListAdapter.IRiwayatListAdapter {
@@ -49,10 +55,14 @@ public class InfoKasFragment extends Fragment implements View.OnClickListener, R
     private RecyclerView rvRiwayatInfoKas;
     private ArrayList<Keuangan> keuanganList;
     private TextView tvSemuaRiwayat;
+    private TextView tvJmlSaldo;
+    private TextView tvTanggalSaldo;
     private Toolbar toolbar;
     private RiwayatListAdapter adapter;
     private RequestQueue queue;
     private RelativeLayout rlMenuKeuangan;
+
+    private String jmlSaldo;
 
     public InfoKasFragment() {
 
@@ -80,7 +90,8 @@ public class InfoKasFragment extends Fragment implements View.OnClickListener, R
         queue = Volley.newRequestQueue(view.getContext());
         keuanganList = new ArrayList<>();
         //addData();
-        getData(view);
+        getSaldo(view);
+        getDataKeuangan(view);
         //buildRecyclerView(view);
         return view;
     }
@@ -88,6 +99,8 @@ public class InfoKasFragment extends Fragment implements View.OnClickListener, R
     private void initViews(View view){
         rvRiwayatInfoKas = view.findViewById(R.id.rvRiwayatInfoKas);
         rlMenuKeuangan = view.findViewById(R.id.rlMenuInfoKas);
+        tvJmlSaldo = view.findViewById(R.id.tvJmlSaldo);
+        tvTanggalSaldo = view.findViewById(R.id.tvTanggalSaldo);
         tvSemuaRiwayat = view.findViewById(R.id.tvLihatSemuaRiwayat);
         toolbar = view.findViewById(R.id.tbInfoKas);
     }
@@ -111,7 +124,7 @@ public class InfoKasFragment extends Fragment implements View.OnClickListener, R
 //        riwayatKasArrayList.add(new RiwayatKas("RK000015","Kotak Amal", true,"13/03/2022","Kotak Amal Sholat Jum'at",90000, 10250000, 11150000));
 //    }
 
-    public void getData(View view){
+    public void getDataKeuangan(View view){
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, urlKeuangan, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
@@ -155,6 +168,30 @@ public class InfoKasFragment extends Fragment implements View.OnClickListener, R
         queue.add(jsonArrayRequest);
     }
 
+    public void getSaldo(View view){
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, urlSaldo, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                //pbJadwalKegiatan.setVisibility(View.GONE);
+                //rvJadwalKegiatan.setVisibility(View.VISIBLE);
+                try {
+                    JSONObject responseObj = response.getJSONObject(0);
+                    jmlSaldo = responseObj.getString("jml_saldo");
+                    tvJmlSaldo.setText("Rp. "+toRupiah(jmlSaldo));
+                    tvTanggalSaldo.setText(getCurentDate());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(view.getContext(), "Fail to get the data..", Toast.LENGTH_SHORT).show();
+            }
+        });
+        queue.add(jsonArrayRequest);
+    }
+
     public void buildRecyclerView(View view) {
         adapter = new RiwayatListAdapter(keuanganList, view.getContext(), 2, this, queue, rlMenuKeuangan);
         LinearLayoutManager manager = new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false);
@@ -162,6 +199,25 @@ public class InfoKasFragment extends Fragment implements View.OnClickListener, R
         rvRiwayatInfoKas.setLayoutManager(manager);
         rvRiwayatInfoKas.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+    }
+
+    private String toRupiah(String nominal){
+        String hasil = "";
+        try {
+            NumberFormat formatRupiah = NumberFormat.getInstance(locale);
+            hasil = (String) formatRupiah.format(Double.valueOf(nominal));
+        }catch (Exception e){
+            e.printStackTrace();
+            Toast.makeText(getContext(), "Gagal merubah nilai rupiah", Toast.LENGTH_LONG).show();
+        }
+        return hasil;
+    }
+
+    public String getCurentDate(){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy");
+        Calendar cal = Calendar.getInstance();
+        //System.out.println(dateFormat.format(cal.getTime()));
+        return dateFormat.format(cal.getTime());
     }
 
     @Override
