@@ -45,7 +45,6 @@ import id.simtaq.androidapp.models.RiwayatKas;
 
 import static id.simtaq.androidapp.helper.config.locale;
 import static id.simtaq.androidapp.helper.config.url;
-import static id.simtaq.androidapp.helper.config.urlKeuangan;
 
 public class RiwayatActivity extends AppCompatActivity implements RiwayatListAdapter.IRiwayatListAdapter {
 
@@ -140,7 +139,7 @@ public class RiwayatActivity extends AppCompatActivity implements RiwayatListAda
 //    }
 
     public void getDataKeuangan (String filter){
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, urlKeuangan, null, new Response.Listener<JSONArray>() {
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url+"/keuangan", null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 pbRiwayatKeuangan.setVisibility(View.GONE);
@@ -269,7 +268,6 @@ public class RiwayatActivity extends AppCompatActivity implements RiwayatListAda
     public void doNextCurentTime(){
         try {
             final Calendar b = Calendar.getInstance();
-            b.add(Calendar.MONTH, 5);
             if (sBulanTahun.equals(tampilkanTanggalDanWaktu(b.getTime(),"yyyy-MM", locale))) {
                 ivNext.setClickable(false);
                 ivNext.setImageResource(R.drawable.ic_next_abu);

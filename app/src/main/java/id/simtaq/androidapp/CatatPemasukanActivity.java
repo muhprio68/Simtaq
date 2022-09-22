@@ -35,8 +35,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static id.simtaq.androidapp.helper.config.locale;
-import static id.simtaq.androidapp.helper.config.urlKeuangan;
-import static id.simtaq.androidapp.helper.config.urlSaldo;
+import static id.simtaq.androidapp.helper.config.url;
 
 public class CatatPemasukanActivity extends AppCompatActivity {
 
@@ -125,7 +124,7 @@ public class CatatPemasukanActivity extends AppCompatActivity {
     }
 
     private void tambahDataPemasukan(String tglPemasukan, String ketPemasukan, String nominalPemasukan, String deskripPemasukan) {
-        StringRequest request = new StringRequest(Request.Method.POST, urlKeuangan, new com.android.volley.Response.Listener<String>() {
+        StringRequest request = new StringRequest(Request.Method.POST, url+"/keuangan", new com.android.volley.Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 pbCatatPemasukan.setVisibility(View.GONE);
@@ -191,7 +190,7 @@ public class CatatPemasukanActivity extends AppCompatActivity {
     }
 
     public void getSaldo(){
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, urlSaldo, null, new Response.Listener<JSONArray>() {
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url+"/saldo", null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 //pbJadwalKegiatan.setVisibility(View.GONE);
@@ -213,7 +212,7 @@ public class CatatPemasukanActivity extends AppCompatActivity {
     }
 
     private void ubahSaldo(String jmlSaldo) {
-        StringRequest request = new StringRequest(Request.Method.PUT, urlSaldo+"/1", new com.android.volley.Response.Listener<String>() {
+        StringRequest request = new StringRequest(Request.Method.PUT, url+"/saldo/1", new com.android.volley.Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.e("TAG", "RESPONSE IS " + response);

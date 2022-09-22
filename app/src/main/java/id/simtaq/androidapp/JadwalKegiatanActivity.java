@@ -141,7 +141,7 @@ public class JadwalKegiatanActivity extends AppCompatActivity implements JadwalK
     }
 
     public void getData(String filter){
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url+"/kegiatan", null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 pbJadwalKegiatan.setVisibility(View.GONE);
@@ -273,7 +273,7 @@ public class JadwalKegiatanActivity extends AppCompatActivity implements JadwalK
     public void doNextCurentTime(){
         try {
             final Calendar b = Calendar.getInstance();
-            b.add(Calendar.MONTH, 5);
+            b.add(Calendar.MONTH, 3);
             if (sBulanTahun.equals(tampilkanTanggalDanWaktu(b.getTime(),"yyyy-MM", locale))) {
                 ivNext.setClickable(false);
                 ivNext.setImageResource(R.drawable.ic_next_abu);

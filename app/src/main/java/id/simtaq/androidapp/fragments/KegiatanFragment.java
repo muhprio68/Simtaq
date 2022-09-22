@@ -101,7 +101,7 @@ public class KegiatanFragment extends Fragment implements View.OnClickListener, 
     }
 
     public void getData(View view){
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url+"/kegiatan", null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 pbInfoKegiatan.setVisibility(View.GONE);

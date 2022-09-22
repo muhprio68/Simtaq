@@ -48,8 +48,6 @@ import id.simtaq.androidapp.models.RiwayatKas;
 import static id.simtaq.androidapp.helper.config.locale;
 import static id.simtaq.androidapp.helper.config.toRupiah;
 import static id.simtaq.androidapp.helper.config.url;
-import static id.simtaq.androidapp.helper.config.urlKeuangan;
-import static id.simtaq.androidapp.helper.config.urlSaldo;
 
 
 public class InfoKasFragment extends Fragment implements View.OnClickListener, RiwayatListAdapter.IRiwayatListAdapter {
@@ -138,7 +136,7 @@ public class InfoKasFragment extends Fragment implements View.OnClickListener, R
 //    }
 
     public void getDataKeuangan(View view){
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, urlKeuangan, null, new Response.Listener<JSONArray>() {
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url+"/keuangan", null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 pbInfoKas.setVisibility(View.GONE);
@@ -189,7 +187,7 @@ public class InfoKasFragment extends Fragment implements View.OnClickListener, R
     }
 
     public void getSaldo(View view){
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, urlSaldo, null, new Response.Listener<JSONArray>() {
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url+"/saldo", null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 //pbInfoKas.setVisibility(View.GONE);

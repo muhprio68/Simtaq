@@ -154,7 +154,7 @@ public class UbahKegiatanActivity extends AppCompatActivity {
 
     public void getDataUbahKegiatan(){
         RequestQueue queue = Volley.newRequestQueue(UbahKegiatanActivity.this);
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url+"/"+idKegiatan, null, new Response.Listener<JSONArray>() {
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url+"/kegiatan/"+idKegiatan, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 //pbDetailKegiatan.setVisibility(View.GONE);
@@ -190,7 +190,7 @@ public class UbahKegiatanActivity extends AppCompatActivity {
     private void ubahKegiatan(int idKegiatan, String namaKegiatan, String tipeKegiatan, String tglKegiatan, String wktKegiatan, String tempatKegiatan, String pembicaraKegiatan, String deskripsiKegiatan) {
         RequestQueue queue = Volley.newRequestQueue(UbahKegiatanActivity.this);
 
-        StringRequest request = new StringRequest(Request.Method.PUT, url+"/"+idKegiatan, new com.android.volley.Response.Listener<String>() {
+        StringRequest request = new StringRequest(Request.Method.PUT, url+"/kegiatan/"+idKegiatan, new com.android.volley.Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.e("TAG", "RESPONSE IS " + response);

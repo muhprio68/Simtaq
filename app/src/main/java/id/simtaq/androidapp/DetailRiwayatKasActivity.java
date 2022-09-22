@@ -26,7 +26,6 @@ import java.text.NumberFormat;
 import static id.simtaq.androidapp.helper.config.locale;
 import static id.simtaq.androidapp.helper.config.toRupiah;
 import static id.simtaq.androidapp.helper.config.url;
-import static id.simtaq.androidapp.helper.config.urlKeuangan;
 
 public class DetailRiwayatKasActivity extends AppCompatActivity {
 
@@ -85,7 +84,7 @@ public class DetailRiwayatKasActivity extends AppCompatActivity {
     }
 
     public void getData(){
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, urlKeuangan+"/"+idKeuangan, null, new Response.Listener<JSONArray>() {
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url+"/keuangan/"+idKeuangan, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 pbDetailKeuangan.setVisibility(View.GONE);
@@ -127,7 +126,7 @@ public class DetailRiwayatKasActivity extends AppCompatActivity {
     }
 
     public void lihatTambah(){
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, urlKeuangan, null, new Response.Listener<JSONArray>() {
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url+"/keuangan", null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 pbDetailKeuangan.setVisibility(View.GONE);

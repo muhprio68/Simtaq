@@ -20,8 +20,6 @@
         android:padding="16dp"
         android:layout_below="@+id/tbDetailKegiatan">
 
-
-
     <RelativeLayout
         android:id="@+id/rlNamaKegiatan"
         android:layout_width="match_parent"

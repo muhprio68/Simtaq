@@ -149,7 +149,7 @@ public class TambahKegiatanActivity extends AppCompatActivity {
     private void addDataToDatabase(String namaKegiatan, String tipeKegiatan, String tglKegiatan, String wktKegiatan, String tempatKegiatan, String pembicaraKegiatan, String deskripsiKegiatan) {
         RequestQueue queue = Volley.newRequestQueue(TambahKegiatanActivity.this);
 
-        StringRequest request = new StringRequest(Request.Method.POST, url, new com.android.volley.Response.Listener<String>() {
+        StringRequest request = new StringRequest(Request.Method.POST, url+"/kegiatan", new com.android.volley.Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.e("TAG", "RESPONSE IS " + response);

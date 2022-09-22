@@ -86,7 +86,7 @@ public class DetailKegiatanActivity extends AppCompatActivity {
 
     public void getData(){
         RequestQueue queue = Volley.newRequestQueue(DetailKegiatanActivity.this);
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url+"/"+idKegiatan, null, new Response.Listener<JSONArray>() {
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url+"/kegiatan/"+idKegiatan, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 pbDetailKegiatan.setVisibility(View.GONE);
@@ -121,7 +121,7 @@ public class DetailKegiatanActivity extends AppCompatActivity {
 
     public void lihatTambah(){
         RequestQueue queue = Volley.newRequestQueue(DetailKegiatanActivity.this);
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url+"/kegiatan", null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 pbDetailKegiatan.setVisibility(View.GONE);
