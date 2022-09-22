@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -50,7 +51,8 @@ public class RiwayatActivity extends AppCompatActivity implements RiwayatListAda
 
     private RelativeLayout rlRiwayatKeuangan;
     private Toolbar toolbar;
-    RecyclerView rvRiwayat;
+    private ProgressBar pbRiwayatKeuangan;
+    private RecyclerView rvRiwayat;
     private ArrayList<Keuangan> keuanganList;
     private RiwayatListAdapter adapter;
     private RequestQueue queue;
@@ -111,6 +113,7 @@ public class RiwayatActivity extends AppCompatActivity implements RiwayatListAda
         toolbar = findViewById(R.id.tbRiwayatKas);
         rlRiwayatKeuangan = findViewById(R.id.rlRiwayatKeuangan);
         rvRiwayat = findViewById(R.id.rvRiwayat);
+        pbRiwayatKeuangan = findViewById(R.id.pbRiwayatKeuangan);
         tvFilterBulanKeuangan = findViewById(R.id.tvFilterBlnRiwayat);
         tvFilterTahunKeuangan = findViewById(R.id.tvFilterThnRiwayat);
         ivNext = findViewById(R.id.ivNextKeuangan);
@@ -140,7 +143,7 @@ public class RiwayatActivity extends AppCompatActivity implements RiwayatListAda
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, urlKeuangan, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-                //pbJadwalKegiatan.setVisibility(View.GONE);
+                pbRiwayatKeuangan.setVisibility(View.GONE);
                 rvRiwayat.setVisibility(View.VISIBLE);
                 for (int i = 0; i < response.length(); i++) {
                     try {
@@ -301,28 +304,4 @@ public class RiwayatActivity extends AppCompatActivity implements RiwayatListAda
         intent.putExtra("idKeuangan", id);
         startActivity(intent);
     }
-
-//
-//    @Override
-//    public void doClick(String id) {
-//        for (int i = 0 ; i < riwayatKasArrayList.size() ; i++){
-//            final RiwayatKas riwayatKas = riwayatKasArrayList.get(i);
-//            if (riwayatKas.getId().equals(id)){
-//                Bundle bundle = new Bundle();
-//                bundle.putString("noCatatan", riwayatKas.getId());
-//                bundle.putBoolean("tipe", riwayatKas.isPemasukan());
-//                bundle.putString("tgl", riwayatKas.getTanggal());
-//                bundle.putString("keterangan", riwayatKas.getKeterangan());
-//                bundle.putString("deskripsi", riwayatKas.getDeskripsi());
-//                bundle.putInt("totalKasAwal", riwayatKas.getJmlKasAwal());
-//                bundle.putInt("nominalCatatan", riwayatKas.getNominal());
-//                bundle.putInt("totalKasAkhir", riwayatKas.getJmlKasAkhir());
-//                Intent intent = new Intent(RiwayatActivity.this, DetailRiwayatKasActivity.class);
-//                intent.putExtras(bundle);
-//                startActivity(intent);
-//            }
-//        }
-////        final RiwayatKas riwayatKas = riwayatKasArrayList.get(id);
-//
-//    }
 }

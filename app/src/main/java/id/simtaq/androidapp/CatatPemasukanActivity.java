@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -41,6 +42,7 @@ public class CatatPemasukanActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
     private RelativeLayout rlCatatPemasukan;
+    private ProgressBar pbCatatPemasukan;
     private EditText etTglPemasukan;
     private EditText etKetPemasukan;
     private EditText etNominalPemasukan;
@@ -113,6 +115,7 @@ public class CatatPemasukanActivity extends AppCompatActivity {
     public void initViews(){
         toolbar = findViewById(R.id.tbCatatPemasukan);
         rlCatatPemasukan = findViewById(R.id.rlCatatPemasukan);
+        pbCatatPemasukan = findViewById(R.id.pbCatatPemasukan);
         etTglPemasukan = findViewById(R.id.etTanggalPemasukan);
         etKetPemasukan = findViewById(R.id.etKeteranganPemasukan);
         etNominalPemasukan = findViewById(R.id.etNominalPemasukan);
@@ -125,6 +128,7 @@ public class CatatPemasukanActivity extends AppCompatActivity {
         StringRequest request = new StringRequest(Request.Method.POST, urlKeuangan, new com.android.volley.Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                pbCatatPemasukan.setVisibility(View.GONE);
                 Log.e("TAG", "RESPONSE IS " + response);
                 try {
                     JSONObject jsonObject = new JSONObject(response);

@@ -6,6 +6,7 @@ import androidx.core.content.ContextCompat;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,27 +24,29 @@ import org.json.JSONObject;
 import java.text.NumberFormat;
 
 import static id.simtaq.androidapp.helper.config.locale;
+import static id.simtaq.androidapp.helper.config.toRupiah;
 import static id.simtaq.androidapp.helper.config.url;
 import static id.simtaq.androidapp.helper.config.urlKeuangan;
 
 public class DetailRiwayatKasActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
-    TextView tvNominalCatatan;
-    TextView tvNoCatatan;
-    TextView tvTipeCatatan;
-    TextView tvTglCatatan;
-    TextView tvKeteranganCatatan;
-    TextView tvDeskripsiCatatan;
-    TextView tvJudulDetailPenjumlahan;
-    TextView tvTotalKasAwal;
-    TextView tvTipeJumlah;
-    TextView tvDetailNominalCatatan;
-    TextView tvTotalKasAkhir;
+    private ProgressBar pbDetailKeuangan;
+    private TextView tvNominalCatatan;
+    private TextView tvNoCatatan;
+    private TextView tvTipeCatatan;
+    private TextView tvTglCatatan;
+    private TextView tvKeteranganCatatan;
+    private TextView tvDeskripsiCatatan;
+    private TextView tvJudulDetailPenjumlahan;
+    private TextView tvTotalKasAwal;
+    private TextView tvTipeJumlah;
+    private TextView tvDetailNominalCatatan;
+    private TextView tvTotalKasAkhir;
 
-    RequestQueue queue;
-    int idKeuangan;
-    String intentDari;
+    private RequestQueue queue;
+    private int idKeuangan;
+    private String intentDari;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +70,7 @@ public class DetailRiwayatKasActivity extends AppCompatActivity {
 
     public void initViews(){
         toolbar = findViewById(R.id.tbDetailCatatanKas);
+        pbDetailKeuangan = findViewById(R.id.pbDetailRiwayatKeuangan);
         tvNominalCatatan = findViewById(R.id.tvValueNominalCatatanKas);
         tvNoCatatan = findViewById(R.id.tvValueNoCatatan);
         tvTipeCatatan = findViewById(R.id.tvValueTipeCatatanKas);
@@ -84,19 +88,19 @@ public class DetailRiwayatKasActivity extends AppCompatActivity {
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, urlKeuangan+"/"+idKeuangan, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-                //pbDetailKegiatan.setVisibility(View.GONE);
+                pbDetailKeuangan.setVisibility(View.GONE);
                 for (int i = 0; i < response.length(); i++) {
                     try {
                         JSONObject responseObj = response.getJSONObject(0);
                         tvNoCatatan.setText(responseObj.getString("no_keuangan"));
                         if (responseObj.getString("tipe_keuangan").equals("Pemasukan")){
-                            tvNominalCatatan.setText("+ Rp."+toRupiah(responseObj.getString("nominal_keuangan")));
+                            tvNominalCatatan.setText("+ "+toRupiah(responseObj.getString("nominal_keuangan")));
                             tvNominalCatatan.setTextColor(ContextCompat.getColor(DetailRiwayatKasActivity.this, R.color.jmlPemasukan));
                             tvTipeCatatan.setText("Pemasukan");
                             tvJudulDetailPenjumlahan.setText("Detail Pemasukan");
                             tvTipeJumlah.setText("Jumlah Pemasukan");
                         } else{
-                            tvNominalCatatan.setText("- Rp."+toRupiah(responseObj.getString("nominal_keuangan")));
+                            tvNominalCatatan.setText("- "+toRupiah(responseObj.getString("nominal_keuangan")));
                             tvNominalCatatan.setTextColor(ContextCompat.getColor(DetailRiwayatKasActivity.this, R.color.jmlPengeluaran));
                             tvTipeCatatan.setText("Pengeluaran");
                             tvJudulDetailPenjumlahan.setText("Detail Pengeluaran");
@@ -105,9 +109,9 @@ public class DetailRiwayatKasActivity extends AppCompatActivity {
                         tvTglCatatan.setText(responseObj.getString("tgl_keuangan"));
                         tvKeteranganCatatan.setText(responseObj.getString("keterangan_keuangan"));
                         tvDeskripsiCatatan.setText(responseObj.getString("deskripsi_keuangan"));
-                        tvTotalKasAwal.setText("Rp. "+toRupiah(responseObj.getString("jml_kas_awal")));
-                        tvDetailNominalCatatan.setText("Rp. "+toRupiah(responseObj.getString("nominal_keuangan")));
-                        tvTotalKasAkhir.setText("Rp. "+toRupiah(responseObj.getString("jml_kas_akhir")));
+                        tvTotalKasAwal.setText(toRupiah(responseObj.getString("jml_kas_awal")));
+                        tvDetailNominalCatatan.setText(toRupiah(responseObj.getString("nominal_keuangan")));
+                        tvTotalKasAkhir.setText(toRupiah(responseObj.getString("jml_kas_akhir")));
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -126,19 +130,19 @@ public class DetailRiwayatKasActivity extends AppCompatActivity {
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, urlKeuangan, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-                //pbDetailKegiatan.setVisibility(View.GONE);
+                pbDetailKeuangan.setVisibility(View.GONE);
                 for (int i = 0; i < response.length(); i++) {
                     try {
                         JSONObject responseObj = response.getJSONObject(response.length()-1);
                         tvNoCatatan.setText(responseObj.getString("no_keuangan"));
                         if (responseObj.getString("tipe_keuangan").equals("Pemasukan")){
-                            tvNominalCatatan.setText("+ Rp."+toRupiah(responseObj.getString("nominal_keuangan")));
+                            tvNominalCatatan.setText("+ "+toRupiah(responseObj.getString("nominal_keuangan")));
                             tvNominalCatatan.setTextColor(ContextCompat.getColor(DetailRiwayatKasActivity.this, R.color.jmlPemasukan));
                             tvTipeCatatan.setText("Pemasukan");
                             tvJudulDetailPenjumlahan.setText("Detail Pemasukan");
                             tvTipeJumlah.setText("Jumlah Pemasukan");
                         } else{
-                            tvNominalCatatan.setText("- Rp."+toRupiah(responseObj.getString("nominal_keuangan")));
+                            tvNominalCatatan.setText("- "+toRupiah(responseObj.getString("nominal_keuangan")));
                             tvNominalCatatan.setTextColor(ContextCompat.getColor(DetailRiwayatKasActivity.this, R.color.jmlPengeluaran));
                             tvTipeCatatan.setText("Pengeluaran");
                             tvJudulDetailPenjumlahan.setText("Detail Pengeluaran");
@@ -147,9 +151,9 @@ public class DetailRiwayatKasActivity extends AppCompatActivity {
                         tvTglCatatan.setText(responseObj.getString("tgl_keuangan"));
                         tvKeteranganCatatan.setText(responseObj.getString("keterangan_keuangan"));
                         tvDeskripsiCatatan.setText(responseObj.getString("deskripsi_keuangan"));
-                        tvTotalKasAwal.setText("Rp. "+toRupiah(responseObj.getString("jml_kas_awal")));
-                        tvDetailNominalCatatan.setText("Rp. "+toRupiah(responseObj.getString("nominal_keuangan")));
-                        tvTotalKasAkhir.setText("Rp. "+toRupiah(responseObj.getString("jml_kas_akhir")));
+                        tvTotalKasAwal.setText(toRupiah(responseObj.getString("jml_kas_awal")));
+                        tvDetailNominalCatatan.setText(toRupiah(responseObj.getString("nominal_keuangan")));
+                        tvTotalKasAkhir.setText(toRupiah(responseObj.getString("jml_kas_akhir")));
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -162,18 +166,6 @@ public class DetailRiwayatKasActivity extends AppCompatActivity {
             }
         });
         queue.add(jsonArrayRequest);
-    }
-
-    private String toRupiah(String nominal){
-        String hasil = "";
-        try {
-            NumberFormat formatRupiah = NumberFormat.getInstance(locale);
-            hasil = (String) formatRupiah.format(Double.valueOf(nominal));
-        }catch (Exception e){
-            e.printStackTrace();
-            Toast.makeText(DetailRiwayatKasActivity.this, "Gagal merubah nilai rupiah", Toast.LENGTH_LONG).show();
-        }
-        return hasil;
     }
 
     @Override

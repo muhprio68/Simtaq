@@ -30,6 +30,7 @@ import id.simtaq.androidapp.models.RiwayatKas;
 import id.simtaq.androidapp.viewholder.RiwayatViewHolder;
 
 import static id.simtaq.androidapp.helper.config.locale;
+import static id.simtaq.androidapp.helper.config.toRupiah;
 import static id.simtaq.androidapp.helper.config.url;
 
 public class RiwayatListAdapter extends RecyclerView.Adapter<RiwayatViewHolder> {
@@ -72,23 +73,23 @@ public class RiwayatListAdapter extends RecyclerView.Adapter<RiwayatViewHolder> 
             if (keuangan.getTipeKeuangan().equals("Pemasukan") ){
                 holder.cvIconRiwayat.getBackground().setTint(ContextCompat.getColor(context, R.color.jmlPemasukan));
                 holder.ivIconRiwayat.setImageResource(R.drawable.ic_bullish);
-                holder.tvJmlUang.setText("+ Rp. "+toRupiah(keuangan.getNominalKeuangan()+""));
+                holder.tvJmlUang.setText("+ "+toRupiah(keuangan.getNominalKeuangan()+""));
                 holder.tvJmlUang.setTextColor(ContextCompat.getColor(context, R.color.jmlPemasukan));
             } else {
                 holder.cvIconRiwayat.getBackground().setTint(ContextCompat.getColor(context, R.color.jmlPengeluaran));
                 holder.ivIconRiwayat.setImageResource(R.drawable.ic_bearish);
-                holder.tvJmlUang.setText("- Rp. "+toRupiah(keuangan.getNominalKeuangan()+""));
+                holder.tvJmlUang.setText("- "+toRupiah(keuangan.getNominalKeuangan()+""));
                 holder.tvJmlUang.setTextColor(ContextCompat.getColor(context, R.color.jmlPengeluaran));
             }
 
             holder.tvKeteranganRiwayat.setText(keuangan.getKetKeuangan());
             holder.tvTanggalRiwayat.setText(keuangan.getTglKeuangan());
 
-            if (position == getItemCount()-1){
-                holder.vGaris.setVisibility(View.GONE);
-            } else {
-                holder.vGaris.setVisibility(View.VISIBLE);
-            }
+//            if (position == getItemCount()-1){
+//                holder.vGaris.setVisibility(View.GONE);
+//            } else {
+//                holder.vGaris.setVisibility(View.VISIBLE);
+//            }
 
             holder.rlLisRiwayat.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -98,10 +99,10 @@ public class RiwayatListAdapter extends RecyclerView.Adapter<RiwayatViewHolder> 
             });
         } else {
             if (keuangan.getTipeKeuangan().equals("Pemasukan")){
-                holder.tvJmlInfoKas.setText("+ Rp. "+toRupiah(keuangan.getNominalKeuangan()+""));
+                holder.tvJmlInfoKas.setText("+ "+toRupiah(keuangan.getNominalKeuangan()+""));
                 holder.tvJmlInfoKas.setTextColor(ContextCompat.getColor(context, R.color.jmlPemasukan));
             } else {
-                holder.tvJmlInfoKas.setText("- Rp. "+toRupiah(keuangan.getNominalKeuangan()+""));
+                holder.tvJmlInfoKas.setText("- "+toRupiah(keuangan.getNominalKeuangan()+""));
                 holder.tvJmlInfoKas.setTextColor(ContextCompat.getColor(context, R.color.jmlPengeluaran));
             }
             holder.tvKeteranganInfoKas.setText(keuangan.getKetKeuangan());
@@ -155,18 +156,5 @@ public class RiwayatListAdapter extends RecyclerView.Adapter<RiwayatViewHolder> 
                 }
         );
         queue.add(dr);
-    }
-
-
-    private String toRupiah(String nominal){
-        String hasil = "";
-        try {
-            NumberFormat formatRupiah = NumberFormat.getInstance(locale);
-            hasil = (String) formatRupiah.format(Double.valueOf(nominal));
-        }catch (Exception e){
-            e.printStackTrace();
-            Toast.makeText(context, "Gagal merubah nilai rupiah", Toast.LENGTH_LONG).show();
-        }
-        return hasil;
     }
 }

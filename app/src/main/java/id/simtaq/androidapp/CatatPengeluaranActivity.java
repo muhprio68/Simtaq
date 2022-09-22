@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -47,6 +48,7 @@ public class CatatPengeluaranActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
     private RelativeLayout rlCatatPengeluaran;
+    private ProgressBar pbCatatPengeluaran;
     private EditText etTglPengeluaran;
     private EditText etKetPengeluaran;
     private EditText etNominalPengeluaran;
@@ -118,6 +120,7 @@ public class CatatPengeluaranActivity extends AppCompatActivity {
     public void initViews(){
         toolbar = findViewById(R.id.tbCatatPengeluaran);
         rlCatatPengeluaran = findViewById(R.id.rlCatatPengeluaran);
+        pbCatatPengeluaran = findViewById(R.id.pbCatatPengeluaran);
         etTglPengeluaran = findViewById(R.id.etTanggalPengeluaran);
         etKetPengeluaran = findViewById(R.id.etKeteranganPengeluaran);
         etNominalPengeluaran = findViewById(R.id.etNominalPengeluaran);
@@ -131,6 +134,7 @@ public class CatatPengeluaranActivity extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 Log.e("TAG", "RESPONSE IS " + response);
+                pbCatatPengeluaran.setVisibility(View.GONE);
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     // on below line we are displaying a success toast message.

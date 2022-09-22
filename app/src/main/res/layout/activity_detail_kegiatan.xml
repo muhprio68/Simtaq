@@ -20,13 +20,7 @@
         android:padding="16dp"
         android:layout_below="@+id/tbDetailKegiatan">
 
-        <ProgressBar
-            android:id="@+id/pbDetailKegiatan"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:layout_width="wrap_content"
-            android:outlineAmbientShadowColor="@color/primaryDarkColor"
-            android:layout_height="wrap_content" />
+
 
     <RelativeLayout
         android:id="@+id/rlNamaKegiatan"
@@ -66,6 +60,14 @@
         android:layout_marginBottom="24dp"
         android:layout_below="@+id/tvInfoKegiatan"
         android:background="@drawable/rounded_border_detail">
+
+        <ProgressBar
+            android:id="@+id/pbDetailKegiatan"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_width="wrap_content"
+            android:outlineAmbientShadowColor="@color/primaryDarkColor"
+            android:layout_height="wrap_content" />
 
         <TableLayout
             android:layout_width="match_parent"

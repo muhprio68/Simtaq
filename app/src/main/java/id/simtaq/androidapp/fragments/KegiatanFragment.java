@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,6 +46,7 @@ public class KegiatanFragment extends Fragment implements View.OnClickListener, 
 
     private ArrayList<Kegiatan> kegiatanList;
     private RecyclerView rvKegiatan;
+    private ProgressBar pbInfoKegiatan;
     private TextView tvLihatSemuaKegiatan;
     private JadwalKegiatanAdapter adapter;
     private RequestQueue queue;
@@ -85,6 +87,7 @@ public class KegiatanFragment extends Fragment implements View.OnClickListener, 
 
     public void initViews(View v){
         rlMenuKegiatan = v.findViewById(R.id.rlMenuKegiatan);
+        pbInfoKegiatan = v.findViewById(R.id.pbInfoKegiatan);
         rvKegiatan = v.findViewById(R.id.rvKegiatan);
         tvLihatSemuaKegiatan = v.findViewById(R.id.tvLihatSemuaKegiatan);
     }
@@ -101,7 +104,7 @@ public class KegiatanFragment extends Fragment implements View.OnClickListener, 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-                //pbJadwalKegiatan.setVisibility(View.GONE);
+                pbInfoKegiatan.setVisibility(View.GONE);
                 rvKegiatan.setVisibility(View.VISIBLE);
                 for (int i = 0; i < response.length(); i++) {
                     try {

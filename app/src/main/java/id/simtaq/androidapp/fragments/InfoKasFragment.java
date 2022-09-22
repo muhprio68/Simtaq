@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,6 +46,7 @@ import id.simtaq.androidapp.models.Keuangan;
 import id.simtaq.androidapp.models.RiwayatKas;
 
 import static id.simtaq.androidapp.helper.config.locale;
+import static id.simtaq.androidapp.helper.config.toRupiah;
 import static id.simtaq.androidapp.helper.config.url;
 import static id.simtaq.androidapp.helper.config.urlKeuangan;
 import static id.simtaq.androidapp.helper.config.urlSaldo;
@@ -54,15 +56,20 @@ public class InfoKasFragment extends Fragment implements View.OnClickListener, R
 
     private RecyclerView rvRiwayatInfoKas;
     private ArrayList<Keuangan> keuanganList;
+    private ProgressBar pbInfoKas;
     private TextView tvSemuaRiwayat;
     private TextView tvJmlSaldo;
     private TextView tvTanggalSaldo;
+    private TextView tvPemasukanBlnIni;
+    private TextView tvPengeluaranBlnIni;
     private Toolbar toolbar;
     private RiwayatListAdapter adapter;
     private RequestQueue queue;
     private RelativeLayout rlMenuKeuangan;
 
     private String jmlSaldo;
+    private int pemasukanBulanIni;
+    private int pengeluaranBulanIni;
 
     public InfoKasFragment() {
 
@@ -92,6 +99,9 @@ public class InfoKasFragment extends Fragment implements View.OnClickListener, R
         //addData();
         getSaldo(view);
         getDataKeuangan(view);
+        pemasukanBulanIni = 0;
+        pengeluaranBulanIni = 0;
+
         //buildRecyclerView(view);
         return view;
     }
@@ -99,10 +109,13 @@ public class InfoKasFragment extends Fragment implements View.OnClickListener, R
     private void initViews(View view){
         rvRiwayatInfoKas = view.findViewById(R.id.rvRiwayatInfoKas);
         rlMenuKeuangan = view.findViewById(R.id.rlMenuInfoKas);
+        pbInfoKas = view.findViewById(R.id.pbInfoKas);
         tvJmlSaldo = view.findViewById(R.id.tvJmlSaldo);
         tvTanggalSaldo = view.findViewById(R.id.tvTanggalSaldo);
         tvSemuaRiwayat = view.findViewById(R.id.tvLihatSemuaRiwayat);
         toolbar = view.findViewById(R.id.tbInfoKas);
+        tvPemasukanBlnIni = view.findViewById(R.id.tvPemasukanBlnIni);
+        tvPengeluaranBlnIni = view.findViewById(R.id.tvPengeluaranBlnIni);
     }
 
 //    public void addData(){
@@ -128,7 +141,7 @@ public class InfoKasFragment extends Fragment implements View.OnClickListener, R
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, urlKeuangan, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-                //pbJadwalKegiatan.setVisibility(View.GONE);
+                pbInfoKas.setVisibility(View.GONE);
                 rvRiwayatInfoKas.setVisibility(View.VISIBLE);
                 for (int i = 0; i < response.length(); i++) {
                     try {
@@ -144,7 +157,7 @@ public class InfoKasFragment extends Fragment implements View.OnClickListener, R
                         String deskripsiKeuangan = responseObj.getString("deskripsi_keuangan");
                         String createAt = responseObj.getString("create_at");
                         String updateAt = responseObj.getString("update_at");
-                        if (tglKeuangan.contains("2022-09")){
+                        if (tglKeuangan.contains(getCurentMonth())){
                             keuanganList.add(new Keuangan(idKeuangan, noKeuangan, tipeKeuangan, tglKeuangan, ketKeuangan, nominalKeuangan, jmlKasAwal, jmlKasAkhir, deskripsiKeuangan, createAt, updateAt));
                             Collections.sort(keuanganList, new Comparator<Keuangan>() {
                                 @Override
@@ -152,6 +165,13 @@ public class InfoKasFragment extends Fragment implements View.OnClickListener, R
                                     return keuangan.getTglKeuangan().compareTo(k1.getTglKeuangan());
                                 }
                             });
+                            if (tipeKeuangan.equals("Pemasukan")){
+                                pemasukanBulanIni += nominalKeuangan;
+                                tvPemasukanBlnIni.setText("+ "+toRupiah(pemasukanBulanIni+""));
+                            } else {
+                                pengeluaranBulanIni += nominalKeuangan;
+                                tvPengeluaranBlnIni.setText("- "+toRupiah(pengeluaranBulanIni+""));
+                            }
                             buildRecyclerView(view);
                         }
                     } catch (JSONException e) {
@@ -172,12 +192,11 @@ public class InfoKasFragment extends Fragment implements View.OnClickListener, R
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, urlSaldo, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-                //pbJadwalKegiatan.setVisibility(View.GONE);
-                //rvJadwalKegiatan.setVisibility(View.VISIBLE);
+                //pbInfoKas.setVisibility(View.GONE);
                 try {
                     JSONObject responseObj = response.getJSONObject(0);
                     jmlSaldo = responseObj.getString("jml_saldo");
-                    tvJmlSaldo.setText("Rp. "+toRupiah(jmlSaldo));
+                    tvJmlSaldo.setText(toRupiah(jmlSaldo));
                     tvTanggalSaldo.setText(getCurentDate());
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -201,22 +220,15 @@ public class InfoKasFragment extends Fragment implements View.OnClickListener, R
         adapter.notifyDataSetChanged();
     }
 
-    private String toRupiah(String nominal){
-        String hasil = "";
-        try {
-            NumberFormat formatRupiah = NumberFormat.getInstance(locale);
-            hasil = (String) formatRupiah.format(Double.valueOf(nominal));
-        }catch (Exception e){
-            e.printStackTrace();
-            Toast.makeText(getContext(), "Gagal merubah nilai rupiah", Toast.LENGTH_LONG).show();
-        }
-        return hasil;
-    }
-
     public String getCurentDate(){
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy");
         Calendar cal = Calendar.getInstance();
-        //System.out.println(dateFormat.format(cal.getTime()));
+        return dateFormat.format(cal.getTime());
+    }
+
+    public String getCurentMonth(){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM");
+        Calendar cal = Calendar.getInstance();
         return dateFormat.format(cal.getTime());
     }
 
