@@ -91,11 +91,7 @@ public class TambahKegiatanActivity extends AppCompatActivity {
             public void onClick(View view) {
                 namaKegiatan = etNamaKegiatan.getText().toString();
                 String valueSpinner = spTipeKegiatan.getSelectedItem().toString();
-                if (valueSpinner.equals("Umum")){
-                    tipeKegiatan = "1";
-                } else {
-                    tipeKegiatan = "0";
-                }
+                tipeKegiatan = valueSpinner;
                 tglKegiatan = etTglKegiatan.getText().toString();
                 wktKegiatan = etWaktuKegiatan.getText().toString();
                 tempatKegiatan = etTempatKegiatan.getText().toString();
@@ -193,14 +189,16 @@ public class TambahKegiatanActivity extends AppCompatActivity {
 
                 // on below line we are passing our
                 // key and value pair to our parameters.
+                params.put("no_kegiatan", "KEG-220922001");
                 params.put("nama_kegiatan", namaKegiatan);
-                params.put("kegiatan_umum", tipeKegiatan);
+                params.put("tipe_kegiatan", tipeKegiatan);
                 params.put("tgl_kegiatan", tglKegiatan);
                 params.put("waktu_kegiatan", wktKegiatan+":00");
                 params.put("tempat_kegiatan", tempatKegiatan);
                 params.put("pembicara_kegiatan", pembicaraKegiatan);
                 params.put("deskripsi_kegiatan", deskripsiKegiatan);
-
+                params.put("create_at", getCurentDate());
+                params.put("update_at", getCurentDate());
                 // at last we are returning our params.
                 return params;
             }
@@ -283,6 +281,13 @@ public class TambahKegiatanActivity extends AppCompatActivity {
             }
         });
         snackbar.show();
+    }
+
+    public String getCurentDate(){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar cal = Calendar.getInstance();
+        //System.out.println(dateFormat.format(cal.getTime()));
+        return dateFormat.format(cal.getTime());
     }
 
     public void lihatTambahData() {

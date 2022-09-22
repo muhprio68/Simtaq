@@ -131,14 +131,14 @@ public class JadwalKegiatanActivity extends AppCompatActivity implements JadwalK
         rvJadwalKegiatan = findViewById(R.id.rvJadwalKegiatan);
     }
 
-    public void addData(){
-        kegiatanList = new ArrayList<>();
-        kegiatanList.add(new Kegiatan("KEG00001", true, "Pengajian Rutin", "22/03/2022","19.30", "Pengajuan Rutin Sabtu Pon","Masjid At-Taqwa","KH.Abdul Kholiq Hasan, M.HI."));
-        kegiatanList.add(new Kegiatan("KEG00002", true, "Sholawat Diba' Rutin", "22/03/2022","19.30", "Pengajuan Rutin Sabtu Pon","Masjid At-Taqwa","Bpk. Suhardiman"));
-        kegiatanList.add(new Kegiatan("KEG00003", false, "Rapat takmir", "18/03/2022","19.30", "Pengajuan Rutin Sabtu Pon","Masjid At-Taqwa","Bpk. H.M.Supeno"));
-        kegiatanList.add(new Kegiatan("KEG00004", true, "Istighosah Rutin", "25/03/2022","19.30", "Pengajuan Rutin Sabtu Pon","Masjid At-Taqwa","Bpk. H.M.Supeno"));
-        kegiatanList.add(new Kegiatan("KEG00005", true, "Sholawat Diba'", "29/03/2022","19.30", "Pengajuan Rutin Sabtu Pon","Masjid At-Taqwa","Bpk. M. Khoirul Huda"));
-    }
+//    public void addData(){
+//        kegiatanList = new ArrayList<>();
+//        kegiatanList.add(new Kegiatan("KEG00001", true, "Pengajian Rutin", "22/03/2022","19.30", "Pengajuan Rutin Sabtu Pon","Masjid At-Taqwa","KH.Abdul Kholiq Hasan, M.HI."));
+//        kegiatanList.add(new Kegiatan("KEG00002", true, "Sholawat Diba' Rutin", "22/03/2022","19.30", "Pengajuan Rutin Sabtu Pon","Masjid At-Taqwa","Bpk. Suhardiman"));
+//        kegiatanList.add(new Kegiatan("KEG00003", false, "Rapat takmir", "18/03/2022","19.30", "Pengajuan Rutin Sabtu Pon","Masjid At-Taqwa","Bpk. H.M.Supeno"));
+//        kegiatanList.add(new Kegiatan("KEG00004", true, "Istighosah Rutin", "25/03/2022","19.30", "Pengajuan Rutin Sabtu Pon","Masjid At-Taqwa","Bpk. H.M.Supeno"));
+//        kegiatanList.add(new Kegiatan("KEG00005", true, "Sholawat Diba'", "29/03/2022","19.30", "Pengajuan Rutin Sabtu Pon","Masjid At-Taqwa","Bpk. M. Khoirul Huda"));
+//    }
 
     public void getData(String filter){
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url+"/kegiatan", null, new Response.Listener<JSONArray>() {
@@ -150,25 +150,22 @@ public class JadwalKegiatanActivity extends AppCompatActivity implements JadwalK
                     try {
                         JSONObject responseObj = response.getJSONObject(i);
                         String idKegiatan = responseObj.getString("id_kegiatan");
+                        String noKegiatan = responseObj.getString("no_kegiatan");
                         String namaKegiatan = responseObj.getString("nama_kegiatan");
-                        String kegiatanUmum = responseObj.getString("kegiatan_umum");
-                        boolean isUmum;
-                        if (kegiatanUmum == "0"){
-                            isUmum = false;
-                        }else{
-                            isUmum = true;
-                        }
+                        String tipeKegiatan = responseObj.getString("tipe_kegiatan");
                         String tglKegiatan = responseObj.getString("tgl_kegiatan");
                         String waktuKegiatan = responseObj.getString("waktu_kegiatan");
                         String tempatKegiatan = responseObj.getString("tempat_kegiatan");
                         String pembicaraKegiatan = responseObj.getString("pembicara_kegiatan");
                         String deskripsiKegiatan = responseObj.getString("deskripsi_kegiatan");
+                        String createAt = responseObj.getString("create_at");
+                        String updateAt = responseObj.getString("update_at");
                         if (tglKegiatan.contains(filter)){
-                            kegiatanList.add(new Kegiatan(idKegiatan, isUmum, namaKegiatan, tglKegiatan, waktuKegiatan, tempatKegiatan, pembicaraKegiatan, deskripsiKegiatan));
+                            kegiatanList.add(new Kegiatan(idKegiatan, noKegiatan, namaKegiatan, tipeKegiatan, tglKegiatan, waktuKegiatan, tempatKegiatan, pembicaraKegiatan, deskripsiKegiatan, createAt, updateAt));
                             Collections.sort(kegiatanList, new Comparator<Kegiatan>() {
                                 @Override
                                 public int compare(Kegiatan kegiatan, Kegiatan k1) {
-                                    return kegiatan.getTanggalKegiatan().compareTo(k1.getTanggalKegiatan());
+                                    return kegiatan.getTglKegiatan().compareTo(k1.getTglKegiatan());
                                 }
                             });
                             buildRecyclerView();

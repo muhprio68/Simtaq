@@ -71,7 +71,7 @@ public class JadwalKegiatanAdapter extends RecyclerView.Adapter<JadwalKegiatanVi
     public void onBindViewHolder(@NonNull JadwalKegiatanViewHolder holder, int position) {
         final Kegiatan kegiatan = kegiatanList.get(position);
         if (tipe == 1) {
-            holder.tvTanggalKegiatan.setText(fullDateToDate(kegiatan.getTanggalKegiatan()));
+            holder.tvTanggalKegiatan.setText(fullDateToDate(kegiatan.getTglKegiatan()));
             holder.tvNamaKegiatan.setText(kegiatan.getNamaKegiatan());
             holder.tvJamKegiatan.setText(timeFormat(kegiatan.getWaktuKegiatan())+" WIB, "+kegiatan.getTempatKegiatan());
             holder.rlListKegiatan.setOnClickListener(new View.OnClickListener() {
@@ -82,7 +82,7 @@ public class JadwalKegiatanAdapter extends RecyclerView.Adapter<JadwalKegiatanVi
             });
         } else {
             holder.tvKetInfoKegiatan.setText(kegiatan.getNamaKegiatan());
-            holder.tvTglInfoKegiatan.setText(kegiatan.getTanggalKegiatan());
+            holder.tvTglInfoKegiatan.setText(kegiatan.getTglKegiatan());
         }
     }
     @Override
@@ -115,7 +115,7 @@ public class JadwalKegiatanAdapter extends RecyclerView.Adapter<JadwalKegiatanVi
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        SimpleDateFormat newFormat = new SimpleDateFormat("hh:mm", locale);
+        SimpleDateFormat newFormat = new SimpleDateFormat("HH:mm", locale);
         String wktBaru = newFormat.format(date);
         return wktBaru;
     }

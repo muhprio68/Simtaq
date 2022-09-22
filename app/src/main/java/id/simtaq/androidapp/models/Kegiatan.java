@@ -3,23 +3,29 @@ package id.simtaq.androidapp.models;
 public class Kegiatan {
 
     private String idKegiatan;
-    private boolean isUmum;
+    private String noKegiatan;
     private String namaKegiatan;
-    private String tanggalKegiatan;
+    private String tipeKegiatan;
+    private String tglKegiatan;
     private String waktuKegiatan;
     private String deskripsiKegiatan;
     private String tempatKegiatan;
     private String pembicaraKegiatan;
+    private String createAt;
+    private String updateAt;
 
-    public Kegiatan(String idKegiatan, boolean isUmum, String namaKegiatan, String tanggalKegiatan, String waktuKegiatan, String deskripsiKegiatan, String tempatKegiatan, String pembicaraKegiatan) {
+    public Kegiatan(String idKegiatan, String noKegiatan, String namaKegiatan, String tipeKegiatan, String tglKegiatan, String waktuKegiatan, String deskripsiKegiatan, String tempatKegiatan, String pembicaraKegiatan, String createAt, String updateAt) {
         this.idKegiatan = idKegiatan;
-        this.isUmum = isUmum;
+        this.noKegiatan = noKegiatan;
         this.namaKegiatan = namaKegiatan;
-        this.tanggalKegiatan = tanggalKegiatan;
+        this.tipeKegiatan = tipeKegiatan;
+        this.tglKegiatan = tglKegiatan;
         this.waktuKegiatan = waktuKegiatan;
         this.deskripsiKegiatan = deskripsiKegiatan;
         this.tempatKegiatan = tempatKegiatan;
         this.pembicaraKegiatan = pembicaraKegiatan;
+        this.createAt = createAt;
+        this.updateAt = updateAt;
     }
 
     public String getIdKegiatan() {
@@ -30,12 +36,12 @@ public class Kegiatan {
         this.idKegiatan = idKegiatan;
     }
 
-    public boolean isUmum() {
-        return isUmum;
+    public String getNoKegiatan() {
+        return noKegiatan;
     }
 
-    public void setUmum(boolean umum) {
-        isUmum = umum;
+    public void setNoKegiatan(String noKegiatan) {
+        this.noKegiatan = noKegiatan;
     }
 
     public String getNamaKegiatan() {
@@ -46,12 +52,20 @@ public class Kegiatan {
         this.namaKegiatan = namaKegiatan;
     }
 
-    public String getTanggalKegiatan() {
-        return tanggalKegiatan;
+    public String getTipeKegiatan() {
+        return tipeKegiatan;
     }
 
-    public void setTanggalKegiatan(String tanggalKegiatan) {
-        this.tanggalKegiatan = tanggalKegiatan;
+    public void setTipeKegiatan(String tipeKegiatan) {
+        this.tipeKegiatan = tipeKegiatan;
+    }
+
+    public String getTglKegiatan() {
+        return tglKegiatan;
+    }
+
+    public void setTglKegiatan(String tglKegiatan) {
+        this.tglKegiatan = tglKegiatan;
     }
 
     public String getWaktuKegiatan() {
@@ -84,5 +98,21 @@ public class Kegiatan {
 
     public void setPembicaraKegiatan(String pembicaraKegiatan) {
         this.pembicaraKegiatan = pembicaraKegiatan;
+    }
+
+    public String getCreateAt() {
+        return createAt;
+    }
+
+    public void setCreateAt(String createAt) {
+        this.createAt = createAt;
+    }
+
+    public String getUpdateAt() {
+        return updateAt;
+    }
+
+    public void setUpdateAt(String updateAt) {
+        this.updateAt = updateAt;
     }
 }

@@ -93,13 +93,9 @@ public class DetailKegiatanActivity extends AppCompatActivity {
                 for (int i = 0; i < response.length(); i++) {
                     try {
                         JSONObject responseObj = response.getJSONObject(0);
+                        tvNoKegiatan.setText(responseObj.getString("no_kegiatan"));
                         tvDetailNamaKegiatan.setText(responseObj.getString("nama_kegiatan"));
-                        tvNoKegiatan.setText(responseObj.getString("id_kegiatan"));
-                        if (responseObj.getString("kegiatan_umum").equals("0")){
-                            tvTipeKegiatan.setText("Undangan");
-                        } else{
-                            tvTipeKegiatan.setText("Umum");
-                        }
+                        tvTipeKegiatan.setText(responseObj.getString("tipe_kegiatan"));
                         tvTglKegiatan.setText(fullDatePlusDay(responseObj.getString("tgl_kegiatan")));
                         tvWaktuKegiatan.setText(formatWaktu(responseObj.getString("waktu_kegiatan"))+" WIB");
                         tvTempatKegiatan.setText(responseObj.getString("tempat_kegiatan"));
@@ -128,13 +124,9 @@ public class DetailKegiatanActivity extends AppCompatActivity {
                 for (int i = 0; i < response.length(); i++) {
                     try {
                         JSONObject responseObj = response.getJSONObject(response.length()-1);
+                        tvNoKegiatan.setText(responseObj.getString("no_kegiatan"));
                         tvDetailNamaKegiatan.setText(responseObj.getString("nama_kegiatan"));
-                        tvNoKegiatan.setText(responseObj.getString("id_kegiatan"));
-                        if (responseObj.getString("kegiatan_umum").equals("0")){
-                            tvTipeKegiatan.setText("Undangan");
-                        } else{
-                            tvTipeKegiatan.setText("Umum");
-                        }
+                        tvTipeKegiatan.setText(responseObj.getString("tipe_kegiatan"));
                         tvTglKegiatan.setText(fullDatePlusDay(responseObj.getString("tgl_kegiatan")));
                         tvWaktuKegiatan.setText(formatWaktu(responseObj.getString("waktu_kegiatan"))+" WIB");
                         tvTempatKegiatan.setText(responseObj.getString("tempat_kegiatan"));
@@ -190,7 +182,7 @@ public class DetailKegiatanActivity extends AppCompatActivity {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        SimpleDateFormat newFormat = new SimpleDateFormat("hh:mm", locale);
+        SimpleDateFormat newFormat = new SimpleDateFormat("HH:mm", locale);
         String wktBaru = newFormat.format(date);
         return wktBaru;
     }

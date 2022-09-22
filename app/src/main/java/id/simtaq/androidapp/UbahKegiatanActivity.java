@@ -40,6 +40,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import static id.simtaq.androidapp.helper.config.locale;
 import static id.simtaq.androidapp.helper.config.url;
 
 public class UbahKegiatanActivity extends AppCompatActivity {
@@ -65,6 +66,8 @@ public class UbahKegiatanActivity extends AppCompatActivity {
     private int idKegiatan;
     private String namaKegiatan, tipeKegiatan, tglKegiatan, wktKegiatan, tempatKegiatan, pembicaraKegiatan, deskripsiKegiatan;
 
+    RequestQueue queue;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,7 +80,8 @@ public class UbahKegiatanActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
         idKegiatan = getIntent().getIntExtra("idKegiatan",0);
-        dateFormatter = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+        dateFormatter = new SimpleDateFormat("yyyy-MM-dd", locale);
+        queue = Volley.newRequestQueue(UbahKegiatanActivity.this);
         getDataUbahKegiatan();
         etTglKegiatan.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,11 +101,7 @@ public class UbahKegiatanActivity extends AppCompatActivity {
             public void onClick(View view) {
                 namaKegiatan = etNamaKegiatan.getText().toString();
                 String valueSpinner = spTipeKegiatan.getSelectedItem().toString();
-                if (valueSpinner.equals("Umum")){
-                    tipeKegiatan = "1";
-                } else {
-                    tipeKegiatan = "0";
-                }
+                tipeKegiatan = valueSpinner;
                 tglKegiatan = etTglKegiatan.getText().toString();
                 wktKegiatan = etWaktuKegiatan.getText().toString();
                 tempatKegiatan = etTempatKegiatan.getText().toString();
@@ -153,7 +153,6 @@ public class UbahKegiatanActivity extends AppCompatActivity {
     }
 
     public void getDataUbahKegiatan(){
-        RequestQueue queue = Volley.newRequestQueue(UbahKegiatanActivity.this);
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url+"/kegiatan/"+idKegiatan, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
@@ -162,11 +161,10 @@ public class UbahKegiatanActivity extends AppCompatActivity {
                     try {
                         JSONObject responseObj = response.getJSONObject(0);
                         etNamaKegiatan.setText(responseObj.getString("nama_kegiatan"));
-                        //tvNoKegiatan.setText(responseObj.getString("id_kegiatan"));
-                        if (responseObj.getString("kegiatan_umum").equals("0")){
-                            spTipeKegiatan.setSelection(1);
-                        } else{
+                        if (responseObj.getString("tipe_kegiatan").equals("Umum")){
                             spTipeKegiatan.setSelection(0);
+                        } else{
+                            spTipeKegiatan.setSelection(1);
                         }
                         etTglKegiatan.setText(responseObj.getString("tgl_kegiatan"));
                         etWaktuKegiatan.setText(formatWaktu(responseObj.getString("waktu_kegiatan")));
@@ -235,13 +233,13 @@ public class UbahKegiatanActivity extends AppCompatActivity {
                 // on below line we are passing our
                 // key and value pair to our parameters.
                 params.put("nama_kegiatan", namaKegiatan);
-                params.put("kegiatan_umum", tipeKegiatan);
+                params.put("tipe_kegiatan", tipeKegiatan);
                 params.put("tgl_kegiatan", tglKegiatan);
                 params.put("waktu_kegiatan", wktKegiatan+":00");
                 params.put("tempat_kegiatan", tempatKegiatan);
                 params.put("pembicara_kegiatan", pembicaraKegiatan);
                 params.put("deskripsi_kegiatan", deskripsiKegiatan);
-
+                params.put("update_at", getCurentDate());
                 // at last we are returning our params.
                 return params;
             }
@@ -362,4 +360,12 @@ public class UbahKegiatanActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
+    public String getCurentDate(){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar cal = Calendar.getInstance();
+        //System.out.println(dateFormat.format(cal.getTime()));
+        return dateFormat.format(cal.getTime());
+    }
+
 }
