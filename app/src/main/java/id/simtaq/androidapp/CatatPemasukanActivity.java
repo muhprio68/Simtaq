@@ -67,7 +67,7 @@ public class CatatPemasukanActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Catat Pemasukan");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back_white);
         queue = Volley.newRequestQueue(CatatPemasukanActivity.this);
         getSaldo();
         dateFormatter = new SimpleDateFormat("yyyy-MM-dd", locale);
@@ -171,6 +171,7 @@ public class CatatPemasukanActivity extends AppCompatActivity {
                 params.put("tipe_keuangan", "Pemasukan");
                 params.put("tgl_keuangan", tglPemasukan);
                 params.put("keterangan_keuangan", ketPemasukan);
+                params.put("status_keuangan", "Selesai");
                 params.put("nominal_keuangan", nominalPemasukan);
                 params.put("jml_kas_awal", jmlSaldo);
                 int jmlKasAkhir = Integer.parseInt(jmlSaldo)+Integer.parseInt(nominalPemasukan);

@@ -37,11 +37,8 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.Locale;
 
-import id.simtaq.androidapp.adapter.JadwalKegiatanAdapter;
 import id.simtaq.androidapp.adapter.RiwayatListAdapter;
-import id.simtaq.androidapp.models.Kegiatan;
 import id.simtaq.androidapp.models.Keuangan;
-import id.simtaq.androidapp.models.RiwayatKas;
 
 import static id.simtaq.androidapp.helper.config.locale;
 import static id.simtaq.androidapp.helper.config.url;
@@ -73,7 +70,7 @@ public class RiwayatActivity extends AppCompatActivity implements RiwayatListAda
         getSupportActionBar().setTitle("Riwayat Uang Kas");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back_white);
         keuanganList = new ArrayList<>();
         queue = Volley.newRequestQueue(RiwayatActivity.this);
         c = Calendar.getInstance();

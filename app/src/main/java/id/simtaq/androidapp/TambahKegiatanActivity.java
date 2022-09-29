@@ -71,7 +71,7 @@ public class TambahKegiatanActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Tambah Kegiatan");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back_white);
         dateFormatter = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
         etTglKegiatan.setOnClickListener(new View.OnClickListener() {
             @Override

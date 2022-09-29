@@ -1,10 +1,8 @@
 package id.simtaq.androidapp.fragments;
 
+import androidx.fragment.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +11,7 @@ import android.widget.RelativeLayout;
 
 import id.simtaq.androidapp.CatatPemasukanActivity;
 import id.simtaq.androidapp.CatatPengeluaranActivity;
+import id.simtaq.androidapp.InfakOnlineActivity;
 import id.simtaq.androidapp.JadwalKegiatanActivity;
 import id.simtaq.androidapp.R;
 import id.simtaq.androidapp.RiwayatActivity;
@@ -20,11 +19,12 @@ import id.simtaq.androidapp.TambahKegiatanActivity;
 
 public class HomeFragment extends Fragment implements View.OnClickListener {
 
-    RelativeLayout rlRiwayatUangKas;
-    RelativeLayout rlJadwalKegiatan;
-    RelativeLayout rlCatatPemasukan;
-    RelativeLayout rlCatatPengeluaran;
-    RelativeLayout rlTambahKegiatan;
+    private RelativeLayout rlRiwayatUangKas;
+    private RelativeLayout rlJadwalKegiatan;
+    private RelativeLayout rlInfakOnline;
+    private RelativeLayout rlCatatPemasukan;
+    private RelativeLayout rlCatatPengeluaran;
+    private RelativeLayout rlTambahKegiatan;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -51,6 +51,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         initViews(view);
         rlRiwayatUangKas.setOnClickListener(this);
         rlJadwalKegiatan.setOnClickListener(this);
+        rlInfakOnline.setOnClickListener(this);
         rlCatatPemasukan.setOnClickListener(this);
         rlCatatPengeluaran.setOnClickListener(this);
         rlTambahKegiatan.setOnClickListener(this);
@@ -60,6 +61,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     public void initViews(View v){
         rlRiwayatUangKas = v.findViewById(R.id.rlButtonRiwayatUangKas);
         rlJadwalKegiatan = v.findViewById(R.id.rlButtonJadwalKegiatan);
+        rlInfakOnline = v.findViewById(R.id.rlInfakOnline);
         rlCatatPemasukan = v.findViewById(R.id.rlButtonCatatPemasukan);
         rlCatatPengeluaran = v.findViewById(R.id.rlButtonCatatPengeluaran);
         rlTambahKegiatan = v.findViewById(R.id.rlButtonTambahKegiatan);
@@ -68,15 +70,17 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         if (v == rlRiwayatUangKas){
-            startActivity(new Intent(getContext(), RiwayatActivity.class));
+            startActivity(new Intent(v.getContext(), RiwayatActivity.class));
         } else if (v== rlJadwalKegiatan){
-            startActivity(new Intent(getContext(), JadwalKegiatanActivity.class));
+            startActivity(new Intent(v.getContext(), JadwalKegiatanActivity.class));
+        } else if (v== rlInfakOnline){
+            startActivity(new Intent(v.getContext(), InfakOnlineActivity.class));
         } else if (v== rlCatatPemasukan){
-            startActivity(new Intent(getContext(), CatatPemasukanActivity.class));
+            startActivity(new Intent(v.getContext(), CatatPemasukanActivity.class));
         } else if (v== rlCatatPengeluaran){
-            startActivity(new Intent(getContext(), CatatPengeluaranActivity.class));
+            startActivity(new Intent(v.getContext(), CatatPengeluaranActivity.class));
         } else if (v== rlTambahKegiatan){
-            startActivity(new Intent(getContext(), TambahKegiatanActivity.class));
+            startActivity(new Intent(v.getContext(), TambahKegiatanActivity.class));
         }
     }
 }

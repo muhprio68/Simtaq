@@ -21,9 +21,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.NumberFormat;
-
-import static id.simtaq.androidapp.helper.config.locale;
 import static id.simtaq.androidapp.helper.config.toRupiah;
 import static id.simtaq.androidapp.helper.config.url;
 
@@ -56,7 +53,7 @@ public class DetailRiwayatKasActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Detail Catatan Kas");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back_white);
         queue = Volley.newRequestQueue(DetailRiwayatKasActivity.this);
         intentDari = String.valueOf(getIntent().getStringExtra("intentDari"));
         if (intentDari.equals("riwayat keuangan")){

@@ -2,7 +2,6 @@ package id.simtaq.androidapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -29,8 +28,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-
-import id.simtaq.androidapp.models.Kegiatan;
 
 import static id.simtaq.androidapp.helper.config.url;
 
@@ -59,7 +56,7 @@ public class DetailKegiatanActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Detail Kegiatan");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back_white);
 
         intentDari = String.valueOf(getIntent().getStringExtra("intentDari"));
         if (intentDari.equals("tambah kegiatan")){

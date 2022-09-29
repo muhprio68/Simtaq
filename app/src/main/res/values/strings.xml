@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">Simtaq</string>
     <string name="menu_home">Home</string>
     <string name="menu_infokas">Info Kas</string>
     <string name="menu_kegiatan">Kegiatan</string>
@@ -12,6 +11,7 @@
     <string name="password">Password</string>
     <string name="ulangi_password">Ulangi Password</string>
     <string name="daftar">DAFTAR</string>
+<!--    <string name="app_name">Simtaq</string>-->
 
 
     <string-array name="tipe_kegiatan">

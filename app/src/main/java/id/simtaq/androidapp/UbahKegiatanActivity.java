@@ -78,7 +78,7 @@ public class UbahKegiatanActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Ubah Kegiatan");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back_white);
         idKegiatan = getIntent().getIntExtra("idKegiatan",0);
         dateFormatter = new SimpleDateFormat("yyyy-MM-dd", locale);
         queue = Volley.newRequestQueue(UbahKegiatanActivity.this);

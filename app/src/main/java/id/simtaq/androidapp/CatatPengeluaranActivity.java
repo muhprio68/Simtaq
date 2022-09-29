@@ -31,13 +31,8 @@ import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
-
-import id.simtaq.androidapp.models.Kegiatan;
 
 import static id.simtaq.androidapp.helper.config.locale;
 import static id.simtaq.androidapp.helper.config.url;
@@ -72,7 +67,7 @@ public class CatatPengeluaranActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Catat Pengeluaran");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back_white);
         queue = Volley.newRequestQueue(CatatPengeluaranActivity.this);
         getSaldo();
         dateFormatter = new SimpleDateFormat("yyyy-MM-dd", locale);
@@ -175,6 +170,7 @@ public class CatatPengeluaranActivity extends AppCompatActivity {
                 params.put("tipe_keuangan", "Pengeluaran");
                 params.put("tgl_keuangan", tglPengeluaran);
                 params.put("keterangan_keuangan", ketPengeluaran);
+                params.put("status_keuangan", "Selesai");
                 params.put("nominal_keuangan", nominalPengeluaran);
                 params.put("jml_kas_awal", jmlSaldo);
                 int jmlKasAkhir = Integer.parseInt(jmlSaldo)-Integer.parseInt(nominalPengeluaran);

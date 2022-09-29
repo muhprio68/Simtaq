@@ -158,7 +158,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:layout_constraintStart_toEndOf="@id/rlRiwayatUangKas"
-                    app:layout_constraintEnd_toStartOf="@id/rlLokasiKegiatan"
+                    app:layout_constraintEnd_toStartOf="@id/rlInfakOnline"
                     app:layout_constraintTop_toTopOf="parent">
 
                     <RelativeLayout
@@ -188,33 +188,33 @@
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:id="@+id/rlLokasiKegiatan"
+                    android:id="@+id/rlInfakOnline"
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
                     <RelativeLayout
-                        android:id="@+id/rlButtonLokasiKegiatan"
+                        android:id="@+id/rlButtonInfakOnline"
                         android:layout_width="92dp"
                         android:layout_height="84dp"
-                        android:background="@drawable/rounded_lokasikegiatan">
+                        android:background="@drawable/rounded_infakonline">
 
                         <ImageView
                             android:layout_width="42dp"
                             android:layout_height="42dp"
                             android:layout_centerHorizontal="true"
                             android:layout_centerVertical="true"
-                            android:src="@drawable/ic_home_lokasikegiatan" />
+                            android:src="@drawable/ic_home_infakonline" />
 
                     </RelativeLayout>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/rlButtonLokasiKegiatan"
+                        android:layout_below="@id/rlButtonInfakOnline"
                         android:layout_centerHorizontal="true"
-                        android:text="Lokasi\nKegiatan"
+                        android:text="Infak\nOnline"
                         android:textAlignment="center"
                         android:textColor="@color/primaryTextColor"
                         android:textSize="14sp" />
@@ -350,10 +350,10 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <RelativeLayout
-                        android:id="@+id/rlButtonMasjidAtTaqwa"
+                        android:id="@+id/rlButtonLokasiKegiatan"
                         android:layout_width="92dp"
                         android:layout_height="84dp"
-                        android:background="@drawable/rounded_masjidattaqwa"
+                        android:background="@drawable/rounded_lokasikegiatan"
                         android:gravity="center">
 
                         <ImageView
@@ -361,16 +361,16 @@
                             android:layout_height="42dp"
                             android:layout_centerHorizontal="true"
                             android:layout_centerVertical="true"
-                            android:src="@drawable/ic_home_masjidattaqwa" />
+                            android:src="@drawable/ic_home_lokasikegiatan" />
 
                     </RelativeLayout>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/rlButtonMasjidAtTaqwa"
+                        android:layout_below="@id/rlButtonLokasiKegiatan"
                         android:layout_centerHorizontal="true"
-                        android:text="Masjid\nAt-Taqwa"
+                        android:text="Lokasi\nKegiatan"
                         android:textAlignment="center"
                         android:textColor="@color/primaryTextColor"
                         android:textSize="14sp" />
