@@ -10,8 +10,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
-import static id.simtaq.androidapp.helper.config.getIdCurentDate;
 
+import static id.simtaq.androidapp.helper.config.getCurentDate;
+import static id.simtaq.androidapp.helper.config.getIdCurentDate;
+import static id.simtaq.androidapp.helper.config.url;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
 import com.midtrans.sdk.corekit.callback.TransactionFinishedCallback;
 import com.midtrans.sdk.corekit.core.MidtransSDK;
 import com.midtrans.sdk.corekit.core.TransactionRequest;
@@ -22,6 +31,15 @@ import com.midtrans.sdk.corekit.models.ShippingAddress;
 import com.midtrans.sdk.corekit.models.snap.TransactionResult;
 import com.midtrans.sdk.uikit.SdkUIFlowBuilder;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Collections;
+import java.util.Comparator;
+
+import id.simtaq.androidapp.models.Keuangan;
+
 public class InfakOnlineActivity extends AppCompatActivity implements TransactionFinishedCallback{
 
     private Toolbar toolbar;
@@ -31,8 +49,10 @@ public class InfakOnlineActivity extends AppCompatActivity implements Transactio
     private EditText etDeskripsiInfak;
     private Button btnInfak;
     private Button btnBatalInfak;
+    private RequestQueue queue;
 
-    private String infakNama, nominalInfak, deskripInfak;
+
+    private String infakNama, nominalInfak, deskripInfak, noTransaksi;
 
     TransactionRequest transactionRequest;
     @Override
@@ -41,11 +61,12 @@ public class InfakOnlineActivity extends AppCompatActivity implements Transactio
         setContentView(R.layout.activity_infak_online);
         initViews();
         setSupportActionBar(toolbar);
-
         getSupportActionBar().setTitle("Infak Online");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back_white);
+        queue = Volley.newRequestQueue(InfakOnlineActivity.this);
+        getNomorKeuangan();
         showPembayaran();
         btnInfak.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,13 +80,43 @@ public class InfakOnlineActivity extends AppCompatActivity implements Transactio
                     infakNama = etInfakAtasNama.getText().toString();
                     nominalInfak = etNominalInfak.getText().toString();
                     deskripInfak = etDeskripsiInfak.getText().toString();
-                    transactionRequest= new TransactionRequest("INF-"+getIdCurentDate()+a, Integer.parseInt(nominalInfak));
+                    transactionRequest= new TransactionRequest(noTransaksi, Integer.parseInt(nominalInfak));
                     clickPay();
                     setCustomer();
                 }
             }
         });
 
+    }
+
+    public void getNomorKeuangan (){
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url+"/nomor", null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                //pbRiwayatKeuangan.setVisibility(View.GONE);
+                for (int i = 0; i < response.length(); i++) {
+                    try {
+                        JSONObject responseObj = response.getJSONObject(i);
+                        int idKeuangan = responseObj.getInt("id_nomor");
+                        String tglKeuangan = responseObj.getString("tgl_keuangan");
+                        int noTerakhir = responseObj.getInt("no_terakhir");
+                        if (tglKeuangan.equals(getCurentDate())){
+                            noTransaksi = getIdCurentDate()+noTerakhir;
+                        } else{
+                            noTransaksi = getIdCurentDate()+1;
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(InfakOnlineActivity.this, "Fail to get the data..", Toast.LENGTH_SHORT).show();
+            }
+        });
+        queue.add(jsonArrayRequest);
     }
 
     public void setCustomer(){
