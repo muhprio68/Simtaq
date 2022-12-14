@@ -5,12 +5,14 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import static android.provider.Telephony.BaseMmsColumns.TRANSACTION_ID;
 import static id.simtaq.androidapp.helper.config.getCurentDate;
 import static id.simtaq.androidapp.helper.config.getIdCurentDate;
 import static id.simtaq.androidapp.helper.config.url;
@@ -20,6 +22,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.midtrans.sdk.corekit.callback.TransactionFinishedCallback;
 import com.midtrans.sdk.corekit.core.MidtransSDK;
@@ -37,6 +40,8 @@ import org.json.JSONObject;
 
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Map;
 
 import id.simtaq.androidapp.models.Keuangan;
 
@@ -52,7 +57,7 @@ public class InfakOnlineActivity extends AppCompatActivity implements Transactio
     private RequestQueue queue;
 
 
-    private String infakNama, nominalInfak, deskripInfak, noTransaksi;
+    private String noKeuangan, ketInfak, nominalInfak, deskripInfak, jmlSaldo ;
 
     TransactionRequest transactionRequest;
     @Override
@@ -67,6 +72,7 @@ public class InfakOnlineActivity extends AppCompatActivity implements Transactio
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back_white);
         queue = Volley.newRequestQueue(InfakOnlineActivity.this);
         getNomorKeuangan();
+        getSaldo();
         showPembayaran();
         btnInfak.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,11 +82,10 @@ public class InfakOnlineActivity extends AppCompatActivity implements Transactio
                 } else if (TextUtils.isEmpty(etNominalInfak.getText().toString())){
                     etNominalInfak.setError("Masukkan nominal");
                 }  else {
-                    int a = (int) Math.random();
-                    infakNama = etInfakAtasNama.getText().toString();
+                    ketInfak = etInfakAtasNama.getText().toString();
                     nominalInfak = etNominalInfak.getText().toString();
                     deskripInfak = etDeskripsiInfak.getText().toString();
-                    transactionRequest= new TransactionRequest(noTransaksi, Integer.parseInt(nominalInfak));
+                    transactionRequest= new TransactionRequest(ketInfak, Integer.parseInt(nominalInfak));
                     clickPay();
                     setCustomer();
                 }
@@ -101,9 +106,9 @@ public class InfakOnlineActivity extends AppCompatActivity implements Transactio
                         String tglKeuangan = responseObj.getString("tgl_keuangan");
                         int noTerakhir = responseObj.getInt("no_terakhir");
                         if (tglKeuangan.equals(getCurentDate())){
-                            noTransaksi = getIdCurentDate()+noTerakhir;
+                            noKeuangan = getIdCurentDate()+String.format("%04d",noTerakhir+1);
                         } else{
-                            noTransaksi = getIdCurentDate()+1;
+                            noKeuangan = getIdCurentDate()+String.format("%04d",1);
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -156,15 +161,10 @@ public class InfakOnlineActivity extends AppCompatActivity implements Transactio
         SdkUIFlowBuilder.init()
                 .setClientKey(BuildConfig.CLIENT_KEY) // client_key is mandatory
                 .setContext(InfakOnlineActivity.this) // context is mandatory
-                .setTransactionFinishedCallback(new TransactionFinishedCallback() {
-                    @Override
-                    public void onTransactionFinished(TransactionResult result) {
-                        // Handle finished transaction here.
-                    }
-                }) // set transaction finish callback (sdk callback)
+                .setTransactionFinishedCallback(this)
                 .setMerchantBaseUrl(BuildConfig.BASE_URL) //set merchant url (required)
                 .enableLog(true) // enable sdk log (optional)
-                .setColorTheme(new CustomColorTheme("#07b846", "#008715", "#5cec75")) // set theme. it will replace theme on snap theme on MAP ( optional)
+                .setColorTheme(new CustomColorTheme("#FF07b846", "#008715", "#FF5cec75")) // set theme. it will replace theme on snap theme on MAP ( optional)
                 .setLanguage("id") //`en` for English and `id` for Bahasa
                 .buildSDK();
     }
@@ -180,9 +180,11 @@ public class InfakOnlineActivity extends AppCompatActivity implements Transactio
             switch (result.getStatus()){
                 case TransactionResult.STATUS_SUCCESS:
                     Toast.makeText(this, "Transaction Sukses " + result.getResponse().getTransactionId(), Toast.LENGTH_LONG).show();
+                    tambahDataPemasukan(getCurentDate(), "Infak atas nama "+ketInfak, "Selesai", nominalInfak, deskripInfak);
                     break;
                 case TransactionResult.STATUS_PENDING:
                     Toast.makeText(this, "Transaction Pending " + result.getResponse().getTransactionId(), Toast.LENGTH_LONG).show();
+                    tambahDataPemasukan(getCurentDate(), "Infak atas nama "+ketInfak, "Tertunda", nominalInfak, deskripInfak);
                     break;
                 case TransactionResult.STATUS_FAILED:
                     Toast.makeText(this, "Transaction Failed" + result.getResponse().getTransactionId(), Toast.LENGTH_LONG).show();
@@ -198,5 +200,139 @@ public class InfakOnlineActivity extends AppCompatActivity implements Transactio
                 Toast.makeText(this, "Something Wrong", Toast.LENGTH_LONG).show();
             }
         }
+    }
+
+    private void tambahDataPemasukan(String tglInfak, String ketInfak, String statusInfak, String nominalInfak, String deskripInfak) {
+        StringRequest request = new StringRequest(Request.Method.POST, url+"/keuangan", new com.android.volley.Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                //pbCatatPemasukan.setVisibility(View.GONE);
+                Log.e("TAG", "RESPONSE IS " + response);
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    // on below line we are displaying a success toast message.
+                    //snackbarWithAction();
+
+                    //Toast.makeText(TambahKegiatanActivity.this, "Data berhasil disimpan", Toast.LENGTH_SHORT).show();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                // and setting data to edit text as empty
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                // method to handle errors.
+                Toast.makeText(InfakOnlineActivity.this, "Fail to get response = " + error, Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            @Override
+            public String getBodyContentType() {
+                // as we are passing data in the form of url encoded
+                // so we are passing the content type below
+                return "application/x-www-form-urlencoded; charset=UTF-8";
+            }
+
+            @Override
+            protected Map<String, String> getParams() {
+
+                // below line we are creating a map for storing
+                // our values in key and value pair.
+                Map<String, String> params = new HashMap<String, String>();
+
+                // on below line we are passing our
+                // key and value pair to our parameters.
+                params.put("tipe_keuangan", "Pemasukan");
+                params.put("tgl_keuangan", tglInfak);
+                params.put("keterangan_keuangan", ketInfak);
+                params.put("status_keuangan", statusInfak);
+                params.put("nominal_keuangan", nominalInfak);
+                params.put("jml_kas_awal", jmlSaldo);
+                int jmlKasAkhir = Integer.parseInt(jmlSaldo)+Integer.parseInt(nominalInfak);
+                params.put("jml_kas_akhir", jmlKasAkhir+"");
+                params.put("deskripsi_keuangan", deskripInfak);
+                params.put("create_at", getCurentDate());
+                params.put("update_at", getCurentDate());
+                ubahSaldo(jmlKasAkhir+"");
+
+                // at last we are returning our params.
+                return params;
+            }
+        };
+        // below line is to make
+        // a json object request.
+        queue.add(request);
+    }
+
+    public void getSaldo(){
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url+"/saldo", null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                //pbJadwalKegiatan.setVisibility(View.GONE);
+                //rvJadwalKegiatan.setVisibility(View.VISIBLE);
+                try {
+                    JSONObject responseObj = response.getJSONObject(0);
+                    jmlSaldo = responseObj.getString("jml_saldo");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(InfakOnlineActivity.this, "Fail to get the data..", Toast.LENGTH_SHORT).show();
+            }
+        });
+        queue.add(jsonArrayRequest);
+    }
+
+    private void ubahSaldo(String jmlSaldo) {
+        StringRequest request = new StringRequest(Request.Method.PUT, url+"/saldo/1", new com.android.volley.Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.e("TAG", "RESPONSE IS " + response);
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    // on below line we are displaying a success toast message.
+                    //snackbarWithAction();
+
+                    //Toast.makeText(TambahKegiatanActivity.this, "Data berhasil disimpan", Toast.LENGTH_SHORT).show();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                // method to handle errors.
+                Toast.makeText(InfakOnlineActivity.this, "Fail to get response = " + error, Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            @Override
+            public String getBodyContentType() {
+                // as we are passing data in the form of url encoded
+                // so we are passing the content type below
+                return "application/x-www-form-urlencoded; charset=UTF-8";
+            }
+
+            @Override
+            protected Map<String, String> getParams() {
+
+                // below line we are creating a map for storing
+                // our values in key and value pair.
+                Map<String, String> params = new HashMap<String, String>();
+
+                // on below line we are passing our
+                // key and value pair to our parameters.
+                params.put("jml_saldo", jmlSaldo);
+                params.put("update_at", getCurentDate());
+
+                // at last we are returning our params.
+                return params;
+            }
+        };
+        // below line is to make
+        // a json object request.
+        queue.add(request);
     }
 }

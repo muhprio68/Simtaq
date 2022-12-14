@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
+import id.simtaq.androidapp.CatatKeuanganActivity;
 import id.simtaq.androidapp.CatatPemasukanActivity;
 import id.simtaq.androidapp.CatatPengeluaranActivity;
 import id.simtaq.androidapp.InfakOnlineActivity;
