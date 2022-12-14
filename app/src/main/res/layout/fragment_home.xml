@@ -231,17 +231,17 @@
                 android:layout_below="@id/clMenuRow1">
 
                 <RelativeLayout
-                    android:id="@+id/rlCatatPemasukan"
+                    android:id="@+id/rlCatatKeuangan"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
                     <RelativeLayout
-                        android:id="@+id/rlButtonCatatPemasukan"
+                        android:id="@+id/rlButtonCatatKeuangan"
                         android:layout_width="92dp"
                         android:layout_height="84dp"
-                        android:background="@drawable/rounded_catatpemasukan"
+                        android:background="@drawable/rounded_catatkeuangan"
                         android:gravity="center">
 
                         <ImageView
@@ -249,50 +249,50 @@
                             android:layout_height="42dp"
                             android:layout_centerHorizontal="true"
                             android:layout_centerVertical="true"
-                            android:src="@drawable/ic_home_catatpemasukan" />
+                            android:src="@drawable/ic_home_catatkeuangan" />
 
                     </RelativeLayout>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/rlButtonCatatPemasukan"
+                        android:layout_below="@id/rlButtonCatatKeuangan"
                         android:layout_centerHorizontal="true"
-                        android:text="Catat\nPemasukan"
+                        android:text="Catat\nKeuangan"
                         android:textAlignment="center"
                         android:textColor="@color/primaryTextColor"
                         android:textSize="14sp" />
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:id="@+id/rlCatatPengeluaran"
+                    android:id="@+id/rlCatatDonatur"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintStart_toEndOf="@id/rlCatatPemasukan"
+                    app:layout_constraintStart_toEndOf="@id/rlCatatKeuangan"
                     app:layout_constraintEnd_toStartOf="@id/rlTambahKegiatan"
                     app:layout_constraintTop_toTopOf="parent">
 
                     <RelativeLayout
-                        android:id="@+id/rlButtonCatatPengeluaran"
+                        android:id="@+id/rlButtonCatatDonatur"
                         android:layout_width="92dp"
                         android:layout_height="84dp"
-                        android:background="@drawable/rounded_catatpengeluaran">
+                        android:background="@drawable/rounded_catatdonatur">
 
                         <ImageView
                             android:layout_width="42dp"
                             android:layout_height="42dp"
                             android:layout_centerHorizontal="true"
                             android:layout_centerVertical="true"
-                            android:src="@drawable/ic_home_catatpengeluaran" />
+                            android:src="@drawable/ic_home_catatdonatur" />
 
                     </RelativeLayout>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_below="@id/rlButtonCatatPengeluaran"
+                        android:layout_below="@id/rlButtonCatatDonatur"
                         android:layout_centerHorizontal="true"
-                        android:text="Catat\nPengeluaran"
+                        android:text="Catat\nDonatur"
                         android:textAlignment="center"
                         android:textColor="@color/primaryTextColor"
                         android:textSize="14sp" />

@@ -23,8 +23,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private RelativeLayout rlRiwayatUangKas;
     private RelativeLayout rlJadwalKegiatan;
     private RelativeLayout rlInfakOnline;
-    private RelativeLayout rlCatatPemasukan;
-    private RelativeLayout rlCatatPengeluaran;
+    private RelativeLayout rlCatatKeuangan;
+    private RelativeLayout rlCatatDonatur;
     private RelativeLayout rlTambahKegiatan;
 
     public HomeFragment() {
@@ -53,8 +53,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         rlRiwayatUangKas.setOnClickListener(this);
         rlJadwalKegiatan.setOnClickListener(this);
         rlInfakOnline.setOnClickListener(this);
-        rlCatatPemasukan.setOnClickListener(this);
-        rlCatatPengeluaran.setOnClickListener(this);
+        rlCatatKeuangan.setOnClickListener(this);
+        rlCatatDonatur.setOnClickListener(this);
         rlTambahKegiatan.setOnClickListener(this);
         return view;
     }
@@ -63,8 +63,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         rlRiwayatUangKas = v.findViewById(R.id.rlButtonRiwayatUangKas);
         rlJadwalKegiatan = v.findViewById(R.id.rlButtonJadwalKegiatan);
         rlInfakOnline = v.findViewById(R.id.rlInfakOnline);
-        rlCatatPemasukan = v.findViewById(R.id.rlButtonCatatPemasukan);
-        rlCatatPengeluaran = v.findViewById(R.id.rlButtonCatatPengeluaran);
+        rlCatatKeuangan = v.findViewById(R.id.rlButtonCatatKeuangan);
+        rlCatatDonatur = v.findViewById(R.id.rlButtonCatatDonatur);
         rlTambahKegiatan = v.findViewById(R.id.rlButtonTambahKegiatan);
     }
 
@@ -76,9 +76,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             startActivity(new Intent(v.getContext(), JadwalKegiatanActivity.class));
         } else if (v== rlInfakOnline){
             startActivity(new Intent(v.getContext(), InfakOnlineActivity.class));
-        } else if (v== rlCatatPemasukan){
-            startActivity(new Intent(v.getContext(), CatatPemasukanActivity.class));
-        } else if (v== rlCatatPengeluaran){
+        } else if (v== rlCatatKeuangan){
+            startActivity(new Intent(v.getContext(), CatatKeuanganActivity.class));
+        } else if (v== rlCatatDonatur){
             startActivity(new Intent(v.getContext(), CatatPengeluaranActivity.class));
         } else if (v== rlTambahKegiatan){
             startActivity(new Intent(v.getContext(), TambahKegiatanActivity.class));
