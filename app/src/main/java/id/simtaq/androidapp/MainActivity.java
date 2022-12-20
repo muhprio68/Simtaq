@@ -4,26 +4,44 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import id.simtaq.androidapp.fragments.HomeFragment;
 import id.simtaq.androidapp.fragments.KegiatanFragment;
 import id.simtaq.androidapp.fragments.PengaturanFragment;
 import id.simtaq.androidapp.fragments.InfoKasFragment;
+import id.simtaq.androidapp.helper.config;
 
 public class MainActivity extends AppCompatActivity {
 
-    BottomNavigationView bottomNavigationView;
+    private BottomNavigationView bottomNavigationView;
+    private String authToken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        authToken = String.valueOf(getIntent().getStringExtra("token"));
+        auth(authToken);
         setContentView(R.layout.activity_main);
         getSupportFragmentManager().beginTransaction().replace(R.id.flPageContainer, new HomeFragment()).commit();
         initView();
@@ -69,5 +87,66 @@ public class MainActivity extends AppCompatActivity {
 
     public void initView(){
         bottomNavigationView = findViewById(R.id.bottomNav);
+    }
+
+    private void auth(String token) {
+        // url to post our data
+        String url = config.url+"/me";
+        //loadingPB.setVisibility(View.VISIBLE);
+
+        // creating a new variable for our request queue
+        RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
+
+        // on below line we are calling a string
+        // request method to post the data to our API
+        // in this we are calling a post method.
+        StringRequest request = new StringRequest(Request.Method.GET, url, new com.android.volley.Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                // inside on response method we are
+                // hiding our progress bar
+                // and setting data to edit text as empty
+//                loadingPB.setVisibility(View.GONE);
+//                nameEdt.setText("");
+//                jobEdt.setText("");
+
+                // on below line we are displaying a success toast message.
+                //Toast.makeText(MainActivity.this, "Data added to API", Toast.LENGTH_SHORT).show();
+                try {
+                    // on below line we are parsing the response
+                    // to json object to extract data from it.
+                    JSONObject respObj = new JSONObject(response);
+
+                    // below are the strings which we
+                    // extract from our json object.
+                    String id = respObj.getString("id");
+                    String emaili = respObj.getString("email");
+
+                    // on below line we are setting this string s to our text view.
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                // method to handle errors.
+                Toast.makeText(MainActivity.this, "Fail to get response = " + error, Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                intent.putExtra("intentDari", "main");
+                startActivity(intent);
+                finish();
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Authorization", "Bearer " + token);
+                return headers;
+            }
+        };
+        // below line is to make
+        // a json object request.
+        queue.add(request);
     }
 }
