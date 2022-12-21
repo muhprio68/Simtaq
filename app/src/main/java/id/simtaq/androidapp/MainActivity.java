@@ -30,22 +30,24 @@ import id.simtaq.androidapp.fragments.HomeFragment;
 import id.simtaq.androidapp.fragments.KegiatanFragment;
 import id.simtaq.androidapp.fragments.PengaturanFragment;
 import id.simtaq.androidapp.fragments.InfoKasFragment;
+import id.simtaq.androidapp.helper.Preferences;
 import id.simtaq.androidapp.helper.config;
 
 public class MainActivity extends AppCompatActivity {
 
     private BottomNavigationView bottomNavigationView;
     private String authToken;
+    private String id, nama, email, level;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        authToken = String.valueOf(getIntent().getStringExtra("token"));
+        //authToken = String.valueOf(getIntent().getStringExtra("token"));
+        authToken = Preferences.getKeyToken(MainActivity.this);
         auth(authToken);
         setContentView(R.layout.activity_main);
         getSupportFragmentManager().beginTransaction().replace(R.id.flPageContainer, new HomeFragment()).commit();
         initView();
-
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -119,8 +121,15 @@ public class MainActivity extends AppCompatActivity {
 
                     // below are the strings which we
                     // extract from our json object.
-                    String id = respObj.getString("id");
-                    String emaili = respObj.getString("email");
+                    id = respObj.getString("id");
+                    nama = respObj.getString("nama");
+                    email = respObj.getString("email");
+                    level = respObj.getString("level");
+
+                    Preferences.setKeyId(MainActivity.this, id);
+                    Preferences.setKeyNama(MainActivity.this, nama);
+                    Preferences.setKeyEmail(MainActivity.this, email);
+                    Preferences.setKeyLevel(MainActivity.this, level);
 
                     // on below line we are setting this string s to our text view.
                 } catch (JSONException e) {

@@ -135,6 +135,7 @@ public class DaftarActivity extends AppCompatActivity {
                 params.put("email", email);
                 params.put("password", password);
                 params.put("confpassword", ulangiPassword);
+                params.put("level", 1+"");
 
                 // at last we are
                 // returning our params.

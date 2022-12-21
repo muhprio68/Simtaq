@@ -254,7 +254,7 @@ public class RiwayatActivity extends AppCompatActivity implements RiwayatListAda
             tvFilterBulanKeuangan.setText(sBulan);
             getDataKeuangan(sFilterBulanTahun);
             tvFilterTahunKeuangan.setText(sTahun);
-            adapter.notifyDataSetChanged();
+//            adapter.notifyDataSetChanged();
             doNextCurentTime();
         } catch (Exception ex) {
             ex.printStackTrace();

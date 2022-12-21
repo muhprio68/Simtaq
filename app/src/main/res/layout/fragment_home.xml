@@ -254,6 +254,7 @@
                     </RelativeLayout>
 
                     <TextView
+                        android:id="@+id/tvCatatKeuangan"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/rlButtonCatatKeuangan"
@@ -288,6 +289,7 @@
                     </RelativeLayout>
 
                     <TextView
+                        android:id="@+id/tvCatatDonatur"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_below="@id/rlButtonCatatDonatur"
@@ -321,6 +323,7 @@
                     </RelativeLayout>
 
                     <TextView
+                        android:id="@+id/tvTambahKegiatan"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/rlButtonTambahKegiatan"

@@ -28,6 +28,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import id.simtaq.androidapp.helper.Preferences;
 import id.simtaq.androidapp.helper.config;
 
 import static id.simtaq.androidapp.helper.config.url;
@@ -44,6 +45,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private RequestQueue queue;
     private StringRequest request;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +82,15 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (Preferences.getLoggedInStatus(getBaseContext())){
+            startActivity(new Intent(LoginActivity.this,MainActivity.class));
+            finish();
+        }
+    }
+
     private void login(String email, String password) {
         // url to post our data
         String url = config.url+"/login";
@@ -112,6 +123,9 @@ public class LoginActivity extends AppCompatActivity {
                     // extract from our json object.
                     String name = respObj.getString("message");
                     token = respObj.getString("token");
+                    Preferences.setLoggedInStatus(LoginActivity.this,true);
+                    Preferences.setKeyToken(LoginActivity.this,token);
+
 
                     // on below line we are setting this string s to our text view.
                     //etEmail.setText(token+"");
@@ -145,68 +159,6 @@ public class LoginActivity extends AppCompatActivity {
                 // at last we are
                 // returning our params.
                 return params;
-            }
-        };
-        // below line is to make
-        // a json object request.
-        queue.add(request);
-    }
-
-    private void auth(String tokens) {
-        // url to post our data
-        String url = config.url+"/me";
-        //loadingPB.setVisibility(View.VISIBLE);
-
-        // creating a new variable for our request queue
-        RequestQueue queue = Volley.newRequestQueue(LoginActivity.this);
-
-        // on below line we are calling a string
-        // request method to post the data to our API
-        // in this we are calling a post method.
-        StringRequest request = new StringRequest(Request.Method.GET, url, new com.android.volley.Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                // inside on response method we are
-                // hiding our progress bar
-                // and setting data to edit text as empty
-//                loadingPB.setVisibility(View.GONE);
-//                nameEdt.setText("");
-//                jobEdt.setText("");
-
-                // on below line we are displaying a success toast message.
-                Toast.makeText(LoginActivity.this, "Data added to API", Toast.LENGTH_SHORT).show();
-                try {
-                    // on below line we are parsing the response
-                    // to json object to extract data from it.
-                    JSONObject respObj = new JSONObject(response);
-
-                    // below are the strings which we
-                    // extract from our json object.
-                    String id = respObj.getString("id");
-                    String emaili = respObj.getString("email");
-
-                    // on below line we are setting this string s to our text view.
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                    intent.putExtra("intentDari", "login");
-                    intent.putExtra("token", token);
-                    startActivity(intent);
-                    finish();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new com.android.volley.Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                // method to handle errors.
-                Toast.makeText(LoginActivity.this, "Fail to get response = " + error, Toast.LENGTH_SHORT).show();
-            }
-        }) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap<String, String> headers = new HashMap<String, String>();
-                headers.put("Authorization", "Bearer " + tokens);
-                return headers;
             }
         };
         // below line is to make
