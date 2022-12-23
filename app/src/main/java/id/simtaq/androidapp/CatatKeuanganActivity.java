@@ -24,7 +24,7 @@ public class CatatKeuanganActivity extends AppCompatActivity {
         setContentView(R.layout.activity_catat_keuangan);
         initViews();
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Catat Pemasukan");
+        getSupportActionBar().setTitle("Catat Keuangan");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back_white);
@@ -43,5 +43,16 @@ public class CatatKeuanganActivity extends AppCompatActivity {
         adapter.addFragment(PemasukanFragment.newInstance(), "Pemasukan");
         adapter.addFragment(PengeluaranFragment.newInstance(), "Pengeluaran");
         viewPager.setAdapter(adapter);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }

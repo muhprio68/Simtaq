@@ -50,7 +50,7 @@
             android:name=".CatatPengeluaranActivity"
             android:exported="false" />
         <activity
-            android:name=".CatatPemasukanActivity"
+            android:name=".CatatDonaturActivity"
             android:exported="false" />
         <activity
             android:name=".JadwalKegiatanActivity"

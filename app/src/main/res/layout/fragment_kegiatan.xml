@@ -228,7 +228,7 @@
             </RelativeLayout>
 
             <TextView
-                android:id="@+id/tvTambahData"
+                android:id="@+id/tvTambahDataKegiatan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/rlRecyclerViewKegiatan"
@@ -242,7 +242,7 @@
                 android:id="@+id/rlTambahKegiatan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/tvTambahData">
+                android:layout_below="@id/tvTambahDataKegiatan">
 
                 <RelativeLayout
                     android:id="@+id/rlButtonTambahKegiatan"

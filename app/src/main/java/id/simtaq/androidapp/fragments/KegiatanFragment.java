@@ -37,6 +37,7 @@ import id.simtaq.androidapp.R;
 import id.simtaq.androidapp.RiwayatActivity;
 import id.simtaq.androidapp.adapter.JadwalKegiatanAdapter;
 import id.simtaq.androidapp.adapter.RiwayatListAdapter;
+import id.simtaq.androidapp.helper.Preferences;
 import id.simtaq.androidapp.models.CalendarModel;
 import id.simtaq.androidapp.models.Kegiatan;
 
@@ -48,9 +49,12 @@ public class KegiatanFragment extends Fragment implements View.OnClickListener, 
     private RecyclerView rvKegiatan;
     private ProgressBar pbInfoKegiatan;
     private TextView tvLihatSemuaKegiatan;
+    private TextView tvTambahData;
     private JadwalKegiatanAdapter adapter;
     private RequestQueue queue;
-    private RelativeLayout rlMenuKegiatan;
+    private RelativeLayout rlMenuKegiatan, rlTambahKegiatan;
+
+    private String level;
 
     public KegiatanFragment() {
 
@@ -76,12 +80,14 @@ public class KegiatanFragment extends Fragment implements View.OnClickListener, 
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_kegiatan, container, false);
         initViews(view);
+        level = Preferences.getKeyLevel(getContext());
         tvLihatSemuaKegiatan.setOnClickListener(this);
         kegiatanList = new ArrayList<>();
         queue = Volley.newRequestQueue(view.getContext());
 //        addData();
         getData(view);
         buildRecyclerView(view);
+        aksesLevel(level);
         return view;
     }
 
@@ -90,15 +96,9 @@ public class KegiatanFragment extends Fragment implements View.OnClickListener, 
         pbInfoKegiatan = v.findViewById(R.id.pbInfoKegiatan);
         rvKegiatan = v.findViewById(R.id.rvKegiatan);
         tvLihatSemuaKegiatan = v.findViewById(R.id.tvLihatSemuaKegiatan);
+        tvTambahData = v.findViewById(R.id.tvTambahDataKegiatan);
+        rlTambahKegiatan = v.findViewById(R.id.rlTambahKegiatan);
     }
-
-//    public void addData(){
-//        kegiatanList.add(new Kegiatan("KEG00001", true, "Pengajian Rutin", "22/03/2022","19.30", "Pengajuan Rutin Sabtu Pon","Masjid At-Taqwa","KH.Abdul Kholiq Hasan, M.HI."));
-//        kegiatanList.add(new Kegiatan("KEG00002", true, "Sholawat Diba' Rutin", "22/03/2022","19.30", "Pengajuan Rutin Sabtu Pon","Masjid At-Taqwa","Bpk. Suhardiman"));
-//        kegiatanList.add(new Kegiatan("KEG00003", false, "Rapat takmir", "18/03/2022","19.30", "Pengajuan Rutin Sabtu Pon","Masjid At-Taqwa","Bpk. H.M.Supeno"));
-//        kegiatanList.add(new Kegiatan("KEG00004", true, "Istighosah Rutin", "25/03/2022","19.30", "Pengajuan Rutin Sabtu Pon","Masjid At-Taqwa","Bpk. H.M.Supeno"));
-//        kegiatanList.add(new Kegiatan("KEG00005", true, "Sholawat Diba'", "29/03/2022","19.30", "Pengajuan Rutin Sabtu Pon","Masjid At-Taqwa","Bpk. M. Khoirul Huda"));
-//    }
 
     public void getData(View view){
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url+"/kegiatan", null, new Response.Listener<JSONArray>() {
@@ -155,6 +155,13 @@ public class KegiatanFragment extends Fragment implements View.OnClickListener, 
     @Override
     public void doClick(String id) {
 
+    }
+
+    private void aksesLevel(String level){
+        if (level.equals("1") || level.equals("2")) {
+            rlTambahKegiatan.setVisibility(View.GONE);
+            tvTambahData.setVisibility(View.GONE);
+        }
     }
 }
 

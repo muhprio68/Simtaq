@@ -11,9 +11,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import id.simtaq.androidapp.CatatDonaturActivity;
 import id.simtaq.androidapp.CatatKeuanganActivity;
-import id.simtaq.androidapp.CatatPemasukanActivity;
-import id.simtaq.androidapp.CatatPengeluaranActivity;
 import id.simtaq.androidapp.InfakOnlineActivity;
 import id.simtaq.androidapp.JadwalKegiatanActivity;
 import id.simtaq.androidapp.R;
@@ -72,12 +71,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         rlRiwayatUangKas = v.findViewById(R.id.rlButtonRiwayatUangKas);
         rlJadwalKegiatan = v.findViewById(R.id.rlButtonJadwalKegiatan);
         rlInfakOnline = v.findViewById(R.id.rlInfakOnline);
-        rlCatatKeuangan = v.findViewById(R.id.rlButtonCatatKeuangan);
-        rlCatatDonatur = v.findViewById(R.id.rlButtonCatatDonatur);
-        rlTambahKegiatan = v.findViewById(R.id.rlButtonTambahKegiatan);
-        tvCatatKeuangan = v.findViewById(R.id.tvCatatKeuangan);
-        tvCatatDonatur = v.findViewById(R.id.tvCatatDonatur);
-        tvTambahKegiatan = v.findViewById(R.id.tvTambahKegiatan);
+        rlCatatKeuangan = v.findViewById(R.id.rlCatatKeuangan);
+        rlCatatDonatur = v.findViewById(R.id.rlCatatDonatur);
+        rlTambahKegiatan = v.findViewById(R.id.rlTambahKegiatan);
     }
 
     @Override
@@ -98,7 +94,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             if (level.equals("3")){
                 Toast.makeText(getContext(), "Menu hanya untuk bendahara takmir", Toast.LENGTH_SHORT).show();
             } else {
-                startActivity(new Intent(v.getContext(), CatatPengeluaranActivity.class));
+                startActivity(new Intent(v.getContext(), CatatDonaturActivity.class));
             }
         } else if (v== rlTambahKegiatan){
             if (level.equals("2")){
@@ -114,9 +110,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             rlCatatKeuangan.setVisibility(View.GONE);
             rlCatatDonatur.setVisibility(View.GONE);
             rlTambahKegiatan.setVisibility(View.GONE);
-            tvCatatKeuangan.setVisibility(View.GONE);
-            tvCatatDonatur.setVisibility(View.GONE);
-            tvTambahKegiatan.setVisibility(View.GONE);
         }
     }
 }

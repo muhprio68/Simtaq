@@ -126,7 +126,7 @@
                     android:id="@+id/rlCatatKeuangan"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/tvTambahData"
+                    android:layout_below="@id/tvTambahDataKeuangan"
                     android:layout_marginEnd="16dp">
 
                     <RelativeLayout
@@ -156,9 +156,10 @@
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:id="@+id/rlCatatDonatur"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/tvTambahData"
+                    android:layout_below="@id/tvTambahDataKeuangan"
                     android:layout_toEndOf="@id/rlCatatKeuangan">
 
                     <RelativeLayout
@@ -200,7 +201,7 @@
                     android:textSize="18sp" />
 
                 <TextView
-                    android:id="@+id/tvTambahData"
+                    android:id="@+id/tvTambahDataKeuangan"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/cvPemasukanBlnIni"

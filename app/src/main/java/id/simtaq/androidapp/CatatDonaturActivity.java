@@ -37,19 +37,19 @@ import java.util.Map;
 import static id.simtaq.androidapp.helper.config.locale;
 import static id.simtaq.androidapp.helper.config.url;
 
-public class CatatPengeluaranActivity extends AppCompatActivity {
+public class CatatDonaturActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
-    private RelativeLayout rlCatatPengeluaran;
-    private ProgressBar pbCatatPengeluaran;
-    private EditText etTglPengeluaran;
-    private EditText etKetPengeluaran;
-    private EditText etNominalPengeluaran;
-    private EditText etDeskripPengeluaran;
-    private Button btnSimpanPengeluaran;
-    private Button btnBatalPengeluaran;
+    private RelativeLayout rlCatatDonatur;
+    private ProgressBar pbCatatDonatur;
+    private EditText etTglDonatur;
+    private EditText etKeteranganDonatur;
+    private EditText etNominalDonatur;
+    private EditText etDeskripDonatur;
+    private Button btnSimpanDonatur;
+    private Button btnBatalDonatur;
 
-    private String tglPengeluaran, ketPengeluaran, nominalPengeluaran, deskripPengeluaran;
+    private String tglDonatur, ketDonatur, nominalDonatur, deskripDonatur;
 
     private RequestQueue queue;
 
@@ -60,74 +60,75 @@ public class CatatPengeluaranActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_catat_pengeluaran);
+        setContentView(R.layout.activity_catat_donatur);
         initViews();
         setSupportActionBar(toolbar);
 
-        getSupportActionBar().setTitle("Catat Pengeluaran");
+        getSupportActionBar().setTitle("Catat Donatur");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back_white);
-        queue = Volley.newRequestQueue(CatatPengeluaranActivity.this);
+        queue = Volley.newRequestQueue(CatatDonaturActivity.this);
         getSaldo();
         dateFormatter = new SimpleDateFormat("yyyy-MM-dd", locale);
-        etTglPengeluaran.setOnClickListener(new View.OnClickListener() {
+
+        etTglDonatur.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showDateDialog();
             }
         });
 
-        btnSimpanPengeluaran.setOnClickListener(new View.OnClickListener() {
+        btnSimpanDonatur.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                tglPengeluaran = etTglPengeluaran.getText().toString();
-                ketPengeluaran = etKetPengeluaran.getText().toString();
-                nominalPengeluaran = etNominalPengeluaran.getText().toString();
-                deskripPengeluaran = etDeskripPengeluaran.getText().toString();
+                tglDonatur = etTglDonatur.getText().toString();
+                ketDonatur = etKeteranganDonatur.getText().toString();
+                nominalDonatur = etNominalDonatur.getText().toString();
+                deskripDonatur = etDeskripDonatur.getText().toString();
 
-                if (TextUtils.isEmpty(tglPengeluaran)) {
-                    etTglPengeluaran.setError("Masukkan nama kegiatan");
-                } else if (TextUtils.isEmpty(ketPengeluaran)){
-                    etKetPengeluaran.setError("Masukkan tanggal kegiatan");
-                } else if (TextUtils.isEmpty(nominalPengeluaran)){
-                    etNominalPengeluaran.setError("Masukkan waktu kegiatan");
+                if (TextUtils.isEmpty(tglDonatur)) {
+                    etTglDonatur.setError("Masukkan tanggal");
+                } else if (TextUtils.isEmpty(ketDonatur)){
+                    etKeteranganDonatur.setError("Masukkan keterangan");
+                } else if (TextUtils.isEmpty(nominalDonatur)){
+                    etNominalDonatur.setError("Masukkan nominal");
                 } else {
-                    tambahDataPengeluaran(tglPengeluaran, ketPengeluaran, nominalPengeluaran, deskripPengeluaran);
+                    tambahDataPemasukan(tglDonatur, ketDonatur, nominalDonatur, deskripDonatur);
                 }
             }
         });
 
-        btnBatalPengeluaran.setOnClickListener(new View.OnClickListener() {
+        btnBatalDonatur.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                etTglPengeluaran.setText("");
-                etKetPengeluaran.setText("");
-                etNominalPengeluaran.setText("");
-                etDeskripPengeluaran.setText("");
-                Toast.makeText(CatatPengeluaranActivity.this, "Catat pengeluaran dibatalkan", Toast.LENGTH_SHORT).show();
+                etTglDonatur.setText("");
+                etKeteranganDonatur.setText("");
+                etNominalDonatur.setText("");
+                etDeskripDonatur.setText("");
+                Toast.makeText(CatatDonaturActivity.this, "Catat donatur dibatalkan", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     public void initViews(){
-        toolbar = findViewById(R.id.tbCatatPengeluaran);
-        rlCatatPengeluaran = findViewById(R.id.rlCatatPengeluaran);
-        pbCatatPengeluaran = findViewById(R.id.pbCatatPengeluaran);
-        etTglPengeluaran = findViewById(R.id.etTanggalPengeluaran);
-        etKetPengeluaran = findViewById(R.id.etKeteranganPengeluaran);
-        etNominalPengeluaran = findViewById(R.id.etNominalPengeluaran);
-        etDeskripPengeluaran = findViewById(R.id.etDeskripsiPengeluaran);
-        btnSimpanPengeluaran = findViewById(R.id.btnSimpanPengeluaran);
-        btnBatalPengeluaran = findViewById(R.id.btnBatalPengeluaran);
+        toolbar = findViewById(R.id.tbCatatDonatur);
+        rlCatatDonatur = findViewById(R.id.rlCatatDonatur);
+        pbCatatDonatur = findViewById(R.id.pbCatatDonatur);
+        etTglDonatur = findViewById(R.id.etTanggalDonatur);
+        etKeteranganDonatur = findViewById(R.id.etKeteranganRtRw);
+        etNominalDonatur = findViewById(R.id.etNominalDonatur);
+        etDeskripDonatur = findViewById(R.id.etDeskripsiDonatur);
+        btnSimpanDonatur = findViewById(R.id.btnSimpanDonatur);
+        btnBatalDonatur = findViewById(R.id.btnBatalDonatur);
     }
 
-    private void tambahDataPengeluaran(String tglPengeluaran, String ketPengeluaran, String nominalPengeluaran, String deskripPengeluaran) {
+    private void tambahDataPemasukan(String tglPemasukan, String ketPemasukan, String nominalPemasukan, String deskripPemasukan) {
         StringRequest request = new StringRequest(Request.Method.POST, url+"/keuangan", new com.android.volley.Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                pbCatatDonatur.setVisibility(View.GONE);
                 Log.e("TAG", "RESPONSE IS " + response);
-                pbCatatPengeluaran.setVisibility(View.GONE);
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     // on below line we are displaying a success toast message.
@@ -138,16 +139,16 @@ public class CatatPengeluaranActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 // and setting data to edit text as empty
-                etTglPengeluaran.setText("");
-                etKetPengeluaran.setText("");
-                etNominalPengeluaran.setText("");
-                etDeskripPengeluaran.setText("");
+                etTglDonatur.setText("");
+                etKeteranganDonatur.setText("");
+                etNominalDonatur.setText("");
+                etDeskripDonatur.setText("");
             }
         }, new com.android.volley.Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 // method to handle errors.
-                Toast.makeText(CatatPengeluaranActivity.this, "Fail to get response = " + error, Toast.LENGTH_SHORT).show();
+                Toast.makeText(CatatDonaturActivity.this, "Fail to get response = " + error, Toast.LENGTH_SHORT).show();
             }
         }) {
             @Override
@@ -167,15 +168,15 @@ public class CatatPengeluaranActivity extends AppCompatActivity {
                 // on below line we are passing our
                 // key and value pair to our parameters.
                 params.put("no_keuangan", "PEN-220921001");
-                params.put("tipe_keuangan", "Pengeluaran");
-                params.put("tgl_keuangan", tglPengeluaran);
-                params.put("keterangan_keuangan", ketPengeluaran);
+                params.put("tipe_keuangan", "Pemasukan");
+                params.put("tgl_keuangan", tglPemasukan);
+                params.put("keterangan_keuangan", ketPemasukan);
                 params.put("status_keuangan", "Selesai");
-                params.put("nominal_keuangan", nominalPengeluaran);
+                params.put("nominal_keuangan", nominalPemasukan);
                 params.put("jml_kas_awal", jmlSaldo);
-                int jmlKasAkhir = Integer.parseInt(jmlSaldo)-Integer.parseInt(nominalPengeluaran);
+                int jmlKasAkhir = Integer.parseInt(jmlSaldo)+Integer.parseInt(nominalPemasukan);
                 params.put("jml_kas_akhir", jmlKasAkhir+"");
-                params.put("deskripsi_keuangan", deskripPengeluaran);
+                params.put("deskripsi_keuangan", deskripPemasukan);
                 params.put("create_at", getCurentDate());
                 params.put("update_at", getCurentDate());
                 ubahSaldo(jmlKasAkhir+"");
@@ -195,17 +196,17 @@ public class CatatPengeluaranActivity extends AppCompatActivity {
             public void onResponse(JSONArray response) {
                 //pbJadwalKegiatan.setVisibility(View.GONE);
                 //rvJadwalKegiatan.setVisibility(View.VISIBLE);
-                    try {
-                        JSONObject responseObj = response.getJSONObject(0);
-                        jmlSaldo = responseObj.getString("jml_saldo");
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+                try {
+                    JSONObject responseObj = response.getJSONObject(0);
+                    jmlSaldo = responseObj.getString("jml_saldo");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(CatatPengeluaranActivity.this, "Fail to get the data..", Toast.LENGTH_SHORT).show();
+                Toast.makeText(CatatDonaturActivity.this, "Fail to get the data..", Toast.LENGTH_SHORT).show();
             }
         });
         queue.add(jsonArrayRequest);
@@ -230,7 +231,7 @@ public class CatatPengeluaranActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 // method to handle errors.
-                Toast.makeText(CatatPengeluaranActivity.this, "Fail to get response = " + error, Toast.LENGTH_SHORT).show();
+                Toast.makeText(CatatDonaturActivity.this, "Fail to get response = " + error, Toast.LENGTH_SHORT).show();
             }
         }) {
             @Override
@@ -279,7 +280,7 @@ public class CatatPengeluaranActivity extends AppCompatActivity {
                 Calendar newDate = Calendar.getInstance();
                 newDate.set(year, monthOfYear, dayOfMonth);
 
-                etTglPengeluaran.setText(dateFormatter.format(newDate.getTime()));
+                etTglDonatur.setText(dateFormatter.format(newDate.getTime()));
             }
 
         },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
@@ -291,7 +292,7 @@ public class CatatPengeluaranActivity extends AppCompatActivity {
     }
 
     public void snackbarWithAction(){
-        Snackbar snackbar = Snackbar.make(rlCatatPengeluaran ,"Data berhasil disimpan",Snackbar.LENGTH_SHORT);
+        Snackbar snackbar = Snackbar.make(rlCatatDonatur ,"Data berhasil disimpan",Snackbar.LENGTH_SHORT);
         snackbar.setAction("Lihat", new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -310,11 +311,11 @@ public class CatatPengeluaranActivity extends AppCompatActivity {
     }
 
     public void lihatTambahData() {
-        Intent intent = new Intent(CatatPengeluaranActivity.this, DetailRiwayatKasActivity.class);
-        intent.putExtra("intentDari", "catat pengeluaran");
+        Intent intent = new Intent(CatatDonaturActivity.this, DetailRiwayatKasActivity.class);
+        intent.putExtra("intentDari", "catat Pemasukan");
         startActivity(intent);
     }
-
+    
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();
