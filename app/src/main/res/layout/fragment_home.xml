@@ -83,12 +83,10 @@
 
     </RelativeLayout>
 
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/rlHeaderHome">
-
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -346,7 +344,7 @@
                 android:layout_below="@id/clMenuRow2">
 
                 <RelativeLayout
-                    android:id="@+id/rlMasjidAtTaqwa"
+                    android:id="@+id/rlLokasiKegiatan"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:layout_constraintStart_toStartOf="parent"
@@ -383,7 +381,7 @@
                     android:id="@+id/rlPengurusTakmir"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintStart_toEndOf="@id/rlMasjidAtTaqwa"
+                    app:layout_constraintStart_toEndOf="@id/rlLokasiKegiatan"
                     app:layout_constraintEnd_toStartOf="@id/rlTentangSimtaq"
                     app:layout_constraintTop_toTopOf="parent">
 

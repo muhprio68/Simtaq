@@ -14,6 +14,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -43,7 +44,7 @@ public class CatatDonaturActivity extends AppCompatActivity {
     private RelativeLayout rlCatatDonatur;
     private ProgressBar pbCatatDonatur;
     private EditText etTglDonatur;
-    private EditText etKeteranganDonatur;
+    private Spinner spKeteranganDonatur;
     private EditText etNominalDonatur;
     private EditText etDeskripDonatur;
     private Button btnSimpanDonatur;
@@ -83,15 +84,14 @@ public class CatatDonaturActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 tglDonatur = etTglDonatur.getText().toString();
-                ketDonatur = etKeteranganDonatur.getText().toString();
+                String valueSpinner = spKeteranganDonatur.getSelectedItem().toString();
+                ketDonatur = valueSpinner;
                 nominalDonatur = etNominalDonatur.getText().toString();
                 deskripDonatur = etDeskripDonatur.getText().toString();
 
                 if (TextUtils.isEmpty(tglDonatur)) {
                     etTglDonatur.setError("Masukkan tanggal");
-                } else if (TextUtils.isEmpty(ketDonatur)){
-                    etKeteranganDonatur.setError("Masukkan keterangan");
-                } else if (TextUtils.isEmpty(nominalDonatur)){
+                }  else if (TextUtils.isEmpty(nominalDonatur)){
                     etNominalDonatur.setError("Masukkan nominal");
                 } else {
                     tambahDataPemasukan(tglDonatur, ketDonatur, nominalDonatur, deskripDonatur);
@@ -103,7 +103,6 @@ public class CatatDonaturActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 etTglDonatur.setText("");
-                etKeteranganDonatur.setText("");
                 etNominalDonatur.setText("");
                 etDeskripDonatur.setText("");
                 Toast.makeText(CatatDonaturActivity.this, "Catat donatur dibatalkan", Toast.LENGTH_SHORT).show();
@@ -116,14 +115,14 @@ public class CatatDonaturActivity extends AppCompatActivity {
         rlCatatDonatur = findViewById(R.id.rlCatatDonatur);
         pbCatatDonatur = findViewById(R.id.pbCatatDonatur);
         etTglDonatur = findViewById(R.id.etTanggalDonatur);
-        etKeteranganDonatur = findViewById(R.id.etKeteranganRtRw);
+        spKeteranganDonatur = findViewById(R.id.spKetDonatur);
         etNominalDonatur = findViewById(R.id.etNominalDonatur);
         etDeskripDonatur = findViewById(R.id.etDeskripsiDonatur);
         btnSimpanDonatur = findViewById(R.id.btnSimpanDonatur);
         btnBatalDonatur = findViewById(R.id.btnBatalDonatur);
     }
 
-    private void tambahDataPemasukan(String tglPemasukan, String ketPemasukan, String nominalPemasukan, String deskripPemasukan) {
+    private void tambahDataPemasukan(String tglDonatur, String ketDonatur, String nominalDonatur, String deskripDonatur) {
         StringRequest request = new StringRequest(Request.Method.POST, url+"/keuangan", new com.android.volley.Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -140,7 +139,6 @@ public class CatatDonaturActivity extends AppCompatActivity {
                 }
                 // and setting data to edit text as empty
                 etTglDonatur.setText("");
-                etKeteranganDonatur.setText("");
                 etNominalDonatur.setText("");
                 etDeskripDonatur.setText("");
             }
@@ -169,14 +167,14 @@ public class CatatDonaturActivity extends AppCompatActivity {
                 // key and value pair to our parameters.
                 params.put("no_keuangan", "PEN-220921001");
                 params.put("tipe_keuangan", "Pemasukan");
-                params.put("tgl_keuangan", tglPemasukan);
-                params.put("keterangan_keuangan", ketPemasukan);
+                params.put("tgl_keuangan", tglDonatur);
+                params.put("keterangan_keuangan", ketDonatur);
                 params.put("status_keuangan", "Selesai");
-                params.put("nominal_keuangan", nominalPemasukan);
+                params.put("nominal_keuangan", nominalDonatur);
                 params.put("jml_kas_awal", jmlSaldo);
-                int jmlKasAkhir = Integer.parseInt(jmlSaldo)+Integer.parseInt(nominalPemasukan);
+                int jmlKasAkhir = Integer.parseInt(jmlSaldo)+Integer.parseInt(nominalDonatur);
                 params.put("jml_kas_akhir", jmlKasAkhir+"");
-                params.put("deskripsi_keuangan", deskripPemasukan);
+                params.put("deskripsi_keuangan", deskripDonatur);
                 params.put("create_at", getCurentDate());
                 params.put("update_at", getCurentDate());
                 ubahSaldo(jmlKasAkhir+"");

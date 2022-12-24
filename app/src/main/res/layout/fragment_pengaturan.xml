@@ -38,11 +38,11 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/tbPengaturan"
         android:paddingLeft="16dp"
         android:paddingTop="16dp"
         android:paddingRight="16dp"
-        android:paddingBottom="8dp"
-        android:layout_below="@id/tbPengaturan">
+        android:paddingBottom="8dp">
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -55,20 +55,30 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/rounded_white"
+                android:paddingLeft="16dp"
                 android:paddingTop="82dp"
-                android:paddingRight="16dp"
-                android:paddingLeft="16dp">
-                <TextView
-                    android:id="@+id/tvNamaPengguna"
+                android:paddingRight="16dp">
+
+                <RelativeLayout
+                    android:id="@+id/rlBtnEditProfil"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_below="@id/tvTipePengguna"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="4dp"
-                    android:text="Lee Ruby"
-                    android:textAlignment="center"
-                    android:textColor="@color/primaryTextColor"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
+                    android:layout_marginBottom="32dp"
+                    android:background="@drawable/rounded_btn_editprofil">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvEditProfil"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:text="Edit Profile"
+                        android:textColor="@color/white"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+                </RelativeLayout>
 
                 <TextView
                     android:id="@+id/tvEmailPengguna"
@@ -89,34 +99,25 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tvEmailPengguna"
                     android:layout_centerHorizontal="true"
-                    android:text="Admin"
                     android:layout_marginBottom="4dp"
+                    android:text="Admin"
                     android:textAlignment="center"
                     android:textColor="@color/primaryTextColor"
                     android:textSize="16sp"
                     android:textStyle="italic" />
 
 
-                <RelativeLayout
-                    android:id="@+id/rlBtnEditProfil"
+                <TextView
+                    android:id="@+id/tvNamaPengguna"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/tvTipePengguna"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="32dp"
-                    android:background="@drawable/rounded_btn_editprofil">
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tvTanggal"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginRight="8dp"
-                        android:text="Edit Profile"
-                        android:textColor="@color/white"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-                </RelativeLayout>
+                    android:layout_marginBottom="4dp"
+                    android:text="Lee Ruby"
+                    android:textAlignment="center"
+                    android:textColor="@color/primaryTextColor"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
 
                 <View
                     android:id="@+id/garisPengaturan1"
@@ -129,12 +130,6 @@
                     android:layout_marginBottom="8dp"
                     android:background="@color/primaryColor" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvPengaturan"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/garisPengaturan1" />
-
                 <View
                     android:id="@+id/garisPengaturan2"
                     android:layout_width="match_parent"
@@ -145,24 +140,66 @@
                     android:layout_marginEnd="1dp"
                     android:layout_marginBottom="16dp"
                     android:background="@color/primaryColor" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvPengaturan"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/garisPengaturan1" />
             </RelativeLayout>
 
         </androidx.cardview.widget.CardView>
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="140dp"
-            android:layout_height="140dp"
-            android:layout_centerHorizontal="true"
-            app:cardCornerRadius="150dp">
+        <!--        <androidx.cardview.widget.CardView-->
+        <!--            android:layout_width="140dp"-->
+        <!--            android:layout_height="140dp"-->
+        <!--            android:layout_centerHorizontal="true"-->
+        <!--            app:cardCornerRadius="150dp">-->
 
-            <androidx.appcompat.widget.AppCompatImageView
+        <!--            <androidx.appcompat.widget.AppCompatImageView-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="match_parent"-->
+        <!--                android:scaleType="centerCrop"-->
+        <!--                android:src="@drawable/profil" />-->
+
+        <!--        </androidx.cardview.widget.CardView>-->
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cvLogo"
+            android:layout_width="148dp"
+            android:layout_height="148dp"
+            android:layout_centerHorizontal="true"
+            app:cardCornerRadius="148dp">
+
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                android:src="@drawable/profil" />
+                android:background="@drawable/rounded_logo">
 
+                <TextView
+                    android:id="@+id/tvSimTaqLogo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/ivSimtaqLogo"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="6dp"
+                    android:fontFamily="@font/blessed_eid_demo"
+                    android:text="SimTaq"
+                    android:textColor="@android:color/white"
+                    android:textSize="32sp"
+                    android:textStyle="bold" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivSimtaqLogo"
+                    android:layout_width="72dp"
+                    android:layout_height="72dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="16dp"
+                    android:src="@drawable/ic_mosque" />
+
+            </RelativeLayout>
         </androidx.cardview.widget.CardView>
-
 
     </RelativeLayout>
 

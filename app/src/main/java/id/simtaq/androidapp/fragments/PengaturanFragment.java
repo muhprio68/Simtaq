@@ -10,14 +10,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import id.simtaq.androidapp.EditProfilActivity;
 import id.simtaq.androidapp.JadwalKegiatanActivity;
+import id.simtaq.androidapp.LaporkanBugActivity;
 import id.simtaq.androidapp.R;
 import id.simtaq.androidapp.SplashScreenActivity;
+import id.simtaq.androidapp.TentangSimtaqActivity;
+import id.simtaq.androidapp.UbahKataSandiActivity;
 import id.simtaq.androidapp.adapter.PengaturanListAdapter;
 import id.simtaq.androidapp.adapter.RiwayatListAdapter;
 import id.simtaq.androidapp.helper.Preferences;
@@ -28,21 +33,33 @@ public class PengaturanFragment extends Fragment implements PengaturanListAdapte
     private RecyclerView rvPengaturan;
     private ArrayList<Pengaturan> pengaturanList;
     private TextView tvNama, tvEmail, tvTipePengguna;
-    private String nama, email, tipePengguna;
+    private String nama, email, levelPengguna, tipePengguna;
+    private RelativeLayout rlBtnEditProfil;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_pengaturan, container, false);
-        addData();
         initViews(view);
         nama = Preferences.getKeyNama(getContext());
         email = Preferences.getKeyEmail(getContext());
+        levelPengguna = Preferences.getKeyLevel(getContext());
         tipePengguna = initPengguna(Preferences.getKeyLevel(getContext()));
         setProfil();
+        if (levelPengguna.equals("4")){
+            addDataSuperAdmin();
+        } else {
+            addData();
+        }
         rvPengaturan.setHasFixedSize(true);
         rvPengaturan.setLayoutManager(new LinearLayoutManager(view.getContext()));
         rvPengaturan.setAdapter(new PengaturanListAdapter(view.getContext(), pengaturanList, this));
+        rlBtnEditProfil.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), EditProfilActivity.class));
+            }
+        });
         return view;
     }
 
@@ -51,11 +68,23 @@ public class PengaturanFragment extends Fragment implements PengaturanListAdapte
         tvNama = view.findViewById(R.id.tvNamaPengguna);
         tvEmail = view.findViewById(R.id.tvEmailPengguna);
         tvTipePengguna = view.findViewById(R.id.tvTipePengguna);
+        rlBtnEditProfil = view.findViewById(R.id.rlBtnEditProfil);
     }
 
     void addData(){
         pengaturanList = new ArrayList<>();
+        pengaturanList.add(new Pengaturan(0, R.drawable.ic_lock_primarytext, "Ganti Kata Sandi"));
+        pengaturanList.add(new Pengaturan(1, R.drawable.ic_document_bug, "Laporkan Bug"));
+        pengaturanList.add(new Pengaturan(2, R.drawable.ic_info_squared, "Tentang"));
+        pengaturanList.add(new Pengaturan(3, R.drawable.ic_shutdown, "Keluar"));
+    }
+
+    void addDataSuperAdmin(){
+        pengaturanList = new ArrayList<>();
         pengaturanList.add(new Pengaturan(0, R.drawable.ic_lock_primarytext, "Ganti kata sandi"));
+        pengaturanList.add(new Pengaturan(4, R.drawable.ic_lock_primarytext, "Tambah Akun"));
+        pengaturanList.add(new Pengaturan(5, R.drawable.ic_lock_primarytext, "Ubah Akun"));
+        pengaturanList.add(new Pengaturan(6, R.drawable.ic_lock_primarytext, "Hapus Akun"));
         pengaturanList.add(new Pengaturan(1, R.drawable.ic_document_bug, "Laporkan Bug"));
         pengaturanList.add(new Pengaturan(2, R.drawable.ic_info_squared, "Tentang"));
         pengaturanList.add(new Pengaturan(3, R.drawable.ic_shutdown, "Keluar"));
@@ -82,11 +111,11 @@ public class PengaturanFragment extends Fragment implements PengaturanListAdapte
     @Override
     public void doClick(int id) {
         if (id == 0){
-            Toast.makeText(getContext(), "Ganti kata sandi", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(getContext(), UbahKataSandiActivity.class));
         } else if (id == 1) {
-            Toast.makeText(getContext(), "Laporkan Bug", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(getContext(), LaporkanBugActivity.class));
         } else if (id == 2) {
-            Toast.makeText(getContext(), "Tentang Simtaq", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(getContext(), TentangSimtaqActivity.class));
         } else {
             Preferences.setKeyToken(getContext(),"");
             Preferences.setKeyId(getContext(),"");

@@ -123,7 +123,7 @@ public class TambahKegiatanActivity extends AppCompatActivity {
                 etTempatKegiatan.setText("");
                 etPembicaraKegiatan.setText("");
                 etDeskripsiKegiatan.setText("");
-                Toast.makeText(TambahKegiatanActivity.this, "Tambah keegiatan dibatalkan", Toast.LENGTH_SHORT).show();
+                Toast.makeText(TambahKegiatanActivity.this, "Tambah kegiatan dibatalkan", Toast.LENGTH_SHORT).show();
             }
         });
     }

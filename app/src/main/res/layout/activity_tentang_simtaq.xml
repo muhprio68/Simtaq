@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".TentangSimtaqActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/tbTentangSimtaq"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="?attr/actionBarSize"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        style="@style/AppTheme.Toolbar"/>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvLogo"
+        android:layout_width="180dp"
+        android:layout_height="180dp"
+        android:layout_marginTop="120dp"
+        app:cardBackgroundColor="@color/primaryColor"
+        app:cardCornerRadius="150dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tbTentangSimtaq">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivSimtaqLogo"
+                android:layout_width="88dp"
+                android:layout_height="88dp"
+                android:src="@drawable/ic_mosque"
+                android:layout_marginTop="20dp"
+                android:layout_centerHorizontal="true"
+                />
+
+            <TextView
+                android:id="@+id/tvSimTaqLogo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ivSimtaqLogo"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/blessed_eid_demo"
+                android:text="SimTaq"
+                android:textColor="@android:color/white"
+                android:textSize="38sp"
+                android:layout_centerHorizontal="true"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/tvTentang"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cvLogo"
+        android:textAlignment="center"
+        android:textSize="22sp"
+        android:text="@string/tentang"
+
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

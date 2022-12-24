@@ -15,19 +15,19 @@ import id.simtaq.androidapp.CatatDonaturActivity;
 import id.simtaq.androidapp.CatatKeuanganActivity;
 import id.simtaq.androidapp.InfakOnlineActivity;
 import id.simtaq.androidapp.JadwalKegiatanActivity;
+import id.simtaq.androidapp.LokasiKegiatanActivity;
+import id.simtaq.androidapp.PengurusTakmirActivity;
 import id.simtaq.androidapp.R;
 import id.simtaq.androidapp.RiwayatActivity;
 import id.simtaq.androidapp.TambahKegiatanActivity;
+import id.simtaq.androidapp.TentangSimtaqActivity;
 import id.simtaq.androidapp.helper.Preferences;
 
 public class HomeFragment extends Fragment implements View.OnClickListener {
 
-    private RelativeLayout rlRiwayatUangKas;
-    private RelativeLayout rlJadwalKegiatan;
-    private RelativeLayout rlInfakOnline;
-    private RelativeLayout rlCatatKeuangan;
-    private RelativeLayout rlCatatDonatur;
-    private RelativeLayout rlTambahKegiatan;
+    private RelativeLayout rlRiwayatUangKas, rlJadwalKegiatan, rlInfakOnline;
+    private RelativeLayout rlCatatKeuangan,rlCatatDonatur, rlTambahKegiatan;
+    private RelativeLayout rlLokasiKegiatan, rlPengurusTakmir, rlTentangSimtaq;
 
     private TextView tvCatatKeuangan, tvCatatDonatur, tvTambahKegiatan;
 
@@ -63,6 +63,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         rlCatatKeuangan.setOnClickListener(this);
         rlCatatDonatur.setOnClickListener(this);
         rlTambahKegiatan.setOnClickListener(this);
+        rlLokasiKegiatan.setOnClickListener(this);
+        rlPengurusTakmir.setOnClickListener(this);
+        rlTentangSimtaq.setOnClickListener(this);
         aksesLevel(level);
         return view;
     }
@@ -74,6 +77,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         rlCatatKeuangan = v.findViewById(R.id.rlCatatKeuangan);
         rlCatatDonatur = v.findViewById(R.id.rlCatatDonatur);
         rlTambahKegiatan = v.findViewById(R.id.rlTambahKegiatan);
+        rlLokasiKegiatan = v.findViewById(R.id.rlLokasiKegiatan);
+        rlPengurusTakmir = v.findViewById(R.id.rlPengurusTakmir);
+        rlTentangSimtaq = v.findViewById(R.id.rlTentangSimtaq);
     }
 
     @Override
@@ -102,6 +108,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             } else{
                 startActivity(new Intent(v.getContext(), TambahKegiatanActivity.class));
             }
+        } else if (v== rlLokasiKegiatan){
+            startActivity(new Intent(v.getContext(), LokasiKegiatanActivity.class));
+        } else if (v== rlPengurusTakmir){
+            startActivity(new Intent(v.getContext(), PengurusTakmirActivity.class));
+        } else if (v== rlTentangSimtaq){
+            startActivity(new Intent(v.getContext(), TentangSimtaqActivity.class));
         }
     }
 
