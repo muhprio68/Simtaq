@@ -15,4 +15,123 @@
         app:layout_constraintTop_toTopOf="parent"
         style="@style/AppTheme.Toolbar"/>
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/tbUbahKataSandi"
+        app:layout_constraintStart_toStartOf="parent"
+        android:padding="16dp">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvPasswordLama"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Kata Sandi Lama"
+            android:textSize="18sp"
+            android:textColor="@color/primaryTextColor"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <EditText
+            android:id="@+id/etPasswordLama"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/rounded_border_tambahdata"
+            android:drawablePadding="16dp"
+            android:ems="10"
+            android:hint="Masukkan kata sandi lama"
+            android:inputType="textPassword"
+            android:padding="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvPasswordLama" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvPasswordBaru"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:text="Kata Sandi Baru"
+            android:textColor="@color/primaryTextColor"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/etPasswordLama"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <EditText
+            android:id="@+id/etPasswordBaru"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/rounded_border_tambahdata"
+            android:drawablePadding="16dp"
+            android:ems="10"
+            android:hint="Masukkan kata sandi baru"
+            android:inputType="textPassword"
+            android:padding="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvPasswordBaru" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvKonfirmasiPasswordBaru"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Konfirmasi Kata Sandi Baru"
+            android:textSize="18sp"
+            android:textColor="@color/primaryTextColor"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/etPasswordBaru"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <EditText
+            android:id="@+id/etKonfirmasiPasswordBaru"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/rounded_border_tambahdata"
+            android:drawablePadding="16dp"
+            android:ems="10"
+            android:hint="Ulangi kata sandi baru"
+            android:inputType="textPassword"
+            android:padding="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvKonfirmasiPasswordBaru" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnBatalUbahSandi"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="4dp"
+            android:background="@drawable/rounded_bg_orange"
+            android:text="Batal"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btnSimpanUbahSandi"
+            app:layout_constraintTop_toBottomOf="@+id/etKonfirmasiPasswordBaru" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnSimpanUbahSandi"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/rounded_bg_primary"
+            android:text="Simpan"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/btnBatalUbahSandi"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etKonfirmasiPasswordBaru" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

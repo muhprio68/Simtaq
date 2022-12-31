@@ -6,4 +6,181 @@
     android:layout_height="match_parent"
     tools:context=".TambahAkunActivity">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/tbTambahAkun"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="?attr/actionBarSize"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        style="@style/AppTheme.Toolbar"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/tbTambahAkun"
+        app:layout_constraintStart_toStartOf="parent"
+        android:padding="16dp">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvNamaTambahAkun"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Nama"
+            android:textSize="18sp"
+            android:textColor="@color/primaryTextColor"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <EditText
+            android:id="@+id/etNamaTambahAkun"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/rounded_border_tambahdata"
+            android:drawablePadding="16dp"
+            android:ems="10"
+            android:hint="Masukkan Nama"
+            android:inputType="textPersonName"
+            android:padding="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvNamaTambahAkun" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvEmailTambahAkun"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Email"
+            android:textSize="18sp"
+            android:textColor="@color/primaryTextColor"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/etNamaTambahAkun"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <EditText
+            android:id="@+id/etEmailTambahAkun"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/rounded_border_tambahdata"
+            android:drawablePadding="16dp"
+            android:ems="10"
+            android:hint="Masukkan Email"
+            android:inputType="textEmailAddress"
+            android:padding="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvEmailTambahAkun" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvPasswordTambahAkun"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Password"
+            android:textSize="18sp"
+            android:textColor="@color/primaryTextColor"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/etEmailTambahAkun"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <EditText
+            android:id="@+id/etPasswordTambahAkun"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/rounded_border_tambahdata"
+            android:drawablePadding="16dp"
+            android:ems="10"
+            android:hint="Masukkan Password"
+            android:inputType="textPassword"
+            android:padding="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvPasswordTambahAkun" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvLevelTambahAkun"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Level Pengguna"
+            android:textSize="18sp"
+            android:textColor="@color/primaryTextColor"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/etPasswordTambahAkun"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <RelativeLayout
+            android:id="@+id/rlSpinnerLevelTambahAkun"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight=".28"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/rounded_border_tambahdata"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvLevelTambahAkun">
+
+
+            <Spinner
+                android:id="@+id/spLvlTambahAkun"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:background="@android:color/transparent"
+                android:gravity="center"
+                android:scrollbarSize="16dp"
+                android:entries="@array/lvl_pengguna"
+                android:minHeight="48dp"
+                android:padding="16dp"
+                android:spinnerMode="dropdown" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="16dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_arrow_down" />
+
+        </RelativeLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnBatalTambahAkun"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="4dp"
+            android:background="@drawable/rounded_bg_orange"
+            android:text="Batal"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btnSimpanTambahAkun"
+            app:layout_constraintTop_toBottomOf="@+id/rlSpinnerLevelTambahAkun" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnSimpanTambahAkun"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/rounded_bg_primary"
+            android:text="Simpan"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/btnBatalTambahAkun"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rlSpinnerLevelTambahAkun" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

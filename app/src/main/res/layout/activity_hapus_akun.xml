@@ -6,4 +6,13 @@
     android:layout_height="match_parent"
     tools:context=".HapusAkunActivity">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/tbHapusAkun"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="?attr/actionBarSize"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        style="@style/AppTheme.Toolbar"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

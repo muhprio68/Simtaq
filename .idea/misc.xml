@@ -92,18 +92,21 @@
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/layout/activity_detail_kegiatan.xml" value="0.25" />
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/layout/activity_detail_riwayat_kas.xml" value="0.22" />
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/layout/activity_edit_profil.xml" value="0.16802052159042324" />
+        <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/layout/activity_hapus_akun.xml" value="0.16802052159042324" />
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/layout/activity_infak_online.xml" value="0.25" />
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/layout/activity_jadwal_kegiatan.xml" value="0.25" />
-        <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/layout/activity_laporkan_bug.xml" value="0.16802052159042324" />
+        <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/layout/activity_laporkan_bug.xml" value="0.25" />
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/layout/activity_login.xml" value="0.33" />
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/layout/activity_lokasi_kegiatan.xml" value="0.16802052159042324" />
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/layout/activity_pengurus_takmir.xml" value="0.25" />
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/layout/activity_riwayat.xml" value="0.1675929884566054" />
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/layout/activity_splash_screen.xml" value="0.33" />
+        <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/layout/activity_tambah_akun.xml" value="0.33" />
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/layout/activity_tambah_kegiatan.xml" value="0.25" />
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/layout/activity_tentang_simtaq.xml" value="0.25" />
-        <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/layout/activity_ubah_kata_sandi.xml" value="0.16802052159042324" />
+        <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/layout/activity_ubah_akun.xml" value="0.25" />
+        <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/layout/activity_ubah_kata_sandi.xml" value="0.33" />
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/layout/activity_ubah_kegiatan.xml" value="0.1" />
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/layout/fragment_home.xml" value="0.1" />
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/layout/fragment_infokas.xml" value="0.22" />

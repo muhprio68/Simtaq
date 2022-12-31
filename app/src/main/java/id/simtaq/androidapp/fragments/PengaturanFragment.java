@@ -17,11 +17,15 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import id.simtaq.androidapp.EditProfilActivity;
+import id.simtaq.androidapp.HapusAkunActivity;
 import id.simtaq.androidapp.JadwalKegiatanActivity;
 import id.simtaq.androidapp.LaporkanBugActivity;
 import id.simtaq.androidapp.R;
 import id.simtaq.androidapp.SplashScreenActivity;
+import id.simtaq.androidapp.TambahAkunActivity;
+import id.simtaq.androidapp.TambahKegiatanActivity;
 import id.simtaq.androidapp.TentangSimtaqActivity;
+import id.simtaq.androidapp.UbahAkunActivity;
 import id.simtaq.androidapp.UbahKataSandiActivity;
 import id.simtaq.androidapp.adapter.PengaturanListAdapter;
 import id.simtaq.androidapp.adapter.RiwayatListAdapter;
@@ -116,6 +120,12 @@ public class PengaturanFragment extends Fragment implements PengaturanListAdapte
             startActivity(new Intent(getContext(), LaporkanBugActivity.class));
         } else if (id == 2) {
             startActivity(new Intent(getContext(), TentangSimtaqActivity.class));
+        } else if (id == 4) {
+            startActivity(new Intent(getContext(), TambahAkunActivity.class));
+        } else if (id == 5) {
+            startActivity(new Intent(getContext(), UbahAkunActivity.class));
+        } else if (id == 6) {
+            startActivity(new Intent(getContext(), HapusAkunActivity.class));
         } else {
             Preferences.setKeyToken(getContext(),"");
             Preferences.setKeyId(getContext(),"");

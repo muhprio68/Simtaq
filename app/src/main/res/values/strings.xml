@@ -29,4 +29,11 @@
         <item>RT 02/RW 02</item>
         <item>RT 01/RW 03</item>
     </string-array>
+
+    <string-array name="lvl_pengguna">
+        <item>Jamaah masjid</item>
+        <item>Bendahara takmir</item>
+        <item>humas takmir</item>
+        <item>Superadmin</item>
+    </string-array>
 </resources>
