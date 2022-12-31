@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/clListPengguna"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_margin="8dp">
+
+    <TextView
+        android:id="@+id/tvNamaPenggunaList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:textColor="@color/primaryTextColor"
+        tools:text="Muhammad Supeno" />
+
+    <TextView
+        android:id="@+id/tvTipePenggunaList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        app:layout_constraintTop_toBottomOf="@id/tvNamaPenggunaList"
+        app:layout_constraintStart_toStartOf="parent"
+        android:textColor="@color/primaryTextColor"
+        android:textSize="11sp"
+        tools:text="Superadmin" />
+
+    <TextView
+        android:id="@+id/tvEmailPenggunaList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        app:layout_constraintTop_toBottomOf="@id/tvTipePenggunaList"
+        app:layout_constraintStart_toStartOf="parent"
+        android:textColor="@color/primaryTextColor"
+        android:textSize="8sp"
+        tools:text="muh93gmail.com" />
+
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivIconPengguna"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/ic_chevron_right"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/garisListPengguna"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="4dp"
+        app:layout_constraintTop_toBottomOf="@id/tvEmailPenggunaList"
+        android:background="@color/primaryTextColor" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
