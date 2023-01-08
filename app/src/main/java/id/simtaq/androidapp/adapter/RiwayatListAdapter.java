@@ -134,7 +134,7 @@ public class RiwayatListAdapter extends RecyclerView.Adapter<RiwayatViewHolder> 
     }
 
     public void deleteData(int id){
-        StringRequest dr = new StringRequest(Request.Method.DELETE, url+"/"+id,
+        StringRequest dr = new StringRequest(Request.Method.DELETE, url+"/keuangan/"+id,
                 new Response.Listener<String>()
                 {
                     @Override

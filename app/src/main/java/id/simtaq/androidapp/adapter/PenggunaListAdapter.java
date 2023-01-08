@@ -5,10 +5,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 
@@ -18,15 +23,17 @@ import id.simtaq.androidapp.models.Pengguna;
 import id.simtaq.androidapp.viewholder.PengaturanViewHolder;
 import id.simtaq.androidapp.viewholder.PenggunaViewHolder;
 
+import static id.simtaq.androidapp.helper.config.url;
+
 public class PenggunaListAdapter extends RecyclerView.Adapter<PenggunaViewHolder>{
     ArrayList<Pengguna> penggunaList;
     Context context;
     int tipe;
     IPenggunaAdapter iPenggunaAdapter;
     RequestQueue queue;
-    CoordinatorLayout clListPengguna;
+    ConstraintLayout clListPengguna;
 
-    public PenggunaListAdapter(ArrayList<Pengguna> penggunaList, Context context, int tipe, IPenggunaAdapter iPenggunaAdapter, RequestQueue queue, CoordinatorLayout clListPengguna) {
+    public PenggunaListAdapter(ArrayList<Pengguna> penggunaList, Context context, int tipe, IPenggunaAdapter iPenggunaAdapter, RequestQueue queue, ConstraintLayout clListPengguna) {
         this.penggunaList = penggunaList;
         this.context = context;
         this.tipe = tipe;
@@ -63,10 +70,14 @@ public class PenggunaListAdapter extends RecyclerView.Adapter<PenggunaViewHolder
         }
         holder.tvTipePengguna.setText(tipePengguna);
         holder.tvEmailPengguna.setText(pengguna.getEmail());
-        //holder.ivIconPengaturan.setImageResource(pengaturan.getIconPengaturan());
-        if (position == penggunaList.size()-1){
-            holder.vGaris.setVisibility(View.GONE);
+        if (tipe == 1){
+            holder.ivIconPengguna.setImageResource(R.drawable.ic_ubah_primary);
+        } else {
+            holder.ivIconPengguna.setImageResource(R.drawable.ic_hapus_primary);
         }
+//        if (position == penggunaList.size()-1){
+//            holder.vGaris.setVisibility(View.INVISIBLE);
+//        }
         holder.clListPengguna.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -82,5 +93,36 @@ public class PenggunaListAdapter extends RecyclerView.Adapter<PenggunaViewHolder
 
     public interface IPenggunaAdapter{
         void doClick(int id);
+    }
+
+    public void removeItem(int position) {
+        deleteData(penggunaList.get(position).getId());
+        penggunaList.remove(position);
+        //notifyItemRemoved(position);
+    }
+
+    public void deleteData(int id){
+        StringRequest dr = new StringRequest(Request.Method.DELETE, url+"/user/"+id,
+                new Response.Listener<String>()
+                {
+                    @Override
+                    public void onResponse(String response) {
+                        Snackbar snackbar = Snackbar
+                                .make(clListPengguna, "Data pengguna berhasil dihapus", Snackbar.LENGTH_LONG);
+                        snackbar.show();
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Snackbar snackbar = Snackbar
+                                .make(clListPengguna, "Gagal menghapus data pengguna", Snackbar.LENGTH_LONG);
+                        snackbar.show();
+
+                    }
+                }
+        );
+        queue.add(dr);
     }
 }

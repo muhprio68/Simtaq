@@ -50,7 +50,7 @@ public class RiwayatActivity extends AppCompatActivity implements RiwayatListAda
     private ProgressBar pbRiwayatKeuangan;
     private RecyclerView rvRiwayat;
     private ArrayList<Keuangan> keuanganList;
-    private RiwayatListAdapter adapter;
+    public RiwayatListAdapter adapter;
     private RequestQueue queue;
     private String sBulanTahun, sBulan, sTahun, sFilterBulanTahun;
     private SimpleDateFormat bulanTahun, tahun, bulan, filterBulanTahun;
@@ -87,7 +87,6 @@ public class RiwayatActivity extends AppCompatActivity implements RiwayatListAda
         getDataKeuangan(sFilterBulanTahun);
         tvFilterBulanKeuangan.setText(sBulan);
         tvFilterTahunKeuangan.setText(sTahun);
-        //doNextCurentTime();
 
         enableSwipeToDeleteAndUndo();
         ivNext.setOnClickListener(new View.OnClickListener() {
@@ -166,6 +165,8 @@ public class RiwayatActivity extends AppCompatActivity implements RiwayatListAda
                             });
                             buildRecyclerView();
                             doNextCurentTime();
+                        } else{
+                            buildRecyclerView();
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -196,7 +197,6 @@ public class RiwayatActivity extends AppCompatActivity implements RiwayatListAda
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
                 final int position = viewHolder.getAdapterPosition();
                 hapusDialog(position);
-                adapter.notifyDataSetChanged();
             }
         };
         ItemTouchHelper itemTouchhelper = new ItemTouchHelper(swipeToDeleteCallback);
@@ -218,15 +218,15 @@ public class RiwayatActivity extends AppCompatActivity implements RiwayatListAda
                     public void onClick(DialogInterface dialog,int id) {
                         // jika tombol diklik, maka akan menutup activity ini
                         adapter.removeItem(position);
-                        adapter.notifyDataSetChanged();
+                        buildRecyclerView();
                     }
                 })
                 .setNegativeButton("Tidak",new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         // jika tombol ini diklik, akan menutup dialog
                         // dan tidak terjadi apa2
-                        adapter.notifyDataSetChanged();
                         dialog.cancel();
+                        buildRecyclerView();
                     }
                 });
 
@@ -251,10 +251,9 @@ public class RiwayatActivity extends AppCompatActivity implements RiwayatListAda
             SimpleDateFormat sdfFilterBulanTahun = new SimpleDateFormat("yyyy-MM", locale);
             sFilterBulanTahun = sdfFilterBulanTahun.format(c.getTime());
             keuanganList.clear();
-            tvFilterBulanKeuangan.setText(sBulan);
             getDataKeuangan(sFilterBulanTahun);
+            tvFilterBulanKeuangan.setText(sBulan);
             tvFilterTahunKeuangan.setText(sTahun);
-//            adapter.notifyDataSetChanged();
             doNextCurentTime();
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -299,5 +298,16 @@ public class RiwayatActivity extends AppCompatActivity implements RiwayatListAda
         intent.putExtra("intentDari", "riwayat keuangan");
         intent.putExtra("idKeuangan", id);
         startActivity(intent);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }

@@ -131,7 +131,7 @@ public class JadwalKegiatanAdapter extends RecyclerView.Adapter<JadwalKegiatanVi
     }
 
     public void deleteData(String id){
-        StringRequest dr = new StringRequest(Request.Method.DELETE, url+"/"+id,
+        StringRequest dr = new StringRequest(Request.Method.DELETE, url+"/kegiatan/"+id,
                 new Response.Listener<String>()
                 {
                     @Override

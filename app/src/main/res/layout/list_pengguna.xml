@@ -15,6 +15,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:textColor="@color/primaryTextColor"
+        android:textSize="20sp"
         tools:text="Muhammad Supeno" />
 
     <TextView
@@ -25,7 +26,7 @@
         app:layout_constraintTop_toBottomOf="@id/tvNamaPenggunaList"
         app:layout_constraintStart_toStartOf="parent"
         android:textColor="@color/primaryTextColor"
-        android:textSize="11sp"
+        android:textSize="18sp"
         tools:text="Superadmin" />
 
     <TextView
@@ -36,15 +37,16 @@
         app:layout_constraintTop_toBottomOf="@id/tvTipePenggunaList"
         app:layout_constraintStart_toStartOf="parent"
         android:textColor="@color/primaryTextColor"
-        android:textSize="8sp"
+        android:textSize="16sp"
         tools:text="muh93gmail.com" />
 
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/ivIconPengguna"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
         android:src="@drawable/ic_chevron_right"
+        android:layout_marginEnd="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

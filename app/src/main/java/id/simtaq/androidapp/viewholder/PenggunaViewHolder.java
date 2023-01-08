@@ -5,6 +5,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,7 +17,7 @@ public class PenggunaViewHolder extends RecyclerView.ViewHolder {
     public TextView tvEmailPengguna;
     public ImageView ivIconPengguna;
     public View vGaris;
-    public CoordinatorLayout clListPengguna;
+    public ConstraintLayout clListPengguna;
 
     public PenggunaViewHolder(@NonNull View itemView) {
         super(itemView);

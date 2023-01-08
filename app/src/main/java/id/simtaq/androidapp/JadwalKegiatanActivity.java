@@ -162,6 +162,8 @@ public class JadwalKegiatanActivity extends AppCompatActivity implements JadwalK
                             });
                             buildRecyclerView();
                             doNextCurentTime();
+                        } else {
+                            buildRecyclerView();
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -192,7 +194,6 @@ public class JadwalKegiatanActivity extends AppCompatActivity implements JadwalK
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
                 final int position = viewHolder.getAdapterPosition();
                 hapusDialog(position);
-                adapter.notifyDataSetChanged();
             }
         };
         ItemTouchHelper itemTouchhelper = new ItemTouchHelper(swipeToDeleteCallback);
@@ -214,15 +215,15 @@ public class JadwalKegiatanActivity extends AppCompatActivity implements JadwalK
                     public void onClick(DialogInterface dialog,int id) {
                         // jika tombol diklik, maka akan menutup activity ini
                         adapter.removeItem(position);
-                        adapter.notifyDataSetChanged();
+                        buildRecyclerView();
                     }
                 })
                 .setNegativeButton("Tidak",new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         // jika tombol ini diklik, akan menutup dialog
                         // dan tidak terjadi apa2
-                        adapter.notifyDataSetChanged();
                         dialog.cancel();
+                        buildRecyclerView();
                     }
                 });
 
@@ -250,7 +251,7 @@ public class JadwalKegiatanActivity extends AppCompatActivity implements JadwalK
             tvFilterBulanKegiatan.setText(sBulan);
             getData(sFilterBulanTahun);
             tvFilterTahunKegiatan.setText(sTahun);
-            adapter.notifyDataSetChanged();
+            //adapter.notifyDataSetChanged();
             doNextCurentTime();
         } catch (Exception ex) {
             ex.printStackTrace();
