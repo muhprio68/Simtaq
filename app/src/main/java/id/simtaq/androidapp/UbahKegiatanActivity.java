@@ -40,6 +40,8 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import id.simtaq.androidapp.helper.Preferences;
+
 import static id.simtaq.androidapp.helper.config.locale;
 import static id.simtaq.androidapp.helper.config.url;
 
@@ -66,15 +68,16 @@ public class UbahKegiatanActivity extends AppCompatActivity {
     private int idKegiatan;
     private String namaKegiatan, tipeKegiatan, tglKegiatan, wktKegiatan, tempatKegiatan, pembicaraKegiatan, deskripsiKegiatan;
 
-    RequestQueue queue;
+    private RequestQueue queue;
+    private String authToken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ubah_kegiatan);
         initViews();
+        authToken = Preferences.getKeyToken(UbahKegiatanActivity.this);
         setSupportActionBar(toolbar);
-
         getSupportActionBar().setTitle("Ubah Kegiatan");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);

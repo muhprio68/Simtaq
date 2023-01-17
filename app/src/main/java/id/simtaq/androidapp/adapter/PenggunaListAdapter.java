@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -16,6 +17,8 @@ import com.android.volley.toolbox.StringRequest;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import id.simtaq.androidapp.R;
 import id.simtaq.androidapp.models.Pengaturan;
@@ -32,14 +35,16 @@ public class PenggunaListAdapter extends RecyclerView.Adapter<PenggunaViewHolder
     IPenggunaAdapter iPenggunaAdapter;
     RequestQueue queue;
     ConstraintLayout clListPengguna;
+    String token;
 
-    public PenggunaListAdapter(ArrayList<Pengguna> penggunaList, Context context, int tipe, IPenggunaAdapter iPenggunaAdapter, RequestQueue queue, ConstraintLayout clListPengguna) {
+    public PenggunaListAdapter(ArrayList<Pengguna> penggunaList, Context context, int tipe, IPenggunaAdapter iPenggunaAdapter, RequestQueue queue, ConstraintLayout clListPengguna, String token) {
         this.penggunaList = penggunaList;
         this.context = context;
         this.tipe = tipe;
         this.iPenggunaAdapter = iPenggunaAdapter;
         this.queue = queue;
         this.clListPengguna = clListPengguna;
+        this.token = token;
     }
 
     public int getItemViewType(final int position){
@@ -122,7 +127,14 @@ public class PenggunaListAdapter extends RecyclerView.Adapter<PenggunaViewHolder
 
                     }
                 }
-        );
+        ){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Authorization", "Bearer " + token);
+                return headers;
+            }
+        };
         queue.add(dr);
     }
 }

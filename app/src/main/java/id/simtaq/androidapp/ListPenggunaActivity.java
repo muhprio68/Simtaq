@@ -12,16 +12,35 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Map;
 
 import id.simtaq.androidapp.adapter.JadwalKegiatanAdapter;
 import id.simtaq.androidapp.adapter.PengaturanListAdapter;
 import id.simtaq.androidapp.adapter.PenggunaListAdapter;
+import id.simtaq.androidapp.helper.Preferences;
+import id.simtaq.androidapp.models.Keuangan;
 import id.simtaq.androidapp.models.Pengguna;
+
+import static id.simtaq.androidapp.helper.config.url;
 
 public class ListPenggunaActivity extends AppCompatActivity implements PenggunaListAdapter.IPenggunaAdapter {
 
@@ -32,6 +51,7 @@ public class ListPenggunaActivity extends AppCompatActivity implements PenggunaL
     private RequestQueue queue;
     private PenggunaListAdapter adapter;
     private int tipe;
+    private String authToken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +59,7 @@ public class ListPenggunaActivity extends AppCompatActivity implements PenggunaL
         setContentView(R.layout.activity_list_pengguna);
         initViews();
         tipe = getIntent().getIntExtra("tipe", 0);
+        authToken = Preferences.getKeyToken(ListPenggunaActivity.this);
         setSupportActionBar(toolbar);
         if (tipe == 1){
             getSupportActionBar().setTitle("Ubah Pengguna");
@@ -50,11 +71,12 @@ public class ListPenggunaActivity extends AppCompatActivity implements PenggunaL
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back_white);
         penggunaList = new ArrayList<>();
-        penggunaList.add(new Pengguna(1, "blabla1", "blabla1@gmail.com", "pppppp", "1"));
-        penggunaList.add(new Pengguna(2, "blabla2", "blabla2@gmail.com", "pppppp", "2"));
-        penggunaList.add(new Pengguna(3, "blabla3", "blabla3@gmail.com", "pppppp", "3"));
-        penggunaList.add(new Pengguna(4, "blabla4", "blabla4@gmail.com", "pppppp", "4"));
+//        penggunaList.add(new Pengguna(1, "blabla1", "blabla1@gmail.com", "pppppp", "1"));
+//        penggunaList.add(new Pengguna(2, "blabla2", "blabla2@gmail.com", "pppppp", "2"));
+//        penggunaList.add(new Pengguna(3, "blabla3", "blabla3@gmail.com", "pppppp", "3"));
+//        penggunaList.add(new Pengguna(4, "blabla4", "blabla4@gmail.com", "pppppp", "4"));
         queue = Volley.newRequestQueue(ListPenggunaActivity.this);
+        getPengguna(authToken);
         buildRecyclerView();
     }
 
@@ -65,12 +87,49 @@ public class ListPenggunaActivity extends AppCompatActivity implements PenggunaL
     }
 
     public void buildRecyclerView(){
-        adapter = new PenggunaListAdapter(penggunaList, ListPenggunaActivity.this,tipe, this, queue, clPengggunaList);
+        adapter = new PenggunaListAdapter(penggunaList, ListPenggunaActivity.this,tipe, this, queue, clPengggunaList, authToken);
         LinearLayoutManager manager = new LinearLayoutManager(this);
         rvPenggunaList.setHasFixedSize(true);
         rvPenggunaList.setLayoutManager(manager);
         rvPenggunaList.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+    }
+
+    public void getPengguna (String token){
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url+"/user", null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                //pbRiwayatKeuangan.setVisibility(View.GONE);
+                rvPenggunaList.setVisibility(View.VISIBLE);
+                for (int i = 0; i < response.length(); i++) {
+                    try {
+                        JSONObject responseObj = response.getJSONObject(i);
+                        int id = responseObj.getInt("id");
+                        String nama = responseObj.getString("nama");
+                        String email = responseObj.getString("email");
+                        String password = responseObj.getString("password");
+                        String level = responseObj.getString("level");
+                        penggunaList.add(new Pengguna(id, nama, email, password, level));
+                        buildRecyclerView();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(ListPenggunaActivity.this, "Fail to get the data..", Toast.LENGTH_SHORT).show();
+            }
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Authorization", "Bearer " + token);
+                return headers;
+            }
+        };
+        queue.add(jsonArrayRequest);
     }
 
     private void enableSwipeToDeleteAndUndo() {
@@ -99,7 +158,7 @@ public class ListPenggunaActivity extends AppCompatActivity implements PenggunaL
                 .setPositiveButton("Ya",new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog,int id) {
                         // jika tombol diklik, maka akan menutup activity ini
-                        //adapter.removeItem(position);
+                        adapter.removeItem(position);
                         buildRecyclerView();
                     }
                 })
@@ -125,7 +184,6 @@ public class ListPenggunaActivity extends AppCompatActivity implements PenggunaL
             Intent intent = new Intent(ListPenggunaActivity.this, UbahAkunActivity.class);
             intent.putExtra("id", id);
             startActivity(intent);
-            finish();
         } else {
             hapusDialog(id);
         }
