@@ -90,8 +90,7 @@ public class PengaturanFragment extends Fragment implements PengaturanListAdapte
         pengaturanList = new ArrayList<>();
         pengaturanList.add(new Pengaturan(0, R.drawable.ic_lock_primarytext, "Ganti kata sandi"));
         pengaturanList.add(new Pengaturan(4, R.drawable.ic_lock_primarytext, "Tambah Akun"));
-        pengaturanList.add(new Pengaturan(5, R.drawable.ic_lock_primarytext, "Ubah Akun"));
-        pengaturanList.add(new Pengaturan(6, R.drawable.ic_lock_primarytext, "Hapus Akun"));
+        pengaturanList.add(new Pengaturan(5, R.drawable.ic_lock_primarytext, "Daftar Pengguna"));
         pengaturanList.add(new Pengaturan(1, R.drawable.ic_document_bug, "Laporkan Bug"));
         pengaturanList.add(new Pengaturan(2, R.drawable.ic_info_squared, "Tentang"));
         pengaturanList.add(new Pengaturan(3, R.drawable.ic_shutdown, "Keluar"));
@@ -126,14 +125,8 @@ public class PengaturanFragment extends Fragment implements PengaturanListAdapte
         } else if (id == 4) {
             startActivity(new Intent(getContext(), TambahAkunActivity.class));
         } else if (id == 5) {
-            Intent intent = new Intent(getContext(), ListPenggunaActivity.class);
-            intent.putExtra("tipe", 1);
-            startActivity(intent);
-        } else if (id == 6) {
-            Intent intent = new Intent(getContext(), ListPenggunaActivity.class);
-            intent.putExtra("tipe", 2);
-            startActivity(intent);
-        } else {
+            startActivity(new Intent(getContext(), ListPenggunaActivity.class));
+        }  else {
             Preferences.setKeyToken(getContext(),"");
             Preferences.setKeyId(getContext(),"");
             Preferences.setKeyNama(getContext(),"");

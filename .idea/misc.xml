@@ -63,6 +63,7 @@
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/drawable/rounded_bg_orange.xml" value="0.161" />
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/drawable/rounded_bg_primary.xml" value="0.161" />
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/drawable/rounded_bg_primarytext.xml" value="0.161" />
+        <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/drawable/rounded_bg_red.xml" value="0.18" />
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/drawable/rounded_border_primary.xml" value="0.161" />
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/drawable/rounded_border_primarytext.xml" value="0.161" />
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/drawable/rounded_border_tambahdata.xml" value="0.161" />
@@ -90,6 +91,7 @@
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/layout/activity_catat_pengeluaran.xml" value="0.21" />
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/layout/activity_daftar.xml" value="0.6147540983606558" />
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/layout/activity_detail_kegiatan.xml" value="0.25" />
+        <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/layout/activity_detail_pengguna.xml" value="0.33" />
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/layout/activity_detail_riwayat_kas.xml" value="0.22" />
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/layout/activity_edit_profil.xml" value="0.16802052159042324" />
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/layout/activity_hapus_akun.xml" value="0.16802052159042324" />

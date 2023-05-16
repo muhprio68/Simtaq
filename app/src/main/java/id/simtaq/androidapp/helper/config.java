@@ -11,7 +11,7 @@ import java.util.Locale;
 public class config {
     public static Locale locale = new Locale("in", "ID");
     //public static String url = "http://simtaq-app.herokuapp.com";
-    public static String url = "http://192.168.0.13:8080/restfulapi/public";
+    public static String url = "http://192.168.0.26:8080/restfulapi/public";
     public static String urlKegiatan = "http://10.200.58.161:8080/restfulapi/public/kegiatan";
     public static String urlKeuangan = "http://10.200.58.161:8080/restfulapi/public/keuangan";
     public static String urlSaldo = "http://10.200.58.161:8080/restfulapi/public/saldo";

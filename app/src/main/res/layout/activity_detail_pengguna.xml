@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DetailPenggunaActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/tbDetailPengguna"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="?attr/actionBarSize"
+        style="@style/AppTheme.Toolbar"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        app:layout_constraintTop_toBottomOf="@id/tbDetailPengguna"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/tvInfoPengguna"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Informasi Pengguna"
+            android:textSize="20sp"
+            android:textColor="@color/primaryTextColor"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <RelativeLayout
+            android:id="@+id/rlInfoPengguna"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:layout_marginBottom="24dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@id/tvInfoPengguna"
+            android:background="@drawable/rounded_border_detail">
+
+            <ProgressBar
+                android:id="@+id/pbDetailPengguna"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_width="wrap_content"
+                android:outlineAmbientShadowColor="@color/primaryDarkColor"
+                android:layout_height="wrap_content" />
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TableRow
+                    android:layout_marginTop="8dp" >
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvIdPengguna"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Id Pengguna"
+                        android:textColor="@color/primaryTextColor"
+                        android:textSize="16sp" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvValueIdPengguna"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1"
+                        android:layout_weight="1"
+                        android:textColor="@color/primaryTextColor"
+                        android:textSize="16sp"/>
+
+                </TableRow>
+
+
+                <TableRow
+                    android:layout_marginTop="8dp" >
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvDetailNamaPengguna"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Nama Pengguna"
+                        android:textColor="@color/primaryTextColor"
+                        android:layout_weight="1"
+                        android:textSize="16sp"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvValueDetailNamaPengguna"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="M. Prio"
+                        android:layout_weight="1"
+                        android:textColor="@color/primaryTextColor"
+                        android:textSize="16sp"/>
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_marginTop="8dp" >
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvDetailEmailPengguna"
+                        android:layout_width="136dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Email Pengguna"
+                        android:textColor="@color/primaryTextColor"
+                        android:textSize="16sp" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvValueDetailEmailPengguna"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="muh@gmail.com"
+                        android:textColor="@color/primaryTextColor"
+                        android:layout_weight="1"
+                        android:textSize="16sp"/>
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_marginTop="8dp" >
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvDetailLevelPengguna"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Level Pengguna"
+                        android:textColor="@color/primaryTextColor"
+                        android:textSize="16sp" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvValueDetailLevelPengguna"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Jamaah Masjid"
+                        android:layout_weight="1"
+                        android:textColor="@color/primaryTextColor"
+                        android:textSize="16sp"/>
+
+                </TableRow>
+
+            </TableLayout>
+
+        </RelativeLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnUbahProfilPengguna"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/rounded_bg_primary"
+            android:text="Ubah Profil Pengguna"
+            android:textColor="@android:color/white"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rlInfoPengguna" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnGantiKataSandiPengguna"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/rounded_bg_orange"
+            android:text="Ganti Kata Sandi Pengguna"
+            android:textColor="@android:color/white"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnUbahProfilPengguna" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnHapusPengguna"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/rounded_bg_red"
+            android:text="Hapus Pengguna"
+            android:textColor="@android:color/white"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnGantiKataSandiPengguna" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

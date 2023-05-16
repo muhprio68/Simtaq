@@ -3,6 +3,7 @@ package id.simtaq.androidapp;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -35,14 +36,14 @@ import static id.simtaq.androidapp.helper.config.url;
 public class UbahAkunActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
-    private EditText etUbahNama, etUbahEmail, etUbahPassword;
+    private EditText etUbahNama, etUbahEmail;
     private Spinner spLevel;
     private Button btnSimpanUbah, btnBatalUbah;
     private int id;
 
     private RequestQueue queue;
     private String authToken;
-    private String ubahNama, ubahEmail, ubahPassword;
+    private String ubahNama, ubahEmail;
     private int ubahLevel;
 
     @Override
@@ -58,14 +59,11 @@ public class UbahAkunActivity extends AppCompatActivity {
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back_white);
         queue = Volley.newRequestQueue(UbahAkunActivity.this);
         id = getIntent().getIntExtra("id",0);
-        getDataUbahKegiatan(authToken);
+        getDataUbahAkun(authToken);
         btnBatalUbah.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                etUbahNama.setText("");
-                etUbahEmail.setText("");
-                etUbahPassword.setText("");
-                spLevel.setSelection(0);
+                onBackPressed();
             }
         });
 
@@ -74,17 +72,14 @@ public class UbahAkunActivity extends AppCompatActivity {
             public void onClick(View view) {
                 ubahNama = etUbahNama.getText().toString();
                 ubahEmail = etUbahEmail.getText().toString();
-                ubahPassword = etUbahPassword.getText().toString();
                 ubahLevel = spLevel.getSelectedItemPosition()+1;
 
                 if (TextUtils.isEmpty(ubahNama)){
                     etUbahNama.setError("Masukkan nama pengguna");
                 } else if (TextUtils.isEmpty(ubahEmail)){
                     etUbahNama.setError("Masukkan email pengguna");
-                } else if (TextUtils.isEmpty(ubahPassword)){
-                    etUbahNama.setError("Masukkan password pengguna");
-                } else {
-                    ubahAkun(id, ubahNama, ubahEmail, ubahPassword, ubahLevel, authToken);
+                }  else {
+                    ubahAkun(id, ubahNama, ubahEmail, ubahLevel, authToken);
                 }
             }
         });
@@ -94,13 +89,12 @@ public class UbahAkunActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.tbUbahAkun);
         etUbahNama = findViewById(R.id.etNamaUbahAkun);
         etUbahEmail = findViewById(R.id.etEmailUbahAkun);
-        etUbahPassword = findViewById(R.id.etPasswordUbahAkun);
         spLevel = findViewById(R.id.spLvlUbahAkun);
         btnSimpanUbah = findViewById(R.id.btnSimpanUbahAkun);
         btnBatalUbah = findViewById(R.id.btnBatalUbahAkun);
     }
 
-    public void getDataUbahKegiatan(String token){
+    public void getDataUbahAkun(String token){
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url+"/user/"+id, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
@@ -110,7 +104,6 @@ public class UbahAkunActivity extends AppCompatActivity {
                         JSONObject responseObj = response.getJSONObject(0);
                         etUbahNama.setText(responseObj.getString("nama"));
                         etUbahEmail.setText(responseObj.getString("email"));
-                        etUbahPassword.setText(responseObj.getString("password"));
                         spLevel.setSelection(responseObj.getInt("level")-1);
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -133,7 +126,7 @@ public class UbahAkunActivity extends AppCompatActivity {
         queue.add(jsonArrayRequest);
     }
 
-    private void ubahAkun(int id, String nama, String email, String password, int level, String token) {
+    private void ubahAkun(int id, String nama, String email, int level, String token) {
         RequestQueue queue = Volley.newRequestQueue(UbahAkunActivity.this);
 
         StringRequest request = new StringRequest(Request.Method.PUT, url+"/user/"+id, new com.android.volley.Response.Listener<String>() {
@@ -145,17 +138,11 @@ public class UbahAkunActivity extends AppCompatActivity {
                     // on below line we are displaying a success toast message.
                     //snackbarWithAction();
 
-                    Toast.makeText(UbahAkunActivity.this, "Data berhasil disimpan", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(UbahAkunActivity.this, "Data berhasil diubah", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(UbahAkunActivity.this, ListPenggunaActivity.class));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                // and setting data to edit text as empty
-//                etNamaKegiatan.setText("");
-//                etTglKegiatan.setText("");
-//                etWaktuKegiatan.setText("");
-//                etTempatKegiatan.setText("");
-//                etPembicaraKegiatan.setText("");
-//                etDeskripsiKegiatan.setText("");
             }
         }, new com.android.volley.Response.ErrorListener() {
             @Override
@@ -189,7 +176,6 @@ public class UbahAkunActivity extends AppCompatActivity {
                 // key and value pair to our parameters.
                 params.put("nama", nama);
                 params.put("email", email);
-                params.put("password", password);
                 params.put("level", level+"");
                 // at last we are returning our params.
                 return params;

@@ -31,16 +31,14 @@ import static id.simtaq.androidapp.helper.config.url;
 public class PenggunaListAdapter extends RecyclerView.Adapter<PenggunaViewHolder>{
     ArrayList<Pengguna> penggunaList;
     Context context;
-    int tipe;
     IPenggunaAdapter iPenggunaAdapter;
     RequestQueue queue;
     ConstraintLayout clListPengguna;
     String token;
 
-    public PenggunaListAdapter(ArrayList<Pengguna> penggunaList, Context context, int tipe, IPenggunaAdapter iPenggunaAdapter, RequestQueue queue, ConstraintLayout clListPengguna, String token) {
+    public PenggunaListAdapter(ArrayList<Pengguna> penggunaList, Context context, IPenggunaAdapter iPenggunaAdapter, RequestQueue queue, ConstraintLayout clListPengguna, String token) {
         this.penggunaList = penggunaList;
         this.context = context;
-        this.tipe = tipe;
         this.iPenggunaAdapter = iPenggunaAdapter;
         this.queue = queue;
         this.clListPengguna = clListPengguna;
@@ -75,11 +73,7 @@ public class PenggunaListAdapter extends RecyclerView.Adapter<PenggunaViewHolder
         }
         holder.tvTipePengguna.setText(tipePengguna);
         holder.tvEmailPengguna.setText(pengguna.getEmail());
-        if (tipe == 1){
-            holder.ivIconPengguna.setImageResource(R.drawable.ic_ubah_primary);
-        } else {
-            holder.ivIconPengguna.setImageResource(R.drawable.ic_hapus_primary);
-        }
+        holder.ivIconPengguna.setImageResource(R.drawable.ic_ubah_primary);
 //        if (position == penggunaList.size()-1){
 //            holder.vGaris.setVisibility(View.INVISIBLE);
 //        }

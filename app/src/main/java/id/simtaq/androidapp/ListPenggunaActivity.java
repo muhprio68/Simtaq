@@ -50,7 +50,6 @@ public class ListPenggunaActivity extends AppCompatActivity implements PenggunaL
     private ConstraintLayout clPengggunaList;
     private RequestQueue queue;
     private PenggunaListAdapter adapter;
-    private int tipe;
     private String authToken;
 
     @Override
@@ -58,15 +57,10 @@ public class ListPenggunaActivity extends AppCompatActivity implements PenggunaL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_pengguna);
         initViews();
-        tipe = getIntent().getIntExtra("tipe", 0);
         authToken = Preferences.getKeyToken(ListPenggunaActivity.this);
         setSupportActionBar(toolbar);
-        if (tipe == 1){
-            getSupportActionBar().setTitle("Ubah Pengguna");
-        } else {
-            getSupportActionBar().setTitle("Hapus Pengguna");
-            enableSwipeToDeleteAndUndo();
-        }
+        getSupportActionBar().setTitle("Daftar Pengguna");
+        enableSwipeToDeleteAndUndo();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back_white);
@@ -87,7 +81,7 @@ public class ListPenggunaActivity extends AppCompatActivity implements PenggunaL
     }
 
     public void buildRecyclerView(){
-        adapter = new PenggunaListAdapter(penggunaList, ListPenggunaActivity.this,tipe, this, queue, clPengggunaList, authToken);
+        adapter = new PenggunaListAdapter(penggunaList, ListPenggunaActivity.this, this, queue, clPengggunaList, authToken);
         LinearLayoutManager manager = new LinearLayoutManager(this);
         rvPenggunaList.setHasFixedSize(true);
         rvPenggunaList.setLayoutManager(manager);
@@ -180,13 +174,10 @@ public class ListPenggunaActivity extends AppCompatActivity implements PenggunaL
 
     @Override
     public void doClick(int id) {
-        if (tipe == 1){
-            Intent intent = new Intent(ListPenggunaActivity.this, UbahAkunActivity.class);
-            intent.putExtra("id", id);
-            startActivity(intent);
-        } else {
-            hapusDialog(id);
-        }
+        Intent intent = new Intent(ListPenggunaActivity.this, DetailPenggunaActivity.class);
+        intent.putExtra("id", id);
+        startActivity(intent);
+        finish();
     }
 
     @Override
