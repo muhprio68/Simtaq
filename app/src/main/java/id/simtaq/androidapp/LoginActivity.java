@@ -66,8 +66,10 @@ public class LoginActivity extends AppCompatActivity {
                 password = etPassword.getText().toString();
 
                 if (TextUtils.isEmpty(email)) {
+                    etEmail.requestFocus();
                     etEmail.setError("Masukkan email");
                 } else if (TextUtils.isEmpty(password)){
+                    etPassword.requestFocus();
                     etPassword.setError("Masukkan password");
                 } else {
                     login(email, password);
@@ -94,7 +96,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    public void ShowHidePassLogin(View view) {
+    public void showHidePassLogin(View view) {
 
         if(view.getId()==R.id.show_passlogin_btn){
             if(etPassword.getTransformationMethod().equals(PasswordTransformationMethod.getInstance())){

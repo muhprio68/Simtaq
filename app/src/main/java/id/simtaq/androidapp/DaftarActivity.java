@@ -50,15 +50,23 @@ public class DaftarActivity extends AppCompatActivity {
                 ulangiPassword = etUlangiPassword.getText().toString();
 
                 if (TextUtils.isEmpty(nama)) {
+                    etNama.requestFocus();
                     etNama.setError("Masukkan nama");
                 } else if (TextUtils.isEmpty(email)){
+                    etEmail.requestFocus();
                     etEmail.setError("Masukkan email");
                 }  else if (!isEmailValid(email)){
+                    etEmail.requestFocus();
                     etEmail.setError("Email tidak valid");
                 } else if (TextUtils.isEmpty(password)){
+                    etPassword.requestFocus();
                     etPassword.setError("Masukkan password");
                 } else if (TextUtils.isEmpty(ulangiPassword)){
-                    etPassword.setError("Ulangi password harus diisi");
+                    etUlangiPassword.requestFocus();
+                    etUlangiPassword.setError("Konfirmasi password harus diisi");
+                } else if (!ulangiPassword.equals(password)){
+                    etUlangiPassword.requestFocus();
+                    etUlangiPassword.setError("Konfirmasi password tidak sama");
                 } else {
                     daftar(nama, email, password, ulangiPassword);
                 }
@@ -88,7 +96,7 @@ public class DaftarActivity extends AppCompatActivity {
         return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
-    public void ShowHidePassDaftar(View view) {
+    public void showHidePassDaftar(View view) {
 
         if(view.getId()==R.id.show_passdaftar_btn){
             if(etPassword.getTransformationMethod().equals(PasswordTransformationMethod.getInstance())){
@@ -104,7 +112,7 @@ public class DaftarActivity extends AppCompatActivity {
         }
     }
 
-    public void ShowHideKonfPassDaftar(View view) {
+    public void showHideKonfPassDaftar(View view) {
 
         if(view.getId()==R.id.show_konfpassdaftar_btn){
             if(etUlangiPassword.getTransformationMethod().equals(PasswordTransformationMethod.getInstance())){

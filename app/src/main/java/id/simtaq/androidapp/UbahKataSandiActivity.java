@@ -1,14 +1,19 @@
 package id.simtaq.androidapp;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -71,12 +76,16 @@ public class UbahKataSandiActivity extends AppCompatActivity {
                 passKonf= etkonfirmasiPassword.getText().toString();
 
                 if (level!=4 && TextUtils.isEmpty(passSaatIni)){
+                    etPasswordSaatIni.requestFocus();
                     etPasswordSaatIni.setError("Masukkan kata sandi saat ini");
                 } else if (TextUtils.isEmpty(passBaru)){
+                    etPasswordBaru.requestFocus();
                     etPasswordBaru.setError("Masukkan kata sandi baru");
                 }  else if (TextUtils.isEmpty(passKonf)){
+                    etkonfirmasiPassword.requestFocus();
                     etkonfirmasiPassword.setError("Masukkan konfirmasi kata sandi");
                 } else if (!passKonf.equals(passBaru)){
+                    etkonfirmasiPassword.requestFocus();
                     etkonfirmasiPassword.setError("Konfirmasi kata sandi tidak sama");
                 } else {
                     ubahKataSandi(id, passSaatIni, passBaru, passKonf, authToken);
@@ -106,7 +115,7 @@ public class UbahKataSandiActivity extends AppCompatActivity {
         }
     }
 
-    public void ShowHidePassSaatIni(View view) {
+    public void showHidePassSaatIni(View view) {
 
         if(view.getId()==R.id.show_passsaatini_btn){
             if(etPasswordSaatIni.getTransformationMethod().equals(PasswordTransformationMethod.getInstance())){
@@ -122,7 +131,7 @@ public class UbahKataSandiActivity extends AppCompatActivity {
         }
     }
 
-    public void ShowHidePassBaru(View view) {
+    public void showHidePassBaru(View view) {
 
         if(view.getId()==R.id.show_passbaru_btn){
             if(etPasswordBaru.getTransformationMethod().equals(PasswordTransformationMethod.getInstance())){
@@ -138,7 +147,7 @@ public class UbahKataSandiActivity extends AppCompatActivity {
         }
     }
 
-    public void ShowHideKonfPass(View view) {
+    public void showHideKonfPass(View view) {
 
         if(view.getId()==R.id.show_konfpass_btn){
             if(etkonfirmasiPassword.getTransformationMethod().equals(PasswordTransformationMethod.getInstance())){
@@ -154,6 +163,33 @@ public class UbahKataSandiActivity extends AppCompatActivity {
         }
     }
 
+    public void showDialogSukses(){
+        AlertDialog.Builder dialogBuilder;
+        AlertDialog alertDialog;
+        dialogBuilder = new AlertDialog.Builder(UbahKataSandiActivity.this, R.style.DialogSlideAnim);
+        View layoutView = getLayoutInflater().inflate(R.layout.dialoggantikatasandi, null);
+        Button dialogButton = layoutView.findViewById(R.id.btnOkDialogKatasandi);
+        dialogBuilder.setView(layoutView);
+        alertDialog = dialogBuilder.create();
+        alertDialog.setCancelable(false);
+        alertDialog.show();
+        alertDialog.getWindow().setGravity(Gravity.BOTTOM);
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialogButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Preferences.setKeyToken(UbahKataSandiActivity.this,"");
+                Preferences.setKeyId(UbahKataSandiActivity.this,"");
+                Preferences.setKeyNama(UbahKataSandiActivity.this,"");
+                Preferences.setKeyEmail(UbahKataSandiActivity.this,"");
+                Preferences.setKeyLevel(UbahKataSandiActivity.this,"");
+                Preferences.setLoggedInStatus(UbahKataSandiActivity.this,false);
+                startActivity(new Intent(UbahKataSandiActivity.this, SplashScreenActivity.class));
+                finish();
+            }
+        });
+    }
+
     private void ubahKataSandi(int id, String passwordSaatIni, String passwordBaru, String konfirmasiPassword, String token) {
         StringRequest request = new StringRequest(Request.Method.PUT, url+"/gantipassword/"+id, new com.android.volley.Response.Listener<String>() {
             @Override
@@ -163,8 +199,9 @@ public class UbahKataSandiActivity extends AppCompatActivity {
                     JSONObject jsonObject = new JSONObject(response);
                     // on below line we are displaying a success toast message.
                     //snackbarWithAction();
-
-                    Toast.makeText(UbahKataSandiActivity.this, jsonObject.getString("messages"), Toast.LENGTH_SHORT).show();
+                    showDialogSukses();
+                    Log.e("TAG", "RESPONSE IS " + jsonObject.getString("messages"));
+                    //Toast.makeText(UbahKataSandiActivity.this, jsonObject.getString("messages"), Toast.LENGTH_SHORT).show();
                     //startActivity(new Intent(UbahKataSandiActivity.this, PengaturanFragment.class));
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -174,7 +211,9 @@ public class UbahKataSandiActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 // method to handle errors.
-                Toast.makeText(UbahKataSandiActivity.this, "password saat ini salah", Toast.LENGTH_SHORT).show();
+                etPasswordSaatIni.requestFocus();
+                etPasswordSaatIni.setError("Kata sandi saat ini tidak sesuai");
+                //Toast.makeText(UbahKataSandiActivity.this, "password saat ini salah", Toast.LENGTH_SHORT).show();
             }
         }) {
             @Override
