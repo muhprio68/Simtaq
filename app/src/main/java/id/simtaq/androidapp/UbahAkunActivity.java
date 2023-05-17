@@ -127,8 +127,6 @@ public class UbahAkunActivity extends AppCompatActivity {
     }
 
     private void ubahAkun(int id, String nama, String email, int level, String token) {
-        RequestQueue queue = Volley.newRequestQueue(UbahAkunActivity.this);
-
         StringRequest request = new StringRequest(Request.Method.PUT, url+"/user/"+id, new com.android.volley.Response.Listener<String>() {
             @Override
             public void onResponse(String response) {

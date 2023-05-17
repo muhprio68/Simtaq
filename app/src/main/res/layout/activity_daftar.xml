@@ -101,7 +101,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/inputNama"
         />
-
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clPasswordDaftar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/inputEmail">
     <EditText
         android:id="@+id/inputPassword"
         android:layout_width="0dp"
@@ -118,8 +124,29 @@
         android:padding="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/inputEmail" />
+        app:layout_constraintTop_toTopOf="parent" />
+        <ImageView
+            android:id="@+id/show_passdaftar_btn"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="42dp"
+            android:alpha="0.6"
+            android:onClick="ShowHidePassDaftar"
+            android:padding="5dp"
+            android:src="@drawable/ic_visible"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clPasswordKonfDaftar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/clPasswordDaftar">
     <EditText
         android:id="@+id/inputUlangiPassword"
         android:layout_width="0dp"
@@ -136,7 +163,23 @@
         android:padding="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/inputPassword" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/show_konfpassdaftar_btn"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="42dp"
+            android:alpha="0.6"
+            android:onClick="ShowHideKonfPassDaftar"
+            android:padding="5dp"
+            android:src="@drawable/ic_visible"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button
         android:id="@+id/btnDaftar"
@@ -152,7 +195,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/inputUlangiPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/clPasswordKonfDaftar" />
 
     <TextView
         android:id="@+id/textView7"

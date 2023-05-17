@@ -5,10 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -88,6 +91,22 @@ public class LoginActivity extends AppCompatActivity {
         if (Preferences.getLoggedInStatus(getBaseContext())){
             startActivity(new Intent(LoginActivity.this,MainActivity.class));
             finish();
+        }
+    }
+
+    public void ShowHidePassLogin(View view) {
+
+        if(view.getId()==R.id.show_passlogin_btn){
+            if(etPassword.getTransformationMethod().equals(PasswordTransformationMethod.getInstance())){
+                ((ImageView)(view)).setImageResource(R.drawable.ic_invisible);
+                //Show Password
+                etPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+            }
+            else{
+                ((ImageView)(view)).setImageResource(R.drawable.ic_visible);
+                //Hide Password
+                etPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+            }
         }
     }
 

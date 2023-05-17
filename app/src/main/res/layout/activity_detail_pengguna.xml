@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/clDetailPengguna"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".DetailPenggunaActivity">
@@ -16,6 +17,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clDetailInfoPengguna"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="16dp"
@@ -151,6 +153,22 @@
             </TableLayout>
 
         </RelativeLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnKembali"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/rounded_bg_primary"
+            android:text="Kembali"
+            android:textColor="@android:color/white"
+            android:textSize="12sp"
+            android:visibility="gone"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rlInfoPengguna" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnUbahProfilPengguna"

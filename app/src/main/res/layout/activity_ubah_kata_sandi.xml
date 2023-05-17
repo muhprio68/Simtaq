@@ -33,20 +33,43 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
 
-        <EditText
-            android:id="@+id/etPasswordSaatIni"
-            android:layout_width="0dp"
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clPasswordSaatIni"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/rounded_border_tambahdata"
-            android:drawablePadding="16dp"
-            android:ems="10"
-            android:hint="Masukkan kata sandi saat ini"
-            android:inputType="textPassword"
-            android:padding="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvPasswordSaatIni" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvPasswordSaatIni">
+            <EditText
+                android:id="@+id/etPasswordSaatIni"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/rounded_border_tambahdata"
+                android:drawablePadding="16dp"
+                android:ems="10"
+                android:hint="Masukkan kata sandi saat ini"
+                android:inputType="textPassword"
+                android:padding="16dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <ImageView
+                android:id="@+id/show_passsaatini_btn"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:alpha="0.6"
+                android:onClick="ShowHidePassSaatIni"
+                android:padding="5dp"
+                android:src="@drawable/ic_visible"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvPasswordBaru"
@@ -56,24 +79,45 @@
             android:text="Kata Sandi Baru"
             android:textColor="@color/primaryTextColor"
             android:layout_marginTop="16dp"
-            app:layout_constraintTop_toBottomOf="@+id/etPasswordSaatIni"
+            app:layout_constraintTop_toBottomOf="@+id/clPasswordSaatIni"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
-
-        <EditText
-            android:id="@+id/etPasswordBaru"
-            android:layout_width="0dp"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clPasswordBaru"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/rounded_border_tambahdata"
-            android:drawablePadding="16dp"
-            android:ems="10"
-            android:hint="Masukkan kata sandi baru"
-            android:inputType="textPassword"
-            android:padding="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvPasswordBaru" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvPasswordBaru">
+            <EditText
+                android:id="@+id/etPasswordBaru"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/rounded_border_tambahdata"
+                android:drawablePadding="16dp"
+                android:ems="10"
+                android:hint="Masukkan kata sandi baru"
+                android:inputType="textPassword"
+                android:padding="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/show_passbaru_btn"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:alpha="0.6"
+                android:onClick="ShowHidePassBaru"
+                android:padding="5dp"
+                android:src="@drawable/ic_visible"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvKonfirmasiPasswordBaru"
@@ -83,25 +127,46 @@
             android:textSize="18sp"
             android:textColor="@color/primaryTextColor"
             android:layout_marginTop="16dp"
-            app:layout_constraintTop_toBottomOf="@+id/etPasswordBaru"
+            app:layout_constraintTop_toBottomOf="@+id/clPasswordBaru"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
-
-        <EditText
-            android:id="@+id/etKonfirmasiPasswordBaru"
-            android:layout_width="0dp"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clKonfPassword"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/rounded_border_tambahdata"
-            android:drawablePadding="16dp"
-            android:ems="10"
-            android:hint="Ulangi kata sandi baru"
-            android:inputType="textPassword"
-            android:padding="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvKonfirmasiPasswordBaru" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvKonfirmasiPasswordBaru">
+            <EditText
+                android:id="@+id/etKonfirmasiPasswordBaru"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/rounded_border_tambahdata"
+                android:drawablePadding="16dp"
+                android:ems="10"
+                android:hint="Ulangi kata sandi baru"
+                android:inputType="textPassword"
+                android:padding="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
+            <ImageView
+                android:id="@+id/show_konfpass_btn"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:alpha="0.6"
+                android:onClick="ShowHideKonfPass"
+                android:padding="5dp"
+                android:src="@drawable/ic_visible"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnBatalUbahSandi"
             android:layout_width="0dp"
@@ -115,7 +180,7 @@
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/btnSimpanUbahSandi"
-            app:layout_constraintTop_toBottomOf="@+id/etKonfirmasiPasswordBaru" />
+            app:layout_constraintTop_toBottomOf="@+id/clKonfPassword" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnSimpanUbahSandi"
@@ -130,7 +195,7 @@
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@id/btnBatalUbahSandi"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etKonfirmasiPasswordBaru" />
+            app:layout_constraintTop_toBottomOf="@+id/clKonfPassword" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

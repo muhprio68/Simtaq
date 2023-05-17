@@ -64,6 +64,13 @@ public class TambahAkunActivity extends AppCompatActivity {
                 }
             }
         });
+
+        btnBatalTambahAkun.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
     }
 
     private void initViews(){

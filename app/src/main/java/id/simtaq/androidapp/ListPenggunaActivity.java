@@ -177,7 +177,6 @@ public class ListPenggunaActivity extends AppCompatActivity implements PenggunaL
         Intent intent = new Intent(ListPenggunaActivity.this, DetailPenggunaActivity.class);
         intent.putExtra("id", id);
         startActivity(intent);
-        finish();
     }
 
     @Override

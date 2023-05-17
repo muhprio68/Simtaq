@@ -5,9 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,9 +50,11 @@ public class DaftarActivity extends AppCompatActivity {
                 ulangiPassword = etUlangiPassword.getText().toString();
 
                 if (TextUtils.isEmpty(nama)) {
-                    etEmail.setError("Masukkan nama");
+                    etNama.setError("Masukkan nama");
                 } else if (TextUtils.isEmpty(email)){
-                    etPassword.setError("Masukkan email");
+                    etEmail.setError("Masukkan email");
+                }  else if (!isEmailValid(email)){
+                    etEmail.setError("Email tidak valid");
                 } else if (TextUtils.isEmpty(password)){
                     etPassword.setError("Masukkan password");
                 } else if (TextUtils.isEmpty(ulangiPassword)){
@@ -77,6 +82,42 @@ public class DaftarActivity extends AppCompatActivity {
         etPassword = findViewById(R.id.inputPassword);
         etUlangiPassword = findViewById(R.id.inputUlangiPassword);
         btnDaftar = findViewById(R.id.btnDaftar);
+    }
+
+    boolean isEmailValid(CharSequence email) {
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
+    }
+
+    public void ShowHidePassDaftar(View view) {
+
+        if(view.getId()==R.id.show_passdaftar_btn){
+            if(etPassword.getTransformationMethod().equals(PasswordTransformationMethod.getInstance())){
+                ((ImageView)(view)).setImageResource(R.drawable.ic_invisible);
+                //Show Password
+                etPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+            }
+            else{
+                ((ImageView)(view)).setImageResource(R.drawable.ic_visible);
+                //Hide Password
+                etPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+            }
+        }
+    }
+
+    public void ShowHideKonfPassDaftar(View view) {
+
+        if(view.getId()==R.id.show_konfpassdaftar_btn){
+            if(etUlangiPassword.getTransformationMethod().equals(PasswordTransformationMethod.getInstance())){
+                ((ImageView)(view)).setImageResource(R.drawable.ic_invisible);
+                //Show Password
+                etUlangiPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+            }
+            else{
+                ((ImageView)(view)).setImageResource(R.drawable.ic_visible);
+                //Hide Password
+                etUlangiPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+            }
+        }
     }
 
     private void daftar(String nama, String email, String password, String ulangiPassword) {
