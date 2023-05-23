@@ -54,10 +54,13 @@ public class TambahAkunActivity extends AppCompatActivity {
                 levelPengguna = valueSpinner;
 
                 if (TextUtils.isEmpty(nama)) {
-                    etEmail.setError("Masukkan nama");
+                    etNama.requestFocus();
+                    etNama.setError("Masukkan nama");
                 } else if (TextUtils.isEmpty(email)){
-                    etPassword.setError("Masukkan email");
+                    etEmail.requestFocus();
+                    etEmail.setError("Masukkan email");
                 } else if (TextUtils.isEmpty(password)){
+                    etPassword.requestFocus();
                     etPassword.setError("Masukkan password");
                 }  else {
                     tambahAkun(nama, email, password, levelPengguna);

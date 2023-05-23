@@ -99,14 +99,19 @@ public class TambahKegiatanActivity extends AppCompatActivity {
                 deskripsiKegiatan = etDeskripsiKegiatan.getText().toString();
 
                 if (TextUtils.isEmpty(namaKegiatan)) {
+                    etNamaKegiatan.requestFocus();
                     etNamaKegiatan.setError("Masukkan nama kegiatan");
                 } else if (TextUtils.isEmpty(tglKegiatan)){
+                    etTglKegiatan.requestFocus();
                     etTglKegiatan.setError("Masukkan tanggal kegiatan");
                 } else if (TextUtils.isEmpty(wktKegiatan)){
+                    etWaktuKegiatan.requestFocus();
                     etWaktuKegiatan.setError("Masukkan waktu kegiatan");
                 } else if (TextUtils.isEmpty(tempatKegiatan)){
+                    etTempatKegiatan.requestFocus();
                     etTempatKegiatan.setError("Masukkan tempat kegiatan");
                 } else if (TextUtils.isEmpty(pembicaraKegiatan)){
+                    etPembicaraKegiatan.requestFocus();
                     etPembicaraKegiatan.setError("Masukkan pembicara kegiatan");
                 } else {
                     addDataToDatabase(namaKegiatan, tipeKegiatan, tglKegiatan,wktKegiatan,tempatKegiatan,pembicaraKegiatan,deskripsiKegiatan);

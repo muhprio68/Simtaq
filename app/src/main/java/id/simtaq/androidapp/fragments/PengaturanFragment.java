@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import id.simtaq.androidapp.DetailPenggunaActivity;
 import id.simtaq.androidapp.EditProfilActivity;
 import id.simtaq.androidapp.HapusAkunActivity;
 import id.simtaq.androidapp.JadwalKegiatanActivity;
@@ -89,8 +90,8 @@ public class PengaturanFragment extends Fragment implements PengaturanListAdapte
     void addDataSuperAdmin(){
         pengaturanList = new ArrayList<>();
         pengaturanList.add(new Pengaturan(0, R.drawable.ic_lock_primarytext, "Ganti kata sandi"));
-        pengaturanList.add(new Pengaturan(4, R.drawable.ic_lock_primarytext, "Tambah Akun"));
-        pengaturanList.add(new Pengaturan(5, R.drawable.ic_lock_primarytext, "Daftar Pengguna"));
+        pengaturanList.add(new Pengaturan(4, R.drawable.ic_add_user, "Tambah Akun"));
+        pengaturanList.add(new Pengaturan(5, R.drawable.ic_list_user, "Daftar Pengguna"));
         pengaturanList.add(new Pengaturan(1, R.drawable.ic_document_bug, "Laporkan Bug"));
         pengaturanList.add(new Pengaturan(2, R.drawable.ic_info_squared, "Tentang"));
         pengaturanList.add(new Pengaturan(3, R.drawable.ic_shutdown, "Keluar"));
@@ -117,7 +118,9 @@ public class PengaturanFragment extends Fragment implements PengaturanListAdapte
     @Override
     public void doClick(int id) {
         if (id == 0){
-            startActivity(new Intent(getContext(), UbahKataSandiActivity.class));
+            Intent intent = new Intent(getContext(), UbahKataSandiActivity.class);
+            intent.putExtra("id", Integer.parseInt(Preferences.getKeyId(getContext())));
+            startActivity(intent);
         } else if (id == 1) {
             startActivity(new Intent(getContext(), LaporkanBugActivity.class));
         } else if (id == 2) {

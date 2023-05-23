@@ -11,8 +11,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -51,6 +57,7 @@ public class ListPenggunaActivity extends AppCompatActivity implements PenggunaL
     private RequestQueue queue;
     private PenggunaListAdapter adapter;
     private String authToken;
+    LayoutInflater layoutInflater;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +71,7 @@ public class ListPenggunaActivity extends AppCompatActivity implements PenggunaL
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back_white);
+        layoutInflater =getLayoutInflater();
         penggunaList = new ArrayList<>();
 //        penggunaList.add(new Pengguna(1, "blabla1", "blabla1@gmail.com", "pppppp", "1"));
 //        penggunaList.add(new Pengguna(2, "blabla2", "blabla2@gmail.com", "pppppp", "2"));
@@ -81,7 +89,7 @@ public class ListPenggunaActivity extends AppCompatActivity implements PenggunaL
     }
 
     public void buildRecyclerView(){
-        adapter = new PenggunaListAdapter(penggunaList, ListPenggunaActivity.this, this, queue, clPengggunaList, authToken);
+        adapter = new PenggunaListAdapter(penggunaList, ListPenggunaActivity.this, this, queue, clPengggunaList, authToken, layoutInflater);
         LinearLayoutManager manager = new LinearLayoutManager(this);
         rvPenggunaList.setHasFixedSize(true);
         rvPenggunaList.setLayoutManager(manager);
@@ -143,11 +151,11 @@ public class ListPenggunaActivity extends AppCompatActivity implements PenggunaL
                 this);
 
         // set title dialog
-        alertDialogBuilder.setTitle("Hapus Data Kegiatan");
+        alertDialogBuilder.setTitle("Hapus Data Pengguna");
 
         // set pesan dari dialog
         alertDialogBuilder
-                .setMessage("Yakin menghapus kegiatan ini?")
+                .setMessage("Yakin menghapus pengguna ini?")
                 .setCancelable(false)
                 .setPositiveButton("Ya",new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog,int id) {

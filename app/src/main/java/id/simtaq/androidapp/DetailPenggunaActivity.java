@@ -7,7 +7,10 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -42,7 +45,7 @@ public class DetailPenggunaActivity extends AppCompatActivity {
     private ConstraintLayout clDetailPengguna, clDetailInfoPengguna;
     RelativeLayout rlInfoPengguna;
     private TextView tvInfoPengguna, tvIdPengguna, tvNamaPengguna, tvEmailPengguna, tvLevelPengguna;
-    private Button btnUbahPengguna, btnGantiSandiPengguna, btnHapusPengguna, btnKembali;
+    private Button btnUbahPengguna, btnGantiSandiPengguna, btnHapusPengguna;
     private ProgressBar pbDetailPengguna;
     private int id, level;
     private RequestQueue queue;
@@ -86,13 +89,6 @@ public class DetailPenggunaActivity extends AppCompatActivity {
                 hapusDialog();
             }
         });
-
-        btnKembali.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed();
-            }
-        });
     }
 
     public void initViews(){
@@ -108,7 +104,6 @@ public class DetailPenggunaActivity extends AppCompatActivity {
         btnUbahPengguna = findViewById(R.id.btnUbahProfilPengguna);
         btnGantiSandiPengguna = findViewById(R.id.btnGantiKataSandiPengguna);
         btnHapusPengguna = findViewById(R.id.btnHapusPengguna);
-        btnKembali = findViewById(R.id.btnKembali);
     }
 
     public void getDataPengguna(String token){
@@ -182,19 +177,7 @@ public class DetailPenggunaActivity extends AppCompatActivity {
                 {
                     @Override
                     public void onResponse(String response) {
-                        Snackbar snackbar = Snackbar
-                                .make(clDetailPengguna, "Data pengguna berhasil dihapus", Snackbar.LENGTH_LONG);
-                        snackbar.show();
-                        tvInfoPengguna.setText("Data pengguna dihapus");
-                        rlInfoPengguna.setVisibility(View.GONE);
-                        btnUbahPengguna.setVisibility(View.GONE);
-                        btnGantiSandiPengguna.setVisibility(View.GONE);
-                        btnHapusPengguna.setVisibility(View.GONE);
-                        btnKembali.setVisibility(View.VISIBLE);
-//                        tvIdPengguna.setText("");
-//                        tvNamaPengguna.setText("");
-//                        tvEmailPengguna.setText("");
-//                        tvLevelPengguna.setText("");
+                        showDialogSuksesHapus();
                     }
                 },
                 new Response.ErrorListener()
@@ -216,6 +199,31 @@ public class DetailPenggunaActivity extends AppCompatActivity {
             }
         };
         queue.add(dr);
+    }
+
+    public void showDialogSuksesHapus(){
+        AlertDialog.Builder dialogBuilder;
+        AlertDialog alertDialog;
+        dialogBuilder = new AlertDialog.Builder(DetailPenggunaActivity.this, R.style.DialogSlideAnim);
+        View layoutView = getLayoutInflater().inflate(R.layout.dialogsukses, null);
+        Button dialogButton = layoutView.findViewById(R.id.btnOkDialogSukses);
+        TextView tvKetSuksesAdmin = layoutView.findViewById(R.id.tvKeteranganDialogSukses);
+        dialogButton.setText("Kembali");
+        tvKetSuksesAdmin.setText("Pengguna berhasil dihapus");
+        dialogBuilder.setView(layoutView);
+        alertDialog = dialogBuilder.create();
+        alertDialog.setCancelable(false);
+        alertDialog.show();
+        alertDialog.getWindow().setGravity(Gravity.BOTTOM);
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialogButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(DetailPenggunaActivity.this, ListPenggunaActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     @Override

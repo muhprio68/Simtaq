@@ -90,8 +90,10 @@ public class CatatDonaturActivity extends AppCompatActivity {
                 deskripDonatur = etDeskripDonatur.getText().toString();
 
                 if (TextUtils.isEmpty(tglDonatur)) {
+                    etTglDonatur.requestFocus();
                     etTglDonatur.setError("Masukkan tanggal");
                 }  else if (TextUtils.isEmpty(nominalDonatur)){
+                    etNominalDonatur.requestFocus();
                     etNominalDonatur.setError("Masukkan nominal");
                 } else {
                     tambahDataPemasukan(tglDonatur, ketDonatur, nominalDonatur, deskripDonatur);

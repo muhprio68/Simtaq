@@ -75,9 +75,11 @@ public class UbahAkunActivity extends AppCompatActivity {
                 ubahLevel = spLevel.getSelectedItemPosition()+1;
 
                 if (TextUtils.isEmpty(ubahNama)){
+                    etUbahNama.requestFocus();
                     etUbahNama.setError("Masukkan nama pengguna");
                 } else if (TextUtils.isEmpty(ubahEmail)){
-                    etUbahNama.setError("Masukkan email pengguna");
+                    etUbahEmail.requestFocus();
+                    etUbahEmail.setError("Masukkan email pengguna");
                 }  else {
                     ubahAkun(id, ubahNama, ubahEmail, ubahLevel, authToken);
                 }

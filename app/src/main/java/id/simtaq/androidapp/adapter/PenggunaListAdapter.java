@@ -1,10 +1,17 @@
 package id.simtaq.androidapp.adapter;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,6 +27,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import id.simtaq.androidapp.ListPenggunaActivity;
 import id.simtaq.androidapp.R;
 import id.simtaq.androidapp.models.Pengaturan;
 import id.simtaq.androidapp.models.Pengguna;
@@ -35,14 +43,16 @@ public class PenggunaListAdapter extends RecyclerView.Adapter<PenggunaViewHolder
     RequestQueue queue;
     ConstraintLayout clListPengguna;
     String token;
+    LayoutInflater layoutInflater;
 
-    public PenggunaListAdapter(ArrayList<Pengguna> penggunaList, Context context, IPenggunaAdapter iPenggunaAdapter, RequestQueue queue, ConstraintLayout clListPengguna, String token) {
+    public PenggunaListAdapter(ArrayList<Pengguna> penggunaList, Context context, IPenggunaAdapter iPenggunaAdapter, RequestQueue queue, ConstraintLayout clListPengguna, String token, LayoutInflater layoutInflater) {
         this.penggunaList = penggunaList;
         this.context = context;
         this.iPenggunaAdapter = iPenggunaAdapter;
         this.queue = queue;
         this.clListPengguna = clListPengguna;
         this.token = token;
+        this.layoutInflater = layoutInflater;
     }
 
     public int getItemViewType(final int position){
@@ -106,18 +116,14 @@ public class PenggunaListAdapter extends RecyclerView.Adapter<PenggunaViewHolder
                 {
                     @Override
                     public void onResponse(String response) {
-                        Snackbar snackbar = Snackbar
-                                .make(clListPengguna, "Data pengguna berhasil dihapus", Snackbar.LENGTH_LONG);
-                        snackbar.show();
+                        showDialogSuksesHapusList(1);
                     }
                 },
                 new Response.ErrorListener()
                 {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Snackbar snackbar = Snackbar
-                                .make(clListPengguna, "Gagal menghapus data pengguna", Snackbar.LENGTH_LONG);
-                        snackbar.show();
+                        showDialogSuksesHapusList(2);
 
                     }
                 }
@@ -131,4 +137,41 @@ public class PenggunaListAdapter extends RecyclerView.Adapter<PenggunaViewHolder
         };
         queue.add(dr);
     }
+
+    public void showDialogSuksesHapusList(int a){
+        AlertDialog.Builder dialogBuilder;
+        AlertDialog alertDialog;
+        dialogBuilder = new AlertDialog.Builder(context, R.style.DialogSlideAnim);
+        View layoutView = layoutInflater.inflate(R.layout.dialogsukses, null);
+        ImageView ivDialog = layoutView.findViewById(R.id.ivIconDialog);
+        TextView tvJudulDialog = layoutView.findViewById(R.id.tvJudulDialog);
+        TextView tvKetSuksesAdmin = layoutView.findViewById(R.id.tvKeteranganDialogSukses);
+        Button btnDialog= layoutView.findViewById(R.id.btnOkDialogSukses);
+        if (a == 1){
+            ivDialog.setImageResource(R.drawable.ic_ok);
+            tvJudulDialog.setText("Sukses");
+            tvKetSuksesAdmin.setText("Pengguna telah dihapus");
+            btnDialog.setBackgroundResource(R.drawable.rounded_bg_primary);
+            btnDialog.setText("Oke");
+        } else {
+            ivDialog.setImageResource(R.drawable.ic_fail);
+            tvJudulDialog.setText("Gagal");
+            tvKetSuksesAdmin.setText("Pengguna gagal dihapus");
+            btnDialog.setBackgroundResource(R.drawable.rounded_bg_red);
+            btnDialog.setText("Saya Mengerti");
+        }
+        dialogBuilder.setView(layoutView);
+        alertDialog = dialogBuilder.create();
+        alertDialog.setCancelable(false);
+        alertDialog.show();
+        alertDialog.getWindow().setGravity(Gravity.BOTTOM);
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        btnDialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+            }
+        });
+    }
+
 }

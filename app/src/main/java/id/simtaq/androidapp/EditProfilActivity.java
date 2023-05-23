@@ -74,9 +74,11 @@ public class EditProfilActivity extends AppCompatActivity {
                 editEmail = etEditEmail.getText().toString();
 
                 if (TextUtils.isEmpty(editNama)){
+                    etEditNama.requestFocus();
                     etEditNama.setError("Masukkan nama pengguna");
                 } else if (TextUtils.isEmpty(editEmail)){
-                    etEditNama.setError("Masukkan email pengguna");
+                    etEditEmail.requestFocus();
+                    etEditEmail.setError("Masukkan email pengguna");
                 }  else {
                     editProfil(id, editNama, editEmail, authToken);
                 }

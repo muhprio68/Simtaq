@@ -155,22 +155,6 @@
         </RelativeLayout>
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnKembali"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/rounded_bg_primary"
-            android:text="Kembali"
-            android:textColor="@android:color/white"
-            android:textSize="12sp"
-            android:visibility="gone"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rlInfoPengguna" />
-
-        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnUbahProfilPengguna"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

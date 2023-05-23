@@ -3,8 +3,8 @@ package id.simtaq.androidapp;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
-import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -19,7 +19,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -34,7 +33,6 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-import id.simtaq.androidapp.fragments.PengaturanFragment;
 import id.simtaq.androidapp.helper.Preferences;
 
 import static id.simtaq.androidapp.helper.config.url;
@@ -42,6 +40,7 @@ import static id.simtaq.androidapp.helper.config.url;
 public class UbahKataSandiActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
+    private ConstraintLayout clPasswordSaatIni;
     private TextView tvPasswordSaatIni;
     private EditText etPasswordSaatIni, etPasswordBaru, etkonfirmasiPassword;
     private Button btnSimpanUbah, btnBatalUbah;
@@ -57,7 +56,7 @@ public class UbahKataSandiActivity extends AppCompatActivity {
         setContentView(R.layout.activity_ubah_kata_sandi);
         authToken = Preferences.getKeyToken(UbahKataSandiActivity.this);
         queue = Volley.newRequestQueue(UbahKataSandiActivity.this);
-        id = Integer.parseInt(Preferences.getKeyId(UbahKataSandiActivity.this));
+        id = getIntent().getIntExtra("id",0);
         level = Integer.parseInt(Preferences.getKeyLevel(UbahKataSandiActivity.this));
         initViews(level);
         setSupportActionBar(toolbar);
@@ -103,6 +102,7 @@ public class UbahKataSandiActivity extends AppCompatActivity {
 
     private void initViews(int level){
         toolbar = findViewById(R.id.tbUbahKataSandi);
+        clPasswordSaatIni = findViewById(R.id.clPasswordSaatIni);
         tvPasswordSaatIni = findViewById(R.id.tvPasswordSaatIni);
         etPasswordSaatIni = findViewById(R.id.etPasswordSaatIni);
         etPasswordBaru = findViewById(R.id.etPasswordBaru);
@@ -111,7 +111,7 @@ public class UbahKataSandiActivity extends AppCompatActivity {
         btnBatalUbah = findViewById(R.id.btnBatalUbahSandi);
         if (level == 4 ){
             tvPasswordSaatIni.setVisibility(View.GONE);
-            etPasswordSaatIni.setVisibility(View.GONE);
+            clPasswordSaatIni.setVisibility(View.GONE);
         }
     }
 
@@ -163,33 +163,6 @@ public class UbahKataSandiActivity extends AppCompatActivity {
         }
     }
 
-    public void showDialogSukses(){
-        AlertDialog.Builder dialogBuilder;
-        AlertDialog alertDialog;
-        dialogBuilder = new AlertDialog.Builder(UbahKataSandiActivity.this, R.style.DialogSlideAnim);
-        View layoutView = getLayoutInflater().inflate(R.layout.dialoggantikatasandi, null);
-        Button dialogButton = layoutView.findViewById(R.id.btnOkDialogKatasandi);
-        dialogBuilder.setView(layoutView);
-        alertDialog = dialogBuilder.create();
-        alertDialog.setCancelable(false);
-        alertDialog.show();
-        alertDialog.getWindow().setGravity(Gravity.BOTTOM);
-        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        dialogButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Preferences.setKeyToken(UbahKataSandiActivity.this,"");
-                Preferences.setKeyId(UbahKataSandiActivity.this,"");
-                Preferences.setKeyNama(UbahKataSandiActivity.this,"");
-                Preferences.setKeyEmail(UbahKataSandiActivity.this,"");
-                Preferences.setKeyLevel(UbahKataSandiActivity.this,"");
-                Preferences.setLoggedInStatus(UbahKataSandiActivity.this,false);
-                startActivity(new Intent(UbahKataSandiActivity.this, SplashScreenActivity.class));
-                finish();
-            }
-        });
-    }
-
     private void ubahKataSandi(int id, String passwordSaatIni, String passwordBaru, String konfirmasiPassword, String token) {
         StringRequest request = new StringRequest(Request.Method.PUT, url+"/gantipassword/"+id, new com.android.volley.Response.Listener<String>() {
             @Override
@@ -199,7 +172,11 @@ public class UbahKataSandiActivity extends AppCompatActivity {
                     JSONObject jsonObject = new JSONObject(response);
                     // on below line we are displaying a success toast message.
                     //snackbarWithAction();
-                    showDialogSukses();
+                    if (level!=4){
+                        showDialogSukses();
+                    } else {
+                        showDialogSuksesAdmin();
+                    }
                     Log.e("TAG", "RESPONSE IS " + jsonObject.getString("messages"));
                     //Toast.makeText(UbahKataSandiActivity.this, jsonObject.getString("messages"), Toast.LENGTH_SHORT).show();
                     //startActivity(new Intent(UbahKataSandiActivity.this, PengaturanFragment.class));
@@ -253,6 +230,58 @@ public class UbahKataSandiActivity extends AppCompatActivity {
         queue.add(request);
     }
 
+    public void showDialogSukses(){
+        AlertDialog.Builder dialogBuilder;
+        AlertDialog alertDialog;
+        dialogBuilder = new AlertDialog.Builder(UbahKataSandiActivity.this, R.style.DialogSlideAnim);
+        View layoutView = getLayoutInflater().inflate(R.layout.dialogsukses, null);
+        Button dialogButton = layoutView.findViewById(R.id.btnOkDialogSukses);
+        TextView tvKetSuksesAdmin = layoutView.findViewById(R.id.tvKeteranganDialogSukses);
+        dialogButton.setText("Login");
+        tvKetSuksesAdmin.setText("Kata sandi anda berhasil diubah, silahkan masuk kembali");
+        dialogBuilder.setView(layoutView);
+        alertDialog = dialogBuilder.create();
+        alertDialog.setCancelable(false);
+        alertDialog.show();
+        alertDialog.getWindow().setGravity(Gravity.BOTTOM);
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialogButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Preferences.setKeyToken(UbahKataSandiActivity.this,"");
+                Preferences.setKeyId(UbahKataSandiActivity.this,"");
+                Preferences.setKeyNama(UbahKataSandiActivity.this,"");
+                Preferences.setKeyEmail(UbahKataSandiActivity.this,"");
+                Preferences.setKeyLevel(UbahKataSandiActivity.this,"");
+                Preferences.setLoggedInStatus(UbahKataSandiActivity.this,false);
+                startActivity(new Intent(UbahKataSandiActivity.this, SplashScreenActivity.class));
+                finish();
+            }
+        });
+    }
+
+    public void showDialogSuksesAdmin(){
+        AlertDialog.Builder dialogBuilder;
+        AlertDialog alertDialog;
+        dialogBuilder = new AlertDialog.Builder(UbahKataSandiActivity.this, R.style.DialogSlideAnim);
+        View layoutView = getLayoutInflater().inflate(R.layout.dialogsukses, null);
+        Button dialogButton = layoutView.findViewById(R.id.btnOkDialogSukses);
+        TextView tvKetSuksesAdmin = layoutView.findViewById(R.id.tvKeteranganDialogSukses);
+        dialogButton.setText("Kembali");
+        tvKetSuksesAdmin.setText("Kata sandi telah diubah");
+        dialogBuilder.setView(layoutView);
+        alertDialog = dialogBuilder.create();
+        alertDialog.setCancelable(false);
+        alertDialog.show();
+        alertDialog.getWindow().setGravity(Gravity.BOTTOM);
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialogButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+    }
 
     @Override
     public boolean onSupportNavigateUp() {
