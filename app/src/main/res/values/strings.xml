@@ -4,12 +4,11 @@
     <string name="menu_kegiatan">Kegiatan</string>
     <string name="menu_pengaturan">Pengaturan</string>
     <string name="email">Email</string>
-    <string name="kata_sandi">Kata sandi</string>
+    <string name="kata_sandi">Kata Sandi</string>
     <string name="masuk">Masuk</string>
     <string name="google_icon">google_icon</string>
     <string name="nama">Nama</string>
-    <string name="password">Password</string>
-    <string name="ulangi_password">Ulangi Password</string>
+    <string name="ulangi_katasandi">Ulangi Kata Sandi</string>
     <string name="daftar">DAFTAR</string>
     <string name="tentang">Simtaq adalah sistem informasi masjid at-taqwa yang spesifik menangani sistem informasi pengelolaan keuangan dan kegiatan pada masjid at-taqwa</string>
     <!--    <string name="app_name">Simtaq</string>-->

@@ -16,9 +16,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
@@ -28,6 +30,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -134,7 +137,7 @@ public class LoginActivity extends AppCompatActivity {
 //                jobEdt.setText("");
 
                 // on below line we are displaying a success toast message.
-                Toast.makeText(LoginActivity.this, "Data added to API", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "Berhasil masuk", Toast.LENGTH_SHORT).show();
                 try {
                     // on below line we are parsing the response
                     // to json object to extract data from it.
@@ -163,7 +166,29 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 // method to handle errors.
-                Toast.makeText(LoginActivity.this, "Fail to get response = " + error, Toast.LENGTH_SHORT).show();
+                String body = null;
+                try {
+                    if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                        Toast.makeText(LoginActivity.this, "Tidak ada koneksi internet", Toast.LENGTH_LONG).show();
+                    } else if (error.networkResponse != null) {
+                        if (error.networkResponse.data != null) {
+                            body = new String(error.networkResponse.data, "UTF-8");
+                            JSONObject obj = new JSONObject(body);
+                            JSONObject msg = obj.getJSONObject("messages");
+                            String errorMsg = msg.getString("error");
+                            if (errorMsg.equals("Email Not Found")) {
+                                etEmail.requestFocus();
+                                etEmail.setError("Email belum terdaftar");
+                            } else {
+                                etPassword.requestFocus();
+                                etPassword.setError("Kata sandi salah");
+                            }
+                        }
+                    }
+                    //Toast.makeText(getApplicationContext(),s,Toast.LENGTH_SHORT).show();
+                } catch (UnsupportedEncodingException | JSONException e) {
+                    e.printStackTrace();
+                }
             }
         }) {
             @Override

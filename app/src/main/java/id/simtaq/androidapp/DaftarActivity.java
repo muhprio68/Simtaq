@@ -1,12 +1,16 @@
 package id.simtaq.androidapp;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,6 +29,8 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import id.simtaq.androidapp.helper.config;
 
@@ -55,18 +61,21 @@ public class DaftarActivity extends AppCompatActivity {
                 } else if (TextUtils.isEmpty(email)){
                     etEmail.requestFocus();
                     etEmail.setError("Masukkan email");
-                }  else if (!isEmailValid(email)){
+                }  else if (!config.isEmailValid(email)){
                     etEmail.requestFocus();
                     etEmail.setError("Email tidak valid");
                 } else if (TextUtils.isEmpty(password)){
                     etPassword.requestFocus();
-                    etPassword.setError("Masukkan password");
+                    etPassword.setError("Masukkan kata sandi");
+                } else if (!config.isValidPassword(password)){
+                    etPassword.requestFocus();
+                    etPassword.setError("Kata sandi setidaknya 6 karakter menggunakan 1 huruf besar dan 1 angka");
                 } else if (TextUtils.isEmpty(ulangiPassword)){
                     etUlangiPassword.requestFocus();
-                    etUlangiPassword.setError("Konfirmasi password harus diisi");
+                    etUlangiPassword.setError("Konfirmasi kata sandi harus diisi");
                 } else if (!ulangiPassword.equals(password)){
                     etUlangiPassword.requestFocus();
-                    etUlangiPassword.setError("Konfirmasi password tidak sama");
+                    etUlangiPassword.setError("Konfirmasi kata sandi tidak sama");
                 } else {
                     daftar(nama, email, password, ulangiPassword);
                 }
@@ -90,10 +99,6 @@ public class DaftarActivity extends AppCompatActivity {
         etPassword = findViewById(R.id.inputPassword);
         etUlangiPassword = findViewById(R.id.inputUlangiPassword);
         btnDaftar = findViewById(R.id.btnDaftar);
-    }
-
-    boolean isEmailValid(CharSequence email) {
-        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
     public void showHidePassDaftar(View view) {
@@ -149,11 +154,9 @@ public class DaftarActivity extends AppCompatActivity {
 //                nameEdt.setText("");
 //                jobEdt.setText("");
 
+                showDialogSuksesDaftar(1);
                 // on below line we are displaying a success toast message.
-                Toast.makeText(DaftarActivity.this, "Pendaftaran berhasil, silahkan login", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(DaftarActivity.this, LoginActivity.class);
-                intent.putExtra("intentDari", "catat pengeluaran");
-                startActivity(intent);
+                //Toast.makeText(DaftarActivity.this, "Pendaftaran berhasil, silahkan login", Toast.LENGTH_SHORT).show();
                 try {
                     // on below line we are parsing the response
                     // to json object to extract data from it.
@@ -169,7 +172,8 @@ public class DaftarActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 // method to handle errors.
-                Toast.makeText(DaftarActivity.this, "Fail to get response = " + error, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(DaftarActivity.this, "Fail to get response = " + error, Toast.LENGTH_SHORT).show();
+                showDialogSuksesDaftar(2);
             }
         }) {
             @Override
@@ -194,5 +198,47 @@ public class DaftarActivity extends AppCompatActivity {
         // below line is to make
         // a json object request.
         queue.add(request);
+    }
+
+    public void showDialogSuksesDaftar(int a){
+        AlertDialog.Builder dialogBuilder;
+        AlertDialog alertDialog;
+        dialogBuilder = new AlertDialog.Builder(DaftarActivity.this, R.style.DialogSlideAnim);
+        View layoutView = getLayoutInflater().inflate(R.layout.dialogsukses, null);
+        ImageView ivDialog = layoutView.findViewById(R.id.ivIconDialog);
+        TextView tvJudulDialog = layoutView.findViewById(R.id.tvJudulDialog);
+        TextView tvKetSuksesAdmin = layoutView.findViewById(R.id.tvKeteranganDialogSukses);
+        Button btnDialog= layoutView.findViewById(R.id.btnOkDialogSukses);
+        if (a == 1){
+            ivDialog.setImageResource(R.drawable.ic_ok);
+            tvJudulDialog.setText("Sukses");
+            tvKetSuksesAdmin.setText("Anda berhasil mendaftar, silahkan login!");
+            btnDialog.setBackgroundResource(R.drawable.rounded_bg_primary);
+            btnDialog.setText("Login");
+        } else {
+            ivDialog.setImageResource(R.drawable.ic_fail);
+            tvJudulDialog.setText("Gagal");
+            tvKetSuksesAdmin.setText("Anda gagal mendaftar, pastikan anda terkoneksi dengan internet dan isi data anda dengan benar!");
+            btnDialog.setBackgroundResource(R.drawable.rounded_bg_red);
+            btnDialog.setText("Saya Mengerti");
+        }
+        dialogBuilder.setView(layoutView);
+        alertDialog = dialogBuilder.create();
+        alertDialog.setCancelable(true);
+        alertDialog.show();
+        alertDialog.getWindow().setGravity(Gravity.BOTTOM);
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        btnDialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (a == 1){
+                    Intent intent = new Intent(DaftarActivity.this, LoginActivity.class);
+                    intent.putExtra("intentDari", "daftar");
+                    startActivity(intent);
+                } else {
+                    alertDialog.dismiss();
+                }
+            }
+        });
     }
 }
