@@ -19,6 +19,7 @@ import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
@@ -36,6 +37,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+
+import id.simtaq.androidapp.helper.Preferences;
 
 import static id.simtaq.androidapp.helper.config.url;
 
@@ -60,18 +63,21 @@ public class TambahKegiatanActivity extends AppCompatActivity {
     private Button btnBatal;
 
     private String namaKegiatan, tipeKegiatan, tglKegiatan, wktKegiatan, tempatKegiatan, pembicaraKegiatan, deskripsiKegiatan;
+    private RequestQueue queue;
+    private String authToken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tambah_kegiatan);
         initViews();
+        authToken = Preferences.getKeyToken(TambahKegiatanActivity.this);
         setSupportActionBar(toolbar);
-
         getSupportActionBar().setTitle("Tambah Kegiatan");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back_white);
+        queue = Volley.newRequestQueue(TambahKegiatanActivity.this);
         dateFormatter = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
         etTglKegiatan.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,7 +120,7 @@ public class TambahKegiatanActivity extends AppCompatActivity {
                     etPembicaraKegiatan.requestFocus();
                     etPembicaraKegiatan.setError("Masukkan pembicara kegiatan");
                 } else {
-                    addDataToDatabase(namaKegiatan, tipeKegiatan, tglKegiatan,wktKegiatan,tempatKegiatan,pembicaraKegiatan,deskripsiKegiatan);
+                    tambahKegiatan(authToken, namaKegiatan, tipeKegiatan, tglKegiatan,wktKegiatan,tempatKegiatan,pembicaraKegiatan,deskripsiKegiatan);
                 }
             }
         });
@@ -147,9 +153,7 @@ public class TambahKegiatanActivity extends AppCompatActivity {
         btnBatal = findViewById(R.id.btnBatalKegiatan);
     }
 
-    private void addDataToDatabase(String namaKegiatan, String tipeKegiatan, String tglKegiatan, String wktKegiatan, String tempatKegiatan, String pembicaraKegiatan, String deskripsiKegiatan) {
-        RequestQueue queue = Volley.newRequestQueue(TambahKegiatanActivity.this);
-
+    private void tambahKegiatan(String token, String namaKegiatan, String tipeKegiatan, String tglKegiatan, String wktKegiatan, String tempatKegiatan, String pembicaraKegiatan, String deskripsiKegiatan) {
         StringRequest request = new StringRequest(Request.Method.POST, url+"/kegiatan", new com.android.volley.Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -178,6 +182,12 @@ public class TambahKegiatanActivity extends AppCompatActivity {
                 Toast.makeText(TambahKegiatanActivity.this, "Fail to get response = " + error, Toast.LENGTH_SHORT).show();
             }
         }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Authorization", "Bearer " + token);
+                return headers;
+            }
             @Override
             public String getBodyContentType() {
                 // as we are passing data in the form of url encoded

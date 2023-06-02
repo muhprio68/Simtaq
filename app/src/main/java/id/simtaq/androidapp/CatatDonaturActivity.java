@@ -17,6 +17,7 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -34,6 +35,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+
+import id.simtaq.androidapp.helper.Preferences;
 
 import static id.simtaq.androidapp.helper.config.locale;
 import static id.simtaq.androidapp.helper.config.url;
@@ -53,6 +56,7 @@ public class CatatDonaturActivity extends AppCompatActivity {
     private String tglDonatur, ketDonatur, nominalDonatur, deskripDonatur;
 
     private RequestQueue queue;
+    private String authToken;
 
     private DatePickerDialog datePickerDialog;
     private SimpleDateFormat dateFormatter;
@@ -63,8 +67,8 @@ public class CatatDonaturActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_catat_donatur);
         initViews();
+        authToken = Preferences.getKeyToken(CatatDonaturActivity.this);
         setSupportActionBar(toolbar);
-
         getSupportActionBar().setTitle("Catat Donatur");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -96,7 +100,7 @@ public class CatatDonaturActivity extends AppCompatActivity {
                     etNominalDonatur.requestFocus();
                     etNominalDonatur.setError("Masukkan nominal");
                 } else {
-                    tambahDataPemasukan(tglDonatur, ketDonatur, nominalDonatur, deskripDonatur);
+                    tambahDataPemasukan(authToken, tglDonatur, ketDonatur, nominalDonatur, deskripDonatur);
                 }
             }
         });
@@ -124,7 +128,7 @@ public class CatatDonaturActivity extends AppCompatActivity {
         btnBatalDonatur = findViewById(R.id.btnBatalDonatur);
     }
 
-    private void tambahDataPemasukan(String tglDonatur, String ketDonatur, String nominalDonatur, String deskripDonatur) {
+    private void tambahDataPemasukan(String token, String tglDonatur, String ketDonatur, String nominalDonatur, String deskripDonatur) {
         StringRequest request = new StringRequest(Request.Method.POST, url+"/keuangan", new com.android.volley.Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -151,6 +155,85 @@ public class CatatDonaturActivity extends AppCompatActivity {
                 Toast.makeText(CatatDonaturActivity.this, "Fail to get response = " + error, Toast.LENGTH_SHORT).show();
             }
         }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Authorization", "Bearer " + token);
+                return headers;
+            }
+            @Override
+            public String getBodyContentType() {
+                // as we are passing data in the form of url encoded
+                // so we are passing the content type below
+                return "application/x-www-form-urlencoded; charset=UTF-8";
+            }
+
+            @Override
+            protected Map<String, String> getParams() {
+
+                // below line we are creating a map for storing
+                // our values in key and value pair.
+                Map<String, String> params = new HashMap<String, String>();
+
+                // on below line we are passing our
+                // key and value pair to our parameters.
+                params.put("no_keuangan", "PEN-220921001");
+                params.put("tipe_keuangan", "Pemasukan");
+                params.put("tgl_keuangan", tglDonatur);
+                params.put("keterangan_keuangan", ketDonatur);
+                params.put("jenis_keuangan", "Donatur");
+                params.put("status_keuangan", "Selesai");
+                params.put("nominal_keuangan", nominalDonatur);
+                params.put("jml_kas_awal", jmlSaldo);
+                int jmlKasAkhir = Integer.parseInt(jmlSaldo)+Integer.parseInt(nominalDonatur);
+                params.put("jml_kas_akhir", jmlKasAkhir+"");
+                params.put("deskripsi_keuangan", deskripDonatur);
+                params.put("create_at", getCurentDate());
+                params.put("update_at", getCurentDate());
+                ubahSaldo(jmlKasAkhir+"");
+
+                // at last we are returning our params.
+                return params;
+            }
+        };
+        // below line is to make
+        // a json object request.
+        queue.add(request);
+    }
+
+    private void tambahDataDonatur(String token, String tglDonatur, String ketDonatur, String nominalDonatur, String deskripDonatur) {
+        StringRequest request = new StringRequest(Request.Method.POST, url+"/keuangan", new com.android.volley.Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                pbCatatDonatur.setVisibility(View.GONE);
+                Log.e("TAG", "RESPONSE IS " + response);
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    // on below line we are displaying a success toast message.
+                    //snackbarWithAction();
+
+                    //Toast.makeText(TambahKegiatanActivity.this, "Data berhasil disimpan", Toast.LENGTH_SHORT).show();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                // and setting data to edit text as empty
+                etTglDonatur.setText("");
+                etNominalDonatur.setText("");
+                etDeskripDonatur.setText("");
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                // method to handle errors.
+                Toast.makeText(CatatDonaturActivity.this, "Fail to get response = " + error, Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Authorization", "Bearer " + token);
+                return headers;
+            }
             @Override
             public String getBodyContentType() {
                 // as we are passing data in the form of url encoded

@@ -56,6 +56,55 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvKetPemasukan" />
 
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvJenisPemasukan"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Jenis Pemasukan"
+            android:layout_marginTop="16dp"
+            android:textSize="18sp"
+            android:textColor="@color/primaryTextColor"
+            app:layout_constraintTop_toBottomOf="@id/etKeteranganPemasukan"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <RelativeLayout
+            android:id="@+id/rlSpinnerJenisPemasukan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight=".28"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/rounded_border_tambahdata"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvJenisPemasukan">
+
+            <Spinner
+                android:id="@+id/spJenisPemasukan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:background="@android:color/transparent"
+                android:gravity="center"
+                android:scrollbarSize="16dp"
+                android:entries="@array/jenis_pemasukan"
+                android:minHeight="48dp"
+                android:padding="16dp"
+                android:spinnerMode="dropdown" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="16dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_arrow_down" />
+
+        </RelativeLayout>
+
         <EditText
             android:id="@+id/etNominalPemasukan"
             android:layout_width="0dp"
@@ -150,7 +199,7 @@
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etKeteranganPemasukan" />
+            app:layout_constraintTop_toBottomOf="@+id/rlSpinnerJenisPemasukan" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvDeskripsiPemasukan"

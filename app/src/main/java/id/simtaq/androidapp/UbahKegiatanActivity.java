@@ -19,6 +19,7 @@ import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -85,7 +86,7 @@ public class UbahKegiatanActivity extends AppCompatActivity {
         idKegiatan = getIntent().getIntExtra("idKegiatan",0);
         dateFormatter = new SimpleDateFormat("yyyy-MM-dd", locale);
         queue = Volley.newRequestQueue(UbahKegiatanActivity.this);
-        getDataUbahKegiatan();
+        getDataUbahKegiatan(authToken);
         etTglKegiatan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -127,7 +128,7 @@ public class UbahKegiatanActivity extends AppCompatActivity {
                     etPembicaraKegiatan.requestFocus();
                     etPembicaraKegiatan.setError("Masukkan pembicara kegiatan");
                 } else {
-                    ubahKegiatan(idKegiatan,namaKegiatan, tipeKegiatan, tglKegiatan,wktKegiatan,tempatKegiatan,pembicaraKegiatan,deskripsiKegiatan);
+                    ubahKegiatan(authToken, idKegiatan,namaKegiatan, tipeKegiatan, tglKegiatan,wktKegiatan,tempatKegiatan,pembicaraKegiatan,deskripsiKegiatan);
                 }
             }
         });
@@ -160,7 +161,7 @@ public class UbahKegiatanActivity extends AppCompatActivity {
         btnBatalUbah = findViewById(R.id.btnBatalUbahKegiatan);
     }
 
-    public void getDataUbahKegiatan(){
+    public void getDataUbahKegiatan(String token){
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url+"/kegiatan/"+idKegiatan, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
@@ -189,11 +190,18 @@ public class UbahKegiatanActivity extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(UbahKegiatanActivity.this, "Fail to get the data..", Toast.LENGTH_SHORT).show();
             }
-        });
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Authorization", "Bearer " + token);
+                return headers;
+            }
+        };
         queue.add(jsonArrayRequest);
     }
 
-    private void ubahKegiatan(int idKegiatan, String namaKegiatan, String tipeKegiatan, String tglKegiatan, String wktKegiatan, String tempatKegiatan, String pembicaraKegiatan, String deskripsiKegiatan) {
+    private void ubahKegiatan(String token, int idKegiatan, String namaKegiatan, String tipeKegiatan, String tglKegiatan, String wktKegiatan, String tempatKegiatan, String pembicaraKegiatan, String deskripsiKegiatan) {
         RequestQueue queue = Volley.newRequestQueue(UbahKegiatanActivity.this);
 
         StringRequest request = new StringRequest(Request.Method.PUT, url+"/kegiatan/"+idKegiatan, new com.android.volley.Response.Listener<String>() {
@@ -224,6 +232,12 @@ public class UbahKegiatanActivity extends AppCompatActivity {
                 Toast.makeText(UbahKegiatanActivity.this, "Fail to get response = " + error, Toast.LENGTH_SHORT).show();
             }
         }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Authorization", "Bearer " + token);
+                return headers;
+            }
             @Override
             public String getBodyContentType() {
                 // as we are passing data in the form of url encoded

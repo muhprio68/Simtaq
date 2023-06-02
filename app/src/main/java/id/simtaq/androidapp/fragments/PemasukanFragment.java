@@ -16,8 +16,10 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -38,6 +40,8 @@ import java.util.Map;
 
 import id.simtaq.androidapp.DetailRiwayatKasActivity;
 import id.simtaq.androidapp.R;
+import id.simtaq.androidapp.UbahAkunActivity;
+import id.simtaq.androidapp.helper.Preferences;
 
 import static id.simtaq.androidapp.helper.config.locale;
 import static id.simtaq.androidapp.helper.config.url;
@@ -55,11 +59,12 @@ public class PemasukanFragment extends Fragment {
     private EditText etKetPemasukan;
     private EditText etNominalPemasukan;
     private EditText etDeskripPemasukan;
+    private Spinner spJenisPemasukan;
     private Button btnSimpanPemasukan;
     private Button btnBatalPemasukan;
 
-    private String tglPemasukan, ketPemasukan, nominalPemasukan, deskripPemasukan;
-
+    private String tglPemasukan, ketPemasukan, jenisPemasukan, nominalPemasukan, deskripPemasukan;
+    private String authToken;
     private RequestQueue queue;
 
     private DatePickerDialog datePickerDialog;
@@ -83,6 +88,7 @@ public class PemasukanFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_pemasukan, container, false);
         initViews(view);
+        authToken = Preferences.getKeyToken(getContext());
         queue = Volley.newRequestQueue(getContext());
         getSaldo();
         dateFormatter = new SimpleDateFormat("yyyy-MM-dd", locale);
@@ -99,6 +105,7 @@ public class PemasukanFragment extends Fragment {
             public void onClick(View view) {
                 tglPemasukan = etTglPemasukan.getText().toString();
                 ketPemasukan = etKetPemasukan.getText().toString();
+                jenisPemasukan = spJenisPemasukan.getSelectedItem().toString();
                 nominalPemasukan = etNominalPemasukan.getText().toString();
                 deskripPemasukan = etDeskripPemasukan.getText().toString();
 
@@ -109,7 +116,7 @@ public class PemasukanFragment extends Fragment {
                 } else if (TextUtils.isEmpty(nominalPemasukan)){
                     etNominalPemasukan.setError("Masukkan nominal");
                 } else {
-                    tambahDataPemasukan(tglPemasukan, ketPemasukan, nominalPemasukan, deskripPemasukan);
+                    tambahDataPemasukan(authToken, tglPemasukan, ketPemasukan, jenisPemasukan, nominalPemasukan, deskripPemasukan);
                 }
             }
         });
@@ -134,11 +141,12 @@ public class PemasukanFragment extends Fragment {
         etKetPemasukan = v.findViewById(R.id.etKeteranganPemasukan);
         etNominalPemasukan = v.findViewById(R.id.etNominalPemasukan);
         etDeskripPemasukan = v.findViewById(R.id.etDeskripsiPemasukan);
+        spJenisPemasukan = v.findViewById(R.id.spJenisPemasukan);
         btnSimpanPemasukan = v.findViewById(R.id.btnSimpanPemasukan);
         btnBatalPemasukan = v.findViewById(R.id.btnBatalPemasukan);
     }
 
-    private void tambahDataPemasukan(String tglPemasukan, String ketPemasukan, String nominalPemasukan, String deskripPemasukan) {
+    private void tambahDataPemasukan(String token, String tglPemasukan, String ketPemasukan, String jenisPemasukan, String nominalPemasukan, String deskripPemasukan) {
         StringRequest request = new StringRequest(Request.Method.POST, url+"/keuangan", new com.android.volley.Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -167,6 +175,12 @@ public class PemasukanFragment extends Fragment {
             }
         }) {
             @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Authorization", "Bearer " + token);
+                return headers;
+            }
+            @Override
             public String getBodyContentType() {
                 // as we are passing data in the form of url encoded
                 // so we are passing the content type below
@@ -186,6 +200,7 @@ public class PemasukanFragment extends Fragment {
                 params.put("tipe_keuangan", "Pemasukan");
                 params.put("tgl_keuangan", tglPemasukan);
                 params.put("keterangan_keuangan", ketPemasukan);
+                params.put("jenis_keuangan", jenisPemasukan);
                 params.put("status_keuangan", "Selesai");
                 params.put("nominal_keuangan", nominalPemasukan);
                 params.put("jml_kas_awal", jmlSaldo);

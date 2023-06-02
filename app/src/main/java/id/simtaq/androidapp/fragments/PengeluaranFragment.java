@@ -17,8 +17,10 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -39,6 +41,8 @@ import java.util.Map;
 
 import id.simtaq.androidapp.DetailRiwayatKasActivity;
 import id.simtaq.androidapp.R;
+import id.simtaq.androidapp.UbahAkunActivity;
+import id.simtaq.androidapp.helper.Preferences;
 
 import static id.simtaq.androidapp.helper.config.locale;
 import static id.simtaq.androidapp.helper.config.url;
@@ -51,11 +55,12 @@ public class PengeluaranFragment extends Fragment {
     private EditText etKetPengeluaran;
     private EditText etNominalPengeluaran;
     private EditText etDeskripPengeluaran;
+    private Spinner spJenisPengeluaran;
     private Button btnSimpanPengeluaran;
     private Button btnBatalPengeluaran;
 
-    private String tglPengeluaran, ketPengeluaran, nominalPengeluaran, deskripPengeluaran;
-
+    private String tglPengeluaran, ketPengeluaran, jenisPengeluaran, nominalPengeluaran, deskripPengeluaran;
+    private String authToken;
     private RequestQueue queue;
 
     private DatePickerDialog datePickerDialog;
@@ -80,6 +85,7 @@ public class PengeluaranFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_pengeluaran, container, false);
         initViews(view);
+        authToken = Preferences.getKeyToken(getContext());
         queue = Volley.newRequestQueue(getContext());
         getSaldo();
         dateFormatter = new SimpleDateFormat("yyyy-MM-dd", locale);
@@ -95,6 +101,7 @@ public class PengeluaranFragment extends Fragment {
             public void onClick(View view) {
                 tglPengeluaran = etTglPengeluaran.getText().toString();
                 ketPengeluaran = etKetPengeluaran.getText().toString();
+                jenisPengeluaran = spJenisPengeluaran.getSelectedItem().toString();
                 nominalPengeluaran = etNominalPengeluaran.getText().toString();
                 deskripPengeluaran = etDeskripPengeluaran.getText().toString();
 
@@ -105,7 +112,7 @@ public class PengeluaranFragment extends Fragment {
                 } else if (TextUtils.isEmpty(nominalPengeluaran)){
                     etNominalPengeluaran.setError("Masukkan waktu kegiatan");
                 } else {
-                    tambahDataPengeluaran(tglPengeluaran, ketPengeluaran, nominalPengeluaran, deskripPengeluaran);
+                    tambahDataPengeluaran(authToken, tglPengeluaran, ketPengeluaran, jenisPengeluaran, nominalPengeluaran, deskripPengeluaran);
                 }
             }
         });
@@ -130,11 +137,12 @@ public class PengeluaranFragment extends Fragment {
         etKetPengeluaran = v.findViewById(R.id.etKeteranganPengeluaran);
         etNominalPengeluaran = v.findViewById(R.id.etNominalPengeluaran);
         etDeskripPengeluaran = v.findViewById(R.id.etDeskripsiPengeluaran);
+        spJenisPengeluaran = v.findViewById(R.id.spJenisPengeluaran);
         btnSimpanPengeluaran = v.findViewById(R.id.btnSimpanPengeluaran);
         btnBatalPengeluaran = v.findViewById(R.id.btnBatalPengeluaran);
     }
 
-    private void tambahDataPengeluaran(String tglPengeluaran, String ketPengeluaran, String nominalPengeluaran, String deskripPengeluaran) {
+    private void tambahDataPengeluaran(String token, String tglPengeluaran, String ketPengeluaran, String jenisPengeluaran, String nominalPengeluaran, String deskripPengeluaran) {
         StringRequest request = new StringRequest(Request.Method.POST, url+"/keuangan", new com.android.volley.Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -162,6 +170,13 @@ public class PengeluaranFragment extends Fragment {
                 Toast.makeText(getContext(), "Fail to get response = " + error, Toast.LENGTH_SHORT).show();
             }
         }) {
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Authorization", "Bearer " + token);
+                return headers;
+            }
             @Override
             public String getBodyContentType() {
                 // as we are passing data in the form of url encoded
@@ -182,6 +197,7 @@ public class PengeluaranFragment extends Fragment {
                 params.put("tipe_keuangan", "Pengeluaran");
                 params.put("tgl_keuangan", tglPengeluaran);
                 params.put("keterangan_keuangan", ketPengeluaran);
+                params.put("jenis_keuangan", jenisPengeluaran);
                 params.put("status_keuangan", "Selesai");
                 params.put("nominal_keuangan", nominalPengeluaran);
                 params.put("jml_kas_awal", jmlSaldo);
