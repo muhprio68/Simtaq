@@ -18,6 +18,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -35,9 +36,12 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 import id.simtaq.androidapp.adapter.RiwayatListAdapter;
+import id.simtaq.androidapp.helper.Preferences;
 import id.simtaq.androidapp.models.Keuangan;
 
 import static id.simtaq.androidapp.helper.config.locale;
@@ -52,6 +56,7 @@ public class RiwayatActivity extends AppCompatActivity implements RiwayatListAda
     private ArrayList<Keuangan> keuanganList;
     public RiwayatListAdapter adapter;
     private RequestQueue queue;
+    private String authToken;
     private String sBulanTahun, sBulan, sTahun, sFilterBulanTahun;
     private SimpleDateFormat bulanTahun, tahun, bulan, filterBulanTahun;
     private Calendar c;
@@ -65,6 +70,7 @@ public class RiwayatActivity extends AppCompatActivity implements RiwayatListAda
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_riwayat);
         initViews();
+        authToken = Preferences.getKeyToken(RiwayatActivity.this);
         //addData();
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Riwayat Uang Kas");
@@ -84,7 +90,7 @@ public class RiwayatActivity extends AppCompatActivity implements RiwayatListAda
         sBulan = bulan.format(c.getTime());
         sFilterBulanTahun = filterBulanTahun.format(c.getTime());
 
-        getDataKeuangan(sFilterBulanTahun);
+        getDataKeuangan(sFilterBulanTahun, authToken);
         tvFilterBulanKeuangan.setText(sBulan);
         tvFilterTahunKeuangan.setText(sTahun);
 
@@ -134,7 +140,7 @@ public class RiwayatActivity extends AppCompatActivity implements RiwayatListAda
 //        riwayatKasArrayList.add(new RiwayatKas("RK000015","Kotak Amal", true,"13/03/2022","Kotak Amal Sholat Jum'at",90000, 10250000, 11150000));
 //    }
 
-    public void getDataKeuangan (String filter){
+    public void getDataKeuangan (String filter, String token){
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url+"/keuangan", null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
@@ -178,7 +184,14 @@ public class RiwayatActivity extends AppCompatActivity implements RiwayatListAda
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(RiwayatActivity.this, "Fail to get the data..", Toast.LENGTH_SHORT).show();
             }
-        });
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Authorization", "Bearer " + token);
+                return headers;
+            }
+        };
         queue.add(jsonArrayRequest);
     }
 
@@ -251,7 +264,7 @@ public class RiwayatActivity extends AppCompatActivity implements RiwayatListAda
             SimpleDateFormat sdfFilterBulanTahun = new SimpleDateFormat("yyyy-MM", locale);
             sFilterBulanTahun = sdfFilterBulanTahun.format(c.getTime());
             keuanganList.clear();
-            getDataKeuangan(sFilterBulanTahun);
+            getDataKeuangan(sFilterBulanTahun, authToken);
             tvFilterBulanKeuangan.setText(sBulan);
             tvFilterTahunKeuangan.setText(sTahun);
             doNextCurentTime();

@@ -73,7 +73,6 @@ public class InfakOnlineActivity extends AppCompatActivity implements Transactio
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back_white);
         queue = Volley.newRequestQueue(InfakOnlineActivity.this);
         getNomorKeuangan();
-        getSaldo();
         showPembayaran();
         btnInfak.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -248,85 +247,7 @@ public class InfakOnlineActivity extends AppCompatActivity implements Transactio
                 params.put("keterangan_keuangan", ketInfak);
                 params.put("status_keuangan", statusInfak);
                 params.put("nominal_keuangan", nominalInfak);
-                params.put("jml_kas_awal", jmlSaldo);
-                int jmlKasAkhir = Integer.parseInt(jmlSaldo)+Integer.parseInt(nominalInfak);
-                params.put("jml_kas_akhir", jmlKasAkhir+"");
                 params.put("deskripsi_keuangan", deskripInfak);
-                params.put("create_at", getCurentDate());
-                params.put("update_at", getCurentDate());
-                ubahSaldo(jmlKasAkhir+"");
-
-                // at last we are returning our params.
-                return params;
-            }
-        };
-        // below line is to make
-        // a json object request.
-        queue.add(request);
-    }
-
-    public void getSaldo(){
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url+"/saldo", null, new Response.Listener<JSONArray>() {
-            @Override
-            public void onResponse(JSONArray response) {
-                //pbJadwalKegiatan.setVisibility(View.GONE);
-                //rvJadwalKegiatan.setVisibility(View.VISIBLE);
-                try {
-                    JSONObject responseObj = response.getJSONObject(0);
-                    jmlSaldo = responseObj.getString("jml_saldo");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(InfakOnlineActivity.this, "Fail to get the data..", Toast.LENGTH_SHORT).show();
-            }
-        });
-        queue.add(jsonArrayRequest);
-    }
-
-    private void ubahSaldo(String jmlSaldo) {
-        StringRequest request = new StringRequest(Request.Method.PUT, url+"/saldo/1", new com.android.volley.Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Log.e("TAG", "RESPONSE IS " + response);
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-                    // on below line we are displaying a success toast message.
-                    //snackbarWithAction();
-
-                    //Toast.makeText(TambahKegiatanActivity.this, "Data berhasil disimpan", Toast.LENGTH_SHORT).show();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new com.android.volley.Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                // method to handle errors.
-                Toast.makeText(InfakOnlineActivity.this, "Fail to get response = " + error, Toast.LENGTH_SHORT).show();
-            }
-        }) {
-            @Override
-            public String getBodyContentType() {
-                // as we are passing data in the form of url encoded
-                // so we are passing the content type below
-                return "application/x-www-form-urlencoded; charset=UTF-8";
-            }
-
-            @Override
-            protected Map<String, String> getParams() {
-
-                // below line we are creating a map for storing
-                // our values in key and value pair.
-                Map<String, String> params = new HashMap<String, String>();
-
-                // on below line we are passing our
-                // key and value pair to our parameters.
-                params.put("jml_saldo", jmlSaldo);
-                params.put("update_at", getCurentDate());
 
                 // at last we are returning our params.
                 return params;

@@ -16,6 +16,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -30,8 +31,11 @@ import org.json.JSONObject;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
+import id.simtaq.androidapp.CatatDonaturActivity;
 import id.simtaq.androidapp.JadwalKegiatanActivity;
 import id.simtaq.androidapp.R;
 import id.simtaq.androidapp.RiwayatActivity;
@@ -52,6 +56,7 @@ public class KegiatanFragment extends Fragment implements View.OnClickListener, 
     private TextView tvTambahData;
     private JadwalKegiatanAdapter adapter;
     private RequestQueue queue;
+    private String authToken;
     private RelativeLayout rlMenuKegiatan, rlTambahKegiatan;
 
     private String level;
@@ -80,12 +85,13 @@ public class KegiatanFragment extends Fragment implements View.OnClickListener, 
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_kegiatan, container, false);
         initViews(view);
-        level = Preferences.getKeyLevel(getContext());
+        level = Preferences.getKeyLevel(view.getContext());
+        authToken = Preferences.getKeyToken(view.getContext());
         tvLihatSemuaKegiatan.setOnClickListener(this);
         kegiatanList = new ArrayList<>();
         queue = Volley.newRequestQueue(view.getContext());
 //        addData();
-        getData(view);
+        getData(view, authToken);
         buildRecyclerView(view);
         aksesLevel(level);
         return view;
@@ -100,7 +106,7 @@ public class KegiatanFragment extends Fragment implements View.OnClickListener, 
         rlTambahKegiatan = v.findViewById(R.id.rlTambahKegiatan);
     }
 
-    public void getData(View view){
+    public void getData(View view, String token){
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url+"/kegiatan", null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
@@ -132,7 +138,14 @@ public class KegiatanFragment extends Fragment implements View.OnClickListener, 
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(view.getContext(), "Fail to get the data..", Toast.LENGTH_SHORT).show();
             }
-        });
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Authorization", "Bearer " + token);
+                return headers;
+            }
+        };
         queue.add(jsonArrayRequest);
     }
 

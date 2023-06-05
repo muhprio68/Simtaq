@@ -18,6 +18,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -35,9 +36,12 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 import id.simtaq.androidapp.adapter.JadwalKegiatanAdapter;
+import id.simtaq.androidapp.helper.Preferences;
 import id.simtaq.androidapp.models.Kegiatan;
 
 import static id.simtaq.androidapp.helper.config.locale;
@@ -50,6 +54,7 @@ public class JadwalKegiatanActivity extends AppCompatActivity implements JadwalK
     private ArrayList<Kegiatan> kegiatanList;
     private JadwalKegiatanAdapter adapter;
     private RequestQueue queue;
+    private String authToken;
     private String sBulanTahun, sBulan, sTahun, sFilterBulanTahun;
     private SimpleDateFormat bulanTahun, tahun, bulan, filterBulanTahun;
 
@@ -63,6 +68,7 @@ public class JadwalKegiatanActivity extends AppCompatActivity implements JadwalK
 
     private ProgressBar pbJadwalKegiatan;
 
+
     public JadwalKegiatanActivity() {
     }
 
@@ -71,6 +77,7 @@ public class JadwalKegiatanActivity extends AppCompatActivity implements JadwalK
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_jadwal_kegiatan);
         initViews();
+        authToken = Preferences.getKeyToken(JadwalKegiatanActivity.this);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Jadwal Kegiatan");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -90,7 +97,7 @@ public class JadwalKegiatanActivity extends AppCompatActivity implements JadwalK
         sBulan = bulan.format(c.getTime());
         sFilterBulanTahun = filterBulanTahun.format(c.getTime());
 
-        getData(sFilterBulanTahun);
+        getData(sFilterBulanTahun, authToken);
         tvFilterBulanKegiatan.setText(sBulan);
         tvFilterTahunKegiatan.setText(sTahun);
         //doNextCurentTime();
@@ -132,7 +139,7 @@ public class JadwalKegiatanActivity extends AppCompatActivity implements JadwalK
 //        kegiatanList.add(new Kegiatan("KEG00005", true, "Sholawat Diba'", "29/03/2022","19.30", "Pengajuan Rutin Sabtu Pon","Masjid At-Taqwa","Bpk. M. Khoirul Huda"));
 //    }
 
-    public void getData(String filter){
+    public void getData(String filter, String token){
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url+"/kegiatan", null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
@@ -175,7 +182,14 @@ public class JadwalKegiatanActivity extends AppCompatActivity implements JadwalK
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(JadwalKegiatanActivity.this, "Fail to get the data..", Toast.LENGTH_SHORT).show();
             }
-        });
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Authorization", "Bearer " + token);
+                return headers;
+            }
+        };
         queue.add(jsonArrayRequest);
     }
 
@@ -249,7 +263,7 @@ public class JadwalKegiatanActivity extends AppCompatActivity implements JadwalK
             sFilterBulanTahun = sdfFilterBulanTahun.format(c.getTime());
             kegiatanList.clear();
             tvFilterBulanKegiatan.setText(sBulan);
-            getData(sFilterBulanTahun);
+            getData(sFilterBulanTahun, authToken);
             tvFilterTahunKegiatan.setText(sTahun);
             //adapter.notifyDataSetChanged();
             doNextCurentTime();

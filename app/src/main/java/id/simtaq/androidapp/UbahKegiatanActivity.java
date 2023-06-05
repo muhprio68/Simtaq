@@ -43,6 +43,10 @@ import java.util.Map;
 
 import id.simtaq.androidapp.helper.Preferences;
 
+import static id.simtaq.androidapp.helper.config.formatLihatTanggal;
+import static id.simtaq.androidapp.helper.config.formatLihatWaktu;
+import static id.simtaq.androidapp.helper.config.formatSimpanTanggal;
+import static id.simtaq.androidapp.helper.config.formatSimpanWaktu;
 import static id.simtaq.androidapp.helper.config.locale;
 import static id.simtaq.androidapp.helper.config.url;
 
@@ -84,7 +88,7 @@ public class UbahKegiatanActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back_white);
         idKegiatan = getIntent().getIntExtra("idKegiatan",0);
-        dateFormatter = new SimpleDateFormat("yyyy-MM-dd", locale);
+        dateFormatter = new SimpleDateFormat("dd MMMM yyyy", locale);
         queue = Volley.newRequestQueue(UbahKegiatanActivity.this);
         getDataUbahKegiatan(authToken);
         etTglKegiatan.setOnClickListener(new View.OnClickListener() {
@@ -128,7 +132,7 @@ public class UbahKegiatanActivity extends AppCompatActivity {
                     etPembicaraKegiatan.requestFocus();
                     etPembicaraKegiatan.setError("Masukkan pembicara kegiatan");
                 } else {
-                    ubahKegiatan(authToken, idKegiatan,namaKegiatan, tipeKegiatan, tglKegiatan,wktKegiatan,tempatKegiatan,pembicaraKegiatan,deskripsiKegiatan);
+                    ubahKegiatan(authToken, idKegiatan,namaKegiatan, tipeKegiatan, formatSimpanTanggal(tglKegiatan),wktKegiatan,tempatKegiatan,pembicaraKegiatan,deskripsiKegiatan);
                 }
             }
         });
@@ -175,8 +179,8 @@ public class UbahKegiatanActivity extends AppCompatActivity {
                         } else{
                             spTipeKegiatan.setSelection(1);
                         }
-                        etTglKegiatan.setText(responseObj.getString("tgl_kegiatan"));
-                        etWaktuKegiatan.setText(formatWaktu(responseObj.getString("waktu_kegiatan")));
+                        etTglKegiatan.setText(formatLihatTanggal(responseObj.getString("tgl_kegiatan")));
+                        etWaktuKegiatan.setText(formatLihatWaktu(responseObj.getString("waktu_kegiatan")));
                         etTempatKegiatan.setText(responseObj.getString("tempat_kegiatan"));
                         etPembicaraKegiatan.setText(responseObj.getString("pembicara_kegiatan"));
                         etDeskripsiKegiatan.setText(responseObj.getString("deskripsi_kegiatan"));
@@ -261,7 +265,6 @@ public class UbahKegiatanActivity extends AppCompatActivity {
                 params.put("tempat_kegiatan", tempatKegiatan);
                 params.put("pembicara_kegiatan", pembicaraKegiatan);
                 params.put("deskripsi_kegiatan", deskripsiKegiatan);
-                params.put("update_at", getCurentDate());
                 // at last we are returning our params.
                 return params;
             }
@@ -309,7 +312,7 @@ public class UbahKegiatanActivity extends AppCompatActivity {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
 
-                etWaktuKegiatan.setText(timeFormat(hourOfDay+":"+minute));
+                etWaktuKegiatan.setText(formatSimpanWaktu(hourOfDay+":"+minute));
             }
         },
 
@@ -317,21 +320,6 @@ public class UbahKegiatanActivity extends AppCompatActivity {
                 DateFormat.is24HourFormat(this));
 
         timePickerDialog.show();
-    }
-
-    private String timeFormat(String waktu){
-        String wkt = waktu;
-        Locale locale = new Locale("in", "ID");
-        java.text.DateFormat formatter = new SimpleDateFormat("hh:mm", locale); //dd/MM/yyyy  yyyy-MM-dd
-        Date date = null;
-        try {
-            date = (Date)formatter.parse(wkt);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        SimpleDateFormat newFormat = new SimpleDateFormat("HH:mm", locale);
-        String wktBaru = newFormat.format(date);
-        return wktBaru;
     }
 
     public void snackbarWithAction(){
@@ -346,48 +334,10 @@ public class UbahKegiatanActivity extends AppCompatActivity {
         snackbar.show();
     }
 
-    private String inputDateFormat(String tanggal){
-        String tgl = tanggal;
-        Locale locale = new Locale("in", "ID");
-        java.text.DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", locale);//"dd/MM/yyyy" "yyyy-MM-dd"
-        Date date = null;
-        try {
-            date = (Date)formatter.parse(tgl);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        SimpleDateFormat newFormat = new SimpleDateFormat("EEEE, dd MMMM yyyy", locale);
-        String tglBaru = newFormat.format(date);
-        return tglBaru;
-    }
-
-    private String formatWaktu(String waktu){
-        String wkt = waktu;
-        Locale locale = new Locale("in", "ID");
-        java.text.DateFormat formatter = new SimpleDateFormat("hh:mm:ss", locale);
-        Date date = null;
-        try {
-            date = (Date)formatter.parse(wkt);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        SimpleDateFormat newFormat = new SimpleDateFormat("hh:mm", locale);
-        String wktBaru = newFormat.format(date);
-        return wktBaru;
-    }
-
     public void lihatUbahData() {
         Intent intent = new Intent(UbahKegiatanActivity.this, DetailKegiatanActivity.class);
         intent.putExtra("intentDari", "tambah kegiatan");
         startActivity(intent);
         finish();
     }
-
-    public String getCurentDate(){
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Calendar cal = Calendar.getInstance();
-        //System.out.println(dateFormat.format(cal.getTime()));
-        return dateFormat.format(cal.getTime());
-    }
-
 }

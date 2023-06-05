@@ -40,6 +40,9 @@ import java.util.Map;
 
 import id.simtaq.androidapp.helper.Preferences;
 
+import static id.simtaq.androidapp.helper.config.formatSimpanTanggal;
+import static id.simtaq.androidapp.helper.config.formatSimpanWaktu;
+import static id.simtaq.androidapp.helper.config.locale;
 import static id.simtaq.androidapp.helper.config.url;
 
 public class TambahKegiatanActivity extends AppCompatActivity {
@@ -78,7 +81,7 @@ public class TambahKegiatanActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back_white);
         queue = Volley.newRequestQueue(TambahKegiatanActivity.this);
-        dateFormatter = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+        dateFormatter = new SimpleDateFormat("dd MMMM yyyy", locale);
         etTglKegiatan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -120,7 +123,7 @@ public class TambahKegiatanActivity extends AppCompatActivity {
                     etPembicaraKegiatan.requestFocus();
                     etPembicaraKegiatan.setError("Masukkan pembicara kegiatan");
                 } else {
-                    tambahKegiatan(authToken, namaKegiatan, tipeKegiatan, tglKegiatan,wktKegiatan,tempatKegiatan,pembicaraKegiatan,deskripsiKegiatan);
+                    tambahKegiatan(authToken, namaKegiatan, tipeKegiatan, formatSimpanTanggal(tglKegiatan),wktKegiatan,tempatKegiatan,pembicaraKegiatan,deskripsiKegiatan);
                 }
             }
         });
@@ -204,7 +207,6 @@ public class TambahKegiatanActivity extends AppCompatActivity {
 
                 // on below line we are passing our
                 // key and value pair to our parameters.
-                params.put("no_kegiatan", "KEG-220922001");
                 params.put("nama_kegiatan", namaKegiatan);
                 params.put("tipe_kegiatan", tipeKegiatan);
                 params.put("tgl_kegiatan", tglKegiatan);
@@ -212,8 +214,6 @@ public class TambahKegiatanActivity extends AppCompatActivity {
                 params.put("tempat_kegiatan", tempatKegiatan);
                 params.put("pembicara_kegiatan", pembicaraKegiatan);
                 params.put("deskripsi_kegiatan", deskripsiKegiatan);
-                params.put("create_at", getCurentDate());
-                params.put("update_at", getCurentDate());
                 // at last we are returning our params.
                 return params;
             }
@@ -261,7 +261,7 @@ public class TambahKegiatanActivity extends AppCompatActivity {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
 
-                etWaktuKegiatan.setText(timeFormat(hourOfDay+":"+minute));
+                etWaktuKegiatan.setText(formatSimpanWaktu(hourOfDay+":"+minute));
             }
         },
 
@@ -269,21 +269,6 @@ public class TambahKegiatanActivity extends AppCompatActivity {
                 DateFormat.is24HourFormat(this));
 
         timePickerDialog.show();
-    }
-
-    private String timeFormat(String waktu){
-        String wkt = waktu;
-        Locale locale = new Locale("in", "ID");
-        java.text.DateFormat formatter = new SimpleDateFormat("hh:mm", locale); //dd/MM/yyyy  yyyy-MM-dd
-        Date date = null;
-        try {
-            date = (Date)formatter.parse(wkt);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        SimpleDateFormat newFormat = new SimpleDateFormat("HH:mm", locale);
-        String wktBaru = newFormat.format(date);
-        return wktBaru;
     }
 
     public void snackbarWithAction(){
@@ -296,13 +281,6 @@ public class TambahKegiatanActivity extends AppCompatActivity {
             }
         });
         snackbar.show();
-    }
-
-    public String getCurentDate(){
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Calendar cal = Calendar.getInstance();
-        //System.out.println(dateFormat.format(cal.getTime()));
-        return dateFormat.format(cal.getTime());
     }
 
     public void lihatTambahData() {

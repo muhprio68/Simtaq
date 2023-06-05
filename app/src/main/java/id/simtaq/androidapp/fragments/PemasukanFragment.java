@@ -43,6 +43,7 @@ import id.simtaq.androidapp.R;
 import id.simtaq.androidapp.UbahAkunActivity;
 import id.simtaq.androidapp.helper.Preferences;
 
+import static id.simtaq.androidapp.helper.config.formatSimpanTanggal;
 import static id.simtaq.androidapp.helper.config.locale;
 import static id.simtaq.androidapp.helper.config.url;
 
@@ -90,8 +91,7 @@ public class PemasukanFragment extends Fragment {
         initViews(view);
         authToken = Preferences.getKeyToken(getContext());
         queue = Volley.newRequestQueue(getContext());
-        getSaldo();
-        dateFormatter = new SimpleDateFormat("yyyy-MM-dd", locale);
+        dateFormatter = new SimpleDateFormat("dd MMMM yyyy", locale);
 
         etTglPemasukan.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,7 +116,7 @@ public class PemasukanFragment extends Fragment {
                 } else if (TextUtils.isEmpty(nominalPemasukan)){
                     etNominalPemasukan.setError("Masukkan nominal");
                 } else {
-                    tambahDataPemasukan(authToken, tglPemasukan, ketPemasukan, jenisPemasukan, nominalPemasukan, deskripPemasukan);
+                    tambahDataPemasukan(authToken, formatSimpanTanggal(tglPemasukan), ketPemasukan, jenisPemasukan, nominalPemasukan, deskripPemasukan);
                 }
             }
         });
@@ -155,7 +155,7 @@ public class PemasukanFragment extends Fragment {
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     // on below line we are displaying a success toast message.
-                    //snackbarWithAction();
+                    snackbarWithAction();
 
                     //Toast.makeText(TambahKegiatanActivity.this, "Data berhasil disimpan", Toast.LENGTH_SHORT).show();
                 } catch (JSONException e) {
@@ -196,92 +196,13 @@ public class PemasukanFragment extends Fragment {
 
                 // on below line we are passing our
                 // key and value pair to our parameters.
-                params.put("no_keuangan", "PEN-220921001");
                 params.put("tipe_keuangan", "Pemasukan");
                 params.put("tgl_keuangan", tglPemasukan);
                 params.put("keterangan_keuangan", ketPemasukan);
                 params.put("jenis_keuangan", jenisPemasukan);
                 params.put("status_keuangan", "Selesai");
                 params.put("nominal_keuangan", nominalPemasukan);
-                params.put("jml_kas_awal", jmlSaldo);
-                int jmlKasAkhir = Integer.parseInt(jmlSaldo)+Integer.parseInt(nominalPemasukan);
-                params.put("jml_kas_akhir", jmlKasAkhir+"");
                 params.put("deskripsi_keuangan", deskripPemasukan);
-                params.put("create_at", getCurentDate());
-                params.put("update_at", getCurentDate());
-                ubahSaldo(jmlKasAkhir+"");
-
-                // at last we are returning our params.
-                return params;
-            }
-        };
-        // below line is to make
-        // a json object request.
-        queue.add(request);
-    }
-
-    public void getSaldo(){
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url+"/saldo", null, new Response.Listener<JSONArray>() {
-            @Override
-            public void onResponse(JSONArray response) {
-                //pbJadwalKegiatan.setVisibility(View.GONE);
-                //rvJadwalKegiatan.setVisibility(View.VISIBLE);
-                try {
-                    JSONObject responseObj = response.getJSONObject(0);
-                    jmlSaldo = responseObj.getString("jml_saldo");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getContext(), "Fail to get the data..", Toast.LENGTH_SHORT).show();
-            }
-        });
-        queue.add(jsonArrayRequest);
-    }
-
-    private void ubahSaldo(String jmlSaldo) {
-        StringRequest request = new StringRequest(Request.Method.PUT, url+"/saldo/1", new com.android.volley.Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Log.e("TAG", "RESPONSE IS " + response);
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-                    // on below line we are displaying a success toast message.
-                    snackbarWithAction();
-
-                    //Toast.makeText(TambahKegiatanActivity.this, "Data berhasil disimpan", Toast.LENGTH_SHORT).show();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new com.android.volley.Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                // method to handle errors.
-                Toast.makeText(getContext(), "Fail to get response = " + error, Toast.LENGTH_SHORT).show();
-            }
-        }) {
-            @Override
-            public String getBodyContentType() {
-                // as we are passing data in the form of url encoded
-                // so we are passing the content type below
-                return "application/x-www-form-urlencoded; charset=UTF-8";
-            }
-
-            @Override
-            protected Map<String, String> getParams() {
-
-                // below line we are creating a map for storing
-                // our values in key and value pair.
-                Map<String, String> params = new HashMap<String, String>();
-
-                // on below line we are passing our
-                // key and value pair to our parameters.
-                params.put("jml_saldo", jmlSaldo);
-                params.put("update_at", getCurentDate());
 
                 // at last we are returning our params.
                 return params;
@@ -331,13 +252,6 @@ public class PemasukanFragment extends Fragment {
             }
         });
         snackbar.show();
-    }
-
-    public String getCurentDate(){
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Calendar cal = Calendar.getInstance();
-        //System.out.println(dateFormat.format(cal.getTime()));
-        return dateFormat.format(cal.getTime());
     }
 
     public void lihatTambahData() {

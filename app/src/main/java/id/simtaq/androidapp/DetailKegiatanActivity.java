@@ -12,6 +12,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -27,8 +28,14 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
+import id.simtaq.androidapp.helper.Preferences;
+
+import static id.simtaq.androidapp.helper.config.formatLihatFullTanggal;
+import static id.simtaq.androidapp.helper.config.formatLihatWaktu;
 import static id.simtaq.androidapp.helper.config.url;
 
 public class DetailKegiatanActivity extends AppCompatActivity {
@@ -46,12 +53,17 @@ public class DetailKegiatanActivity extends AppCompatActivity {
     int idKegiatan;
     String intentDari;
 
+    private RequestQueue queue;
+    private String authToken;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_kegiatan);
         initViews();
+        authToken = Preferences.getKeyToken(DetailKegiatanActivity.this);
+        queue = Volley.newRequestQueue(DetailKegiatanActivity.this);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Detail Kegiatan");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -60,10 +72,10 @@ public class DetailKegiatanActivity extends AppCompatActivity {
 
         intentDari = String.valueOf(getIntent().getStringExtra("intentDari"));
         if (intentDari.equals("tambah kegiatan")){
-            lihatTambah();
+            lihatTambah(authToken);
         } else {
             idKegiatan = Integer.valueOf(getIntent().getStringExtra("idKegiatan"));
-            getData();
+            getData(authToken);
         }
 
     }
@@ -81,8 +93,7 @@ public class DetailKegiatanActivity extends AppCompatActivity {
         tvDeskripsiKegiatan =findViewById(R.id.tvValueDetailDeskripsiKegiatan);
     }
 
-    public void getData(){
-        RequestQueue queue = Volley.newRequestQueue(DetailKegiatanActivity.this);
+    public void getData(String token){
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url+"/kegiatan/"+idKegiatan, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
@@ -93,8 +104,8 @@ public class DetailKegiatanActivity extends AppCompatActivity {
                         tvNoKegiatan.setText(responseObj.getString("no_kegiatan"));
                         tvDetailNamaKegiatan.setText(responseObj.getString("nama_kegiatan"));
                         tvTipeKegiatan.setText(responseObj.getString("tipe_kegiatan"));
-                        tvTglKegiatan.setText(fullDatePlusDay(responseObj.getString("tgl_kegiatan")));
-                        tvWaktuKegiatan.setText(formatWaktu(responseObj.getString("waktu_kegiatan"))+" WIB");
+                        tvTglKegiatan.setText(formatLihatFullTanggal(responseObj.getString("tgl_kegiatan")));
+                        tvWaktuKegiatan.setText(formatLihatWaktu(responseObj.getString("waktu_kegiatan"))+" WIB");
                         tvTempatKegiatan.setText(responseObj.getString("tempat_kegiatan"));
                         tvPembicaraKegiatan.setText(responseObj.getString("pembicara_kegiatan"));
                         tvDeskripsiKegiatan.setText(responseObj.getString("deskripsi_kegiatan"));
@@ -108,12 +119,18 @@ public class DetailKegiatanActivity extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(DetailKegiatanActivity.this, "Fail to get the data..", Toast.LENGTH_SHORT).show();
             }
-        });
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Authorization", "Bearer " + token);
+                return headers;
+            }
+        };
         queue.add(jsonArrayRequest);
     }
 
-    public void lihatTambah(){
-        RequestQueue queue = Volley.newRequestQueue(DetailKegiatanActivity.this);
+    public void lihatTambah(String token){
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url+"/kegiatan", null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
@@ -124,8 +141,8 @@ public class DetailKegiatanActivity extends AppCompatActivity {
                         tvNoKegiatan.setText(responseObj.getString("no_kegiatan"));
                         tvDetailNamaKegiatan.setText(responseObj.getString("nama_kegiatan"));
                         tvTipeKegiatan.setText(responseObj.getString("tipe_kegiatan"));
-                        tvTglKegiatan.setText(fullDatePlusDay(responseObj.getString("tgl_kegiatan")));
-                        tvWaktuKegiatan.setText(formatWaktu(responseObj.getString("waktu_kegiatan"))+" WIB");
+                        tvTglKegiatan.setText(formatLihatFullTanggal(responseObj.getString("tgl_kegiatan")));
+                        tvWaktuKegiatan.setText(formatLihatWaktu(responseObj.getString("waktu_kegiatan"))+" WIB");
                         tvTempatKegiatan.setText(responseObj.getString("tempat_kegiatan"));
                         tvPembicaraKegiatan.setText(responseObj.getString("pembicara_kegiatan"));
                         tvDeskripsiKegiatan.setText(responseObj.getString("deskripsi_kegiatan"));
@@ -139,7 +156,14 @@ public class DetailKegiatanActivity extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(DetailKegiatanActivity.this, "Fail to get the data..", Toast.LENGTH_SHORT).show();
             }
-        });
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Authorization", "Bearer " + token);
+                return headers;
+            }
+        };
         queue.add(jsonArrayRequest);
     }
 
@@ -152,36 +176,6 @@ public class DetailKegiatanActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-    }
-
-    private String fullDatePlusDay(String tanggal){
-        String tgl = tanggal;
-        Locale locale = new Locale("in", "ID");
-        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", locale);//"dd/MM/yyyy" "yyyy-MM-dd"
-        Date date = null;
-        try {
-            date = (Date)formatter.parse(tgl);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        SimpleDateFormat newFormat = new SimpleDateFormat("EEEE, dd MMMM yyyy", locale);
-        String tglBaru = newFormat.format(date);
-        return tglBaru;
-    }
-
-    private String formatWaktu(String waktu){
-        String wkt = waktu;
-        Locale locale = new Locale("in", "ID");
-        DateFormat formatter = new SimpleDateFormat("hh:mm:ss", locale);
-        Date date = null;
-        try {
-            date = (Date)formatter.parse(wkt);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        SimpleDateFormat newFormat = new SimpleDateFormat("HH:mm", locale);
-        String wktBaru = newFormat.format(date);
-        return wktBaru;
     }
 
     @Override

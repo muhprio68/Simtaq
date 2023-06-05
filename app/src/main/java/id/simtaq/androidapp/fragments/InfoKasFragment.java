@@ -18,6 +18,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -35,6 +36,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Map;
 
 import id.simtaq.androidapp.CatatDonaturActivity;
 import id.simtaq.androidapp.CatatKeuanganActivity;
@@ -67,6 +70,7 @@ public class InfoKasFragment extends Fragment implements View.OnClickListener, R
     private RiwayatListAdapter adapter;
     private RequestQueue queue;
     private RelativeLayout rlMenuKeuangan, rlCatatKeuangan, rlCatatDonatur;
+    private String authToken;
 
     private String jmlSaldo, level;
     private int pemasukanBulanIni;
@@ -93,14 +97,15 @@ public class InfoKasFragment extends Fragment implements View.OnClickListener, R
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_infokas, container, false);
         initViews(view);
-        level = Preferences.getKeyLevel(getContext());
+        level = Preferences.getKeyLevel(view.getContext());
+        authToken = Preferences.getKeyToken(view.getContext());
         tvSemuaRiwayat.setOnClickListener(this);
         rvRiwayatInfoKas.setHasFixedSize(true);
         queue = Volley.newRequestQueue(view.getContext());
         keuanganList = new ArrayList<>();
         //addData();
-        getSaldo(view);
-        getDataKeuangan(view);
+        getSaldo(view, authToken);
+        getDataKeuangan(view, authToken);
         pemasukanBulanIni = 0;
         pengeluaranBulanIni = 0;
         aksesLevel(level);
@@ -123,7 +128,7 @@ public class InfoKasFragment extends Fragment implements View.OnClickListener, R
         tvTambahData = view.findViewById(R.id.tvTambahDataKeuangan);
     }
 
-    public void getDataKeuangan(View view){
+    public void getDataKeuangan(View view, String token){
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url+"/keuangan", null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
@@ -171,11 +176,18 @@ public class InfoKasFragment extends Fragment implements View.OnClickListener, R
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(view.getContext(), "Fail to get the data..", Toast.LENGTH_SHORT).show();
             }
-        });
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Authorization", "Bearer " + token);
+                return headers;
+            }
+        };
         queue.add(jsonArrayRequest);
     }
 
-    public void getSaldo(View view){
+    public void getSaldo(View view, String token){
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url+"/saldo", null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
@@ -194,7 +206,14 @@ public class InfoKasFragment extends Fragment implements View.OnClickListener, R
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(view.getContext(), "Fail to get the data..", Toast.LENGTH_SHORT).show();
             }
-        });
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Authorization", "Bearer " + token);
+                return headers;
+            }
+        };
         queue.add(jsonArrayRequest);
     }
 

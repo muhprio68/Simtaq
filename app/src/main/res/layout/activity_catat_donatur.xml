@@ -30,8 +30,6 @@
         android:layout_below="@+id/tbCatatDonatur"
         android:padding="16dp">
 
-
-
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvTglDonatur"
             android:layout_width="0dp"
@@ -61,10 +59,10 @@
             app:layout_constraintTop_toBottomOf="@id/tvTglDonatur" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvKeteranganRtRw"
+            android:id="@+id/tvWilayahDonatur"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Keterangan RT/RW"
+            android:text="Wilayah Donatur"
             android:textSize="18sp"
             android:textColor="@color/primaryTextColor"
             android:layout_marginTop="16dp"
@@ -73,7 +71,7 @@
             app:layout_constraintEnd_toEndOf="parent"/>
 
         <RelativeLayout
-            android:id="@+id/rlSpinnerDonatur"
+            android:id="@+id/rlSpinnerWilayahDonatur"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight=".28"
@@ -82,10 +80,10 @@
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvKeteranganRtRw">
+            app:layout_constraintTop_toBottomOf="@id/tvWilayahDonatur">
 
             <Spinner
-                android:id="@+id/spKetDonatur"
+                android:id="@+id/spWilayahDonatur"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -110,6 +108,33 @@
         </RelativeLayout>
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvPetugasDonatur"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Petugas Donatur"
+            android:textSize="18sp"
+            android:textColor="@color/primaryTextColor"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/rlSpinnerWilayahDonatur"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <EditText
+            android:id="@+id/etPetugasDonatur"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/rounded_border_tambahdata"
+            android:drawablePadding="16dp"
+            android:ems="10"
+            android:hint="Petugas Donatur"
+            android:inputType="text"
+            android:padding="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvPetugasDonatur" />
+
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvNominalDonatur"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -117,7 +142,7 @@
             android:textSize="18sp"
             android:textColor="@color/primaryTextColor"
             android:layout_marginTop="16dp"
-            app:layout_constraintTop_toBottomOf="@+id/rlSpinnerDonatur"
+            app:layout_constraintTop_toBottomOf="@+id/etPetugasDonatur"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
 
@@ -130,38 +155,11 @@
             android:drawablePadding="16dp"
             android:ems="10"
             android:hint="Masukkan Nominal"
-            android:inputType="date"
+            android:inputType="number"
             android:padding="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvNominalDonatur" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvDeskripsiDonatur"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Deskripsi Donatur"
-            android:textSize="18sp"
-            android:textColor="@color/primaryTextColor"
-            android:layout_marginTop="16dp"
-            app:layout_constraintTop_toBottomOf="@+id/etNominalDonatur"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
-
-        <EditText
-            android:id="@+id/etDeskripsiDonatur"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/rounded_border_tambahdata"
-            android:ems="10"
-            android:lines="3"
-            android:hint="Masukkan Deskripsi (opsional)"
-            android:padding="16dp"
-            android:gravity="top"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvDeskripsiDonatur" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnBatalDonatur"
@@ -176,7 +174,7 @@
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/btnSimpanDonatur"
-            app:layout_constraintTop_toBottomOf="@+id/etDeskripsiDonatur" />
+            app:layout_constraintTop_toBottomOf="@+id/etNominalDonatur" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnSimpanDonatur"
@@ -191,7 +189,7 @@
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@id/btnBatalDonatur"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etDeskripsiDonatur" />
+            app:layout_constraintTop_toBottomOf="@+id/etNominalDonatur" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </RelativeLayout>

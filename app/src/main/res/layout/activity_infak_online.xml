@@ -78,7 +78,7 @@
             android:drawablePadding="16dp"
             android:ems="10"
             android:hint="Masukkan Nominal Infak"
-            android:inputType="date"
+            android:inputType="number"
             android:padding="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

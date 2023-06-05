@@ -10,6 +10,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -21,6 +22,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import id.simtaq.androidapp.helper.Preferences;
+
+import static id.simtaq.androidapp.helper.config.formatLihatFullTanggal;
 import static id.simtaq.androidapp.helper.config.toRupiah;
 import static id.simtaq.androidapp.helper.config.url;
 
@@ -41,6 +48,7 @@ public class DetailRiwayatKasActivity extends AppCompatActivity {
     private TextView tvTotalKasAkhir;
 
     private RequestQueue queue;
+    private String authToken;
     private int idKeuangan;
     private String intentDari;
 
@@ -49,6 +57,7 @@ public class DetailRiwayatKasActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_riwayat_kas);
         initViews();
+        authToken = Preferences.getKeyToken(DetailRiwayatKasActivity.this);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Detail Catatan Kas");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -58,9 +67,9 @@ public class DetailRiwayatKasActivity extends AppCompatActivity {
         intentDari = String.valueOf(getIntent().getStringExtra("intentDari"));
         if (intentDari.equals("riwayat keuangan")){
             idKeuangan = getIntent().getExtras().getInt("idKeuangan");
-            getData();
+            getData(authToken);
         } else {
-            lihatTambah();
+            lihatTambah(authToken);
         }
     }
 
@@ -80,7 +89,7 @@ public class DetailRiwayatKasActivity extends AppCompatActivity {
         tvTotalKasAkhir = findViewById(R.id.tvValueTotalKasAkhir);
     }
 
-    public void getData(){
+    public void getData(String token){
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url+"/keuangan/"+idKeuangan, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
@@ -102,7 +111,7 @@ public class DetailRiwayatKasActivity extends AppCompatActivity {
                             tvJudulDetailPenjumlahan.setText("Detail Pengeluaran");
                             tvTipeJumlah.setText("Jumlah Pengeluaran");
                         }
-                        tvTglCatatan.setText(responseObj.getString("tgl_keuangan"));
+                        tvTglCatatan.setText(formatLihatFullTanggal(responseObj.getString("tgl_keuangan")));
                         tvKeteranganCatatan.setText(responseObj.getString("keterangan_keuangan"));
                         tvDeskripsiCatatan.setText(responseObj.getString("deskripsi_keuangan"));
                         tvTotalKasAwal.setText(toRupiah(responseObj.getString("jml_kas_awal")));
@@ -118,11 +127,18 @@ public class DetailRiwayatKasActivity extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(DetailRiwayatKasActivity.this, "Fail to get the data..", Toast.LENGTH_SHORT).show();
             }
-        });
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Authorization", "Bearer " + token);
+                return headers;
+            }
+        };
         queue.add(jsonArrayRequest);
     }
 
-    public void lihatTambah(){
+    public void lihatTambah(String token){
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url+"/keuangan", null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
@@ -144,7 +160,7 @@ public class DetailRiwayatKasActivity extends AppCompatActivity {
                             tvJudulDetailPenjumlahan.setText("Detail Pengeluaran");
                             tvTipeJumlah.setText("Jumlah Pengeluaran");
                         }
-                        tvTglCatatan.setText(responseObj.getString("tgl_keuangan"));
+                        tvTglCatatan.setText(formatLihatFullTanggal(responseObj.getString("tgl_keuangan")));
                         tvKeteranganCatatan.setText(responseObj.getString("keterangan_keuangan"));
                         tvDeskripsiCatatan.setText(responseObj.getString("deskripsi_keuangan"));
                         tvTotalKasAwal.setText(toRupiah(responseObj.getString("jml_kas_awal")));
@@ -160,7 +176,14 @@ public class DetailRiwayatKasActivity extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(DetailRiwayatKasActivity.this, "Fail to get the data..", Toast.LENGTH_SHORT).show();
             }
-        });
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Authorization", "Bearer " + token);
+                return headers;
+            }
+        };
         queue.add(jsonArrayRequest);
     }
 

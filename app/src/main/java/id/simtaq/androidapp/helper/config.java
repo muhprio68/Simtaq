@@ -3,9 +3,12 @@ package id.simtaq.androidapp.helper;
 import android.content.Context;
 import android.widget.Toast;
 
+import java.text.DateFormat;
 import java.text.NumberFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -27,6 +30,81 @@ public class config {
         NumberFormat formatRupiah = NumberFormat.getInstance(locale);
         hasil = (String) formatRupiah.format(Double.valueOf(nominal));
         return "Rp "+hasil;
+    }
+
+    public static String formatSimpanTanggal(String tgl){
+        final String OLD_FORMAT = "dd MMMM yyyy";
+        final String NEW_FORMAT = "yyyy-MM-dd";
+
+        SimpleDateFormat sdf = new SimpleDateFormat(OLD_FORMAT, locale);
+        Date d = null;
+        try {
+            d = sdf.parse(tgl);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        sdf.applyPattern(NEW_FORMAT);
+        return sdf.format(d);
+    }
+
+    public static String formatLihatTanggal(String tgl){
+        final String OLD_FORMAT = "yyyy-MM-dd";
+        final String NEW_FORMAT = "dd MMMM yyyy";
+
+        SimpleDateFormat sdf = new SimpleDateFormat(OLD_FORMAT, locale);
+        Date d = null;
+        try {
+            d = sdf.parse(tgl);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        sdf.applyPattern(NEW_FORMAT);
+        return sdf.format(d);
+    }
+
+    public static String formatLihatFullTanggal(String tgl) {
+        final String OLD_FORMAT = "yyyy-MM-dd";
+        final String NEW_FORMAT = "EEEE, dd MMMM yyyy";
+
+        SimpleDateFormat sdf = new SimpleDateFormat(OLD_FORMAT, locale);
+        Date d = null;
+        try {
+            d = sdf.parse(tgl);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        sdf.applyPattern(NEW_FORMAT);
+        return sdf.format(d);
+    }
+
+    public static String formatSimpanWaktu(String waktu){
+        String wkt = waktu;
+        Locale locale = new Locale("in", "ID");
+        java.text.DateFormat formatter = new SimpleDateFormat("hh:mm", locale); //dd/MM/yyyy  yyyy-MM-dd
+        Date date = null;
+        try {
+            date = (Date)formatter.parse(wkt);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        SimpleDateFormat newFormat = new SimpleDateFormat("HH:mm", locale);
+        String wktBaru = newFormat.format(date);
+        return wktBaru;
+    }
+
+    public static String formatLihatWaktu(String waktu){
+        String wkt = waktu;
+        Locale locale = new Locale("in", "ID");
+        java.text.DateFormat formatter = new SimpleDateFormat("hh:mm:ss", locale);
+        Date date = null;
+        try {
+            date = (Date)formatter.parse(wkt);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        SimpleDateFormat newFormat = new SimpleDateFormat("HH:mm", locale);
+        String wktBaru = newFormat.format(date);
+        return wktBaru;
     }
 
     public static String getCurentDate(){
