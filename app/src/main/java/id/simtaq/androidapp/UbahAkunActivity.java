@@ -30,6 +30,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import id.simtaq.androidapp.helper.Preferences;
+import id.simtaq.androidapp.helper.config;
 
 import static id.simtaq.androidapp.helper.config.url;
 
@@ -80,7 +81,10 @@ public class UbahAkunActivity extends AppCompatActivity {
                 } else if (TextUtils.isEmpty(ubahEmail)){
                     etUbahEmail.requestFocus();
                     etUbahEmail.setError("Masukkan email pengguna");
-                }  else {
+                } else if (!config.isEmailValid(ubahEmail)){
+                    etUbahEmail.requestFocus();
+                    etUbahEmail.setError("Email tidak valid");
+                } else {
                     ubahAkun(id, ubahNama, ubahEmail, ubahLevel, authToken);
                 }
             }

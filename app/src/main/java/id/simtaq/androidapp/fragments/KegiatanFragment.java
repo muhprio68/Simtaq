@@ -57,7 +57,7 @@ public class KegiatanFragment extends Fragment implements View.OnClickListener, 
     private JadwalKegiatanAdapter adapter;
     private RequestQueue queue;
     private String authToken;
-    private RelativeLayout rlMenuKegiatan, rlTambahKegiatan;
+    private RelativeLayout rlViewInfoKegiatan, rlMenuKegiatan, rlTambahKegiatan;
 
     private String level;
 
@@ -87,6 +87,7 @@ public class KegiatanFragment extends Fragment implements View.OnClickListener, 
         initViews(view);
         level = Preferences.getKeyLevel(view.getContext());
         authToken = Preferences.getKeyToken(view.getContext());
+        rlViewInfoKegiatan.setVisibility(View.GONE);
         tvLihatSemuaKegiatan.setOnClickListener(this);
         kegiatanList = new ArrayList<>();
         queue = Volley.newRequestQueue(view.getContext());
@@ -104,6 +105,7 @@ public class KegiatanFragment extends Fragment implements View.OnClickListener, 
         tvLihatSemuaKegiatan = v.findViewById(R.id.tvLihatSemuaKegiatan);
         tvTambahData = v.findViewById(R.id.tvTambahDataKegiatan);
         rlTambahKegiatan = v.findViewById(R.id.rlTambahKegiatan);
+        rlViewInfoKegiatan = v.findViewById(R.id.rlViewInfoKegiatan);
     }
 
     public void getData(View view, String token){
@@ -111,7 +113,8 @@ public class KegiatanFragment extends Fragment implements View.OnClickListener, 
             @Override
             public void onResponse(JSONArray response) {
                 pbInfoKegiatan.setVisibility(View.GONE);
-                rvKegiatan.setVisibility(View.VISIBLE);
+                rlViewInfoKegiatan.setVisibility(View.VISIBLE);
+                //rvKegiatan.setVisibility(View.VISIBLE);
                 for (int i = 0; i < response.length(); i++) {
                     try {
                         JSONObject responseObj = response.getJSONObject(i);
@@ -150,7 +153,7 @@ public class KegiatanFragment extends Fragment implements View.OnClickListener, 
     }
 
     public void buildRecyclerView(View view) {
-        adapter = new JadwalKegiatanAdapter(view.getContext(), kegiatanList, 2, this, queue, rlMenuKegiatan);
+        adapter = new JadwalKegiatanAdapter(authToken, view.getContext(), kegiatanList, 2, this, queue, rlMenuKegiatan);
         LinearLayoutManager manager = new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false);
         rvKegiatan.setHasFixedSize(true);
         rvKegiatan.setLayoutManager(manager);

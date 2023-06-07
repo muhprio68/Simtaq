@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/rlRiwayatKeuangan"
+    android:id="@+id/clRiwayatKeuangan"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -13,27 +13,33 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="?attr/actionBarSize"
-        style="@style/AppTheme.Toolbar" />
+        style="@style/AppTheme.Toolbar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
     <View
         android:id="@+id/topViewRiwayatWave"
         android:layout_width="match_parent"
         android:layout_height="220dp"
-        android:layout_below="@id/tbRiwayatKas"
         android:background="@drawable/wave"
-        android:layout_marginTop="-1dp"/>
+        android:layout_marginTop="-1dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tbRiwayatKas"/>
 
     <ProgressBar
         android:id="@+id/pbRiwayatKeuangan"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_width="wrap_content"
+        android:layout_width="64dp"
         android:outlineAmbientShadowColor="@color/primaryDarkColor"
-        android:layout_height="wrap_content" />
+        android:layout_height="64dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/tbRiwayatKas"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tbRiwayatKas"
         android:paddingLeft="12dp"
         android:paddingRight="12dp"
         android:paddingBottom="8dp">
@@ -49,6 +55,24 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/rounded_whiteriwayat">
+
+                <ImageView
+                    android:id="@+id/ivNextKeuangan"
+                    android:layout_width="38dp"
+                    android:layout_height="38dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="20dp"
+                    android:src="@drawable/ic_next" />
+
+                <ImageView
+                    android:id="@+id/ivPrevKeuangan"
+                    android:layout_width="38dp"
+                    android:layout_height="38dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_toStartOf="@id/ivNextKeuangan"
+                    android:src="@drawable/ic_prev" />
 
                 <View
                     android:id="@+id/garisRiwayat"
@@ -87,24 +111,6 @@
                     android:textSize="22sp"
                     android:textStyle="bold" />
 
-                <ImageView
-                    android:id="@+id/ivNextKeuangan"
-                    android:layout_width="38dp"
-                    android:layout_height="38dp"
-                    android:src="@drawable/ic_next"
-                    android:layout_marginEnd="20dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_alignParentEnd="true"/>
-
-                <ImageView
-                    android:id="@+id/ivPrevKeuangan"
-                    android:layout_width="38dp"
-                    android:layout_height="38dp"
-                    android:src="@drawable/ic_prev"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_toStartOf="@id/ivNextKeuangan"/>
-
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvRiwayat"
@@ -119,4 +125,4 @@
 
     </RelativeLayout>
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,10 +6,13 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +41,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import id.simtaq.androidapp.CatatDonaturActivity;
 import id.simtaq.androidapp.CatatKeuanganActivity;
@@ -69,7 +74,7 @@ public class InfoKasFragment extends Fragment implements View.OnClickListener, R
     private Toolbar toolbar;
     private RiwayatListAdapter adapter;
     private RequestQueue queue;
-    private RelativeLayout rlMenuKeuangan, rlCatatKeuangan, rlCatatDonatur;
+    private ConstraintLayout clViewInfoKas, clMenuKeuangan, clCatatKeuangan, clCatatDonatur;
     private String authToken;
 
     private String jmlSaldo, level;
@@ -101,6 +106,7 @@ public class InfoKasFragment extends Fragment implements View.OnClickListener, R
         authToken = Preferences.getKeyToken(view.getContext());
         tvSemuaRiwayat.setOnClickListener(this);
         rvRiwayatInfoKas.setHasFixedSize(true);
+        clViewInfoKas.setVisibility(View.GONE);
         queue = Volley.newRequestQueue(view.getContext());
         keuanganList = new ArrayList<>();
         //addData();
@@ -115,7 +121,7 @@ public class InfoKasFragment extends Fragment implements View.OnClickListener, R
 
     private void initViews(View view){
         rvRiwayatInfoKas = view.findViewById(R.id.rvRiwayatInfoKas);
-        rlMenuKeuangan = view.findViewById(R.id.rlMenuInfoKas);
+        clMenuKeuangan = view.findViewById(R.id.clMenuInfoKas);
         pbInfoKas = view.findViewById(R.id.pbInfoKas);
         tvJmlSaldo = view.findViewById(R.id.tvJmlSaldo);
         tvTanggalSaldo = view.findViewById(R.id.tvTanggalSaldo);
@@ -123,8 +129,9 @@ public class InfoKasFragment extends Fragment implements View.OnClickListener, R
         toolbar = view.findViewById(R.id.tbInfoKas);
         tvPemasukanBlnIni = view.findViewById(R.id.tvPemasukanBlnIni);
         tvPengeluaranBlnIni = view.findViewById(R.id.tvPengeluaranBlnIni);
-        rlCatatKeuangan = view.findViewById(R.id.rlCatatKeuangan);
-        rlCatatDonatur = view.findViewById(R.id.rlCatatDonatur);
+        clCatatKeuangan = view.findViewById(R.id.clCatatKeuangan);
+        clCatatDonatur = view.findViewById(R.id.clCatatDonatur);
+        clViewInfoKas = view.findViewById(R.id.clViewInfoKas);
         tvTambahData = view.findViewById(R.id.tvTambahDataKeuangan);
     }
 
@@ -133,7 +140,8 @@ public class InfoKasFragment extends Fragment implements View.OnClickListener, R
             @Override
             public void onResponse(JSONArray response) {
                 pbInfoKas.setVisibility(View.GONE);
-                rvRiwayatInfoKas.setVisibility(View.VISIBLE);
+                clViewInfoKas.setVisibility(View.VISIBLE);
+                //rvRiwayatInfoKas.setVisibility(View.VISIBLE);
                 for (int i = 0; i < response.length(); i++) {
                     try {
                         JSONObject responseObj = response.getJSONObject(i);
@@ -191,7 +199,6 @@ public class InfoKasFragment extends Fragment implements View.OnClickListener, R
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url+"/saldo", null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-                //pbInfoKas.setVisibility(View.GONE);
                 try {
                     JSONObject responseObj = response.getJSONObject(0);
                     jmlSaldo = responseObj.getString("jml_saldo");
@@ -218,7 +225,7 @@ public class InfoKasFragment extends Fragment implements View.OnClickListener, R
     }
 
     public void buildRecyclerView(View view) {
-        adapter = new RiwayatListAdapter(keuanganList, view.getContext(), 2, this, queue, rlMenuKeuangan);
+        adapter = new RiwayatListAdapter(authToken, keuanganList, view.getContext(), 2, this, queue, clMenuKeuangan);
         LinearLayoutManager manager = new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false);
         rvRiwayatInfoKas.setHasFixedSize(true);
         rvRiwayatInfoKas.setLayoutManager(manager);
@@ -242,17 +249,17 @@ public class InfoKasFragment extends Fragment implements View.OnClickListener, R
     public void onClick(View v) {
         if (v == tvSemuaRiwayat){
             startActivity(new Intent(v.getContext(), RiwayatActivity.class));
-        } else if (v == rlCatatKeuangan){
+        } else if (v == clCatatKeuangan){
             startActivity(new Intent(v.getContext(), CatatKeuanganActivity.class));
-        } else if (v == rlCatatDonatur){
+        } else if (v == clCatatDonatur){
             startActivity(new Intent(v.getContext(), CatatDonaturActivity.class));
         }
     }
 
     private void aksesLevel(String level){
         if (level.equals("1") || level.equals("3")) {
-            rlCatatKeuangan.setVisibility(View.GONE);
-            rlCatatDonatur.setVisibility(View.GONE);
+            clCatatKeuangan.setVisibility(View.GONE);
+            clCatatDonatur.setVisibility(View.GONE);
             tvTambahData.setVisibility(View.GONE);
         }
     }

@@ -34,6 +34,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import id.simtaq.androidapp.helper.Preferences;
+import id.simtaq.androidapp.helper.config;
 
 import static id.simtaq.androidapp.helper.config.url;
 
@@ -80,7 +81,10 @@ public class UbahKataSandiActivity extends AppCompatActivity {
                 } else if (TextUtils.isEmpty(passBaru)){
                     etPasswordBaru.requestFocus();
                     etPasswordBaru.setError("Masukkan kata sandi baru");
-                }  else if (TextUtils.isEmpty(passKonf)){
+                } else if (!config.isValidPassword(passBaru)){
+                    etPasswordBaru.requestFocus();
+                    etPasswordBaru.setError("Kata sandi setidaknya 6 karakter menggunakan 1 huruf besar dan 1 angka");
+                } else if (TextUtils.isEmpty(passKonf)){
                     etkonfirmasiPassword.requestFocus();
                     etkonfirmasiPassword.setError("Masukkan konfirmasi kata sandi");
                 } else if (!passKonf.equals(passBaru)){

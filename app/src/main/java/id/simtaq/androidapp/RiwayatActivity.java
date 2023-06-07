@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -49,7 +50,7 @@ import static id.simtaq.androidapp.helper.config.url;
 
 public class RiwayatActivity extends AppCompatActivity implements RiwayatListAdapter.IRiwayatListAdapter {
 
-    private RelativeLayout rlRiwayatKeuangan;
+    private ConstraintLayout clRiwayatKeuangan;
     private Toolbar toolbar;
     private ProgressBar pbRiwayatKeuangan;
     private RecyclerView rvRiwayat;
@@ -112,7 +113,7 @@ public class RiwayatActivity extends AppCompatActivity implements RiwayatListAda
 
     public void initViews(){
         toolbar = findViewById(R.id.tbRiwayatKas);
-        rlRiwayatKeuangan = findViewById(R.id.rlRiwayatKeuangan);
+        clRiwayatKeuangan = findViewById(R.id.clRiwayatKeuangan);
         rvRiwayat = findViewById(R.id.rvRiwayat);
         pbRiwayatKeuangan = findViewById(R.id.pbRiwayatKeuangan);
         tvFilterBulanKeuangan = findViewById(R.id.tvFilterBlnRiwayat);
@@ -196,7 +197,7 @@ public class RiwayatActivity extends AppCompatActivity implements RiwayatListAda
     }
 
     public void buildRecyclerView(){
-        adapter = new RiwayatListAdapter(keuanganList, RiwayatActivity.this, 1, this, queue, rlRiwayatKeuangan);
+        adapter = new RiwayatListAdapter(authToken, keuanganList, RiwayatActivity.this, 1, this, queue, clRiwayatKeuangan);
         LinearLayoutManager manager = new LinearLayoutManager(this);
         rvRiwayat.setHasFixedSize(true);
         rvRiwayat.setLayoutManager(manager);

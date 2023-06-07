@@ -2,6 +2,7 @@ package id.simtaq.androidapp.viewholder;
 
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -19,6 +20,7 @@ public class RiwayatViewHolder extends RecyclerView.ViewHolder {
     public TextView tvTanggalRiwayat;
     public TextView tvJmlUang;
     public View vGaris;
+    public ProgressBar pbRiwayat;
     public TextView tvKeteranganInfoKas;
     public TextView tvJmlInfoKas;
     public TextView tvTglInfoKas;
@@ -36,5 +38,6 @@ public class RiwayatViewHolder extends RecyclerView.ViewHolder {
         tvJmlInfoKas = itemView.findViewById(R.id.tvJmlInfoKas);
         tvTglInfoKas = itemView.findViewById(R.id.tvTglInfoKas);
         rlLisRiwayat = itemView.findViewById(R.id.rlListRiwayat);
+        pbRiwayat = itemView.findViewById(R.id.pbRiwayatKeuangan);
     }
 }

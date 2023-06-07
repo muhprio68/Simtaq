@@ -1,339 +1,423 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/rlMenuInfoKas"
+    android:id="@+id/clMenuInfoKas"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/background"
     tools:context=".fragments.InfoKasFragment">
-
-
-
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/tbInfoKas"
-        style="@style/AppTheme.Toolbar"
+    <View
+        android:id="@+id/topView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="?attr/actionBarSize">
+        android:layout_height="80dp"
+        android:background="@color/primaryColor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
-        <TextView
-            android:id="@+id/tvAppBarInfoKas"
-            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+    <View
+        android:id="@+id/secondView"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:background="@drawable/rounded_viewinfokas"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/topView"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clPbInfoKas"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ProgressBar
+            android:id="@+id/pbInfoKas"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Uang Kas Masjid"
-            android:textColor="@color/secondaryTextColor"
-            android:textStyle="bold" />
+            android:indeterminateDrawable="@drawable/progressbar"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
 
-    </androidx.appcompat.widget.Toolbar>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clViewInfoKas"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:layout_marginTop="50dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <RelativeLayout
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cvSaldo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp"
-            android:layout_below="@id/tbInfoKas">
+            android:layout_marginBottom="20dp"
+            app:cardCornerRadius="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/cvSaldo"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:cardCornerRadius="16dp"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginBottom="20dp">
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="16dp"
-                        android:background="@drawable/rounded_infokas">
-
-                        <ProgressBar
-                            android:id="@+id/pbInfoKas"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:indeterminateDrawable="@drawable/progressbar"
-                            android:layout_alignParentTop="true"
-                            android:layout_alignParentEnd="true"/>
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/tvSaldo"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Jumlah Uang Kas"
-                            android:layout_alignParentTop="true"
-                            android:layout_centerHorizontal="true"
-                            android:textStyle="bold"
-                            android:layout_marginBottom="16dp"
-                            android:textSize="20sp"
-                            android:textColor="@color/primaryTextColor"/>
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/tvJmlSaldo"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/tvSaldo"
-                            android:layout_centerHorizontal="true"
-                            android:layout_marginBottom="14dp"
-                            android:textColor="@color/primaryTextColor"
-                            android:textSize="28sp"
-                            android:textStyle="bold" />
-
-                        <RelativeLayout
-                            android:id="@+id/rlTanggal"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/tvJmlSaldo"
-                            android:layout_alignParentEnd="true"
-                            android:background="@drawable/rounded_primarytransparan">
-
-                            <androidx.appcompat.widget.AppCompatTextView
-                                android:id="@+id/tvTanggalSaldo"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="12 Feb 2022"
-                                android:textColor="@color/primaryTextColor"
-                                android:textSize="16sp"
-                                android:textStyle="bold" />
-                        </RelativeLayout>
-                    </RelativeLayout>
-                </androidx.cardview.widget.CardView>
-
-
-            <RelativeLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/cvSaldo">
+                android:background="@drawable/rounded_infokas">
 
-                <RelativeLayout
-                    android:id="@+id/rlRecyclerViewRiwayat"
+                <View
+                    android:id="@+id/blob"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:background="@drawable/blob"
+                    android:layout_marginEnd="36dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <View
+                    android:id="@+id/blob2"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/blob"
+                    android:layout_marginEnd="26dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <View
+                    android:id="@+id/blob3"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/blob"
+                    android:layout_marginTop="46dp"
+                    android:layout_marginEnd="26dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <View
+                    android:id="@+id/wave"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:background="@drawable/wave2"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvSaldo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/tvRiwayatUangKas"
-                    android:layout_marginBottom="20dp">
+                    android:text="Jumlah Uang Kas"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginStart="16dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rvRiwayatInfoKas"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/rlCatatKeuangan"
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvJmlSaldo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/tvTambahDataKeuangan"
-                    android:layout_marginEnd="16dp">
+                    android:layout_marginTop="24dp"
+                    android:text="Rp. 2.000.000"
+                    android:textColor="@color/white"
+                    android:textSize="28sp"
+                    android:layout_marginStart="16dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvSaldo" />
 
-                    <RelativeLayout
-                        android:id="@+id/rlButtonCatatKeuangan"
-                        android:layout_width="92dp"
-                        android:layout_height="84dp"
-                        android:background="@drawable/rounded_catatkeuangan">
-
-                        <ImageView
-                            android:layout_width="42dp"
-                            android:layout_height="42dp"
-                            android:layout_centerHorizontal="true"
-                            android:layout_centerVertical="true"
-                            android:src="@drawable/ic_home_catatkeuangan" />
-
-                    </RelativeLayout>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/rlButtonCatatKeuangan"
-                        android:layout_centerHorizontal="true"
-                        android:text="Catat\nKeuangan"
-                        android:textAlignment="center"
-                        android:textColor="@color/primaryTextColor"
-                        android:textSize="14sp" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/rlCatatDonatur"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/rlTanggal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/tvTambahDataKeuangan"
-                    android:layout_toEndOf="@id/rlCatatKeuangan">
-
-                    <RelativeLayout
-                        android:id="@+id/rlButtonCatatDonatur"
-                        android:layout_width="92dp"
-                        android:layout_height="84dp"
-                        android:background="@drawable/rounded_catatdonatur">
-
-                        <ImageView
-                            android:id="@+id/ivButtonCatatDonatur"
-                            android:layout_width="42dp"
-                            android:layout_height="42dp"
-                            android:layout_centerHorizontal="true"
-                            android:layout_centerVertical="true"
-                            android:src="@drawable/ic_home_catatdonatur" />
-
-                    </RelativeLayout>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/rlButtonCatatDonatur"
-                        android:layout_centerHorizontal="true"
-                        android:text="Catat\nDonatur"
-                        android:textAlignment="center"
-                        android:textColor="@color/primaryTextColor"
-                        android:textSize="14sp" />
-                </RelativeLayout>
-
-                <TextView
-                    android:id="@+id/tvInfoKasBlnIni"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/rlRecyclerViewRiwayat"
-                    android:layout_alignParentStart="true"
-                    android:layout_marginBottom="8dp"
-                    android:text="Info Uang Kas bulan Ini"
-                    android:textColor="@color/primaryTextColor"
-                    android:textSize="18sp" />
-
-                <TextView
-                    android:id="@+id/tvTambahDataKeuangan"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/cvPemasukanBlnIni"
-                    android:layout_alignParentStart="true"
-                    android:layout_marginBottom="8dp"
-                    android:text="Tambah Data"
-                    android:textColor="@color/primaryTextColor"
-                    android:textSize="18sp" />
-
-                <TextView
-                    android:id="@+id/tvLihatSemuaRiwayat"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:text="Lihat Semua"
-                    android:textColor="@color/primaryTextColor"
-                    android:textSize="18sp" />
-
-                <TextView
-                    android:id="@+id/tvRiwayatUangKas"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_marginBottom="8dp"
-                    android:text="Riwayat Uang Kas"
-                    android:textColor="@color/primaryTextColor"
-                    android:textSize="18sp" />
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/cvPengeluaranBlnIni"
-                    android:layout_width="wrap_content"
-                    android:layout_height="38dp"
-                    android:layout_below="@id/tvInfoKasBlnIni"
-                    android:layout_marginBottom="20dp"
-                    android:layout_toEndOf="@+id/cvPemasukanBlnIni"
-                    android:backgroundTint="@color/white"
-                    app:cardCornerRadius="8dp">
-
-                    <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:paddingStart="4dp"
-                        android:paddingEnd="4dp">
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/tvPengeluaranBlnIni"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_toEndOf="@+id/cvIcPengeluaranBlnIni"
-                            android:text="- Rp. 800.000"
-                            android:textColor="@color/jmlPengeluaran"
-                            android:textSize="16sp" />
-
-                        <androidx.cardview.widget.CardView
-                            android:id="@+id/cvIcPengeluaranBlnIni"
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:layout_centerVertical="true"
-                            android:layout_marginEnd="8dp"
-                            android:backgroundTint="@color/jmlPengeluaran"
-                            app:cardCornerRadius="40dp">
-
-                            <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent">
-
-                                <androidx.appcompat.widget.AppCompatImageView
-                                    android:id="@+id/ivIcPengeluaranBlnIni"
-                                    android:layout_width="14dp"
-                                    android:layout_height="14dp"
-                                    android:layout_centerInParent="true"
-                                    android:src="@drawable/ic_bearish" />
-
-                            </RelativeLayout>
-                        </androidx.cardview.widget.CardView>
-                    </RelativeLayout>
-
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/cvPemasukanBlnIni"
-                    android:layout_width="wrap_content"
-                    android:layout_height="38dp"
-                    android:layout_below="@id/tvInfoKasBlnIni"
+                    android:layout_marginTop="24dp"
                     android:layout_marginEnd="16dp"
-                    android:layout_marginBottom="20dp"
-                    android:backgroundTint="@color/white"
-                    app:cardCornerRadius="8dp">
+                    android:layout_marginBottom="16dp"
+                    android:background="@drawable/rounded_primarytransparan"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvJmlSaldo"
+                    app:layout_constraintBottom_toBottomOf="parent">
 
-                    <RelativeLayout
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvTanggalSaldo"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:paddingStart="4dp"
-                        android:paddingEnd="4dp">
+                        android:layout_height="wrap_content"
+                        android:text="12 Feb 2022"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/tvPemasukanBlnIni"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_toEndOf="@+id/cvIcPemasukanBlnIni"
-                            android:text="+ Rp. 800.000"
-                            android:textColor="@color/jmlPemasukan"
-                            android:textSize="16sp" />
 
-                        <androidx.cardview.widget.CardView
-                            android:id="@+id/cvIcPemasukanBlnIni"
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:layout_centerVertical="true"
-                            android:layout_marginEnd="8dp"
-                            android:backgroundTint="@color/jmlPemasukan"
-                            app:cardCornerRadius="40dp">
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
 
-                            <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/cvSaldo"
+            app:layout_constraintStart_toStartOf="parent">
 
-                                <androidx.appcompat.widget.AppCompatImageView
-                                    android:id="@+id/ivIcPemasukanBlnIni"
-                                    android:layout_width="14dp"
-                                    android:layout_height="14dp"
-                                    android:layout_centerInParent="true"
-                                    android:src="@drawable/ic_bullish" />
+            <TextView
+                android:id="@+id/tvRiwayatUangKas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="Riwayat Uang Kas"
+                android:textColor="@color/primaryTextColor"
+                android:textSize="18sp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
 
-                            </RelativeLayout>
-                        </androidx.cardview.widget.CardView>
-                    </RelativeLayout>
+            <TextView
+                android:id="@+id/tvLihatSemuaRiwayat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:text="Lihat Semua"
+                android:layout_marginTop="16dp"
+                android:textColor="@color/primaryTextColor"
+                android:textSize="18sp" />
 
-                </androidx.cardview.widget.CardView>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clRecyclerViewRiwayat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@id/tvRiwayatUangKas"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginBottom="20dp">
 
-            </RelativeLayout>
-        </RelativeLayout>
-</RelativeLayout>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvRiwayatInfoKas"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:orientation="horizontal" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/tvInfoKasBlnIni"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="Info Uang Kas bulan Ini"
+                android:textColor="@color/primaryTextColor"
+                android:textSize="18sp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintTop_toBottomOf="@id/clRecyclerViewRiwayat"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cvPemasukanBlnIni"
+                android:layout_width="wrap_content"
+                android:layout_height="38dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="20dp"
+                android:backgroundTint="@color/white"
+                app:cardCornerRadius="8dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@id/tvInfoKasBlnIni"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:paddingStart="4dp"
+                    android:paddingEnd="4dp">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvPemasukanBlnIni"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@+id/cvIcPemasukanBlnIni"
+                        android:text="+ Rp. 800.000"
+                        android:textColor="@color/jmlPemasukan"
+                        android:textSize="16sp" />
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cvIcPemasukanBlnIni"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="8dp"
+                        android:backgroundTint="@color/jmlPemasukan"
+                        app:cardCornerRadius="40dp">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/ivIcPemasukanBlnIni"
+                                android:layout_width="14dp"
+                                android:layout_height="14dp"
+                                android:layout_centerInParent="true"
+                                android:src="@drawable/ic_bullish" />
+
+                        </RelativeLayout>
+                    </androidx.cardview.widget.CardView>
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cvPengeluaranBlnIni"
+                android:layout_width="wrap_content"
+                android:layout_height="38dp"
+                android:layout_marginBottom="20dp"
+                android:backgroundTint="@color/white"
+                app:cardCornerRadius="8dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintStart_toEndOf="@id/cvPemasukanBlnIni"
+                app:layout_constraintTop_toBottomOf="@id/tvInfoKasBlnIni">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:paddingStart="4dp"
+                    android:paddingEnd="4dp">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvPengeluaranBlnIni"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@+id/cvIcPengeluaranBlnIni"
+                        android:text="- Rp. 800.000"
+                        android:textColor="@color/jmlPengeluaran"
+                        android:textSize="16sp" />
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cvIcPengeluaranBlnIni"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="8dp"
+                        android:backgroundTint="@color/jmlPengeluaran"
+                        app:cardCornerRadius="40dp">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/ivIcPengeluaranBlnIni"
+                                android:layout_width="14dp"
+                                android:layout_height="14dp"
+                                android:layout_centerInParent="true"
+                                android:src="@drawable/ic_bearish" />
+
+                        </RelativeLayout>
+                    </androidx.cardview.widget.CardView>
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/tvTambahDataKeuangan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tambah Data"
+                android:textColor="@color/primaryTextColor"
+                android:textSize="18sp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cvPemasukanBlnIni"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clCatatKeuangan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@id/tvTambahDataKeuangan"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginEnd="16dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clButtonCatatKeuangan"
+                    android:layout_width="92dp"
+                    android:layout_height="84dp"
+                    android:background="@drawable/rounded_catatkeuangan"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:layout_width="42dp"
+                        android:layout_height="42dp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:src="@drawable/ic_home_catatkeuangan" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/clButtonCatatKeuangan"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:text="Catat\nKeuangan"
+                    android:textAlignment="center"
+                    android:textColor="@color/primaryTextColor"
+                    android:textSize="14sp" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clCatatDonatur"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@id/tvTambahDataKeuangan"
+                app:layout_constraintStart_toEndOf="@id/clCatatKeuangan">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clButtonCatatDonatur"
+                    android:layout_width="92dp"
+                    android:layout_height="84dp"
+                    android:background="@drawable/rounded_catatdonatur"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/ivButtonCatatDonatur"
+                        android:layout_width="42dp"
+                        android:layout_height="42dp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:src="@drawable/ic_home_catatdonatur" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Catat\nDonatur"
+                    android:textAlignment="center"
+                    android:textColor="@color/primaryTextColor"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/clButtonCatatDonatur"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

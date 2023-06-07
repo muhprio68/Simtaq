@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -24,7 +25,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 import id.simtaq.androidapp.JadwalKegiatanActivity;
 import id.simtaq.androidapp.R;
@@ -36,14 +39,16 @@ import static id.simtaq.androidapp.helper.config.url;
 
 public class JadwalKegiatanAdapter extends RecyclerView.Adapter<JadwalKegiatanViewHolder> {
 
-    Context context;
-    ArrayList <Kegiatan> kegiatanList;
-    int tipe;
-    IJadwalKegiatanAdapter iJadwalKegiatanAdapter;
-    RequestQueue queue;
-    RelativeLayout rlJadwalKegiatan;
+    private String token;
+    private Context context;
+    private ArrayList <Kegiatan> kegiatanList;
+    private int tipe;
+    private IJadwalKegiatanAdapter iJadwalKegiatanAdapter;
+    private RequestQueue queue;
+    private RelativeLayout rlJadwalKegiatan;
 
-    public JadwalKegiatanAdapter(Context context, ArrayList<Kegiatan> kegiatanList, int tipe, IJadwalKegiatanAdapter iJadwalKegiatanAdapter, RequestQueue queue, RelativeLayout rlJadwalKegiatan) {
+    public JadwalKegiatanAdapter(String token, Context context, ArrayList<Kegiatan> kegiatanList, int tipe, IJadwalKegiatanAdapter iJadwalKegiatanAdapter, RequestQueue queue, RelativeLayout rlJadwalKegiatan) {
+        this.token = token;
         this.context = context;
         this.kegiatanList = kegiatanList;
         this.tipe = tipe;
@@ -151,7 +156,14 @@ public class JadwalKegiatanAdapter extends RecyclerView.Adapter<JadwalKegiatanVi
 
                     }
                 }
-        );
+        ){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Authorization", "Bearer " + token);
+                return headers;
+            }
+        };
         queue.add(dr);
     }
 

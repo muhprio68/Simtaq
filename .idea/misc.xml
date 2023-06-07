@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/drawable-v24/wave.xml" value="0.1585" />
+        <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/drawable/blob.xml" value="0.18" />
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/drawable/cardview_saldo.xml" value="0.155" />
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/drawable/cardview_tambahcttkeuangan.xml" value="0.155" />
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/drawable/cardview_tambahkegiatan.xml" value="0.155" />
@@ -25,6 +26,8 @@
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/drawable/ic_add.xml" value="0.155" />
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/drawable/ic_back.xml" value="0.161" />
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/drawable/ic_bearish.xml" value="0.155" />
+        <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/drawable/ic_bubble.xml" value="0.18" />
+        <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/drawable/ic_bulat2.xml" value="0.18" />
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/drawable/ic_bullish.xml" value="0.155" />
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/drawable/ic_card_wallet.xml" value="0.161" />
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/drawable/ic_catat.xml" value="0.1555" />
@@ -74,6 +77,7 @@
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/drawable/rounded_border_primarytext.xml" value="0.161" />
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/drawable/rounded_border_tambahdata.xml" value="0.161" />
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/drawable/rounded_btn_editprofil.xml" value="0.161" />
+        <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/drawable/rounded_catatdonatur.xml" value="0.18" />
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/drawable/rounded_catatpemasukan.xml" value="0.161" />
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/drawable/rounded_catatpengeluaran.xml" value="0.161" />
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/drawable/rounded_homeheader.xml" value="0.1" />
@@ -89,8 +93,11 @@
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/drawable/rounded_riwayatuangkas.xml" value="0.2115" />
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/drawable/rounded_tambahkegiatan.xml" value="0.161" />
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/drawable/rounded_tentangsimtaq.xml" value="0.161" />
+        <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/drawable/rounded_viewinfokas.xml" value="0.18" />
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/drawable/rounded_white.xml" value="0.1555" />
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/drawable/rounded_whiteriwayat.xml" value="0.1555" />
+        <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/drawable/tt.xml" value="1.1" />
+        <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/drawable/wave2.xml" value="0.18" />
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/layout/activity_catat_donatur.xml" value="0.21804511278195488" />
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/layout/activity_catat_keuangan.xml" value="0.25" />
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/layout/activity_catat_pemasukan.xml" value="0.25" />
@@ -119,6 +126,7 @@
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/layout/activity_ubah_kegiatan.xml" value="0.1" />
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/layout/dialoggantikatasandi.xml" value="0.33" />
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/layout/fragment_home.xml" value="0.1" />
+        <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/layout/fragment_info_kas2.xml" value="0.16" />
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/layout/fragment_infokas.xml" value="0.22" />
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/layout/fragment_kegiatan.xml" value="0.27613412228796846" />
         <entry key="..\:/Data Kuliah/Semester 12/App/app/src/main/res/layout/fragment_pemasukan.xml" value="0.22" />

@@ -194,7 +194,7 @@ public class JadwalKegiatanActivity extends AppCompatActivity implements JadwalK
     }
 
     public void buildRecyclerView(){
-        adapter = new JadwalKegiatanAdapter(JadwalKegiatanActivity.this,kegiatanList, 1, this, queue, rlJadwalKegiatan);
+        adapter = new JadwalKegiatanAdapter(authToken, JadwalKegiatanActivity.this,kegiatanList, 1, this, queue, rlJadwalKegiatan);
         LinearLayoutManager manager = new LinearLayoutManager(this);
         rvJadwalKegiatan.setHasFixedSize(true);
         rvJadwalKegiatan.setLayoutManager(manager);

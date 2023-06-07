@@ -9,9 +9,11 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -21,6 +23,8 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 import id.simtaq.androidapp.R;
@@ -34,21 +38,22 @@ import static id.simtaq.androidapp.helper.config.toRupiah;
 import static id.simtaq.androidapp.helper.config.url;
 
 public class RiwayatListAdapter extends RecyclerView.Adapter<RiwayatViewHolder> {
+    private String token;
+    private ArrayList<Keuangan> keuanganList;
+    private Context context;
+    private int tipe;
+    private IRiwayatListAdapter iRiwayatListAdapter;
+    private RequestQueue queue;
+    private ConstraintLayout clRiwayatKeuangan;
 
-    ArrayList<Keuangan> keuanganList;
-    Context context;
-    int tipe;
-    IRiwayatListAdapter iRiwayatListAdapter;
-    RequestQueue queue;
-    RelativeLayout rlRiwayatKeuangan;
-
-    public RiwayatListAdapter(ArrayList<Keuangan> keuanganList, Context context, int tipe, IRiwayatListAdapter iRiwayatListAdapter, RequestQueue queue, RelativeLayout rlRiwayatKeuangan) {
+    public RiwayatListAdapter(String token, ArrayList<Keuangan> keuanganList, Context context, int tipe, IRiwayatListAdapter iRiwayatListAdapter, RequestQueue queue, ConstraintLayout clRiwayatKeuangan) {
+        this.token = token;
         this.keuanganList = keuanganList;
         this.context = context;
         this.tipe = tipe;
         this.iRiwayatListAdapter = iRiwayatListAdapter;
         this.queue = queue;
-        this.rlRiwayatKeuangan = rlRiwayatKeuangan;
+        this.clRiwayatKeuangan = clRiwayatKeuangan;
     }
 
     public int getItemViewType(final int position){
@@ -140,7 +145,7 @@ public class RiwayatListAdapter extends RecyclerView.Adapter<RiwayatViewHolder> 
                     @Override
                     public void onResponse(String response) {
                         Snackbar snackbar = Snackbar
-                                .make(rlRiwayatKeuangan, "Data keuangan berhasil dihapus", Snackbar.LENGTH_LONG);
+                                .make(clRiwayatKeuangan, "Data keuangan berhasil dihapus", Snackbar.LENGTH_LONG);
                         snackbar.show();
                     }
                 },
@@ -149,12 +154,19 @@ public class RiwayatListAdapter extends RecyclerView.Adapter<RiwayatViewHolder> 
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Snackbar snackbar = Snackbar
-                                .make(rlRiwayatKeuangan, "Gagal menghapus data keuangan", Snackbar.LENGTH_LONG);
+                                .make(clRiwayatKeuangan, "Gagal menghapus data keuangan", Snackbar.LENGTH_LONG);
                         snackbar.show();
 
                     }
                 }
-        );
+        ){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Authorization", "Bearer " + token);
+                return headers;
+            }
+        };
         queue.add(dr);
     }
 }
