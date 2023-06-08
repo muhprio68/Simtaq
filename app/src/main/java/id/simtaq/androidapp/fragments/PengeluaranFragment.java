@@ -16,21 +16,17 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.snackbar.Snackbar;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -39,9 +35,8 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
-import id.simtaq.androidapp.DetailRiwayatKasActivity;
+import id.simtaq.androidapp.DetailKeuanganActivity;
 import id.simtaq.androidapp.R;
-import id.simtaq.androidapp.UbahAkunActivity;
 import id.simtaq.androidapp.helper.Preferences;
 
 import static id.simtaq.androidapp.helper.config.formatSimpanTanggal;
@@ -252,7 +247,7 @@ public class PengeluaranFragment extends Fragment {
     }
 
     public void lihatTambahData() {
-        Intent intent = new Intent(getContext(), DetailRiwayatKasActivity.class);
+        Intent intent = new Intent(getContext(), DetailKeuanganActivity.class);
         intent.putExtra("intentDari", "catat pengeluaran");
         startActivity(intent);
     }

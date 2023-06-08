@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".UbahKeuanganActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/tbUbahKeuangan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="?attr/actionBarSize"
+        style="@style/AppTheme.Toolbar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <ProgressBar
+        android:id="@+id/pbUbahKeuangan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        android:layout_marginTop="300dp"
+        android:outlineAmbientShadowColor="@color/primaryDarkColor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tbUbahKeuangan">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:layout_marginBottom="8dp">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvUbahTipeKeuangan"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Tipe Keuangan"
+            android:textSize="18sp"
+            android:textColor="@color/primaryTextColor"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <RelativeLayout
+            android:id="@+id/rlSpinnerUbahTipeKeuangan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight=".28"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/rounded_border_tambahdata"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvUbahTipeKeuangan">
+
+            <Spinner
+                android:id="@+id/spUbahTipeKeuangan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:background="@android:color/transparent"
+                android:gravity="center"
+                android:scrollbarSize="16dp"
+                android:entries="@array/tipe_keuangan"
+                android:minHeight="48dp"
+                android:padding="16dp"
+                android:spinnerMode="dropdown" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="16dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_arrow_down" />
+
+        </RelativeLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvUbahTglKeuangan"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Tanggal Keuangan"
+            android:layout_marginTop="16dp"
+            android:textColor="@color/primaryTextColor"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rlSpinnerUbahTipeKeuangan" />
+
+        <EditText
+            android:id="@+id/etUbahTanggalKeuangan"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/rounded_border_tambahdata"
+            android:drawablePadding="16dp"
+            android:ems="10"
+            android:focusable="false"
+            android:drawableEnd="@drawable/ic_date"
+            android:hint="Masukkan Tanggal"
+            android:inputType="date"
+            android:padding="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvUbahTglKeuangan" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvUbahKetKeuangan"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Keterangan Keuangan"
+            android:textColor="@color/primaryTextColor"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etUbahTanggalKeuangan" />
+
+        <EditText
+            android:id="@+id/etUbahKeteranganKeuangan"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/rounded_border_tambahdata"
+            android:drawablePadding="16dp"
+            android:ems="10"
+            android:hint="Masukkan Keterangan"
+            android:inputType="text"
+            android:padding="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvUbahKetKeuangan" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvUbahJenisKeuangan"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Jenis Keuangan"
+            android:layout_marginTop="16dp"
+            android:textSize="18sp"
+            android:textColor="@color/primaryTextColor"
+            app:layout_constraintTop_toBottomOf="@id/etUbahKeteranganKeuangan"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <RelativeLayout
+            android:id="@+id/rlSpinnerUbahJenisKeuangan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight=".28"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/rounded_border_tambahdata"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvUbahJenisKeuangan">
+
+            <Spinner
+                android:id="@+id/spUbahJenisKeuangan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:background="@android:color/transparent"
+                android:entries="@array/jenis_keuangan"
+                android:gravity="center"
+                android:minHeight="48dp"
+                android:padding="16dp"
+                android:scrollbarSize="16dp"
+                android:spinnerMode="dropdown" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="16dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_arrow_down" />
+
+        </RelativeLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvUbahNominalKeuangan"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Nominal Keuangan"
+            android:textColor="@color/primaryTextColor"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rlSpinnerUbahJenisKeuangan" />
+
+        <EditText
+            android:id="@+id/etUbahNominalKeuangan"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/rounded_border_tambahdata"
+            android:drawablePadding="16dp"
+            android:ems="10"
+            android:hint="Masukkan Nominal"
+            android:inputType="number"
+            android:padding="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvUbahNominalKeuangan" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvUbahDeskripsiKeuangan"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Deskripsi Keuangan"
+            android:textColor="@color/primaryTextColor"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etUbahNominalKeuangan" />
+
+        <EditText
+            android:id="@+id/etUbahDeskripsiKeuangan"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/rounded_border_tambahdata"
+            android:ems="10"
+            android:gravity="top"
+            android:hint="Masukkan Deskripsi (opsional)"
+            android:lines="3"
+            android:padding="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvUbahDeskripsiKeuangan" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnBatalUbahKeuangan"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="4dp"
+            android:background="@drawable/rounded_bg_orange"
+            android:text="Batal"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@id/btnSimpanUbahKeuangan"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etUbahDeskripsiKeuangan" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnSimpanUbahKeuangan"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/rounded_bg_primary"
+            android:text="Simpan"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btnBatalUbahKeuangan"
+            app:layout_constraintTop_toBottomOf="@+id/etUbahDeskripsiKeuangan" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,80 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/clDetailKeuangan"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/background"
-    tools:context=".DetailRiwayatKasActivity">
-
+    tools:context=".DetailKeuanganActivity">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/tbDetailCatatanKas"
+        android:id="@+id/tbDetailKeuangan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="?attr/actionBarSize"
-        style="@style/AppTheme.Toolbar" />
+        style="@style/AppTheme.Toolbar"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
 
-    <RelativeLayout
+    <ProgressBar
+        android:id="@+id/pbDetailRiwayatKeuangan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:outlineAmbientShadowColor="@color/primaryDarkColor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="250dp"/>
+
+    <ScrollView
+        android:id="@+id/svDetailKeuangan"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="16dp"
-        android:layout_below="@+id/tbDetailCatatanKas">
-    <RelativeLayout
-        android:id="@+id/rlJmlDetailUangKas"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tbDetailKeuangan">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clJmlDetailKeuangan"
         android:layout_width="match_parent"
         android:layout_height="52dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginBottom="24dp"
-        android:background="@drawable/rounded_border_detail">
+        android:background="@drawable/rounded_border_detail"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/tvValueNominalCatatanKas"
+            android:id="@+id/tvValueNominalKeuangan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="+ Rp. 250.000"
-            android:layout_centerVertical="true"
             android:textColor="@color/jmlPemasukan"
             android:textSize="20sp"
-            android:layout_centerHorizontal="true"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
-    </RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
-        android:id="@+id/tvInfoCatatan"
+        android:id="@+id/tvInfoKeuangan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/rlJmlDetailUangKas"
-        android:text="Informasi Catatan"
+        android:text="Informasi Detail Keuangan"
         android:textSize="20sp"
         android:textColor="@color/primaryTextColor"
-        android:layout_marginBottom="8dp"/>
+        android:layout_marginTop="24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/clJmlDetailKeuangan"/>
 
-        <RelativeLayout
-            android:id="@+id/rlInfoCatatan"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clInfoKeuangan"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tvInfoCatatan"
-            android:layout_marginBottom="24dp"
+            android:layout_marginTop="8dp"
             android:background="@drawable/rounded_border_detail"
-            android:padding="16dp">
+            android:padding="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvInfoKeuangan">
 
-            <ProgressBar
-                android:id="@+id/pbDetailRiwayatKeuangan"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_width="wrap_content"
-                android:outlineAmbientShadowColor="@color/primaryDarkColor"
-                android:layout_height="wrap_content" />
+
 
             <TableLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <TableRow android:layout_marginTop="8dp">
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tvNoCatatan"
+                        android:id="@+id/tvNoKeuangan"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -83,7 +103,7 @@
                         android:textSize="16sp" />
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tvValueNoCatatan"
+                        android:id="@+id/tvValueNoKeuangan"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -97,7 +117,7 @@
                 <TableRow android:layout_marginTop="8dp">
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tvTipeCatatanKas"
+                        android:id="@+id/tvTipeKeuangan"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -106,7 +126,7 @@
                         android:textSize="16sp" />
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tvValueTipeCatatanKas"
+                        android:id="@+id/tvValueTipeKeuangan"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -119,7 +139,7 @@
                 <TableRow android:layout_marginTop="8dp">
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tvTglCatatanKas"
+                        android:id="@+id/tvTglKeuangan"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -128,7 +148,7 @@
                         android:textSize="16sp" />
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tvValueTglCatatanKas"
+                        android:id="@+id/tvValueTglKeuangan"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -141,7 +161,7 @@
                 <TableRow android:layout_marginTop="8dp">
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tvKeteranganCatatanKas"
+                        android:id="@+id/tvKeteranganKeuangan"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -150,7 +170,7 @@
                         android:textSize="16sp" />
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tvValueKeteranganCatatanKas"
+                        android:id="@+id/tvValueKeteranganKeuangan"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -163,7 +183,29 @@
                 <TableRow android:layout_marginTop="8dp">
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tvDeskripsiCatatanKas"
+                        android:id="@+id/tvJenisKeuangan"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Jenis"
+                        android:textColor="@color/primaryTextColor"
+                        android:textSize="16sp" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvValueJenisKeuangan"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Donatur"
+                        android:textColor="@color/primaryTextColor"
+                        android:textSize="16sp" />
+
+                </TableRow>
+
+                <TableRow android:layout_marginTop="8dp">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvDeskripsiKeuangan"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -172,7 +214,7 @@
                         android:textSize="16sp" />
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tvValueDeskripsiCatanKas"
+                        android:id="@+id/tvValueDeskripsiKeuangan"
                         android:layout_width="75dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -184,30 +226,34 @@
 
             </TableLayout>
 
-        </RelativeLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
             android:id="@+id/tvJudulDetailPenjumlahan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/rlInfoCatatan"
-            android:layout_marginBottom="8dp"
+            android:layout_marginTop="24dp"
             android:text="Detail Jumlah Pemasukan"
             android:textColor="@color/primaryTextColor"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/clInfoKeuangan"/>
 
-    <RelativeLayout
-        android:id="@+id/rlJmlCatatan"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clDetailJmlKeuangan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="16dp"
-        android:layout_marginBottom="24dp"
-        android:layout_below="@+id/tvJudulDetailPenjumlahan"
-        android:background="@drawable/rounded_border_detail">
+        android:layout_marginTop="8dp"
+        android:background="@drawable/rounded_border_detail"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvJudulDetailPenjumlahan">
 
         <TableLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
 
         <TableRow
             android:layout_marginTop="8dp" >
@@ -246,7 +292,7 @@
                 android:textSize="16sp"/>
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvValueNominalDetailPenjumlahan"
+                android:id="@+id/tvValueNominalDetailKeuangan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Rp. 250.000"
@@ -280,6 +326,37 @@
         </TableRow>
         </TableLayout>
 
-    </RelativeLayout>
-    </RelativeLayout>
-</RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnUbahKeuangan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/rounded_bg_orange"
+            android:text="Ubah Detail Keuangan"
+            android:textColor="@android:color/white"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/clDetailJmlKeuangan" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnHapusKeuangan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/rounded_bg_red"
+            android:text="Hapus Catatan Keuangan"
+            android:textColor="@android:color/white"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnUbahKeuangan" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

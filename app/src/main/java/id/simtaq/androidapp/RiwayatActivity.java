@@ -15,7 +15,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -308,7 +307,7 @@ public class RiwayatActivity extends AppCompatActivity implements RiwayatListAda
 
     @Override
     public void doClick(int id) {
-        Intent intent = new Intent(RiwayatActivity.this, DetailRiwayatKasActivity.class);
+        Intent intent = new Intent(RiwayatActivity.this, DetailKeuanganActivity.class);
         intent.putExtra("intentDari", "riwayat keuangan");
         intent.putExtra("idKeuangan", id);
         startActivity(intent);

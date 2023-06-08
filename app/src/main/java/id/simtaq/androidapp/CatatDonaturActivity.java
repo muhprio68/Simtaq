@@ -21,14 +21,11 @@ import android.widget.Toast;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.snackbar.Snackbar;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -258,7 +255,7 @@ public class CatatDonaturActivity extends AppCompatActivity {
     }
 
     public void lihatTambahData() {
-        Intent intent = new Intent(CatatDonaturActivity.this, DetailRiwayatKasActivity.class);
+        Intent intent = new Intent(CatatDonaturActivity.this, DetailKeuanganActivity.class);
         intent.putExtra("intentDari", "catat Pemasukan");
         startActivity(intent);
     }

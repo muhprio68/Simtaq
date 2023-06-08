@@ -86,7 +86,7 @@ public class DetailPenggunaActivity extends AppCompatActivity {
         btnHapusPengguna.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                hapusDialog();
+                showDialogHapusPengguna();
             }
         });
     }
@@ -139,16 +139,16 @@ public class DetailPenggunaActivity extends AppCompatActivity {
         queue.add(jsonArrayRequest);
     }
 
-    public void hapusDialog(){
+    public void showDialogHapusPengguna(){
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
                 this);
 
         // set title dialog
-        alertDialogBuilder.setTitle("Hapus Data Kegiatan");
+        alertDialogBuilder.setTitle("Hapus Pengguna");
 
         // set pesan dari dialog
         alertDialogBuilder
-                .setMessage("Yakin menghapus kegiatan ini?")
+                .setMessage("Yakin menghapus pengguna ini?")
                 .setCancelable(false)
                 .setPositiveButton("Ya",new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog,int id) {

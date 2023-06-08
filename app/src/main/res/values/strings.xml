@@ -21,6 +21,20 @@
         <item>Undangan</item>
     </string-array>
 
+    <string-array name="tipe_keuangan">
+        <item>Pemasukan</item>
+        <item>Pengeluaran</item>
+    </string-array>
+
+    <string-array name="jenis_keuangan">
+        <item>Sewa Sawah</item>
+        <item>Infaq</item>
+        <item>Renovasi Masjid</item>
+        <item>Perawatan Masjid</item>
+        <item>Dana Kegiatan</item>
+        <item>Lain-lain</item>
+    </string-array>
+
     <string-array name="jenis_pemasukan">
         <item>Donatur</item>
         <item>Sewa Sawah</item>

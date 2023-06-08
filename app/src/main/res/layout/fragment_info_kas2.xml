@@ -8,8 +8,6 @@
     android:background="@color/background"
     tools:context=".fragments.InfoKas2Fragment">
 
-
-
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/tbInfoKas"
         style="@style/AppTheme.Toolbar"
