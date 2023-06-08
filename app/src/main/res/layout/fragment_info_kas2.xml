@@ -100,7 +100,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tvJmlSaldo"
                     android:layout_alignParentEnd="true"
-                    android:background="@drawable/rounded_primarytransparan">
+                    android:background="@drawable/rounded_transparan">
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvTanggalSaldo"

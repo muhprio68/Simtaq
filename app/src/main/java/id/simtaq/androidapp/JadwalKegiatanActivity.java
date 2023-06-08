@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -49,7 +50,7 @@ import static id.simtaq.androidapp.helper.config.url;
 
 public class JadwalKegiatanActivity extends AppCompatActivity implements JadwalKegiatanAdapter.IJadwalKegiatanAdapter {
 
-    private RelativeLayout rlJadwalKegiatan;
+    private ConstraintLayout clJadwalKegiatan;
     private Toolbar toolbar;
     private ArrayList<Kegiatan> kegiatanList;
     private JadwalKegiatanAdapter adapter;
@@ -121,7 +122,7 @@ public class JadwalKegiatanActivity extends AppCompatActivity implements JadwalK
 
     public void initViews(){
         toolbar = findViewById(R.id.tbJadwalKegiatan);
-        rlJadwalKegiatan = findViewById(R.id.rlJadwalKegiatan);
+        clJadwalKegiatan = findViewById(R.id.clJadwalKegiatan);
         pbJadwalKegiatan = findViewById(R.id.pbJadwalKegiatan);
         tvFilterBulanKegiatan = findViewById(R.id.tvFilterBulanKegiatan);
         tvFilterTahunKegiatan = findViewById(R.id.tvFilterTahunKegiatan);
@@ -194,7 +195,7 @@ public class JadwalKegiatanActivity extends AppCompatActivity implements JadwalK
     }
 
     public void buildRecyclerView(){
-        adapter = new JadwalKegiatanAdapter(authToken, JadwalKegiatanActivity.this,kegiatanList, 1, this, queue, rlJadwalKegiatan);
+        adapter = new JadwalKegiatanAdapter(authToken, JadwalKegiatanActivity.this,kegiatanList, 1, this, queue, clJadwalKegiatan);
         LinearLayoutManager manager = new LinearLayoutManager(this);
         rvJadwalKegiatan.setHasFixedSize(true);
         rvJadwalKegiatan.setLayoutManager(manager);

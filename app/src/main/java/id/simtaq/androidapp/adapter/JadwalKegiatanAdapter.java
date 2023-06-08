@@ -8,6 +8,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -45,16 +46,16 @@ public class JadwalKegiatanAdapter extends RecyclerView.Adapter<JadwalKegiatanVi
     private int tipe;
     private IJadwalKegiatanAdapter iJadwalKegiatanAdapter;
     private RequestQueue queue;
-    private RelativeLayout rlJadwalKegiatan;
+    private ConstraintLayout clJadwalKegiatan;
 
-    public JadwalKegiatanAdapter(String token, Context context, ArrayList<Kegiatan> kegiatanList, int tipe, IJadwalKegiatanAdapter iJadwalKegiatanAdapter, RequestQueue queue, RelativeLayout rlJadwalKegiatan) {
+    public JadwalKegiatanAdapter(String token, Context context, ArrayList<Kegiatan> kegiatanList, int tipe, IJadwalKegiatanAdapter iJadwalKegiatanAdapter, RequestQueue queue, ConstraintLayout clJadwalKegiatan) {
         this.token = token;
         this.context = context;
         this.kegiatanList = kegiatanList;
         this.tipe = tipe;
         this.iJadwalKegiatanAdapter = iJadwalKegiatanAdapter;
         this.queue = queue;
-        this.rlJadwalKegiatan = rlJadwalKegiatan;
+        this.clJadwalKegiatan = clJadwalKegiatan;
     }
 
     public int getItemViewType(final int position){
@@ -142,7 +143,7 @@ public class JadwalKegiatanAdapter extends RecyclerView.Adapter<JadwalKegiatanVi
                     @Override
                     public void onResponse(String response) {
                         Snackbar snackbar = Snackbar
-                                .make(rlJadwalKegiatan, "Kegiatan berhasil dihapus", Snackbar.LENGTH_LONG);
+                                .make(clJadwalKegiatan, "Kegiatan berhasil dihapus", Snackbar.LENGTH_LONG);
                         snackbar.show();
                     }
                 },
@@ -151,7 +152,7 @@ public class JadwalKegiatanAdapter extends RecyclerView.Adapter<JadwalKegiatanVi
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Snackbar snackbar = Snackbar
-                                .make(rlJadwalKegiatan, "Gagal menghapus kegiatan", Snackbar.LENGTH_LONG);
+                                .make(clJadwalKegiatan, "Gagal menghapus kegiatan", Snackbar.LENGTH_LONG);
                         snackbar.show();
 
                     }

@@ -3,6 +3,7 @@ package id.simtaq.androidapp.fragments;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -57,7 +58,7 @@ public class KegiatanFragment extends Fragment implements View.OnClickListener, 
     private JadwalKegiatanAdapter adapter;
     private RequestQueue queue;
     private String authToken;
-    private RelativeLayout rlViewInfoKegiatan, rlMenuKegiatan, rlTambahKegiatan;
+    private ConstraintLayout clViewInfoKegiatan, clMenuKegiatan, clTambahKegiatan;
 
     private String level;
 
@@ -87,7 +88,7 @@ public class KegiatanFragment extends Fragment implements View.OnClickListener, 
         initViews(view);
         level = Preferences.getKeyLevel(view.getContext());
         authToken = Preferences.getKeyToken(view.getContext());
-        rlViewInfoKegiatan.setVisibility(View.GONE);
+        clViewInfoKegiatan.setVisibility(View.GONE);
         tvLihatSemuaKegiatan.setOnClickListener(this);
         kegiatanList = new ArrayList<>();
         queue = Volley.newRequestQueue(view.getContext());
@@ -99,13 +100,13 @@ public class KegiatanFragment extends Fragment implements View.OnClickListener, 
     }
 
     public void initViews(View v){
-        rlMenuKegiatan = v.findViewById(R.id.rlMenuKegiatan);
+        clMenuKegiatan = v.findViewById(R.id.clMenuKegiatan);
         pbInfoKegiatan = v.findViewById(R.id.pbInfoKegiatan);
         rvKegiatan = v.findViewById(R.id.rvKegiatan);
         tvLihatSemuaKegiatan = v.findViewById(R.id.tvLihatSemuaKegiatan);
         tvTambahData = v.findViewById(R.id.tvTambahDataKegiatan);
-        rlTambahKegiatan = v.findViewById(R.id.rlTambahKegiatan);
-        rlViewInfoKegiatan = v.findViewById(R.id.rlViewInfoKegiatan);
+        clTambahKegiatan = v.findViewById(R.id.clTambahKegiatan);
+        clViewInfoKegiatan = v.findViewById(R.id.clViewInfoKegiatan);
     }
 
     public void getData(View view, String token){
@@ -113,7 +114,7 @@ public class KegiatanFragment extends Fragment implements View.OnClickListener, 
             @Override
             public void onResponse(JSONArray response) {
                 pbInfoKegiatan.setVisibility(View.GONE);
-                rlViewInfoKegiatan.setVisibility(View.VISIBLE);
+                clViewInfoKegiatan.setVisibility(View.VISIBLE);
                 //rvKegiatan.setVisibility(View.VISIBLE);
                 for (int i = 0; i < response.length(); i++) {
                     try {
@@ -153,7 +154,7 @@ public class KegiatanFragment extends Fragment implements View.OnClickListener, 
     }
 
     public void buildRecyclerView(View view) {
-        adapter = new JadwalKegiatanAdapter(authToken, view.getContext(), kegiatanList, 2, this, queue, rlMenuKegiatan);
+        adapter = new JadwalKegiatanAdapter(authToken, view.getContext(), kegiatanList, 2, this, queue, clMenuKegiatan);
         LinearLayoutManager manager = new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false);
         rvKegiatan.setHasFixedSize(true);
         rvKegiatan.setLayoutManager(manager);
@@ -175,7 +176,7 @@ public class KegiatanFragment extends Fragment implements View.OnClickListener, 
 
     private void aksesLevel(String level){
         if (level.equals("1") || level.equals("2")) {
-            rlTambahKegiatan.setVisibility(View.GONE);
+            clTambahKegiatan.setVisibility(View.GONE);
             tvTambahData.setVisibility(View.GONE);
         }
     }

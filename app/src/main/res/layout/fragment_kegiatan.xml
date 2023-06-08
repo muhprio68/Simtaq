@@ -1,37 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/rlMenuKegiatan"
+    android:id="@+id/clMenuKegiatan"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/background"
     tools:context=".fragments.KegiatanFragment">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/tbInfoKegiatan"
+    <View
+        android:id="@+id/topView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="?attr/actionBarSize"
-        style="@style/AppTheme.Toolbar">
+        android:layout_height="80dp"
+        android:background="@color/primaryColor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
-        <TextView
-            android:id="@+id/tvAppBarKegiatan"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Kegiatan Masjid"
-            android:textColor="@color/secondaryTextColor"
-            android:layout_gravity="center"
-            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
-            android:textStyle="bold" />
+    <View
+        android:id="@+id/secondView"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:background="@drawable/rounded_viewinfokas"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/topView"/>
 
-    </androidx.appcompat.widget.Toolbar>
-
-    <RelativeLayout
-        android:id="@+id/rlPbInfoKegiatan"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clPbInfoKegiatan"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/tbInfoKegiatan"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         android:padding="16dp">
 
         <ProgressBar
@@ -39,49 +39,96 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:indeterminateDrawable="@drawable/progressbar"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
-    </RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <RelativeLayout
-        android:id="@+id/rlViewInfoKegiatan"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clViewInfoKegiatan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tbInfoKegiatan"
-        android:padding="16dp">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:padding="16dp"
+        android:layout_marginTop="50dp">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cvInfoKegiatan"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:cardCornerRadius="16dp"
-            android:layout_alignParentTop="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             android:layout_marginBottom="20dp"
             android:backgroundTint="@color/white">
 
-            <RelativeLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="20dp"
                 android:background="@drawable/rounded_infokas">
 
-                <RelativeLayout
-                    android:id="@+id/rlKegiatanSelanjutnya"
+                <View
+                    android:id="@+id/blob"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:background="@drawable/blob"
+                    android:layout_marginEnd="36dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <View
+                    android:id="@+id/blob2"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/blob"
+                    android:layout_marginEnd="26dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <View
+                    android:id="@+id/blob3"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/blob"
+                    android:layout_marginTop="46dp"
+                    android:layout_marginEnd="26dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <View
+                    android:id="@+id/wave"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:background="@drawable/wave2"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clKegiatanSelanjutnya"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="16dp"
-                    android:background="@drawable/rounded_primarytransparan">
+                    android:layout_marginTop="20dp"
+                    android:layout_marginStart="20dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:background="@drawable/rounded_transparan">
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tvTanggal"
+                        android:id="@+id/tvKegiatanSelanjutnya"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Kegiatan Selanjutnya"
-                        android:textColor="@color/primaryTextColor"
+                        android:textColor="@color/white"
                         android:textSize="18sp"
-                        android:textStyle="bold" />
-                </RelativeLayout>
+                        android:textStyle="bold"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -89,17 +136,22 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Pengajian Rutin"
-                    android:layout_below="@id/rlKegiatanSelanjutnya"
+                    android:layout_marginTop="8dp"
                     android:textStyle="bold"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="16dp"
                     android:textSize="24sp"
-                    android:textColor="@color/primaryTextColor"/>
+                    android:textColor="@color/white"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/clKegiatanSelanjutnya"
+                    app:layout_constraintEnd_toEndOf="parent"/>
 
                 <TableLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/tvKeteranganKegiatan">
+                    android:layout_marginStart="20dp"
+                    android:layout_marginBottom="20dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvKeteranganKegiatan"
+                    app:layout_constraintBottom_toBottomOf="parent">
 
                     <TableRow
                         android:layout_marginTop="20dip" >
@@ -110,7 +162,7 @@
                             android:layout_height="wrap_content"
                             android:text="Tipe"
                             android:layout_weight="2"
-                            android:textColor="@color/primaryTextColor"
+                            android:textColor="@color/white"
                             android:textSize="18sp"/>
 
                         <androidx.appcompat.widget.AppCompatTextView
@@ -119,7 +171,7 @@
                             android:layout_height="wrap_content"
                             android:text=": Umum"
                             android:layout_weight="7"
-                            android:textColor="@color/primaryTextColor"
+                            android:textColor="@color/white"
                             android:textSize="18sp"/>
 
                     </TableRow>
@@ -133,7 +185,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Hari / Tanggal"
-                            android:textColor="@color/primaryTextColor"
+                            android:textColor="@color/white"
                             android:layout_weight="2"
                             android:textSize="18sp"/>
 
@@ -143,7 +195,7 @@
                             android:layout_height="wrap_content"
                             android:text=": Senin, 25 Feb 2022"
                             android:layout_weight="7"
-                            android:textColor="@color/primaryTextColor"
+                            android:textColor="@color/white"
                             android:textSize="18sp"/>
 
                     </TableRow>
@@ -157,7 +209,7 @@
                             android:layout_height="wrap_content"
                             android:text="Waktu"
                             android:layout_weight="2"
-                            android:textColor="@color/primaryTextColor"
+                            android:textColor="@color/white"
                             android:textSize="18sp"/>
 
                         <androidx.appcompat.widget.AppCompatTextView
@@ -165,7 +217,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text=": 19.30 WIB"
-                            android:textColor="@color/primaryTextColor"
+                            android:textColor="@color/white"
                             android:layout_weight="7"
                             android:textSize="18sp"/>
 
@@ -180,7 +232,7 @@
                             android:layout_height="wrap_content"
                             android:text="Tempat"
                             android:layout_weight="2"
-                            android:textColor="@color/primaryTextColor"
+                            android:textColor="@color/white"
                             android:textSize="18sp"/>
 
                         <androidx.appcompat.widget.AppCompatTextView
@@ -189,20 +241,21 @@
                             android:layout_height="wrap_content"
                             android:text=": Masjid At-Taqwa"
                             android:layout_weight="7"
-                            android:textColor="@color/primaryTextColor"
+                            android:textColor="@color/white"
                             android:textSize="18sp"/>
 
                     </TableRow>
 
                 </TableLayout>
-            </RelativeLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
 
 
-        <RelativeLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/cvInfoKegiatan">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cvInfoKegiatan">
 
             <TextView
                 android:id="@+id/tvJadwalKegiatan"
@@ -212,75 +265,90 @@
                 android:layout_marginBottom="8dp"
                 android:text="Jadwal Kegiatan"
                 android:textColor="@color/primaryTextColor"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/tvLihatSemuaKegiatan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
                 android:text="Lihat Semua"
+                android:layout_marginTop="16dp"
                 android:textColor="@color/primaryTextColor"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
 
-            <RelativeLayout
-                android:id="@+id/rlRecyclerViewKegiatan"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clRecyclerViewKegiatan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tvJadwalKegiatan"
-                android:layout_marginBottom="20dp">
+                android:layout_marginTop="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvJadwalKegiatan">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvKegiatan"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal" />
-            </RelativeLayout>
+                    android:orientation="horizontal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
                 android:id="@+id/tvTambahDataKegiatan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/rlRecyclerViewKegiatan"
-                android:layout_alignParentStart="true"
-                android:layout_marginBottom="8dp"
                 android:text="Tambah Data"
+                android:layout_marginTop="16dp"
                 android:textColor="@color/primaryTextColor"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/clRecyclerViewKegiatan"/>
 
-            <RelativeLayout
-                android:id="@+id/rlTambahKegiatan"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clTambahKegiatan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/tvTambahDataKegiatan">
+                android:layout_marginTop="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvTambahDataKegiatan">
 
-                <RelativeLayout
-                    android:id="@+id/rlButtonTambahKegiatan"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clButtonTambahKegiatan"
                     android:layout_width="92dp"
                     android:layout_height="84dp"
-                    android:background="@drawable/rounded_tambahkegiatan">
+                    android:background="@drawable/rounded_tambahkegiatan"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <ImageView
                         android:layout_width="42dp"
                         android:layout_height="42dp"
-                        android:layout_centerHorizontal="true"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/ic_home_tambahkegiatan" />
+                        android:src="@drawable/ic_home_tambahkegiatan"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
 
-                </RelativeLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/rlButtonTambahKegiatan"
-                    android:layout_centerHorizontal="true"
                     android:text="Tambah\nKegiatan"
                     android:textAlignment="center"
                     android:textColor="@color/primaryTextColor"
-                    android:textSize="14sp" />
-            </RelativeLayout>
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/clButtonTambahKegiatan"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-        </RelativeLayout>
-    </RelativeLayout>
-</RelativeLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
