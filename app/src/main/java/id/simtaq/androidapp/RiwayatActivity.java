@@ -154,6 +154,7 @@ public class RiwayatActivity extends AppCompatActivity implements RiwayatListAda
                         String tipeKeuangan = responseObj.getString("tipe_keuangan");
                         String tglKeuangan = responseObj.getString("tgl_keuangan");
                         String ketKeuangan = responseObj.getString("keterangan_keuangan");
+                        String jenisKeuangan = responseObj.getString("jenis_keuangan");
                         String statusKeuangan = responseObj.getString("status_keuangan");
                         Long nominalKeuangan = responseObj.getLong("nominal_keuangan");
                         Long jmlKasAwal = responseObj.getLong("jml_kas_awal");
@@ -162,7 +163,7 @@ public class RiwayatActivity extends AppCompatActivity implements RiwayatListAda
                         String createAt = responseObj.getString("create_at");
                         String updateAt = responseObj.getString("update_at");
                         if (tglKeuangan.contains(filter)){
-                            keuanganList.add(new Keuangan(idKeuangan, noKeuangan, tipeKeuangan, tglKeuangan, ketKeuangan, statusKeuangan, nominalKeuangan, jmlKasAwal, jmlKasAkhir, deskripsiKeuangan, createAt, updateAt));
+                            keuanganList.add(new Keuangan(idKeuangan, noKeuangan, tipeKeuangan, tglKeuangan, ketKeuangan, jenisKeuangan, statusKeuangan, nominalKeuangan, jmlKasAwal, jmlKasAkhir, deskripsiKeuangan, createAt, updateAt));
                             Collections.sort(keuanganList, new Comparator<Keuangan>() {
                                 @Override
                                 public int compare(Keuangan keuangan, Keuangan k1) {
@@ -308,7 +309,7 @@ public class RiwayatActivity extends AppCompatActivity implements RiwayatListAda
     @Override
     public void doClick(int id) {
         Intent intent = new Intent(RiwayatActivity.this, DetailKeuanganActivity.class);
-        intent.putExtra("intentDari", "riwayat keuangan");
+        //intent.putExtra("intentDari", "riwayat keuangan");
         intent.putExtra("idKeuangan", id);
         startActivity(intent);
     }

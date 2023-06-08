@@ -83,10 +83,7 @@
             android:name=".DetailKegiatanActivity"
             android:exported="false" />
         <activity
-            android:name=".DetailRiwayatKasActivity"
-            android:exported="false" />
-        <activity
-            android:name=".CatatPengeluaranActivity"
+            android:name=".DetailKeuanganActivity"
             android:exported="false" />
         <activity
             android:name=".CatatDonaturActivity"

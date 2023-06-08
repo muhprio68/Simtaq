@@ -82,9 +82,9 @@ public class DetailKeuanganActivity extends AppCompatActivity {
         svDetailKeuangan.setVisibility(View.GONE);
         queue = Volley.newRequestQueue(DetailKeuanganActivity.this);
         intentDari = String.valueOf(getIntent().getStringExtra("intentDari"));
+        idKeuangan = getIntent().getExtras().getInt("idKeuangan");
         if (intentDari.equals("riwayat keuangan")){
-            idKeuangan = getIntent().getExtras().getInt("idKeuangan");
-            getData(authToken);
+            getData(authToken, idKeuangan);
         } else {
             lihatTambah(authToken);
         }
@@ -92,13 +92,13 @@ public class DetailKeuanganActivity extends AppCompatActivity {
         btnUbahKeuangan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (jenisKeuangan.equals("Donatur")){
+                if (!jenisKeuangan.equals("Donatur")){
                     Intent intent = new Intent(DetailKeuanganActivity.this, UbahKeuanganActivity.class);
-                    intent.putExtra("id", idKeuangan);
+                    intent.putExtra("idKeuangan", idKeuangan);
                     startActivity(intent);
                 } else {
                     Intent intent = new Intent(DetailKeuanganActivity.this, UbahDonaturActivity.class);
-                    intent.putExtra("id", idKeuangan);
+                    intent.putExtra("idKeuangan", idKeuangan);
                     startActivity(intent);
                 }
             }
@@ -122,7 +122,7 @@ public class DetailKeuanganActivity extends AppCompatActivity {
         tvTipeKeungan = findViewById(R.id.tvValueTipeKeuangan);
         tvTglKeuangan = findViewById(R.id.tvValueTglKeuangan);
         tvKeteranganKeuangan = findViewById(R.id.tvValueKeteranganKeuangan);
-        tvJenisKeuangan = findViewById(R.id.tvJenisKeuangan);
+        tvJenisKeuangan = findViewById(R.id.tvValueJenisKeuangan);
         tvDeskripsiKeuangan = findViewById(R.id.tvValueDeskripsiKeuangan);
         tvJudulDetailPenjumlahan = findViewById(R.id.tvJudulDetailPenjumlahan);
         tvTotalKasAwal = findViewById(R.id.tvValueTotalKasAwal);
@@ -133,7 +133,7 @@ public class DetailKeuanganActivity extends AppCompatActivity {
         btnHapusKeuangan = findViewById(R.id.btnHapusKeuangan);
     }
 
-    public void getData(String token){
+    public void getData(String token, int idKeuangan){
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url+"/keuangan/"+idKeuangan, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {

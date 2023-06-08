@@ -6,6 +6,7 @@ public class Keuangan {
     private String tipeKeuangan;
     private String tglKeuangan;
     private String ketKeuangan;
+    private String jenisKeuangan;
     private String statusKeuangan;
     private Long nominalKeuangan;
     private Long jmlKasAwal;
@@ -14,12 +15,13 @@ public class Keuangan {
     private String createAt;
     private String updateAt;
 
-    public Keuangan(int idKeuangan, String noKeuangan, String tipeKeuangan, String tglKeuangan, String ketKeuangan, String statusKeuangan, Long nominalKeuangan, Long jmlKasAwal, Long jmlKasAkhir, String deskripsiKeuangan, String createAt, String updateAt) {
+    public Keuangan(int idKeuangan, String noKeuangan, String tipeKeuangan, String tglKeuangan, String ketKeuangan, String jenisKeuangan, String statusKeuangan, Long nominalKeuangan, Long jmlKasAwal, Long jmlKasAkhir, String deskripsiKeuangan, String createAt, String updateAt) {
         this.idKeuangan = idKeuangan;
         this.noKeuangan = noKeuangan;
         this.tipeKeuangan = tipeKeuangan;
         this.tglKeuangan = tglKeuangan;
         this.ketKeuangan = ketKeuangan;
+        this.jenisKeuangan = jenisKeuangan;
         this.statusKeuangan = statusKeuangan;
         this.nominalKeuangan = nominalKeuangan;
         this.jmlKasAwal = jmlKasAwal;
@@ -55,6 +57,14 @@ public class Keuangan {
 
     public String getTglKeuangan() {
         return tglKeuangan;
+    }
+
+    public String getJenisKeuangan() {
+        return jenisKeuangan;
+    }
+
+    public void setJenisKeuangan(String jenisKeuangan) {
+        this.jenisKeuangan = jenisKeuangan;
     }
 
     public void setTglKeuangan(String tglKeuangan) {

@@ -150,6 +150,7 @@ public class InfoKasFragment extends Fragment implements View.OnClickListener, R
                         String tipeKeuangan = responseObj.getString("tipe_keuangan");
                         String tglKeuangan = responseObj.getString("tgl_keuangan");
                         String ketKeuangan = responseObj.getString("keterangan_keuangan");
+                        String jenisKeuangan = responseObj.getString("jenis_keuangan");
                         String statusKeuangan = responseObj.getString("status_keuangan");
                         Long nominalKeuangan = responseObj.getLong("nominal_keuangan");
                         Long jmlKasAwal = responseObj.getLong("jml_kas_awal");
@@ -158,7 +159,7 @@ public class InfoKasFragment extends Fragment implements View.OnClickListener, R
                         String createAt = responseObj.getString("create_at");
                         String updateAt = responseObj.getString("update_at");
                         if (tglKeuangan.contains(getCurentMonth())){
-                            keuanganList.add(new Keuangan(idKeuangan, noKeuangan, tipeKeuangan, tglKeuangan, ketKeuangan, statusKeuangan, nominalKeuangan, jmlKasAwal, jmlKasAkhir, deskripsiKeuangan, createAt, updateAt));
+                            keuanganList.add(new Keuangan(idKeuangan, noKeuangan, tipeKeuangan, tglKeuangan, ketKeuangan, jenisKeuangan, statusKeuangan, nominalKeuangan, jmlKasAwal, jmlKasAkhir, deskripsiKeuangan, createAt, updateAt));
                             Collections.sort(keuanganList, new Comparator<Keuangan>() {
                                 @Override
                                 public int compare(Keuangan keuangan, Keuangan k1) {

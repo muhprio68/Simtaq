@@ -57,7 +57,6 @@ public class UbahKegiatanActivity extends AppCompatActivity {
     private DatePickerDialog datePickerDialog;
     private SimpleDateFormat dateFormatter;
     private TimePickerDialog timePickerDialog;
-    private SimpleDateFormat timeFormatter;
 
     private Toolbar toolbar;
     private EditText etNamaKegiatan;

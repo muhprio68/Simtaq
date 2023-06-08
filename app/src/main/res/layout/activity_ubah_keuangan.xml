@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/clUbahKeuangan"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -251,6 +252,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="4dp"
+            android:layout_marginBottom="50dp"
             android:background="@drawable/rounded_bg_orange"
             android:text="Batal"
             android:textColor="@android:color/white"
@@ -258,7 +260,8 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@id/btnSimpanUbahKeuangan"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etUbahDeskripsiKeuangan" />
+            app:layout_constraintTop_toBottomOf="@+id/etUbahDeskripsiKeuangan"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnSimpanUbahKeuangan"
@@ -266,6 +269,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:layout_marginTop="16dp"
+            android:layout_marginBottom="64dp"
             android:background="@drawable/rounded_bg_primary"
             android:text="Simpan"
             android:textColor="@android:color/white"
@@ -273,7 +277,8 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/btnBatalUbahKeuangan"
-            app:layout_constraintTop_toBottomOf="@+id/etUbahDeskripsiKeuangan" />
+            app:layout_constraintTop_toBottomOf="@+id/etUbahDeskripsiKeuangan"
+            app:layout_constraintBottom_toBottomOf="parent"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
