@@ -37,6 +37,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import id.simtaq.androidapp.CatatDonaturActivity;
+import id.simtaq.androidapp.DetailKegiatanActivity;
 import id.simtaq.androidapp.JadwalKegiatanActivity;
 import id.simtaq.androidapp.R;
 import id.simtaq.androidapp.RiwayatActivity;
@@ -171,7 +172,10 @@ public class KegiatanFragment extends Fragment implements View.OnClickListener, 
 
     @Override
     public void doClick(String id) {
-
+        Intent intent = new Intent(getContext(), DetailKegiatanActivity.class);
+        intent.putExtra("intentDari", "jadwal kegiatan");
+        intent.putExtra("idKegiatan", id);
+        startActivity(intent);
     }
 
     private void aksesLevel(String level){

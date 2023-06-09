@@ -309,6 +309,7 @@ public class JadwalKegiatanActivity extends AppCompatActivity implements JadwalK
     @Override
     public void doClick(String id) {
         Intent intent = new Intent(JadwalKegiatanActivity.this, DetailKegiatanActivity.class);
+        intent.putExtra("intentDari", "jadwal kegiatan");
         intent.putExtra("idKegiatan", id);
         startActivity(intent);
     }

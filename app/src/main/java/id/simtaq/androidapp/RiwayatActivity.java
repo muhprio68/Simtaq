@@ -70,6 +70,7 @@ public class RiwayatActivity extends AppCompatActivity implements RiwayatListAda
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_riwayat);
         initViews();
+
         authToken = Preferences.getKeyToken(RiwayatActivity.this);
         //addData();
         setSupportActionBar(toolbar);
@@ -309,7 +310,7 @@ public class RiwayatActivity extends AppCompatActivity implements RiwayatListAda
     @Override
     public void doClick(int id) {
         Intent intent = new Intent(RiwayatActivity.this, DetailKeuanganActivity.class);
-        //intent.putExtra("intentDari", "riwayat keuangan");
+        intent.putExtra("intentDari", "riwayat keuangan");
         intent.putExtra("idKeuangan", id);
         startActivity(intent);
     }

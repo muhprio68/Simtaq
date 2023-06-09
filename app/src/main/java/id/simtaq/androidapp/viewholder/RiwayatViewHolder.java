@@ -25,6 +25,7 @@ public class RiwayatViewHolder extends RecyclerView.ViewHolder {
     public TextView tvJmlInfoKas;
     public TextView tvTglInfoKas;
     public RelativeLayout rlLisRiwayat;
+    public RelativeLayout rlListInfoKas;
 
     public RiwayatViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -39,5 +40,6 @@ public class RiwayatViewHolder extends RecyclerView.ViewHolder {
         tvTglInfoKas = itemView.findViewById(R.id.tvTglInfoKas);
         rlLisRiwayat = itemView.findViewById(R.id.rlListRiwayat);
         pbRiwayat = itemView.findViewById(R.id.pbRiwayatKeuangan);
+        rlListInfoKas = itemView.findViewById(R.id.rlListInfoKas);
     }
 }

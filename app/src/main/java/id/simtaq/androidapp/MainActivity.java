@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
     private String authToken;
     private String id, nama, email, level;
+    private String intentDari;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,8 +47,16 @@ public class MainActivity extends AppCompatActivity {
         authToken = Preferences.getKeyToken(MainActivity.this);
         auth(authToken);
         setContentView(R.layout.activity_main);
-        getSupportFragmentManager().beginTransaction().replace(R.id.flPageContainer, new HomeFragment()).commit();
         initView();
+        intentDari = String.valueOf(getIntent().getStringExtra("intentDari"));
+        if (intentDari.equals("detail keuangan")){
+            bottomNavigationView.setSelectedItemId(R.id.menu_infokas);
+            getSupportFragmentManager().beginTransaction().replace(R.id.flPageContainer, new InfoKasFragment()).commit();
+        } else if (intentDari.equals("detail kegiatan")){
+            getSupportFragmentManager().beginTransaction().replace(R.id.flPageContainer, new KegiatanFragment()).commit();
+        } else {
+            getSupportFragmentManager().beginTransaction().replace(R.id.flPageContainer, new HomeFragment()).commit();
+        }
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {

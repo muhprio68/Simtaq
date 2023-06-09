@@ -83,10 +83,16 @@ public class DetailKeuanganActivity extends AppCompatActivity {
         queue = Volley.newRequestQueue(DetailKeuanganActivity.this);
         intentDari = String.valueOf(getIntent().getStringExtra("intentDari"));
         idKeuangan = getIntent().getExtras().getInt("idKeuangan");
-        if (intentDari.equals("riwayat keuangan")){
+        if (intentDari.equals("catat keuangan")){
+            btnUbahKeuangan.setVisibility(View.GONE);
+            btnHapusKeuangan.setVisibility(View.GONE);
+            lihatTambah(authToken);
+        } else if (intentDari.equals("ubah keuangan")){
+            btnUbahKeuangan.setVisibility(View.GONE);
+            btnHapusKeuangan.setVisibility(View.GONE);
             getData(authToken, idKeuangan);
         } else {
-            lihatTambah(authToken);
+            getData(authToken, idKeuangan);
         }
 
         btnUbahKeuangan.setOnClickListener(new View.OnClickListener() {
@@ -317,9 +323,22 @@ public class DetailKeuanganActivity extends AppCompatActivity {
         dialogButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(DetailKeuanganActivity.this, RiwayatActivity.class);
-                startActivity(intent);
-                finish();
+//                Intent intent = new Intent(DetailKeuanganActivity.this, RiwayatActivity.class);
+//                startActivity(intent);
+//                finish();
+                if (intentDari.equals("riwayat keuangan")){
+                    Intent i = new Intent(DetailKeuanganActivity.this, RiwayatActivity.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    i.putExtra("intentDari", "detail keuangan");
+                    startActivity(i);
+                } else if (intentDari.equals("info kas")){
+                    Intent i = new Intent(DetailKeuanganActivity.this, MainActivity.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    i.putExtra("intentDari", "detail keuangan");
+                    startActivity(i);
+                }
             }
         });
     }

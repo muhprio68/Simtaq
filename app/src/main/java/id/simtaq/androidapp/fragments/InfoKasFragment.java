@@ -46,6 +46,7 @@ import java.util.concurrent.Executors;
 
 import id.simtaq.androidapp.CatatDonaturActivity;
 import id.simtaq.androidapp.CatatKeuanganActivity;
+import id.simtaq.androidapp.DetailKeuanganActivity;
 import id.simtaq.androidapp.R;
 import id.simtaq.androidapp.RiwayatActivity;
 import id.simtaq.androidapp.adapter.JadwalKegiatanAdapter;
@@ -267,6 +268,9 @@ public class InfoKasFragment extends Fragment implements View.OnClickListener, R
 
     @Override
     public void doClick(int id) {
-
+        Intent intent = new Intent(getContext(), DetailKeuanganActivity.class);
+        intent.putExtra("intentDari", "info kas");
+        intent.putExtra("idKeuangan", id);
+        startActivity(intent);
     }
 }

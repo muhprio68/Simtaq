@@ -112,6 +112,12 @@ public class RiwayatListAdapter extends RecyclerView.Adapter<RiwayatViewHolder> 
             }
             holder.tvKeteranganInfoKas.setText(keuangan.getKetKeuangan());
             holder.tvTglInfoKas.setText(keuangan.getTglKeuangan());
+            holder.rlListInfoKas.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    iRiwayatListAdapter.doClick(keuangan.getIdKeuangan());
+                }
+            });
         }
     }
 

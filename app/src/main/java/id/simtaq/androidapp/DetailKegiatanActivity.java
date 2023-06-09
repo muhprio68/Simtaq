@@ -69,12 +69,11 @@ public class DetailKegiatanActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back_white);
-
+        idKegiatan = Integer.valueOf(getIntent().getStringExtra("idKegiatan"));
         intentDari = String.valueOf(getIntent().getStringExtra("intentDari"));
         if (intentDari.equals("tambah kegiatan")){
             lihatTambah(authToken);
         } else {
-            idKegiatan = Integer.valueOf(getIntent().getStringExtra("idKegiatan"));
             getData(authToken);
         }
 

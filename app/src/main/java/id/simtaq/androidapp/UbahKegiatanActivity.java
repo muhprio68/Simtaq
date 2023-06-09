@@ -1,21 +1,26 @@
 package id.simtaq.androidapp;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -214,7 +219,8 @@ public class UbahKegiatanActivity extends AppCompatActivity {
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     // on below line we are displaying a success toast message.
-                    snackbarWithAction();
+                    //snackbarWithAction();
+                    showDialogBerhasilUbah();
 
                     //Toast.makeText(TambahKegiatanActivity.this, "Data berhasil disimpan", Toast.LENGTH_SHORT).show();
                 } catch (JSONException e) {
@@ -338,5 +344,49 @@ public class UbahKegiatanActivity extends AppCompatActivity {
         intent.putExtra("intentDari", "tambah kegiatan");
         startActivity(intent);
         finish();
+    }
+
+    public void showDialogBerhasilUbah(){
+        AlertDialog.Builder dialogBuilder;
+        AlertDialog alertDialog;
+        dialogBuilder = new AlertDialog.Builder(UbahKegiatanActivity.this, R.style.DialogSlideAnim);
+        View layoutView = getLayoutInflater().inflate(R.layout.dialogberhasiltambahdata, null);
+        Button btnDialogYa = layoutView.findViewById(R.id.btnYaDialogBerhasil);
+        Button btnDialogTidak = layoutView.findViewById(R.id.btnTidakDialogBerhasil);
+        TextView tvKetBerhasil = layoutView.findViewById(R.id.tvKeteranganDialogBerhasil);
+        btnDialogYa.setText("Ya");
+        btnDialogTidak.setText("Tidak");
+        tvKetBerhasil.setText("Data kegiatan berhasil diubah, apakah anda ingin melihat detailnya?");
+        dialogBuilder.setView(layoutView);
+        alertDialog = dialogBuilder.create();
+        alertDialog.setCancelable(false);
+        alertDialog.show();
+        alertDialog.getWindow().setGravity(Gravity.BOTTOM);
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        btnDialogYa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                lihatUbahData();
+            }
+        });
+
+        btnDialogTidak.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+            }
+        });
+    }
+
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }

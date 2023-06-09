@@ -248,7 +248,7 @@ public class PengeluaranFragment extends Fragment {
 
     public void lihatTambahData() {
         Intent intent = new Intent(getContext(), DetailKeuanganActivity.class);
-        intent.putExtra("intentDari", "catat pengeluaran");
+        intent.putExtra("intentDari", "catat keuangan");
         startActivity(intent);
     }
 }

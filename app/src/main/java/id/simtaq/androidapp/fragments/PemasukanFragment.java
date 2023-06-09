@@ -252,7 +252,7 @@ public class PemasukanFragment extends Fragment {
 
     public void lihatTambahData() {
         Intent intent = new Intent(getContext(), DetailKeuanganActivity.class);
-        intent.putExtra("intentDari", "catat Pemasukan");
+        intent.putExtra("intentDari", "catat keuangan");
         startActivity(intent);
     }
 }

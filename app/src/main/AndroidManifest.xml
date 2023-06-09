@@ -84,7 +84,8 @@
             android:exported="false" />
         <activity
             android:name=".DetailKeuanganActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".RiwayatActivity"/>
         <activity
             android:name=".CatatDonaturActivity"
             android:exported="false" />
