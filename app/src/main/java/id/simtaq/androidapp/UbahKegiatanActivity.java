@@ -79,6 +79,7 @@ public class UbahKegiatanActivity extends AppCompatActivity {
 
     private RequestQueue queue;
     private String authToken;
+    private String intentDari;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +93,7 @@ public class UbahKegiatanActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back_white);
         idKegiatan = getIntent().getIntExtra("idKegiatan",0);
+        intentDari = getIntent().getStringExtra("intentDari");
         dateFormatter = new SimpleDateFormat("dd MMMM yyyy", locale);
         queue = Volley.newRequestQueue(UbahKegiatanActivity.this);
         getDataUbahKegiatan(authToken);
@@ -341,7 +343,7 @@ public class UbahKegiatanActivity extends AppCompatActivity {
 
     public void lihatUbahData() {
         Intent intent = new Intent(UbahKegiatanActivity.this, DetailKegiatanActivity.class);
-        intent.putExtra("intentDari", "ubah kegiatan");
+        intent.putExtra("intentDari", intentDari);
         intent.putExtra("idKegiatan", idKegiatan);
         startActivity(intent);
         finish();

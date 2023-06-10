@@ -90,14 +90,14 @@ public class DetailKegiatanActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back_white);
         svDetailKegiatan.setVisibility(View.GONE);
-        idKegiatan = Integer.valueOf(getIntent().getStringExtra("idKegiatan"));
-        intentDari = String.valueOf(getIntent().getStringExtra("intentDari"));
+        idKegiatan = getIntent().getExtras().getInt("idKegiatan", 0);
+        intentDari = getIntent().getStringExtra("intentDari");
         initLevel(level);
         if (intentDari.equals("tambah kegiatan")){
             btnUbahKegiatan.setVisibility(View.GONE);
             btnHapusKegiatan.setVisibility(View.GONE);
             lihatTambah(authToken);
-        } else if (intentDari.equals("ubah kegiatan")){
+        } else if (intentDari.contains("ubah")){
             btnUbahKegiatan.setVisibility(View.GONE);
             btnHapusKegiatan.setVisibility(View.GONE);
             getData(authToken, idKegiatan);
@@ -110,6 +110,7 @@ public class DetailKegiatanActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(DetailKegiatanActivity.this, UbahKegiatanActivity.class);
                 intent.putExtra("idKegiatan", idKegiatan);
+                intent.putExtra("intentDari", "ubah "+intentDari);
                 startActivity(intent);
             }
         });
@@ -331,18 +332,9 @@ public class DetailKegiatanActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (i == 2){
                     alertDialog.dismiss();
-                } else if (intentDari.equals("jadwal kegiatan") && i == 1){
-                    Intent i = new Intent(DetailKegiatanActivity.this, JadwalKegiatanActivity.class);
-                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    i.putExtra("intentDari", "detail kegiatan");
-                    startActivity(i);
-                } else if (intentDari.equals("info kegiatan") && i == 1){
-                    Intent i = new Intent(DetailKegiatanActivity.this, MainActivity.class);
-                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    i.putExtra("intentDari", "detail kegiatan");
-                    startActivity(i);
+                } else {
+                    intentDari = "hapus "+intentDari;
+                    onBackPressed();
                 }
             }
         });
@@ -356,7 +348,33 @@ public class DetailKegiatanActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        if (intentDari.equals("jadwal kegiatan") || intentDari.equals("info kegiatan") || intentDari.equals("tambah kegiatan")){
+            super.onBackPressed();
+        } else if (intentDari.equals("ubah jadwal kegiatan")){
+            Intent i = new Intent(DetailKegiatanActivity.this, JadwalKegiatanActivity.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            i.putExtra("intentDari", "detail kegiatan");
+            startActivity(i);
+        } else if (intentDari.equals("ubah info kegiatan") ){
+            Intent i = new Intent(DetailKegiatanActivity.this, MainActivity.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            i.putExtra("intentDari", "detail kegiatan");
+            startActivity(i);
+        } else if (intentDari.equals("hapus info kegiatan") ) {
+            Intent i = new Intent(DetailKegiatanActivity.this, MainActivity.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            i.putExtra("intentDari", "detail kegiatan");
+            startActivity(i);
+        } else {
+            Intent i = new Intent(DetailKegiatanActivity.this, JadwalKegiatanActivity.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            i.putExtra("intentDari", "detail kegiatan");
+            startActivity(i);
+        }
     }
 
     @Override

@@ -279,6 +279,7 @@ public class PengeluaranFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 lihatTambahData();
+                alertDialog.dismiss();
             }
         });
 

@@ -157,7 +157,7 @@ public class JadwalKegiatanActivity extends AppCompatActivity implements JadwalK
                 for (int i = 0; i < response.length(); i++) {
                     try {
                         JSONObject responseObj = response.getJSONObject(i);
-                        String idKegiatan = responseObj.getString("id_kegiatan");
+                        int idKegiatan = responseObj.getInt("id_kegiatan");
                         String noKegiatan = responseObj.getString("no_kegiatan");
                         String namaKegiatan = responseObj.getString("nama_kegiatan");
                         String tipeKegiatan = responseObj.getString("tipe_kegiatan");
@@ -315,10 +315,21 @@ public class JadwalKegiatanActivity extends AppCompatActivity implements JadwalK
     }
 
     @Override
-    public void doClick(String id) {
+    public void doClick(int id) {
         Intent intent = new Intent(JadwalKegiatanActivity.this, DetailKegiatanActivity.class);
         intent.putExtra("intentDari", "jadwal kegiatan");
         intent.putExtra("idKegiatan", id);
         startActivity(intent);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }

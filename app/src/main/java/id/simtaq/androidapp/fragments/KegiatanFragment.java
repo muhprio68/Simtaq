@@ -91,11 +91,12 @@ public class KegiatanFragment extends Fragment implements View.OnClickListener, 
         authToken = Preferences.getKeyToken(view.getContext());
         clViewInfoKegiatan.setVisibility(View.GONE);
         tvLihatSemuaKegiatan.setOnClickListener(this);
+        rvKegiatan.setHasFixedSize(true);
         kegiatanList = new ArrayList<>();
         queue = Volley.newRequestQueue(view.getContext());
 //        addData();
         getData(view, authToken);
-        buildRecyclerView(view);
+        //buildRecyclerView(view);
         aksesLevel(level);
         return view;
     }
@@ -120,7 +121,7 @@ public class KegiatanFragment extends Fragment implements View.OnClickListener, 
                 for (int i = 0; i < response.length(); i++) {
                     try {
                         JSONObject responseObj = response.getJSONObject(i);
-                        String idKegiatan = responseObj.getString("id_kegiatan");
+                        int idKegiatan = responseObj.getInt("id_kegiatan");
                         String noKegiatan = responseObj.getString("no_kegiatan");
                         String namaKegiatan = responseObj.getString("nama_kegiatan");
                         String tipeKegiatan = responseObj.getString("tipe_kegiatan");
@@ -171,7 +172,7 @@ public class KegiatanFragment extends Fragment implements View.OnClickListener, 
     }
 
     @Override
-    public void doClick(String id) {
+    public void doClick(int id) {
         Intent intent = new Intent(getContext(), DetailKegiatanActivity.class);
         intent.putExtra("intentDari", "info kegiatan");
         intent.putExtra("idKegiatan", id);

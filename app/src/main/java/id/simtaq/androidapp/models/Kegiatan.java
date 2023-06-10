@@ -2,7 +2,7 @@ package id.simtaq.androidapp.models;
 
 public class Kegiatan {
 
-    private String idKegiatan;
+    private int idKegiatan;
     private String noKegiatan;
     private String namaKegiatan;
     private String tipeKegiatan;
@@ -14,7 +14,7 @@ public class Kegiatan {
     private String createAt;
     private String updateAt;
 
-    public Kegiatan(String idKegiatan, String noKegiatan, String namaKegiatan, String tipeKegiatan, String tglKegiatan, String waktuKegiatan, String deskripsiKegiatan, String tempatKegiatan, String pembicaraKegiatan, String createAt, String updateAt) {
+    public Kegiatan(int idKegiatan, String noKegiatan, String namaKegiatan, String tipeKegiatan, String tglKegiatan, String waktuKegiatan, String deskripsiKegiatan, String tempatKegiatan, String pembicaraKegiatan, String createAt, String updateAt) {
         this.idKegiatan = idKegiatan;
         this.noKegiatan = noKegiatan;
         this.namaKegiatan = namaKegiatan;
@@ -28,11 +28,11 @@ public class Kegiatan {
         this.updateAt = updateAt;
     }
 
-    public String getIdKegiatan() {
+    public int getIdKegiatan() {
         return idKegiatan;
     }
 
-    public void setIdKegiatan(String idKegiatan) {
+    public void setIdKegiatan(int idKegiatan) {
         this.idKegiatan = idKegiatan;
     }
 

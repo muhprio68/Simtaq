@@ -88,8 +88,8 @@ public class DetailKeuanganActivity extends AppCompatActivity {
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back_white);
         svDetailKeuangan.setVisibility(View.GONE);
         queue = Volley.newRequestQueue(DetailKeuanganActivity.this);
-        intentDari = String.valueOf(getIntent().getStringExtra("intentDari"));
-        idKeuangan = getIntent().getExtras().getInt("idKeuangan");
+        intentDari = getIntent().getStringExtra("intentDari");
+        idKeuangan = getIntent().getExtras().getInt("idKeuangan", 0);
         initLevel(level);
         if (intentDari.equals("catat keuangan")){
             btnUbahKeuangan.setVisibility(View.GONE);
@@ -109,11 +109,15 @@ public class DetailKeuanganActivity extends AppCompatActivity {
                 if (!jenisKeuangan.equals("Donatur")){
                     Intent intent = new Intent(DetailKeuanganActivity.this, UbahKeuanganActivity.class);
                     intent.putExtra("idKeuangan", idKeuangan);
+                    intent.putExtra("intentDari", "ubah "+intentDari);
                     startActivity(intent);
+                    finish();
                 } else {
                     Intent intent = new Intent(DetailKeuanganActivity.this, UbahDonaturActivity.class);
                     intent.putExtra("idKeuangan", idKeuangan);
+                    intent.putExtra("intentDari", "ubah "+intentDari);
                     startActivity(intent);
+                    finish();
                 }
             }
         });

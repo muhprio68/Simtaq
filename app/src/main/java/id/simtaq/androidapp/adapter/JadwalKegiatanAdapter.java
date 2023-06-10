@@ -133,7 +133,7 @@ public class JadwalKegiatanAdapter extends RecyclerView.Adapter<JadwalKegiatanVi
     }
 
     public interface IJadwalKegiatanAdapter{
-        void doClick(String id);
+        void doClick(int id);
     }
 
     public void removeItem(int position) {
@@ -142,7 +142,7 @@ public class JadwalKegiatanAdapter extends RecyclerView.Adapter<JadwalKegiatanVi
         //notifyItemRemoved(position);
     }
 
-    public void deleteData(String id){
+    public void deleteData(int id){
         StringRequest dr = new StringRequest(Request.Method.DELETE, url+"/kegiatan/"+id,
                 new Response.Listener<String>()
                 {
