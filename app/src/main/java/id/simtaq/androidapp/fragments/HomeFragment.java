@@ -66,7 +66,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         rlLokasiKegiatan.setOnClickListener(this);
         rlPengurusTakmir.setOnClickListener(this);
         rlTentangSimtaq.setOnClickListener(this);
-        aksesLevel(level);
+        initLevel(level);
         return view;
     }
 
@@ -117,7 +117,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    private void aksesLevel(String level){
+    private void initLevel(String level){
         if (level.equals("1")) {
             rlCatatKeuangan.setVisibility(View.GONE);
             rlCatatDonatur.setVisibility(View.GONE);

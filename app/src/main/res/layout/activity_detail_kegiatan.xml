@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -12,227 +13,272 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="?attr/actionBarSize"
-        style="@style/AppTheme.Toolbar" />
+        style="@style/AppTheme.Toolbar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
-    <RelativeLayout
+    <ProgressBar
+        android:id="@+id/pbDetailKegiatan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:outlineAmbientShadowColor="@color/primaryDarkColor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <ScrollView
+        android:id="@+id/svDetailKegiatan"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="16dp"
-        android:layout_below="@+id/tbDetailKegiatan">
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tbDetailKegiatan">
 
-    <RelativeLayout
-        android:id="@+id/rlNamaKegiatan"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clNamaKegiatan"
         android:layout_width="match_parent"
         android:layout_height="52dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginBottom="24dp"
-        android:background="@drawable/rounded_border_detail">
+        android:background="@drawable/rounded_border_detail"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/tvValueNamaKegiatan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Pengajian Rutin"
-            android:layout_centerVertical="true"
             android:textColor="@color/primaryTextColor"
             android:textSize="20sp"
-            android:layout_centerHorizontal="true"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
-    </RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
         android:id="@+id/tvInfoKegiatan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/rlNamaKegiatan"
         android:text="Informasi Kegiatan"
         android:textSize="20sp"
         android:textColor="@color/primaryTextColor"
-        android:layout_marginBottom="8dp"/>
+        android:layout_marginTop="24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/clNamaKegiatan"/>
 
-    <RelativeLayout
-        android:id="@+id/rlInfoKegiatan"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:layout_marginBottom="24dp"
-        android:layout_below="@+id/tvInfoKegiatan"
-        android:background="@drawable/rounded_border_detail">
-
-        <ProgressBar
-            android:id="@+id/pbDetailKegiatan"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_width="wrap_content"
-            android:outlineAmbientShadowColor="@color/primaryDarkColor"
-            android:layout_height="wrap_content" />
-
-        <TableLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clInfoKegiatan"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/rounded_border_detail"
+            android:padding="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvInfoKegiatan">
 
-            <TableRow
-                android:layout_marginTop="8dp" >
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvNoKegiatan"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="No Kegiatan"
-                    android:textColor="@color/primaryTextColor"
-                    android:textSize="16sp" />
+                <TableRow android:layout_marginTop="8dp">
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvValueNoKegiatan"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="KG00005"
-                    android:layout_weight="1"
-                    android:textColor="@color/primaryTextColor"
-                    android:textSize="16sp"/>
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvNoKegiatan"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="No Kegiatan"
+                        android:textColor="@color/primaryTextColor"
+                        android:textSize="16sp" />
 
-            </TableRow>
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvValueNoKegiatan"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="KG00005"
+                        android:textColor="@color/primaryTextColor"
+                        android:textSize="16sp" />
+
+                </TableRow>
 
 
-            <TableRow
-                android:layout_marginTop="8dp" >
+                <TableRow android:layout_marginTop="8dp">
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvDetailTipeKegiatan"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Tipe"
-                    android:textColor="@color/primaryTextColor"
-                    android:layout_weight="1"
-                    android:textSize="16sp"/>
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvDetailTipeKegiatan"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Tipe"
+                        android:textColor="@color/primaryTextColor"
+                        android:textSize="16sp" />
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvValueDetailTipeKegiatan"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Umum"
-                    android:layout_weight="1"
-                    android:textColor="@color/primaryTextColor"
-                    android:textSize="16sp"/>
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvValueDetailTipeKegiatan"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Umum"
+                        android:textColor="@color/primaryTextColor"
+                        android:textSize="16sp" />
 
-            </TableRow>
+                </TableRow>
 
-            <TableRow
-                android:layout_marginTop="8dp" >
+                <TableRow android:layout_marginTop="8dp">
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvHariTglKegiatan"
-                    android:layout_width="136dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Hari/Tanggal"
-                    android:textColor="@color/primaryTextColor"
-                    android:textSize="16sp" />
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvHariTglKegiatan"
+                        android:layout_width="136dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Hari/Tanggal"
+                        android:textColor="@color/primaryTextColor"
+                        android:textSize="16sp" />
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvValueHariTglKegiatan"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="06 Jan, 2022"
-                    android:textColor="@color/primaryTextColor"
-                    android:layout_weight="1"
-                    android:textSize="16sp"/>
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvValueHariTglKegiatan"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="06 Jan, 2022"
+                        android:textColor="@color/primaryTextColor"
+                        android:textSize="16sp" />
 
-            </TableRow>
+                </TableRow>
 
-            <TableRow
-                android:layout_marginTop="8dp" >
+                <TableRow android:layout_marginTop="8dp">
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvDetailWaktuKegiatan"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Waktu"
-                    android:textColor="@color/primaryTextColor"
-                    android:textSize="16sp" />
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvDetailWaktuKegiatan"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Waktu"
+                        android:textColor="@color/primaryTextColor"
+                        android:textSize="16sp" />
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvValueDetailWaktuKegiatan"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="19.30 WIB"
-                    android:layout_weight="1"
-                    android:textColor="@color/primaryTextColor"
-                    android:textSize="16sp"/>
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvValueDetailWaktuKegiatan"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="19.30 WIB"
+                        android:textColor="@color/primaryTextColor"
+                        android:textSize="16sp" />
 
-            </TableRow>
-            <TableRow
-                android:layout_marginTop="8dp" >
+                </TableRow>
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvDetailTempatKegiatan"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Tempat"
-                    android:layout_weight="1"
-                    android:textColor="@color/primaryTextColor"
-                    android:textSize="16sp"/>
+                <TableRow android:layout_marginTop="8dp">
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvValueDetailTempatKegiatan"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Masjid At-Taqwa"
-                    android:layout_weight="1"
-                    android:textColor="@color/primaryTextColor"
-                    android:textSize="16sp"/>
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvDetailTempatKegiatan"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Tempat"
+                        android:textColor="@color/primaryTextColor"
+                        android:textSize="16sp" />
 
-            </TableRow>
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvValueDetailTempatKegiatan"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Masjid At-Taqwa"
+                        android:textColor="@color/primaryTextColor"
+                        android:textSize="16sp" />
 
-            <TableRow
-                android:layout_marginTop="8dp" >
+                </TableRow>
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvDetailPembicaraKegiatan"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Pembicara"
-                    android:layout_weight="1"
-                    android:textColor="@color/primaryTextColor"
-                    android:textSize="16sp"/>
+                <TableRow android:layout_marginTop="8dp">
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvValueDetailPembicaraKegiatan"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="KH. Abdul Kholiq Hasan, M.HI."
-                    android:layout_weight="1"
-                    android:textColor="@color/primaryTextColor"
-                    android:textSize="16sp"/>
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvDetailPembicaraKegiatan"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Pembicara"
+                        android:textColor="@color/primaryTextColor"
+                        android:textSize="16sp" />
 
-            </TableRow>
-            <TableRow
-                android:layout_marginTop="8dp" >
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvValueDetailPembicaraKegiatan"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="KH. Abdul Kholiq Hasan, M.HI."
+                        android:textColor="@color/primaryTextColor"
+                        android:textSize="16sp" />
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvDetailDeskripsiKegiatan"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Deskripsi"
-                    android:layout_weight="1"
-                    android:textColor="@color/primaryTextColor"
-                    android:textSize="16sp"/>
+                </TableRow>
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvValueDetailDeskripsiKegiatan"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Pengajian Rutin sabtu Pahing"
-                    android:layout_weight="1"
-                    android:textColor="@color/primaryTextColor"
-                    android:textSize="16sp"/>
+                <TableRow android:layout_marginTop="8dp">
 
-            </TableRow>
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvDetailDeskripsiKegiatan"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Deskripsi"
+                        android:textColor="@color/primaryTextColor"
+                        android:textSize="16sp" />
 
-        </TableLayout>
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvValueDetailDeskripsiKegiatan"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Pengajian Rutin sabtu Pahing"
+                        android:textColor="@color/primaryTextColor"
+                        android:textSize="16sp" />
 
-    </RelativeLayout>
-    </RelativeLayout>
-</RelativeLayout>
+                </TableRow>
+
+            </TableLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnUbahKegiatan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/rounded_bg_orange"
+            android:text="Ubah Detail Kegiatan"
+            android:textColor="@android:color/white"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/clInfoKegiatan" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnHapusKegiatan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="64dp"
+            android:background="@drawable/rounded_bg_red"
+            android:text="Hapus Kegiatan"
+            android:textColor="@android:color/white"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnUbahKegiatan"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

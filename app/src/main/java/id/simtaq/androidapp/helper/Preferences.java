@@ -12,6 +12,12 @@ public class Preferences {
     static final String KEY_EMAIL = "key_email";
     static final String KEY_LEVEL = "key_level";
 
+    //level user
+    //1. Jama'ah masjid/user biasa
+    //2. Bendahara Takmir
+    //3. Humas Takmir
+    //4. Superadmin
+
     public static SharedPreferences getSharedPreference(Context context){
         return PreferenceManager.getDefaultSharedPreferences(context);
     }

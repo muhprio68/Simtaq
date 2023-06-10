@@ -17,11 +17,19 @@ public class config {
     public static Locale locale = new Locale("in", "ID");
     //public static String url = "http://simtaq-app.herokuapp.com";
     //public static String url = "http://192.168.0.26:8080/restfulapi/public";
-    public static String url = "http://192.168.172.211:8080/restfulapi/public";
+    public static String url = "http://192.168.50.211:8080/restfulapi/public";
+    //public static String url = "http://10.208.116.66:8080/restfulapi/public";
 //https://run.mocky.io/v3/3d965384-7078-4ee5-8209-a71a4dfc02c0
     //kampus 10.200.58.161
     //kos 192.168.0.27
     //10.208.178.101
+
+
+    //level user
+    //1. Jama'ah masjid/user biasa
+    //2. Bendahara Takmir
+    //3. Humas Takmir
+    //4. Superadmin
 
     public static String toRupiah(String nominal){
         String hasil = "";

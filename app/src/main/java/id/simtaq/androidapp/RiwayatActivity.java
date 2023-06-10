@@ -57,6 +57,7 @@ public class RiwayatActivity extends AppCompatActivity implements RiwayatListAda
     public RiwayatListAdapter adapter;
     private RequestQueue queue;
     private String authToken;
+    private String level;
     private String sBulanTahun, sBulan, sTahun, sFilterBulanTahun;
     private SimpleDateFormat bulanTahun, tahun, bulan, filterBulanTahun;
     private Calendar c;
@@ -72,6 +73,7 @@ public class RiwayatActivity extends AppCompatActivity implements RiwayatListAda
         initViews();
 
         authToken = Preferences.getKeyToken(RiwayatActivity.this);
+        level = Preferences.getKeyLevel(RiwayatActivity.this);
         //addData();
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Riwayat Uang Kas");
@@ -94,8 +96,7 @@ public class RiwayatActivity extends AppCompatActivity implements RiwayatListAda
         getDataKeuangan(sFilterBulanTahun, authToken);
         tvFilterBulanKeuangan.setText(sBulan);
         tvFilterTahunKeuangan.setText(sTahun);
-
-        enableSwipeToDeleteAndUndo();
+        initLevel(level);
         ivNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -120,6 +121,12 @@ public class RiwayatActivity extends AppCompatActivity implements RiwayatListAda
         tvFilterTahunKeuangan = findViewById(R.id.tvFilterThnRiwayat);
         ivNext = findViewById(R.id.ivNextKeuangan);
         ivPrev = findViewById(R.id.ivPrevKeuangan);
+    }
+
+    private void initLevel(String level){
+        if (level.equals("2") || level.equals("4")) {
+            enableSwipeToDelete();
+        }
     }
 
 //    public void addData(){
@@ -206,7 +213,7 @@ public class RiwayatActivity extends AppCompatActivity implements RiwayatListAda
         adapter.notifyDataSetChanged();
     }
 
-    private void enableSwipeToDeleteAndUndo() {
+    private void enableSwipeToDelete() {
         SwipeToDeleteCallback swipeToDeleteCallback = new SwipeToDeleteCallback(this) {
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {

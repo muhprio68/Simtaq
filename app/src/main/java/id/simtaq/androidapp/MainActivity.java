@@ -1,19 +1,28 @@
 package id.simtaq.androidapp;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -23,6 +32,7 @@ import com.google.android.material.navigation.NavigationBarView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -39,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
     private String authToken;
     private String id, nama, email, level;
     private String intentDari;
+    private String judulMessage, message;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
             bottomNavigationView.setSelectedItemId(R.id.menu_infokas);
             getSupportFragmentManager().beginTransaction().replace(R.id.flPageContainer, new InfoKasFragment()).commit();
         } else if (intentDari.equals("detail kegiatan")){
+            bottomNavigationView.setSelectedItemId(R.id.menu_kegiatan);
             getSupportFragmentManager().beginTransaction().replace(R.id.flPageContainer, new KegiatanFragment()).commit();
         } else {
             getSupportFragmentManager().beginTransaction().replace(R.id.flPageContainer, new HomeFragment()).commit();
@@ -149,11 +161,32 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 // method to handle errors.
-                Toast.makeText(MainActivity.this, "Fail to get response = " + error, Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                intent.putExtra("intentDari", "main");
-                startActivity(intent);
-                finish();
+//                Toast.makeText(MainActivity.this, "Fail to get response = " + error, Toast.LENGTH_SHORT).show();
+//                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+//                intent.putExtra("intentDari", "main");
+//                startActivity(intent);
+//                finish();
+                String body = null;
+                try {
+                    if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                        judulMessage = "Gagal";
+                        message = "Tidak ada koneksi internet, silahkan nyalakan data";
+                        showDialogMsg(2);
+                    } else if (error.networkResponse != null) {
+                        if (error.networkResponse.data != null) {
+                            body = new String(error.networkResponse.data, "UTF-8");
+                            JSONObject obj = new JSONObject(body);
+                            JSONObject msg = obj.getJSONObject("messages");
+                            String errorMsg = msg.getString("error");
+                            judulMessage = "Gagal";
+                            message = errorMsg;
+                            showDialogMsg(2);
+                        }
+                    }
+                    //Toast.makeText(getApplicationContext(),s,Toast.LENGTH_SHORT).show();
+                } catch (UnsupportedEncodingException | JSONException e) {
+                    e.printStackTrace();
+                }
             }
         }) {
             @Override
@@ -166,5 +199,41 @@ public class MainActivity extends AppCompatActivity {
         // below line is to make
         // a json object request.
         queue.add(request);
+    }
+
+    public void showDialogMsg(int i){
+        AlertDialog.Builder dialogBuilder;
+        AlertDialog alertDialog;
+        dialogBuilder = new AlertDialog.Builder(MainActivity.this, R.style.DialogSlideAnim);
+        View layoutView = getLayoutInflater().inflate(R.layout.dialogsukses, null);
+        Button btnDialog = layoutView.findViewById(R.id.btnOkDialogSukses);
+        ImageView ivDialog = layoutView.findViewById(R.id.ivIconDialog);
+        TextView tvJudulDialog = layoutView.findViewById(R.id.tvJudulDialog);
+        TextView tvKetSuksesAdmin = layoutView.findViewById(R.id.tvKeteranganDialogSukses);
+        tvJudulDialog.setText(judulMessage);
+        tvKetSuksesAdmin.setText(message);
+        if (i == 1){
+            ivDialog.setImageResource(R.drawable.ic_ok);
+            btnDialog.setBackgroundResource(R.drawable.rounded_bg_primary);
+            btnDialog.setText("Kembali");
+        } else {
+            ivDialog.setImageResource(R.drawable.ic_fail);
+            btnDialog.setBackgroundResource(R.drawable.rounded_bg_red);
+            btnDialog.setText("Saya Mengerti");
+        }
+        dialogBuilder.setView(layoutView);
+        alertDialog = dialogBuilder.create();
+        alertDialog.setCancelable(false);
+        alertDialog.show();
+        alertDialog.getWindow().setGravity(Gravity.BOTTOM);
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        btnDialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (i == 2){
+                    alertDialog.dismiss();
+                }
+            }
+        });
     }
 }

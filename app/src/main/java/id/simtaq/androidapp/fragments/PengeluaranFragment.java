@@ -2,12 +2,16 @@ package id.simtaq.androidapp.fragments;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +21,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -146,7 +151,8 @@ public class PengeluaranFragment extends Fragment {
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     // on below line we are displaying a success toast message.
-                    snackbarWithAction();
+                    //snackbarWithAction();
+                    showDialogBerhasilTambah();
 
                     //Toast.makeText(TambahKegiatanActivity.this, "Data berhasil disimpan", Toast.LENGTH_SHORT).show();
                 } catch (JSONException e) {
@@ -250,5 +256,37 @@ public class PengeluaranFragment extends Fragment {
         Intent intent = new Intent(getContext(), DetailKeuanganActivity.class);
         intent.putExtra("intentDari", "catat keuangan");
         startActivity(intent);
+    }
+
+    public void showDialogBerhasilTambah(){
+        AlertDialog.Builder dialogBuilder;
+        AlertDialog alertDialog;
+        dialogBuilder = new AlertDialog.Builder(getContext(), R.style.DialogSlideAnim);
+        View layoutView = getLayoutInflater().inflate(R.layout.dialogberhasiltambahdata, null);
+        Button btnDialogYa = layoutView.findViewById(R.id.btnYaDialogBerhasil);
+        Button btnDialogTidak = layoutView.findViewById(R.id.btnTidakDialogBerhasil);
+        TextView tvKetBerhasil = layoutView.findViewById(R.id.tvKeteranganDialogBerhasil);
+        btnDialogYa.setText("Ya");
+        btnDialogTidak.setText("Tidak");
+        tvKetBerhasil.setText("Data keuangan berhasil ditambahkan, apakah anda ingin melihat detailnya?");
+        dialogBuilder.setView(layoutView);
+        alertDialog = dialogBuilder.create();
+        alertDialog.setCancelable(false);
+        alertDialog.show();
+        alertDialog.getWindow().setGravity(Gravity.BOTTOM);
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        btnDialogYa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                lihatTambahData();
+            }
+        });
+
+        btnDialogTidak.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+            }
+        });
     }
 }

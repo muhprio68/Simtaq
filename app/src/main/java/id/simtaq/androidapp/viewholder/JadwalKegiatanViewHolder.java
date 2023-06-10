@@ -17,6 +17,7 @@ public class JadwalKegiatanViewHolder extends RecyclerView.ViewHolder {
     public TextView tvKetInfoKegiatan;
     public TextView tvTglInfoKegiatan;
     public RelativeLayout rlListKegiatan;
+    public RelativeLayout rlListInfoKegiatan;
 
     public JadwalKegiatanViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -26,5 +27,6 @@ public class JadwalKegiatanViewHolder extends RecyclerView.ViewHolder {
         tvKetInfoKegiatan = itemView.findViewById(R.id.tvKeteranganInfoKegiatan);
         tvTglInfoKegiatan = itemView.findViewById(R.id.tvTglInfoKegiatan);
         rlListKegiatan = itemView.findViewById(R.id.rlListKegiatan);
+        rlListInfoKegiatan = itemView.findViewById(R.id.rlListInfoKegiatan);
     }
 }

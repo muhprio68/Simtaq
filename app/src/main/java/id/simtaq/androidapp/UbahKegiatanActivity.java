@@ -341,7 +341,8 @@ public class UbahKegiatanActivity extends AppCompatActivity {
 
     public void lihatUbahData() {
         Intent intent = new Intent(UbahKegiatanActivity.this, DetailKegiatanActivity.class);
-        intent.putExtra("intentDari", "tambah kegiatan");
+        intent.putExtra("intentDari", "ubah kegiatan");
+        intent.putExtra("idKegiatan", idKegiatan);
         startActivity(intent);
         finish();
     }

@@ -173,7 +173,7 @@ public class KegiatanFragment extends Fragment implements View.OnClickListener, 
     @Override
     public void doClick(String id) {
         Intent intent = new Intent(getContext(), DetailKegiatanActivity.class);
-        intent.putExtra("intentDari", "jadwal kegiatan");
+        intent.putExtra("intentDari", "info kegiatan");
         intent.putExtra("idKegiatan", id);
         startActivity(intent);
     }

@@ -14,15 +14,18 @@ import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
@@ -33,6 +36,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -64,9 +68,11 @@ public class DetailKeuanganActivity extends AppCompatActivity {
 
     private RequestQueue queue;
     private String authToken;
+    private String level;
     private int idKeuangan;
     private String intentDari;
     private String jenisKeuangan;
+    private String judulMessage, message;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +80,7 @@ public class DetailKeuanganActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail_keuangan);
         initViews();
         authToken = Preferences.getKeyToken(DetailKeuanganActivity.this);
+        level = Preferences.getKeyLevel(DetailKeuanganActivity.this);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Detail Keuangan");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -83,6 +90,7 @@ public class DetailKeuanganActivity extends AppCompatActivity {
         queue = Volley.newRequestQueue(DetailKeuanganActivity.this);
         intentDari = String.valueOf(getIntent().getStringExtra("intentDari"));
         idKeuangan = getIntent().getExtras().getInt("idKeuangan");
+        initLevel(level);
         if (intentDari.equals("catat keuangan")){
             btnUbahKeuangan.setVisibility(View.GONE);
             btnHapusKeuangan.setVisibility(View.GONE);
@@ -249,17 +257,34 @@ public class DetailKeuanganActivity extends AppCompatActivity {
                 {
                     @Override
                     public void onResponse(String response) {
-                        showDialogSuksesHapus();
+                        judulMessage = "Sukses";
+                        message = "Data keuangan berhasil dihapus";
+                        showDialogSuksesHapus(1);
                     }
                 },
                 new Response.ErrorListener()
                 {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Snackbar snackbar = Snackbar
-                                .make(clDetailKeuangan, "Gagal menghapus data keuangan", Snackbar.LENGTH_LONG);
-                        snackbar.show();
-
+                        String body = null;
+                        try {
+                            if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                                Toast.makeText(DetailKeuanganActivity.this, "Tidak ada koneksi internet", Toast.LENGTH_LONG).show();
+                            } else if (error.networkResponse != null) {
+                                if (error.networkResponse.data != null) {
+                                    body = new String(error.networkResponse.data, "UTF-8");
+                                    JSONObject obj = new JSONObject(body);
+                                    JSONObject msg = obj.getJSONObject("messages");
+                                    String errorMsg = msg.getString("error");
+                                    judulMessage = "Gagal";
+                                    message = errorMsg;
+                                    showDialogSuksesHapus(2);
+                                }
+                            }
+                            //Toast.makeText(getApplicationContext(),s,Toast.LENGTH_SHORT).show();
+                        } catch (UnsupportedEncodingException | JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
         ){
@@ -305,34 +330,44 @@ public class DetailKeuanganActivity extends AppCompatActivity {
         alertDialog.show();
     }
 
-    public void showDialogSuksesHapus(){
+    public void showDialogSuksesHapus(int i){
         AlertDialog.Builder dialogBuilder;
         AlertDialog alertDialog;
         dialogBuilder = new AlertDialog.Builder(DetailKeuanganActivity.this, R.style.DialogSlideAnim);
         View layoutView = getLayoutInflater().inflate(R.layout.dialogsukses, null);
-        Button dialogButton = layoutView.findViewById(R.id.btnOkDialogSukses);
+        Button btnDialog = layoutView.findViewById(R.id.btnOkDialogSukses);
+        ImageView ivDialog = layoutView.findViewById(R.id.ivIconDialog);
+        TextView tvJudulDialog = layoutView.findViewById(R.id.tvJudulDialog);
         TextView tvKetSuksesAdmin = layoutView.findViewById(R.id.tvKeteranganDialogSukses);
-        dialogButton.setText("Kembali");
-        tvKetSuksesAdmin.setText("Data keuangan berhasil dihapus");
+        tvJudulDialog.setText(judulMessage);
+        tvKetSuksesAdmin.setText(message);
+        if (i == 1){
+            ivDialog.setImageResource(R.drawable.ic_ok);
+            btnDialog.setBackgroundResource(R.drawable.rounded_bg_primary);
+            btnDialog.setText("Kembali");
+        } else {
+            ivDialog.setImageResource(R.drawable.ic_fail);
+            btnDialog.setBackgroundResource(R.drawable.rounded_bg_red);
+            btnDialog.setText("Saya Mengerti");
+        }
         dialogBuilder.setView(layoutView);
         alertDialog = dialogBuilder.create();
         alertDialog.setCancelable(false);
         alertDialog.show();
         alertDialog.getWindow().setGravity(Gravity.BOTTOM);
         alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        dialogButton.setOnClickListener(new View.OnClickListener() {
+        btnDialog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent intent = new Intent(DetailKeuanganActivity.this, RiwayatActivity.class);
-//                startActivity(intent);
-//                finish();
-                if (intentDari.equals("riwayat keuangan")){
+                if (i == 2){
+                    alertDialog.dismiss();
+                } else if (intentDari.equals("riwayat keuangan") && i == 1){
                     Intent i = new Intent(DetailKeuanganActivity.this, RiwayatActivity.class);
                     i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     i.putExtra("intentDari", "detail keuangan");
                     startActivity(i);
-                } else if (intentDari.equals("info kas")){
+                } else if (intentDari.equals("info kas") && i == 1){
                     Intent i = new Intent(DetailKeuanganActivity.this, MainActivity.class);
                     i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -341,6 +376,13 @@ public class DetailKeuanganActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void initLevel(String level){
+        if (level.equals("1") || level.equals("3")) {
+            btnUbahKeuangan.setVisibility(View.GONE);
+            btnHapusKeuangan.setVisibility(View.GONE);
+        }
     }
 
     @Override

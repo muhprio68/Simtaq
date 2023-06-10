@@ -89,6 +89,12 @@ public class JadwalKegiatanAdapter extends RecyclerView.Adapter<JadwalKegiatanVi
         } else {
             holder.tvKetInfoKegiatan.setText(kegiatan.getNamaKegiatan());
             holder.tvTglInfoKegiatan.setText(kegiatan.getTglKegiatan());
+            holder.rlListInfoKegiatan.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    iJadwalKegiatanAdapter.doClick(kegiatan.getIdKegiatan());
+                }
+            });
         }
     }
     @Override

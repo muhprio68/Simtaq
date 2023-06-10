@@ -83,6 +83,7 @@ public class UbahKeuanganActivity extends AppCompatActivity {
         dateFormatter = new SimpleDateFormat("dd MMMM yyyy", locale);
         queue = Volley.newRequestQueue(UbahKeuanganActivity.this);
         getDataUbahKeuangan(authToken);
+
         etTglKeu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
