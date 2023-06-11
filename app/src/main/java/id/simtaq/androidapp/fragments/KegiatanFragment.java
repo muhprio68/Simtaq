@@ -18,9 +18,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
@@ -29,6 +31,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -88,7 +91,7 @@ public class KegiatanFragment extends Fragment implements View.OnClickListener, 
         View view =  inflater.inflate(R.layout.fragment_kegiatan, container, false);
         initViews(view);
         level = Preferences.getKeyLevel(view.getContext());
-        authToken = Preferences.getKeyToken(view.getContext());
+        authToken = Preferences.getKeyToken(getContext());
         clViewInfoKegiatan.setVisibility(View.GONE);
         tvLihatSemuaKegiatan.setOnClickListener(this);
         rvKegiatan.setHasFixedSize(true);
@@ -142,7 +145,25 @@ public class KegiatanFragment extends Fragment implements View.OnClickListener, 
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(view.getContext(), "Fail to get the data..", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(view.getContext(), "Fail to get the data..", Toast.LENGTH_SHORT).show();
+                String body = null;
+                try {
+                    if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                        Toast.makeText(getContext(), "Tidak ada koneksi internet", Toast.LENGTH_LONG).show();
+                    } else if (error.networkResponse != null) {
+                        if (error.networkResponse.data != null) {
+                            body = new String(error.networkResponse.data, "UTF-8");
+                            JSONObject obj = new JSONObject(body);
+                            JSONObject msg = obj.getJSONObject("messages");
+                            String errorMsg = msg.getString("error");
+                            Toast.makeText(getContext(), errorMsg, Toast.LENGTH_LONG).show();
+
+                        }
+                    }
+                    //Toast.makeText(getApplicationContext(),s,Toast.LENGTH_SHORT).show();
+                } catch (UnsupportedEncodingException | JSONException e) {
+                    e.printStackTrace();
+                }
             }
         }){
             @Override

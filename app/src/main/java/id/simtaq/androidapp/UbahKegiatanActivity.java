@@ -146,13 +146,14 @@ public class UbahKegiatanActivity extends AppCompatActivity {
         btnBatalUbah.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                etNamaKegiatan.setText("");
-                etTglKegiatan.setText("");
-                etWaktuKegiatan.setText("");
-                etTempatKegiatan.setText("");
-                etPembicaraKegiatan.setText("");
-                etDeskripsiKegiatan.setText("");
-                Toast.makeText(UbahKegiatanActivity.this, "Perubahan kegiatan dibatalkan", Toast.LENGTH_SHORT).show();
+                onBackPressed();
+//                etNamaKegiatan.setText("");
+//                etTglKegiatan.setText("");
+//                etWaktuKegiatan.setText("");
+//                etTempatKegiatan.setText("");
+//                etPembicaraKegiatan.setText("");
+//                etDeskripsiKegiatan.setText("");
+//                Toast.makeText(UbahKegiatanActivity.this, "Perubahan kegiatan dibatalkan", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -377,6 +378,19 @@ public class UbahKegiatanActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 alertDialog.dismiss();
+                if (intentDari.equals("ubah jadwal kegiatan")){
+                    Intent i = new Intent(UbahKegiatanActivity.this, JadwalKegiatanActivity.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    i.putExtra("intentDari", "detail kegiatan");
+                    startActivity(i);
+                } else if (intentDari.equals("ubah info kegiatan") ){
+                    Intent i = new Intent(UbahKegiatanActivity.this, MainActivity.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    i.putExtra("intentDari", "detail kegiatan");
+                    startActivity(i);
+                }
             }
         });
     }

@@ -171,7 +171,7 @@ public class InfoKasFragment extends Fragment implements View.OnClickListener, R
                                 pemasukanBulanIni += nominalKeuangan;
                                 tvPemasukanBlnIni.setText("+ "+toRupiah(pemasukanBulanIni+""));
                             } else {
-                                pengeluaranBulanIni += nominalKeuangan;
+                                pengeluaranBulanIni -= nominalKeuangan;
                                 tvPengeluaranBlnIni.setText("- "+toRupiah(pengeluaranBulanIni+""));
                             }
                             buildRecyclerView(view);

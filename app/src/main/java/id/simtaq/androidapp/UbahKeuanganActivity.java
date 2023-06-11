@@ -15,6 +15,8 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -64,9 +66,15 @@ public class UbahKeuanganActivity extends AppCompatActivity {
 
     private int idKeuangan;
     private String tipeKeuangan, tglKeuangan, ketKeuangan, jenisKeuanagan, nominalKeuangan, deskripKeuangan;
-
+    private String valueTipe;
     private RequestQueue queue;
     private String authToken;
+    private String intentDari;
+    private ArrayAdapter a1;
+    private String[] arrayPemasukan;
+    private String[] arrayPengeluaran;
+    private String[] arrayKeuangan;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,19 +83,43 @@ public class UbahKeuanganActivity extends AppCompatActivity {
         initViews();
         authToken = Preferences.getKeyToken(UbahKeuanganActivity.this);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Ubah Kegiatan");
+        getSupportActionBar().setTitle("Ubah Keuangan");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back_white);
         idKeuangan = getIntent().getIntExtra("idKeuangan",0);
+        intentDari = getIntent().getStringExtra("intentDari");
         dateFormatter = new SimpleDateFormat("dd MMMM yyyy", locale);
         queue = Volley.newRequestQueue(UbahKeuanganActivity.this);
+        arrayPemasukan = getResources().getStringArray(R.array.jenis_pemasukan);
+        arrayPengeluaran = getResources().getStringArray(R.array.jenis_pengeluaran);
         getDataUbahKeuangan(authToken);
-
         etTglKeu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showDateDialog();
+            }
+        });
+
+        spTipeKeu.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if (i == 0){
+                    arrayKeuangan = getResources().getStringArray(R.array.jenis_pemasukan);
+                    a1 = new ArrayAdapter<String>(UbahKeuanganActivity.this, android.R.layout.simple_spinner_item,arrayKeuangan);
+                    a1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spJenisKeu.setAdapter(a1);
+                } else {
+                    arrayKeuangan = getResources().getStringArray(R.array.jenis_pengeluaran);
+                    a1 = new ArrayAdapter<String>(UbahKeuanganActivity.this, android.R.layout.simple_spinner_item,arrayKeuangan);
+                    a1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spJenisKeu.setAdapter(a1);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
             }
         });
 
@@ -116,13 +148,14 @@ public class UbahKeuanganActivity extends AppCompatActivity {
         btnBatalUbahKeu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                spTipeKeu.setSelection(0);
-                etTglKeu.setText("");
-                etKetKeu.setText("");
-                spJenisKeu.setSelection(0);
-                etNominalKeu.setText("");
-                etDesKeu.setText("");
-                Toast.makeText(UbahKeuanganActivity.this, "Perubahan keuangan dibatalkan", Toast.LENGTH_SHORT).show();
+                onBackPressed();
+//                spTipeKeu.setSelection(0);
+//                etTglKeu.setText("");
+//                etKetKeu.setText("");
+//                spJenisKeu.setSelection(0);
+//                etNominalKeu.setText("");
+//                etDesKeu.setText("");
+//                Toast.makeText(UbahKeuanganActivity.this, "Perubahan keuangan dibatalkan", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -148,19 +181,45 @@ public class UbahKeuanganActivity extends AppCompatActivity {
                 for (int i = 0; i < response.length(); i++) {
                     try {
                         JSONObject responseObj = response.getJSONObject(0);
-                        if (responseObj.getString("tipe_keuangan").equals("Pemasukan")){
+                        valueTipe = responseObj.getString("tipe_keuangan");
+                        String b = responseObj.getString("jenis_keuangan");
+                        if (valueTipe.equals("Pemasukan")){
                             spTipeKeu.setSelection(0);
+                            arrayKeuangan = getResources().getStringArray(R.array.jenis_pemasukan);
+                            a1 = new ArrayAdapter<String>(UbahKeuanganActivity.this, android.R.layout.simple_spinner_item,arrayKeuangan);
+                            a1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                            a1.notifyDataSetChanged();
+                            spJenisKeu.setAdapter(a1);
+                            spJenisKeu.setSelection(1);
+//                            for(int f=0; f< arrayPemasukan.length ;f++){
+//                                if(arrayPemasukan[f].equals(b)){
+//                                    spJenisKeu.setSelection(f);
+//                                }
+//                            }
                         } else{
                             spTipeKeu.setSelection(1);
+                            arrayKeuangan = getResources().getStringArray(R.array.jenis_pengeluaran);
+                            a1 = new ArrayAdapter<String>(UbahKeuanganActivity.this, android.R.layout.simple_spinner_item,arrayKeuangan);
+                            a1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                            a1.notifyDataSetChanged();
+                            spJenisKeu.setAdapter(a1);
+                            spJenisKeu.setSelection(2);
                         }
                         etTglKeu.setText(formatLihatTanggal(responseObj.getString("tgl_keuangan")));
                         etKetKeu.setText(responseObj.getString("keterangan_keuangan"));
-                        String b = responseObj.getString("jenis_keuangan");
-                        for(int f=0; f<4 ;f++){
-                            if(spJenisKeu.getItemAtPosition(f).toString().equals(b)){
-                                spJenisKeu.setSelection(f);
-                            }
-                        }
+//                        if (valueTipe.equals("Pemasukan")){
+//                            for(int f=0; f< arrayPemasukan.length ;f++){
+//                                if(arrayPemasukan[f].equals(b)){
+//                                    spJenisKeu.setSelection(f);
+//                                }
+//                            }
+//                        } else if (valueTipe.equals("Pengeluaran")) {
+//                            //for(int g=0; g< arrayPengeluaran.length ;g++){
+//                                //if(arrayPengeluaran[g].equals(b)){
+//                                    spJenisKeu.setSelection(2);
+//                                //}
+//                            //}
+//                        }
                         etNominalKeu.setText(responseObj.getString("nominal_keuangan"));
                         etDesKeu.setText(responseObj.getString("deskripsi_keuangan"));
                     } catch (JSONException e) {
@@ -273,7 +332,7 @@ public class UbahKeuanganActivity extends AppCompatActivity {
 
     public void lihatUbahData() {
         Intent intent = new Intent(UbahKeuanganActivity.this, DetailKeuanganActivity.class);
-        intent.putExtra("intentDari", "ubah keuangan");
+        intent.putExtra("intentDari", intentDari);
         intent.putExtra("idKeuangan", idKeuangan);
         startActivity(intent);
         finish();
@@ -307,6 +366,19 @@ public class UbahKeuanganActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 alertDialog.dismiss();
+                if (intentDari.equals("ubah jadwal kegiatan")){
+                    Intent i = new Intent(UbahKeuanganActivity.this, JadwalKegiatanActivity.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    i.putExtra("intentDari", "detail keuangan");
+                    startActivity(i);
+                } else if (intentDari.equals("ubah info kegiatan") ){
+                    Intent i = new Intent(UbahKeuanganActivity.this, MainActivity.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    i.putExtra("intentDari", "detail keuangan");
+                    startActivity(i);
+                }
             }
         });
     }

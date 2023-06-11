@@ -95,7 +95,7 @@ public class DetailKeuanganActivity extends AppCompatActivity {
             btnUbahKeuangan.setVisibility(View.GONE);
             btnHapusKeuangan.setVisibility(View.GONE);
             lihatTambah(authToken);
-        } else if (intentDari.equals("ubah keuangan")){
+        } else if (intentDari.contains("ubah")){
             btnUbahKeuangan.setVisibility(View.GONE);
             btnHapusKeuangan.setVisibility(View.GONE);
             getData(authToken, idKeuangan);
@@ -111,13 +111,11 @@ public class DetailKeuanganActivity extends AppCompatActivity {
                     intent.putExtra("idKeuangan", idKeuangan);
                     intent.putExtra("intentDari", "ubah "+intentDari);
                     startActivity(intent);
-                    finish();
                 } else {
                     Intent intent = new Intent(DetailKeuanganActivity.this, UbahDonaturActivity.class);
                     intent.putExtra("idKeuangan", idKeuangan);
                     intent.putExtra("intentDari", "ubah "+intentDari);
                     startActivity(intent);
-                    finish();
                 }
             }
         });
@@ -365,18 +363,9 @@ public class DetailKeuanganActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (i == 2){
                     alertDialog.dismiss();
-                } else if (intentDari.equals("riwayat keuangan") && i == 1){
-                    Intent i = new Intent(DetailKeuanganActivity.this, RiwayatActivity.class);
-                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    i.putExtra("intentDari", "detail keuangan");
-                    startActivity(i);
-                } else if (intentDari.equals("info kas") && i == 1){
-                    Intent i = new Intent(DetailKeuanganActivity.this, MainActivity.class);
-                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    i.putExtra("intentDari", "detail keuangan");
-                    startActivity(i);
+                } else {
+                    intentDari = "hapus "+intentDari;
+                    onBackPressed();
                 }
             }
         });
@@ -397,6 +386,33 @@ public class DetailKeuanganActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        //super.onBackPressed();
+        if (intentDari.equals("riwayat keuangan") || intentDari.equals("info kas") || intentDari.equals("catat keuangan")){
+            super.onBackPressed();
+        } else if (intentDari.equals("ubah riwayat keuangan")){
+            Intent i = new Intent(DetailKeuanganActivity.this, RiwayatActivity.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            i.putExtra("intentDari", "detail keuangan");
+            startActivity(i);
+        } else if (intentDari.equals("ubah info kas")){
+            Intent i = new Intent(DetailKeuanganActivity.this, MainActivity.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            i.putExtra("intentDari", "detail keuangan");
+            startActivity(i);
+        } else if (intentDari.equals("hapus riwayat keuangan")){
+            Intent i = new Intent(DetailKeuanganActivity.this, RiwayatActivity.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            i.putExtra("intentDari", "detail keuangan");
+            startActivity(i);
+        } else {
+            Intent i = new Intent(DetailKeuanganActivity.this, MainActivity.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            i.putExtra("intentDari", "detail keuangan");
+            startActivity(i);
+        }
     }
 }

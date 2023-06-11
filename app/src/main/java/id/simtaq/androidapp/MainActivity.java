@@ -56,7 +56,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         //authToken = String.valueOf(getIntent().getStringExtra("token"));
         authToken = Preferences.getKeyToken(MainActivity.this);
-        auth(authToken);
+        if (Preferences.getKeyId(MainActivity.this)==null){
+            auth(authToken);
+        }
         setContentView(R.layout.activity_main);
         initView();
         intentDari = String.valueOf(getIntent().getStringExtra("intentDari"));
