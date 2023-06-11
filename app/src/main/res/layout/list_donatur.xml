@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/clListRiwayatDonatur"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="8dp">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvIcRiwayatDonatur"
+        android:layout_width="34dp"
+        android:layout_height="34dp"
+        android:layout_marginTop="4dp"
+        android:backgroundTint="@color/jmlPemasukan"
+        app:cardCornerRadius="34dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivIcRiwayatDonatur"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_bullish"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+    <TextView
+        android:id="@+id/tvRiwayatWilDonatur"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:layout_marginStart="14dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@id/cvIcRiwayatDonatur"
+        android:textColor="@color/primaryTextColor"
+        tools:text="RT 01/RW 01" />
+
+    <TextView
+        android:id="@+id/tvRiwayatPetugasDonatur"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/primaryTextColor"
+        android:layout_marginStart="14dp"
+        android:textSize="12sp"
+        tools:text="Bpk. Supadi dan Ibu Yuliatin"
+        app:layout_constraintTop_toBottomOf="@id/tvRiwayatWilDonatur"
+        app:layout_constraintStart_toEndOf="@id/cvIcRiwayatDonatur"/>
+
+
+    <TextView
+        android:id="@+id/tvRiwayatNominalDonatur"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textColor="@color/jmlPemasukan"
+        tools:text="+ Rp. 80.000"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <View
+        android:id="@+id/garisListRiwayatDonatur"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/primaryTextColor"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@id/tvRiwayatPetugasDonatur"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

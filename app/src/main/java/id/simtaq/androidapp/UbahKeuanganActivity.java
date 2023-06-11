@@ -67,13 +67,16 @@ public class UbahKeuanganActivity extends AppCompatActivity {
     private int idKeuangan;
     private String tipeKeuangan, tglKeuangan, ketKeuangan, jenisKeuanagan, nominalKeuangan, deskripKeuangan;
     private String valueTipe;
+    private String valueJenis = null;
     private RequestQueue queue;
     private String authToken;
     private String intentDari;
     private ArrayAdapter a1;
+    private ArrayAdapter a2;
     private String[] arrayPemasukan;
     private String[] arrayPengeluaran;
     private String[] arrayKeuangan;
+    private int selectJenis;
 
 
     @Override
@@ -87,6 +90,7 @@ public class UbahKeuanganActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back_white);
+        selectJenis = 0;
         idKeuangan = getIntent().getIntExtra("idKeuangan",0);
         intentDari = getIntent().getStringExtra("intentDari");
         dateFormatter = new SimpleDateFormat("dd MMMM yyyy", locale);
@@ -100,20 +104,35 @@ public class UbahKeuanganActivity extends AppCompatActivity {
                 showDateDialog();
             }
         });
-
         spTipeKeu.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if (i == 0){
-                    arrayKeuangan = getResources().getStringArray(R.array.jenis_pemasukan);
-                    a1 = new ArrayAdapter<String>(UbahKeuanganActivity.this, android.R.layout.simple_spinner_item,arrayKeuangan);
+                    arrayPemasukan = getResources().getStringArray(R.array.jenis_pemasukan);
+                    a1 = new ArrayAdapter<String>(UbahKeuanganActivity.this, android.R.layout.simple_spinner_item,arrayPemasukan);
                     a1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spJenisKeu.setAdapter(a1);
+                    spJenisKeu.setSelection(selectJenis);
+                    //for (int j =0; j<arrayPemasukan.length; j++){
+//                        if (valueJenis.equals("Infaq")){
+//                            spJenisKeu.setSelection(1);
+//                        } else {
+//                            spJenisKeu.setSelection(0);
+//                        }
+                    //}
                 } else {
-                    arrayKeuangan = getResources().getStringArray(R.array.jenis_pengeluaran);
-                    a1 = new ArrayAdapter<String>(UbahKeuanganActivity.this, android.R.layout.simple_spinner_item,arrayKeuangan);
-                    a1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    spJenisKeu.setAdapter(a1);
+                    arrayPengeluaran = getResources().getStringArray(R.array.jenis_pengeluaran);
+                    a2 = new ArrayAdapter<String>(UbahKeuanganActivity.this, android.R.layout.simple_spinner_item,arrayPengeluaran);
+                    a2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spJenisKeu.setAdapter(a2);
+                    spJenisKeu.setSelection(selectJenis);
+                    //for (int k =0; k<arrayPengeluaran.length; k++){
+//                        if (valueJenis.equals("Perawatan Masjid")){
+//                            spJenisKeu.setSelection(1);
+//                        } else {
+//                            spJenisKeu.setSelection(0);
+//                        }
+                    //}
                 }
             }
 
@@ -182,28 +201,23 @@ public class UbahKeuanganActivity extends AppCompatActivity {
                     try {
                         JSONObject responseObj = response.getJSONObject(0);
                         valueTipe = responseObj.getString("tipe_keuangan");
-                        String b = responseObj.getString("jenis_keuangan");
+                        valueJenis= responseObj.getString("jenis_keuangan");
                         if (valueTipe.equals("Pemasukan")){
                             spTipeKeu.setSelection(0);
-                            arrayKeuangan = getResources().getStringArray(R.array.jenis_pemasukan);
-                            a1 = new ArrayAdapter<String>(UbahKeuanganActivity.this, android.R.layout.simple_spinner_item,arrayKeuangan);
-                            a1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                            a1.notifyDataSetChanged();
-                            spJenisKeu.setAdapter(a1);
-                            spJenisKeu.setSelection(1);
-//                            for(int f=0; f< arrayPemasukan.length ;f++){
-//                                if(arrayPemasukan[f].equals(b)){
-//                                    spJenisKeu.setSelection(f);
-//                                }
-//                            }
+                            for (int j =0; j<arrayPemasukan.length; j++){
+                                if (valueJenis.contains(arrayPemasukan[j])){
+                                    selectJenis = j;
+                                }
+                            }
+                            spJenisKeu.setSelection(selectJenis);
                         } else{
                             spTipeKeu.setSelection(1);
-                            arrayKeuangan = getResources().getStringArray(R.array.jenis_pengeluaran);
-                            a1 = new ArrayAdapter<String>(UbahKeuanganActivity.this, android.R.layout.simple_spinner_item,arrayKeuangan);
-                            a1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                            a1.notifyDataSetChanged();
-                            spJenisKeu.setAdapter(a1);
-                            spJenisKeu.setSelection(2);
+                            for (int k =0; k<arrayPengeluaran.length; k++){
+                                if (valueJenis.contains(arrayPengeluaran[k])){
+                                    selectJenis = k;
+                                }
+                            }
+                            //spJenisKeu.setSelection(selectJenis);
                         }
                         etTglKeu.setText(formatLihatTanggal(responseObj.getString("tgl_keuangan")));
                         etKetKeu.setText(responseObj.getString("keterangan_keuangan"));

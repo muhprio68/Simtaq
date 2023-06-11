@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/clRiwayatDonatur"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#EFEFEF"
+    tools:context=".RiwayatDonaturActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/tbRiwayatDonatur"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="?attr/actionBarSize"
+        style="@style/AppTheme.Toolbar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+    <View
+        android:id="@+id/topViewRiwayatDonaturWave"
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        android:background="@drawable/wave"
+        android:layout_marginTop="-1dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tbRiwayatDonatur"/>
+
+    <ProgressBar
+        android:id="@+id/pbRiwayatDonatur"
+        android:layout_width="64dp"
+        android:outlineAmbientShadowColor="@color/primaryDarkColor"
+        android:layout_height="64dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tbRiwayatDonatur"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:paddingBottom="8dp">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:backgroundTint="@color/transparan"
+            app:cardElevation="0dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/rounded_whiteriwayat">
+
+                <ImageView
+                    android:id="@+id/ivNextDonatur"
+                    android:layout_width="38dp"
+                    android:layout_height="38dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="20dp"
+                    android:src="@drawable/ic_next" />
+
+                <ImageView
+                    android:id="@+id/ivPrevDonatur"
+                    android:layout_width="38dp"
+                    android:layout_height="38dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_toStartOf="@id/ivNextDonatur"
+                    android:src="@drawable/ic_prev" />
+
+                <View
+                    android:id="@+id/garisRiwayatDonatur"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_below="@id/tvFilterBlnRiwayatDonatur"
+                    android:layout_marginStart="1dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="1dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@color/primaryColor" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvFilterBlnRiwayatDonatur"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="8dp"
+                    android:text="Januari"
+                    android:textColor="@color/primaryColor"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvFilterThnRiwayatDonatur"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_toRightOf="@id/tvFilterBlnRiwayatDonatur"
+                    android:text="2022"
+                    android:textColor="@color/primaryColor"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvRiwayatDonatur"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/garisRiwayatDonatur"
+                    android:layout_marginTop="1dp" />
+
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

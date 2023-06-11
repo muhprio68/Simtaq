@@ -42,6 +42,7 @@ import id.simtaq.androidapp.MainActivity;
 import id.simtaq.androidapp.PengurusTakmirActivity;
 import id.simtaq.androidapp.R;
 import id.simtaq.androidapp.RiwayatActivity;
+import id.simtaq.androidapp.RiwayatDonaturActivity;
 import id.simtaq.androidapp.TambahKegiatanActivity;
 import id.simtaq.androidapp.TentangSimtaqActivity;
 import id.simtaq.androidapp.helper.Preferences;
@@ -136,7 +137,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 startActivity(new Intent(v.getContext(), TambahKegiatanActivity.class));
             }
         } else if (v== rlLokasiKegiatan){
-            startActivity(new Intent(v.getContext(), LokasiKegiatanActivity.class));
+            startActivity(new Intent(v.getContext(), RiwayatDonaturActivity.class));
         } else if (v== rlPengurusTakmir){
             startActivity(new Intent(v.getContext(), PengurusTakmirActivity.class));
         } else if (v== rlTentangSimtaq){

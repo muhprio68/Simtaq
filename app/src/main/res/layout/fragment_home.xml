@@ -362,7 +362,7 @@
                             android:layout_height="42dp"
                             android:layout_centerHorizontal="true"
                             android:layout_centerVertical="true"
-                            android:src="@drawable/ic_home_lokasikegiatan" />
+                            android:src="@drawable/ic_home_riwayatdonatur" />
 
                     </RelativeLayout>
 
@@ -371,7 +371,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/rlButtonLokasiKegiatan"
                         android:layout_centerHorizontal="true"
-                        android:text="Lokasi\nKegiatan"
+                        android:text="Riwayat\nDonatur"
                         android:textAlignment="center"
                         android:textColor="@color/primaryTextColor"
                         android:textSize="14sp" />

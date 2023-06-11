@@ -14,6 +14,9 @@
         android:usesCleartextTraffic="false"
         tools:replace="android:allowBackup">
         <activity
+            android:name=".RiwayatDonaturActivity"
+            android:exported="false" />
+        <activity
             android:name=".UbahKeuanganActivity"
             android:exported="false" />
         <activity
@@ -85,7 +88,7 @@
         <activity
             android:name=".DetailKeuanganActivity"
             android:exported="false"
-            android:parentActivityName=".RiwayatActivity"/>
+            android:parentActivityName=".RiwayatActivity" />
         <activity
             android:name=".CatatDonaturActivity"
             android:exported="false" />
@@ -99,9 +102,9 @@
             android:name=".MainActivity"
             android:exported="true" />
     </application>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
-
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
 </manifest>
