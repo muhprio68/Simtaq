@@ -42,7 +42,7 @@
         app:layout_constraintTop_toBottomOf="@id/tbRiwayatDonatur"
         android:paddingLeft="12dp"
         android:paddingRight="12dp"
-        android:paddingBottom="8dp">
+        android:paddingBottom="64dp">
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
