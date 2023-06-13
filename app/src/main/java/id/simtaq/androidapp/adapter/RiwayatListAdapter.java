@@ -33,6 +33,7 @@ import id.simtaq.androidapp.models.Keuangan;
 import id.simtaq.androidapp.models.RiwayatKas;
 import id.simtaq.androidapp.viewholder.RiwayatViewHolder;
 
+import static id.simtaq.androidapp.helper.config.formatLihatTanggal;
 import static id.simtaq.androidapp.helper.config.locale;
 import static id.simtaq.androidapp.helper.config.toRupiah;
 import static id.simtaq.androidapp.helper.config.url;
@@ -88,7 +89,7 @@ public class RiwayatListAdapter extends RecyclerView.Adapter<RiwayatViewHolder> 
             }
 
             holder.tvKeteranganRiwayat.setText(keuangan.getKetKeuangan());
-            holder.tvTanggalRiwayat.setText(keuangan.getTglKeuangan());
+            holder.tvTanggalRiwayat.setText(formatLihatTanggal(keuangan.getTglKeuangan()));
 
 //            if (position == getItemCount()-1){
 //                holder.vGaris.setVisibility(View.GONE);
@@ -111,7 +112,7 @@ public class RiwayatListAdapter extends RecyclerView.Adapter<RiwayatViewHolder> 
                 holder.tvJmlInfoKas.setTextColor(ContextCompat.getColor(context, R.color.jmlPengeluaran));
             }
             holder.tvKeteranganInfoKas.setText(keuangan.getKetKeuangan());
-            holder.tvTglInfoKas.setText(keuangan.getTglKeuangan());
+            holder.tvTglInfoKas.setText(formatLihatTanggal(keuangan.getTglKeuangan()));
             holder.rlListInfoKas.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

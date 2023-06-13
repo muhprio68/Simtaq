@@ -17,6 +17,7 @@ import static id.simtaq.androidapp.helper.config.getCurentDate;
 import static id.simtaq.androidapp.helper.config.getIdCurentDate;
 import static id.simtaq.androidapp.helper.config.url;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -56,7 +57,7 @@ public class InfakOnlineActivity extends AppCompatActivity implements Transactio
     private Button btnInfak;
     private Button btnBatalInfak;
     private RequestQueue queue;
-
+    private String authToken;
 
     private String noKeuangan, ketInfak, nominalInfak, deskripInfak, jmlSaldo ;
 
@@ -71,6 +72,7 @@ public class InfakOnlineActivity extends AppCompatActivity implements Transactio
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back_white);
+        authToken = Preferences.getKeyToken(InfakOnlineActivity.this);
         queue = Volley.newRequestQueue(InfakOnlineActivity.this);
         getNomorKeuangan();
         showPembayaran();
@@ -85,7 +87,7 @@ public class InfakOnlineActivity extends AppCompatActivity implements Transactio
                     ketInfak = etInfakAtasNama.getText().toString();
                     nominalInfak = etNominalInfak.getText().toString();
                     deskripInfak = etDeskripsiInfak.getText().toString();
-                    transactionRequest= new TransactionRequest(ketInfak, Integer.parseInt(nominalInfak));
+                    transactionRequest= new TransactionRequest(noKeuangan, Integer.parseInt(nominalInfak));
                     clickPay();
                     setCustomer();
                 }
@@ -106,9 +108,9 @@ public class InfakOnlineActivity extends AppCompatActivity implements Transactio
                         String tglKeuangan = responseObj.getString("tgl_keuangan");
                         int noTerakhir = responseObj.getInt("no_terakhir");
                         if (tglKeuangan.equals(getCurentDate())){
-                            noKeuangan = getIdCurentDate()+String.format("%04d",noTerakhir+1);
+                            noKeuangan = "KEU-"+getIdCurentDate()+String.format("%04d",noTerakhir+1);
                         } else{
-                            noKeuangan = getIdCurentDate()+String.format("%04d",1);
+                            noKeuangan = "KEU-"+getIdCurentDate()+String.format("%04d",1);
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -180,11 +182,11 @@ public class InfakOnlineActivity extends AppCompatActivity implements Transactio
             switch (result.getStatus()){
                 case TransactionResult.STATUS_SUCCESS:
                     Toast.makeText(this, "Transaction Sukses " + result.getResponse().getTransactionId(), Toast.LENGTH_LONG).show();
-                    tambahDataPemasukan(getCurentDate(), "Infak atas nama "+ketInfak, "Selesai", nominalInfak, deskripInfak);
+                    tambahDataPemasukan(authToken, getCurentDate(), "Infak atas nama "+ketInfak, "Selesai", nominalInfak, deskripInfak);
                     break;
                 case TransactionResult.STATUS_PENDING:
                     Toast.makeText(this, "Transaction Pending " + result.getResponse().getTransactionId(), Toast.LENGTH_LONG).show();
-                    tambahDataPemasukan(getCurentDate(), "Infak atas nama "+ketInfak, "Tertunda", nominalInfak, deskripInfak);
+                    tambahDataPemasukan(authToken, getCurentDate(), "Infak atas nama "+ketInfak, "Tertunda", nominalInfak, deskripInfak);
                     break;
                 case TransactionResult.STATUS_FAILED:
                     Toast.makeText(this, "Transaction Failed" + result.getResponse().getTransactionId(), Toast.LENGTH_LONG).show();
@@ -202,7 +204,7 @@ public class InfakOnlineActivity extends AppCompatActivity implements Transactio
         }
     }
 
-    private void tambahDataPemasukan(String tglInfak, String ketInfak, String statusInfak, String nominalInfak, String deskripInfak) {
+    private void tambahDataPemasukan(String token, String tglInfak, String ketInfak, String statusInfak, String nominalInfak, String deskripInfak) {
         StringRequest request = new StringRequest(Request.Method.POST, url+"/keuangan", new com.android.volley.Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -227,6 +229,12 @@ public class InfakOnlineActivity extends AppCompatActivity implements Transactio
             }
         }) {
             @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Authorization", "Bearer " + token);
+                return headers;
+            }
+            @Override
             public String getBodyContentType() {
                 // as we are passing data in the form of url encoded
                 // so we are passing the content type below
@@ -245,6 +253,7 @@ public class InfakOnlineActivity extends AppCompatActivity implements Transactio
                 params.put("tipe_keuangan", "Pemasukan");
                 params.put("tgl_keuangan", tglInfak);
                 params.put("keterangan_keuangan", ketInfak);
+                params.put("jenis_keuangan", "Lain-lain");
                 params.put("status_keuangan", statusInfak);
                 params.put("nominal_keuangan", nominalInfak);
                 params.put("deskripsi_keuangan", deskripInfak);

@@ -25,21 +25,21 @@ android {
         development {
             dimension "version"
             applicationId "id.simtaq.androidapp"
-            buildConfigField "String", "BASE_URL", "\"http://simtaq-app.herokuapp.com/\""
+            buildConfigField "String", "BASE_URL", "\"http://simtaq.my.id/restfulapi/public/\""
             buildConfigField "String", "CLIENT_KEY", "\"SB-Mid-client-tZ7IzjwF6BowH_7C\""
         }
 
         staging {
             applicationId "id.simtaq.androidapp"
             dimension "version"
-            buildConfigField "String", "BASE_URL", "\"http://simtaq-app.herokuapp.com/\""
+            buildConfigField "String", "BASE_URL", "\"http://simtaq.my.id/restfulapi/public/\""
             buildConfigField "String", "CLIENT_KEY", "\"SB-Mid-client-tZ7IzjwF6BowH_7C\""
         }
 
         production {
             dimension "version"
             applicationId "id.simtaq.androidapp"
-            buildConfigField "String", "BASE_URL", "\"http://simtaq-app.herokuapp.com/\""
+            buildConfigField "String", "BASE_URL", "\"http://simtaq.my.id/restfulapi/public/\""
             buildConfigField "String", "CLIENT_KEY", "\"SB-Mid-client-tZ7IzjwF6BowH_7C\""
         }
     }
