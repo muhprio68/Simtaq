@@ -60,7 +60,7 @@ public class UbahDonaturActivity extends AppCompatActivity {
     private Button btnSimpanUbahDonatur;
     private Button btnBatalUbahDonatur;
 
-    private int idDonatur;
+    private int idDonatur, idKeuangan;
     private String tglDonatur, wilDonatur, petugasDonatur, nominalDonatur;
     private DatePickerDialog datePickerDialog;
     private SimpleDateFormat dateFormatter;
@@ -77,9 +77,10 @@ public class UbahDonaturActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back_white);
-        idDonatur = getIntent().getIntExtra("idDonatur",0);
+        idKeuangan = getIntent().getExtras().getInt("idKeuangan",0);
         dateFormatter = new SimpleDateFormat("dd MMMM yyyy", locale);
         queue = Volley.newRequestQueue(UbahDonaturActivity.this);
+        initPetugas();
         getDataUbahDonatur(authToken);
 
         etTglDonatur.setOnClickListener(new View.OnClickListener() {
@@ -154,14 +155,15 @@ public class UbahDonaturActivity extends AppCompatActivity {
     }
 
     public void getDataUbahDonatur(String token){
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url+"/donatur/"+idDonatur, null, new Response.Listener<JSONArray>() {
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url+"/donatur/"+idKeuangan, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 //pbDetailKegiatan.setVisibility(View.GONE);
                 for (int i = 0; i < response.length(); i++) {
                     try {
                         JSONObject responseObj = response.getJSONObject(0);
-                        etTglDonatur.setText(responseObj.getString("tgl_donatur"));
+                        idDonatur = responseObj.getInt("id_donatur");
+                        etTglDonatur.setText(formatLihatTanggal(responseObj.getString("tgl_donatur")));
                         for (int a = 0; a < 5; a++){
                             if (spWilDonatur.getItemAtPosition(a).toString().equals(responseObj.getString("wilayah_donatur"))){
                                 spWilDonatur.setSelection(a);
@@ -287,9 +289,9 @@ public class UbahDonaturActivity extends AppCompatActivity {
     }
 
     public void lihatUbahData() {
-        Intent intent = new Intent(UbahDonaturActivity.this, DetailKegiatanActivity.class);
+        Intent intent = new Intent(UbahDonaturActivity.this, DetailKeuanganActivity.class);
         intent.putExtra("intentDari", "ubah donatur");
-        intent.putExtra("idKegiatan", idDonatur);
+        intent.putExtra("idKeuangan", idKeuangan);
         startActivity(intent);
         finish();
     }

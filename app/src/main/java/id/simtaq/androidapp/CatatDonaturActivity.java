@@ -256,7 +256,7 @@ public class CatatDonaturActivity extends AppCompatActivity {
 
     public void lihatTambahData() {
         Intent intent = new Intent(CatatDonaturActivity.this, DetailKeuanganActivity.class);
-        intent.putExtra("intentDari", "catat Pemasukan");
+        intent.putExtra("intentDari", "catat keuangan");
         startActivity(intent);
     }
     
