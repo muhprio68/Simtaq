@@ -31,6 +31,7 @@ import com.midtrans.sdk.corekit.core.TransactionRequest;
 import com.midtrans.sdk.corekit.core.themes.CustomColorTheme;
 import com.midtrans.sdk.corekit.models.BillingAddress;
 import com.midtrans.sdk.corekit.models.CustomerDetails;
+import com.midtrans.sdk.corekit.models.ItemDetails;
 import com.midtrans.sdk.corekit.models.ShippingAddress;
 import com.midtrans.sdk.corekit.models.snap.TransactionResult;
 import com.midtrans.sdk.uikit.SdkUIFlowBuilder;
@@ -39,6 +40,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -88,6 +90,9 @@ public class InfakOnlineActivity extends AppCompatActivity implements Transactio
                     nominalInfak = etNominalInfak.getText().toString();
                     deskripInfak = etDeskripsiInfak.getText().toString();
                     transactionRequest= new TransactionRequest(noKeuangan, Integer.parseInt(nominalInfak));
+                    transactionRequest.setCustomField1(ketInfak);
+                    transactionRequest.setCustomField2(deskripInfak);
+
                     clickPay();
                     setCustomer();
                 }
@@ -182,11 +187,9 @@ public class InfakOnlineActivity extends AppCompatActivity implements Transactio
             switch (result.getStatus()){
                 case TransactionResult.STATUS_SUCCESS:
                     Toast.makeText(this, "Transaction Sukses " + result.getResponse().getTransactionId(), Toast.LENGTH_LONG).show();
-                    tambahDataPemasukan(authToken, getCurentDate(), "Infak atas nama "+ketInfak, "Selesai", nominalInfak, deskripInfak);
                     break;
                 case TransactionResult.STATUS_PENDING:
                     Toast.makeText(this, "Transaction Pending " + result.getResponse().getTransactionId(), Toast.LENGTH_LONG).show();
-                    tambahDataPemasukan(authToken, getCurentDate(), "Infak atas nama "+ketInfak, "Tertunda", nominalInfak, deskripInfak);
                     break;
                 case TransactionResult.STATUS_FAILED:
                     Toast.makeText(this, "Transaction Failed" + result.getResponse().getTransactionId(), Toast.LENGTH_LONG).show();
@@ -265,5 +268,16 @@ public class InfakOnlineActivity extends AppCompatActivity implements Transactio
         // below line is to make
         // a json object request.
         queue.add(request);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }

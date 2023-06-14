@@ -15,7 +15,7 @@ public class PengurusTakmirActivity extends AppCompatActivity {
         setContentView(R.layout.activity_pengurus_takmir);
         toolbar = findViewById(R.id.tbPengurusTakmir);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Tambah Kegiatan");
+        getSupportActionBar().setTitle("Pengurus Takmir");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back_white);

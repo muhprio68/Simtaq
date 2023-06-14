@@ -15,7 +15,7 @@ public class TentangSimtaqActivity extends AppCompatActivity {
         setContentView(R.layout.activity_tentang_simtaq);
         toolbar = findViewById(R.id.tbTentangSimtaq);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Tambah Kegiatan");
+        getSupportActionBar().setTitle("Tentang Simtaq");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back_white);
