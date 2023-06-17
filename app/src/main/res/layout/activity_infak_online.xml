@@ -141,5 +141,21 @@
             app:layout_constraintStart_toEndOf="@id/btnBatalInfak"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/etDeskripsiInfak" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnBayarContinue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/rounded_bg_primary"
+            android:text="Continue"
+            android:visibility="gone"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnBayarInfak" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </RelativeLayout>

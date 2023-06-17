@@ -57,7 +57,7 @@ public class InfakOnlineActivity extends AppCompatActivity implements Transactio
     private EditText etNominalInfak;
     private EditText etDeskripsiInfak;
     private Button btnInfak;
-    private Button btnBatalInfak;
+    private Button btnBatalInfak, btnContinue;
     private RequestQueue queue;
     private String authToken;
 
@@ -91,11 +91,25 @@ public class InfakOnlineActivity extends AppCompatActivity implements Transactio
                     deskripInfak = etDeskripsiInfak.getText().toString();
                     transactionRequest= new TransactionRequest(noKeuangan, Integer.parseInt(nominalInfak));
                     transactionRequest.setCustomField1(ketInfak);
-                    transactionRequest.setCustomField2(deskripInfak);
+                    transactionRequest.setCustomField2(deskripInfak+"");
+                    transactionRequest.setCustomField3(authToken);
 
                     clickPay();
                     setCustomer();
                 }
+            }
+        });
+
+        btnContinue.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                transactionRequest= new TransactionRequest("KEU-2306170015", 50000);
+                transactionRequest.setCustomField1("Apalah");
+                transactionRequest.setCustomField2("Apalah");
+                transactionRequest.setCustomField3(authToken);
+
+                clickPay();
+                setCustomer();
             }
         });
 
@@ -162,8 +176,9 @@ public class InfakOnlineActivity extends AppCompatActivity implements Transactio
         etDeskripsiInfak = findViewById(R.id.etDeskripsiInfak);
         btnInfak = findViewById(R.id.btnBayarInfak);
         btnBatalInfak = findViewById(R.id.btnBatalInfak);
+        btnContinue = findViewById(R.id.btnBayarContinue);
     }
-
+//.setColorTheme(new CustomColorTheme("#FF07b846", "#008715", "#FF5cec75"))
     public void showPembayaran(){
         SdkUIFlowBuilder.init()
                 .setClientKey(BuildConfig.CLIENT_KEY) // client_key is mandatory
@@ -171,7 +186,7 @@ public class InfakOnlineActivity extends AppCompatActivity implements Transactio
                 .setTransactionFinishedCallback(this)
                 .setMerchantBaseUrl(BuildConfig.BASE_URL) //set merchant url (required)
                 .enableLog(true) // enable sdk log (optional)
-                .setColorTheme(new CustomColorTheme("#FF07b846", "#008715", "#FF5cec75")) // set theme. it will replace theme on snap theme on MAP ( optional)
+                .setColorTheme(new CustomColorTheme("#07b846", "#5cec75", "#0b897b")) // set theme. it will replace theme on snap theme on MAP ( optional)
                 .setLanguage("id") //`en` for English and `id` for Bahasa
                 .buildSDK();
     }
@@ -186,13 +201,21 @@ public class InfakOnlineActivity extends AppCompatActivity implements Transactio
         if(result.getResponse() != null){
             switch (result.getStatus()){
                 case TransactionResult.STATUS_SUCCESS:
-                    Toast.makeText(this, "Transaction Sukses " + result.getResponse().getTransactionId(), Toast.LENGTH_LONG).show();
+                    getNomorKeuangan();
+                    etInfakAtasNama.setText("");
+                    etNominalInfak.setText("" );
+                    etDeskripsiInfak.setText("");
+                    Toast.makeText(this, "Transaction Sukses " + result.getResponse().getOrderId(), Toast.LENGTH_LONG).show();
                     break;
                 case TransactionResult.STATUS_PENDING:
-                    Toast.makeText(this, "Transaction Pending " + result.getResponse().getTransactionId(), Toast.LENGTH_LONG).show();
+                    getNomorKeuangan();
+                    etInfakAtasNama.setText("");
+                    etNominalInfak.setText("" );
+                    etDeskripsiInfak.setText("");
+                    Toast.makeText(this, "Transaction Pending " + result.getResponse().getOrderId(), Toast.LENGTH_LONG).show();
                     break;
                 case TransactionResult.STATUS_FAILED:
-                    Toast.makeText(this, "Transaction Failed" + result.getResponse().getTransactionId(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "Transaction Failed" + result.getResponse().getOrderId(), Toast.LENGTH_LONG).show();
                     break;
             }
             result.getResponse().getValidationMessages();
@@ -200,7 +223,7 @@ public class InfakOnlineActivity extends AppCompatActivity implements Transactio
             Toast.makeText(this, "Transaction Failed", Toast.LENGTH_LONG).show();
         }else{
             if(result.getStatus().equalsIgnoreCase((TransactionResult.STATUS_INVALID))){
-                Toast.makeText(this, "Transaction Invalid" + result.getResponse().getTransactionId(), Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Transaction Invalid" + result.getResponse().getOrderId(), Toast.LENGTH_LONG).show();
             }else{
                 Toast.makeText(this, "Something Wrong", Toast.LENGTH_LONG).show();
             }

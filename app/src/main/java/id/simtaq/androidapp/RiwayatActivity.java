@@ -9,9 +9,11 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -30,6 +32,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -65,6 +68,8 @@ public class RiwayatActivity extends AppCompatActivity implements RiwayatListAda
     private TextView tvFilterTahunKeuangan;
     private ImageView ivNext;
     private ImageView ivPrev;
+
+    File file, root;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -313,6 +318,137 @@ public class RiwayatActivity extends AppCompatActivity implements RiwayatListAda
         tanggalStr = formatter.format(tanggalDanWaktu);
         return tanggalStr;
     }
+
+//    private void doSendEmail() {
+//        final ProgressDialog pd = ProgressDialog.show(RiwayatActivity.this,"Loading", "Please Wait...",true);
+//        new Thread() {
+//            public void run() {
+//                try {
+//                    //sum = tvTotal.getText().toString();
+//                    file = null;
+//                    root = Environment.getExternalStorageDirectory();
+//                    //Pengguna p = penggunaList.get(0);
+//                    String csvFile = "Laporan_masjid_bulan"+ tvFilterBulanKeuangan.getText().toString()+ ".xls";
+//                    try {
+//                        step = 11; //atur data ke body email
+//                        record = "";
+//                        record += StringUtilss.left("Riwayat Transaksi Harian", 32);
+//                        record += StringUtilss.newLine(32);
+//                        record += StringUtilss.left("Nama : " + getActivity().getSharedPreferences("Info", 0).getString("Nama", p.getNamaUsaha()), 48);
+//                        //record += StringUtilss.left("No Telp : " + getActivity().getSharedPreferences("Info", 0).getString("No HP", "0856432134"), 48);
+//                        record += StringUtilss.left("Periode : " + tvTanggal.getText().toString(), 48);
+//                        record += StringUtilss.doubleLine(32);
+//                        for (Penjualan transaksi : transaksiList) {
+//                            record += StringUtilss.justify(dateToJam(transaksi.getTgl())+"  "+transaksi.getCaraBayar(), "Rp " + String.format(Locale.ITALIAN, "%1$,.0f", (transaksi.getTotal())),48);
+//                        }
+//                        record += StringUtilss.doubleLine(32);
+//                        record += StringUtilss.justify("TOTAL", sum, 48);
+//                        record += StringUtilss.newLine(32);
+//                    } catch (Exception ex) {
+//                        dialog.dismiss();
+//                        ex.printStackTrace();
+//                        Toast.makeText(context, "Text data tidak bisa dibuat", Toast.LENGTH_LONG).show();
+//                    }
+//
+//                    try {
+//                        step = 13; //buat file csv attachment
+//                        if (root.canWrite()) {
+//                            File dir = new File(root.getAbsolutePath() + "/linkpay/LPayLaporanHarian");
+//
+//                            if (!dir.isDirectory()) {
+//                                dir.mkdirs();
+//                            }
+//
+//                            file = new File(dir, csvFile);
+//
+//                            WorkbookSettings wbSettings = new WorkbookSettings();
+//                            wbSettings.setLocale(new Locale("en", "EN"));
+//                            WritableWorkbook workbook;
+//                            workbook = Workbook.createWorkbook(file, wbSettings);
+//                            // sheet 1
+//                            WritableSheet sheet = workbook.createSheet("Riwayat Transaksi", 0);
+//
+//                            WritableFont cellJud = new WritableFont(WritableFont.TIMES, 13);
+//                            cellJud.setColour(Colour.BLACK);
+//                            cellJud.setBoldStyle(WritableFont.BOLD);
+//
+//                            WritableFont cellHead = new WritableFont(WritableFont.TIMES, 12);
+//                            cellHead.setColour(Colour.BLACK);
+//                            cellHead.setBoldStyle(WritableFont.BOLD);
+//
+//                            WritableFont cellFont = new WritableFont(WritableFont.TIMES, 12);
+//                            cellFont.setColour(Colour.BLACK);
+//
+//                            WritableCellFormat cellFormatJud = new WritableCellFormat(cellJud);
+//                            cellFormatJud.setAlignment(Alignment.CENTRE);
+//
+//                            WritableCellFormat cellFormatHead = new WritableCellFormat(cellHead);
+//                            cellFormatHead.setAlignment(Alignment.CENTRE);
+//                            cellFormatHead.setBorder(Border.ALL, BorderLineStyle.MEDIUM);
+//
+//                            WritableCellFormat cellFormat = new WritableCellFormat(cellFont);
+//                            cellFormat.setAlignment(Alignment.CENTRE);
+//                            cellFormat.setBorder(Border.ALL, BorderLineStyle.THIN);
+//
+//                            sheet.setColumnView(0, 10);
+//                            sheet.setColumnView(1, 26);
+//                            sheet.setColumnView(2, 26);
+//                            sheet.setColumnView(3, 28);
+//                            sheet.mergeCells(0,0,3,0);
+//                            sheet.mergeCells(0,transaksiList.size()+2, 2,transaksiList.size()+2);
+//                            sheet.addCell(new Label(0 , 0, "Riwayat Transaksi Harian "+p.getNamaUsaha()+" Periode : " + tvTanggal.getText().toString(), cellFormatJud));
+//                            sheet.addCell(new Label(0, 1, "No", cellFormatHead));
+//                            sheet.addCell(new Label(1, 1, "Jam", cellFormatHead));
+//                            sheet.addCell(new Label(2, 1, "Cara Bayar", cellFormatHead));
+//                            sheet.addCell(new Label(3, 1, "Total Transaksi", cellFormatHead));
+//                            for (int i = 0; i < transaksiList.size(); i++) {
+//                                sheet.addCell(new Label(0, i+2, i+1 + "", cellFormat));
+//                                sheet.addCell(new Label(1, i+2, dateToJam(transaksiList.get(i).getTgl()), cellFormat));
+//                                sheet.addCell(new Label(2, i+2, transaksiList.get(i).getCaraBayar(), cellFormat));
+//                                sheet.addCell(new Label(3, i+2, "Rp. "+toRupiah(transaksiList.get(i).getTotal() + ""), cellFormat));
+//                            }
+//                            sheet.addCell(new Label(0,transaksiList.size()+2,"Total", cellFormatHead));
+//                            sheet.addCell(new Label(3,transaksiList.size()+2,sum, cellFormatHead));
+//                            workbook.write();
+//                            workbook.close();
+//                        }
+//                    } catch (Exception ex) {
+//                        ex.printStackTrace();
+//                        dialog.dismiss();
+//                        Toast.makeText(context, "File excel tidak bisa dibuat dan dilampirkan" , Toast.LENGTH_LONG).show();
+//                    }
+//
+//
+//
+//                    try {
+//                        requestRuntimePermission();
+//                        Uri attachment;
+//                        attachment = Uri.fromFile(file);
+//
+//                        Intent i = new Intent(Intent.ACTION_SEND);
+//                        i.setType("*/*");
+//                        i.putExtra(Intent.EXTRA_EMAIL, new String[]{"shiddiqpurnomo19@gmail.com"});
+//                        i.putExtra(Intent.EXTRA_SUBJECT, "LinkPay - " + getActivity().getSharedPreferences("Info", 0).getString("Nama", p.getNamaUsaha()) + " - " + tvTanggal.getText().toString());
+//                        i.putExtra(Intent.EXTRA_STREAM, attachment);
+//                        i.putExtra(Intent.EXTRA_TEXT, record);
+//                        startActivity(Intent.createChooser(i, "Kirim laporan..."));
+//                    } catch (android.content.ActivityNotFoundException ex) {
+//                        new AlertDialog.Builder(activity)
+//                                .setMessage("Tidak ada aplikasi pengirim yang terpasang")
+//                                .create().show();
+//                        //Toast.makeText(activity, "Tidak ada aplikasi pengirim yang terpasang.", Toast.LENGTH_SHORT).show();
+//                    }
+//                }catch(Exception e){
+//                    new AlertDialog.Builder(context)
+//                            .setTitle("Ekspor")
+//                            .setMessage("Ekspor laporan gagal")
+//                            .create().show();
+//                }
+//                handler.sendEmptyMessage(10);
+//                pd.dismiss();
+//            }
+//        }.start();
+//    }
 
     @Override
     public void doClick(int id) {
