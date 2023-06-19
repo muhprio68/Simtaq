@@ -72,6 +72,21 @@ public class config {
         return sdf.format(d);
     }
 
+    public static String formatLihatTglExcel(String tgl){
+        final String OLD_FORMAT = "yyyy-MM-dd";
+        final String NEW_FORMAT = "dd-MMM-yy";
+
+        SimpleDateFormat sdf = new SimpleDateFormat(OLD_FORMAT, locale);
+        Date d = null;
+        try {
+            d = sdf.parse(tgl);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        sdf.applyPattern(NEW_FORMAT);
+        return sdf.format(d);
+    }
+
     public static String formatLihatFullTanggal(String tgl) {
         final String OLD_FORMAT = "yyyy-MM-dd";
         final String NEW_FORMAT = "EEEE, dd MMMM yyyy";
