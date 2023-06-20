@@ -87,7 +87,9 @@ import id.simtaq.androidapp.poi.CellBordersHandler;
 import id.simtaq.androidapp.utils.StringUtils;
 
 
+import static id.simtaq.androidapp.helper.config.formatLihatTanggal;
 import static id.simtaq.androidapp.helper.config.formatLihatTglExcel;
+import static id.simtaq.androidapp.helper.config.getCurentDate;
 import static id.simtaq.androidapp.helper.config.locale;
 import static id.simtaq.androidapp.helper.config.toRupiah;
 import static id.simtaq.androidapp.helper.config.url;
@@ -489,15 +491,24 @@ public class RiwayatActivity extends AppCompatActivity implements RiwayatListAda
         int batasData = 7+keuanganList.size();
         int judulDonatur = batasData + 3;
         int dataDonatur = judulDonatur+2;
+        int batasDonatur = dataDonatur+1+donaturList.size();
+        int dataTtd = batasData + 5;
+        int judulRekap = batasDonatur+3;
+        int dataRekap = judulRekap +3;
+
         Workbook workbook = new XSSFWorkbook();
         PropertyTemplate pt = new PropertyTemplate();
         PropertyTemplate ptDonatur = new PropertyTemplate();
+        PropertyTemplate ptRekap = new PropertyTemplate();
+
 // #1) these borders will all be medium in default color
 //        pt.drawBorders(new CellRangeAddress(5, 5, 1, 16),
 //                BorderStyle.MEDIUM, BorderExtent.ALL);
         pt.drawBorders(new CellRangeAddress(5, 7+keuanganList.size(), 1, 16),
                 BorderStyle.THIN, BorderExtent.ALL);
         ptDonatur.drawBorders(new CellRangeAddress(dataDonatur, dataDonatur+donaturList.size()+1, 1, 4),
+                BorderStyle.THIN, BorderExtent.ALL);
+        ptRekap.drawBorders(new CellRangeAddress(dataRekap, dataRekap+14, 1, 4),
                 BorderStyle.THIN, BorderExtent.ALL);
         Sheet sheet = workbook.createSheet("Persons");
         sheet.setColumnWidth(1, getWidth(6));
@@ -517,12 +528,6 @@ public class RiwayatActivity extends AppCompatActivity implements RiwayatListAda
         sheet.setColumnWidth(15, getWidth(15));
         sheet.setColumnWidth(16, getWidth(15));
 
-
-
-
-//        CellRangeAddress region = new CellRangeAddress(5, 5, 1, 16);
-//        CellBordersHandler cBorder = new CellBordersHandler();
-//        cBorder.setRegionBorder(region, sheet, BorderStyle.THIN);
         Row header1 = sheet.createRow(1);
         CellStyle header1Style = workbook.createCellStyle();
         XSSFFont font = ((XSSFWorkbook) workbook).createFont();
@@ -563,7 +568,8 @@ public class RiwayatActivity extends AppCompatActivity implements RiwayatListAda
         header3Style.setAlignment(HorizontalAlignment.CENTER);
         Cell headerCell3 = header3.createCell(1);
         headerCell3.setCellStyle(header3Style);
-        headerCell3.setCellValue("Arus Kas  Keuangan Bulan Juni-Juli 2022");
+        headerCell3.setCellValue("Arus Kas  Keuangan Bulan "+ tvFilterBulanKeuangan.
+                getText().toString()+" "+tvFilterTahunKeuangan.getText().toString() );
         sheet.addMergedRegion(new CellRangeAddress(
                 3, //first row (0-based)
                 3, //last row  (0-based)
@@ -583,6 +589,25 @@ public class RiwayatActivity extends AppCompatActivity implements RiwayatListAda
         headTableStyle.setFillForegroundColor(IndexedColors.LIGHT_GREEN.getIndex());
         headTableStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
         headTableStyle.setWrapText(true);
+
+        CellStyle styleNomor = workbook.createCellStyle();
+        XSSFFont fontNomor = ((XSSFWorkbook) workbook).createFont();
+        fontNomor.setFontName("Calibri");
+        fontNomor.setFontHeight(12);
+        styleNomor.setFont(fontNomor);
+        styleNomor.setAlignment(HorizontalAlignment.CENTER);
+        styleNomor.setVerticalAlignment(VerticalAlignment.CENTER);
+        styleNomor.setWrapText(true);
+
+        CellStyle styleHuruf = workbook.createCellStyle();
+        XSSFFont fontHuruf = ((XSSFWorkbook) workbook).createFont();
+        fontHuruf.setFontName("Calibri");
+        fontHuruf.setFontHeight(12);
+        fontHuruf.setBold(true);
+        styleHuruf.setFont(fontHuruf);
+        styleHuruf.setAlignment(HorizontalAlignment.CENTER);
+        styleHuruf.setVerticalAlignment(VerticalAlignment.CENTER);
+        styleHuruf.setWrapText(true);
 
         Cell cellTbl1 = headerTbl.createCell(1);
         cellTbl1.setCellValue("No");
@@ -726,14 +751,23 @@ public class RiwayatActivity extends AppCompatActivity implements RiwayatListAda
 
         Long akumPemasukan = Long.valueOf(0);
         Long akumPengeluaran = Long.valueOf(0);
-        Cell cell1, cell2, cell3, cell4, cell5, cell6, cell7;
+        Long totalDonatur = Long.valueOf(0);
+        Long totalSewaSawah = Long.valueOf(0);
+        Long totalInfaq = Long.valueOf(0);
+        Long totalLainPemasukan = Long.valueOf(0);
+        Long totalPerawatanMasjid = Long.valueOf(0);
+        Long totalRenovasiMasjid = Long.valueOf(0);
+        Long totalDanaKegiatan = Long.valueOf(0);
+        Long totalLainPengeluaran = Long.valueOf(0);
+
+        Cell cell1, cell2, cell3, cell4, cell5, cell6, cell7, cell8;
         for(int  i=0;i<keuanganList.size();i++)
         {
             final Keuangan k = keuanganList.get(i);
             XSSFRow row = (XSSFRow) sheet.createRow(i+7);
             cell1 = row.createCell(1);
             cell1.setCellValue(i+1);
-            cell1.setCellStyle(dataCellStyle);
+            cell1.setCellStyle(styleNomor);
 
             cell2 = row.createCell(2);
             cell2.setCellValue(formatLihatTglExcel(k.getTglKeuangan()));
@@ -755,18 +789,22 @@ public class RiwayatActivity extends AppCompatActivity implements RiwayatListAda
                     cell4 = row.createCell(4);
                     cell4.setCellValue(k.getNominalKeuangan());
                     cell4.setCellStyle(dataCellStyle);
+                    totalDonatur+=k.getNominalKeuangan();
                 } else if (k.getJenisKeuangan().equals("Sewa Sawah")){
                     cell4 = row.createCell(5);
                     cell4.setCellValue(k.getNominalKeuangan());
                     cell4.setCellStyle(dataCellStyle);
+                    totalSewaSawah+=k.getNominalKeuangan();
                 } else if (k.getJenisKeuangan().equals("Infaq")){
                     cell4 = row.createCell(6);
                     cell4.setCellValue(k.getNominalKeuangan());
                     cell4.setCellStyle(dataCellStyle);
+                    totalInfaq+=k.getNominalKeuangan();
                 } else {
                     cell4 = row.createCell(7);
-                    cell4.setCellValue(k.getNominalKeuangan()+"");
+                    cell4.setCellValue(k.getNominalKeuangan());
                     cell4.setCellStyle(dataCellStyle);
+                    totalLainPemasukan+=k.getNominalKeuangan();
                 }
             } else {
                 cell5 = row.createCell(14);
@@ -780,24 +818,30 @@ public class RiwayatActivity extends AppCompatActivity implements RiwayatListAda
                     cell4 = row.createCell(10);
                     cell4.setCellValue(k.getNominalKeuangan());
                     cell4.setCellStyle(dataCellStyle);
+                    totalPerawatanMasjid+=k.getNominalKeuangan();
                 } else if (k.getJenisKeuangan().equals("Renovasi Masjid")){
                     cell4 = row.createCell(11);
                     cell4.setCellValue(k.getNominalKeuangan());
                     cell4.setCellStyle(dataCellStyle);
+                    totalRenovasiMasjid+=k.getNominalKeuangan();
                 } else if (k.getJenisKeuangan().equals("Dana Kegiatan")){
                     cell4 = row.createCell(12);
                     cell4.setCellValue(k.getNominalKeuangan());
                     cell4.setCellStyle(dataCellStyle);
+                    totalDanaKegiatan+=k.getNominalKeuangan();
                 } else {
                     cell4 = row.createCell(13);
                     cell4.setCellValue(k.getNominalKeuangan());
                     cell4.setCellStyle(dataCellStyle);
+                    totalLainPengeluaran+=k.getNominalKeuangan();
                 }
             }
 
+            cell8 = row.createCell(15);
+            cell8.setCellValue(k.getJmlKasAkhir());
+            cell8.setCellStyle(dataCellStyle);
+
         }
-
-
 
         Row rowTotal = sheet.createRow(batasData);
         Cell cellTotal = rowTotal.createCell(1);
@@ -849,6 +893,8 @@ public class RiwayatActivity extends AppCompatActivity implements RiwayatListAda
         cellTotalPengeluaran.setCellFormula("SUM(O8:O"+batasData+")");
         cellTotalPengeluaran.setCellStyle(headTableStyle);
 
+
+
         CellStyle headDonaturStyle = workbook.createCellStyle();
         XSSFFont fontHeadDonatur = ((XSSFWorkbook) workbook).createFont();
         fontHeadDonatur.setFontName("Calibri");
@@ -880,6 +926,14 @@ public class RiwayatActivity extends AppCompatActivity implements RiwayatListAda
         headTableDonaturStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
         headTableDonaturStyle.setWrapText(true);
 
+        CellStyle cellTtdStyle = workbook.createCellStyle();
+        XSSFFont fontTtd = ((XSSFWorkbook) workbook).createFont();
+        fontTtd.setFontName("Calibri");
+        fontTtd.setFontHeight(14);
+        cellTtdStyle.setFont(fontTtd);
+        cellTtdStyle.setAlignment(HorizontalAlignment.CENTER);
+        cellTtdStyle.setWrapText(true);
+
         Row rowHeadTableDonatur = sheet.createRow(dataDonatur);
         Cell cellHeadTableDonatur = rowHeadTableDonatur.createCell(1);
         cellHeadTableDonatur.setCellValue("NO");
@@ -897,13 +951,23 @@ public class RiwayatActivity extends AppCompatActivity implements RiwayatListAda
         cellHeadTableDonatur3.setCellValue("TOTAL");
         cellHeadTableDonatur3.setCellStyle(headTableDonaturStyle);
 
+        Cell cellTglTtd = rowHeadTableDonatur.createCell(14);
+        cellTglTtd.setCellValue("Jombang, "+formatLihatTanggal(getCurentDate()));
+        cellTglTtd.setCellStyle(cellTtdStyle);
+        sheet.addMergedRegion(new CellRangeAddress(
+                dataTtd, //first row (0-based)
+                dataTtd, //last row  (0-based)
+                14, //first column (0-based)
+                16  //last column  (0-based)
+        ));
+
         Cell celDon1, celDon2, celDon3, celDon4;
         for(int  i=0;i<donaturList.size();i++) {
             final Donatur d = donaturList.get(i);
             XSSFRow row = (XSSFRow) sheet.createRow(dataDonatur+ 1 + i);
             celDon1 = row.createCell(1);
             celDon1.setCellValue(i + 1);
-            celDon1.setCellStyle(dataCellStyle);
+            celDon1.setCellStyle(styleNomor);
 
             celDon2 = row.createCell(2);
             celDon2.setCellValue(d.getWilayahDonatur());
@@ -928,10 +992,11 @@ public class RiwayatActivity extends AppCompatActivity implements RiwayatListAda
                 1, //first column (0-based)
                 3  //last column  (0-based)
         ));
-        int batasDonatur = dataDonatur+1+donaturList.size();
+
         Cell cellValueTotalDonatur = rowTableTotalDonatur.createCell(4);
         cellValueTotalDonatur.setCellFormula("SUM(E"+(dataDonatur+1)+":E"+batasDonatur+")");
         cellValueTotalDonatur.setCellStyle(dataCellStyle);
+
 
         CellStyle headRekapStyle = workbook.createCellStyle();
         XSSFFont fontHeadRekap = ((XSSFWorkbook) workbook).createFont();
@@ -943,12 +1008,10 @@ public class RiwayatActivity extends AppCompatActivity implements RiwayatListAda
         headRekapStyle.setAlignment(HorizontalAlignment.CENTER);
         headRekapStyle.setVerticalAlignment(VerticalAlignment.CENTER);
 
-
-        int judulRekap = batasDonatur+3;
         Row rowJudulRekap1 = sheet.createRow(judulRekap);
         Cell cellJudulRekap1 = rowJudulRekap1.createCell(1);
-        cellJudulRekap1.setCellValue("REKAP LAPORAN KEUANGAN "+tvFilterBulanKeuangan.getText().toString()+
-                " TAHUN "+tvFilterTahunKeuangan.getText().toString());
+        cellJudulRekap1.setCellValue("REKAP LAPORAN KEUANGAN "+tvFilterBulanKeuangan.getText().toString().toUpperCase()+
+                " "+tvFilterTahunKeuangan.getText().toString());
         cellJudulRekap1.setCellStyle(headRekapStyle);
         sheet.addMergedRegion(new CellRangeAddress(
                 judulRekap, //first row (0-based)
@@ -968,27 +1031,350 @@ public class RiwayatActivity extends AppCompatActivity implements RiwayatListAda
                 4  //last column  (0-based)
         ));
 
-        int dataRekap = judulRekap +3;
+        CellStyle headTableRekapStyle = workbook.createCellStyle();
+        XSSFFont fontHeadRekapTable = ((XSSFWorkbook) workbook).createFont();
+        fontHeadRekapTable.setFontName("Calibri");
+        fontHeadRekapTable.setBold(true);
+        fontHeadRekapTable.setFontHeight(12);
+        headTableRekapStyle.setFont(fontHeadRekapTable);
+        headTableRekapStyle.setFillForegroundColor(IndexedColors.LIGHT_TURQUOISE.getIndex());
+        headTableRekapStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+        headTableRekapStyle.setWrapText(true);
+
+        CellStyle headTableRekapStyle2 = workbook.createCellStyle();
+        XSSFFont fontHeadRekapTable2 = ((XSSFWorkbook) workbook).createFont();
+        fontHeadRekapTable2.setFontName("Calibri");
+        fontHeadRekapTable2.setBold(true);
+        fontHeadRekapTable2.setFontHeight(12);
+        headTableRekapStyle2.setFont(fontHeadRekapTable2);
+        headTableRekapStyle2.setWrapText(true);
+
         Row rowRekapSaldoAwal = sheet.createRow(dataRekap);
+        Cell cellKosongSaldo = rowRekapSaldoAwal.createCell(1);
+        cellKosongSaldo.setCellStyle(headTableRekapStyle);
+
         Cell cellRekapSaldo = rowRekapSaldoAwal.createCell(2);
         cellRekapSaldo.setCellValue("Saldo Awal");
-        cellRekapSaldo.setCellStyle(headTableDonaturStyle);
+        cellRekapSaldo.setCellStyle(headTableRekapStyle);
+        sheet.addMergedRegion(new CellRangeAddress(
+                dataRekap, //first row (0-based)
+                dataRekap, //last row  (0-based)
+                2, //first column (0-based)
+                3  //last column  (0-based)
+        ));
 
-        Cell cellValueRekapSaldo = rowRekapSaldoAwal.createCell(3);
-        cellValueRekapSaldo.setCellValue("Value Saldo Awal");
-        cellValueRekapSaldo.setCellStyle(headTableDonaturStyle);
+        Cell cellValueRekapSaldo = rowRekapSaldoAwal.createCell(4);
+        cellValueRekapSaldo.setCellValue(keuanganList.get(0).getJmlKasAwal());
+        cellValueRekapSaldo.setCellStyle(headTableRekapStyle);
 
-        Row rowRekapPemasukan1 = sheet.createRow(dataRekap+1);
-        Cell cellRekapPemasukan1 = rowRekapPemasukan1.createCell(1);
-        cellRekapPemasukan1.setCellValue("A");
-        cellRekapPemasukan1.setCellStyle(headTableDonaturStyle);
+        Row rowHeadRekapPemasukan = sheet.createRow(dataRekap+1);
+        Cell cellHeadRekapPemasukan = rowHeadRekapPemasukan.createCell(1);
+        cellHeadRekapPemasukan.setCellValue("A");
+        cellHeadRekapPemasukan.setCellStyle(styleHuruf);
 
-        Cell cellRekapPemasukan2 = rowRekapPemasukan1.createCell(2);
-        cellRekapPemasukan2.setCellValue("Pemasukan");
-        cellRekapPemasukan2.setCellStyle(headTableDonaturStyle);
+        Cell cellHeadRekapPemasukan2 = rowHeadRekapPemasukan.createCell(2);
+        cellHeadRekapPemasukan2.setCellValue("Pemasukan");
+        cellHeadRekapPemasukan2.setCellStyle(headTableRekapStyle2);
+        sheet.addMergedRegion(new CellRangeAddress(
+                dataRekap+1, //first row (0-based)
+                dataRekap+1, //last row  (0-based)
+                2, //first column (0-based)
+                3  //last column  (0-based)
+        ));
+
+        Row rowRekapPemasukan1 = sheet.createRow(dataRekap+2);
+        Cell cellRekapPemasukan1x1 = rowRekapPemasukan1.createCell(1);
+        cellRekapPemasukan1x1.setCellValue(1);
+        cellRekapPemasukan1x1.setCellStyle(styleNomor);
+
+        Cell cellRekapPemasukan1x2 = rowRekapPemasukan1.createCell(2);
+        cellRekapPemasukan1x2.setCellValue("Donatur Bulanan");
+        cellRekapPemasukan1x2.setCellStyle(dataCellStyle);
+        sheet.addMergedRegion(new CellRangeAddress(
+                dataRekap+2, //first row (0-based)
+                dataRekap+2, //last row  (0-based)
+                2, //first column (0-based)
+                3  //last column  (0-based)
+        ));
+
+        Cell cellRekapPemasukan1x3 = rowRekapPemasukan1.createCell(4);
+        cellRekapPemasukan1x3.setCellValue(totalDonatur);
+        cellRekapPemasukan1x3.setCellStyle(dataCellStyle);
+
+        Row rowRekapPemasukan2 = sheet.createRow(dataRekap+3);
+        Cell cellRekapPemasukan2x1 = rowRekapPemasukan2.createCell(1);
+        cellRekapPemasukan2x1.setCellValue(2);
+        cellRekapPemasukan2x1.setCellStyle(styleNomor);
+
+        Cell cellRekapPemasukan2x2 = rowRekapPemasukan2.createCell(2);
+        cellRekapPemasukan2x2.setCellValue("Sewa Sawah");
+        cellRekapPemasukan2x2.setCellStyle(dataCellStyle);
+        sheet.addMergedRegion(new CellRangeAddress(
+                dataRekap+3, //first row (0-based)
+                dataRekap+3, //last row  (0-based)
+                2, //first column (0-based)
+                3  //last column  (0-based)
+        ));
+
+        Cell cellRekapPemasukan2x3 = rowRekapPemasukan2.createCell(4);
+        cellRekapPemasukan2x3.setCellValue(totalSewaSawah);
+        cellRekapPemasukan2x3.setCellStyle(dataCellStyle);
+
+        Row rowRekapPemasukan3 = sheet.createRow(dataRekap+4);
+        Cell cellRekapPemasukan3x1 = rowRekapPemasukan3.createCell(1);
+        cellRekapPemasukan3x1.setCellValue(3);
+        cellRekapPemasukan3x1.setCellStyle(styleNomor);
+
+        Cell cellRekapPemasukan3x2 = rowRekapPemasukan3.createCell(2);
+        cellRekapPemasukan3x2.setCellValue("Infaq");
+        cellRekapPemasukan3x2.setCellStyle(dataCellStyle);
+        sheet.addMergedRegion(new CellRangeAddress(
+                dataRekap+4, //first row (0-based)
+                dataRekap+4, //last row  (0-based)
+                2, //first column (0-based)
+                3  //last column  (0-based)
+        ));
+
+        Cell cellRekapPemasukan3x3 = rowRekapPemasukan3.createCell(4);
+        cellRekapPemasukan3x3.setCellValue(totalInfaq);
+        cellRekapPemasukan3x3.setCellStyle(dataCellStyle);
+
+        Row rowRekapPemasukan4 = sheet.createRow(dataRekap+5);
+        Cell cellRekapPemasukan4x1 = rowRekapPemasukan4.createCell(1);
+        cellRekapPemasukan4x1.setCellValue(4);
+        cellRekapPemasukan4x1.setCellStyle(styleNomor);
+
+        Cell cellRekapPemasukan4x2 = rowRekapPemasukan4.createCell(2);
+        cellRekapPemasukan4x2.setCellValue("Lain-lain");
+        cellRekapPemasukan4x2.setCellStyle(dataCellStyle);
+        sheet.addMergedRegion(new CellRangeAddress(
+                dataRekap+5, //first row (0-based)
+                dataRekap+5, //last row  (0-based)
+                2, //first column (0-based)
+                3  //last column  (0-based)
+        ));
+
+        Cell cellRekapPemasukan4x3 = rowRekapPemasukan4.createCell(4);
+        cellRekapPemasukan4x3.setCellValue(totalLainPemasukan);
+        cellRekapPemasukan4x3.setCellStyle(dataCellStyle);
+
+        Row rowRekapPemasukan5 = sheet.createRow(dataRekap+6);
+
+        Cell cellRekapPemasukan5x1 = rowRekapPemasukan5.createCell(1);
+        cellRekapPemasukan5x1.setCellStyle(headTableRekapStyle);
+
+        Cell cellRekapPemasukan5x2 = rowRekapPemasukan5.createCell(2);
+        cellRekapPemasukan5x2.setCellValue("Total Pemasukan");
+        cellRekapPemasukan5x2.setCellStyle(headTableRekapStyle);
+        sheet.addMergedRegion(new CellRangeAddress(
+                dataRekap+6, //first row (0-based)
+                dataRekap+6, //last row  (0-based)
+                2, //first column (0-based)
+                3  //last column  (0-based)
+        ));
+
+        Cell cellRekapPemasukan5x3 = rowRekapPemasukan5.createCell(4);
+        cellRekapPemasukan5x3.setCellFormula("SUM(E"+(dataRekap+3)+":E"+(dataRekap+6)+")");
+        cellRekapPemasukan5x3.setCellStyle(headTableRekapStyle);
+
+        sheet.addMergedRegion(new CellRangeAddress(
+                dataRekap+7, //first row (0-based)
+                dataRekap+7, //last row  (0-based)
+                1, //first column (0-based)
+                4  //last column  (0-based)
+        ));
+
+        Row rowHeadRekapPengeluaran = sheet.createRow(dataRekap+8);
+        Cell cellHeadRekapPengeluaran = rowHeadRekapPengeluaran.createCell(1);
+        cellHeadRekapPengeluaran.setCellValue("B");
+        cellHeadRekapPengeluaran.setCellStyle(styleHuruf);
+
+        Cell cellHeadRekapPengeluaran2 = rowHeadRekapPengeluaran.createCell(2);
+        cellHeadRekapPengeluaran2.setCellValue("Pengeluaran");
+        cellHeadRekapPengeluaran2.setCellStyle(headTableRekapStyle2);
+        sheet.addMergedRegion(new CellRangeAddress(
+                dataRekap+8, //first row (0-based)
+                dataRekap+8, //last row  (0-based)
+                2, //first column (0-based)
+                3  //last column  (0-based)
+        ));
+
+        Row rowRekapPengeluaran1 = sheet.createRow(dataRekap+9);
+        Cell cellRekapPengeluaran1x1 = rowRekapPengeluaran1.createCell(1);
+        cellRekapPengeluaran1x1.setCellValue(1);
+        cellRekapPengeluaran1x1.setCellStyle(styleNomor);
+
+        Cell cellRekapPengeluaran1x2 = rowRekapPengeluaran1.createCell(2);
+        cellRekapPengeluaran1x2.setCellValue("Perawatan Masjid");
+        cellRekapPengeluaran1x2.setCellStyle(dataCellStyle);
+        sheet.addMergedRegion(new CellRangeAddress(
+                dataRekap+9, //first row (0-based)
+                dataRekap+9, //last row  (0-based)
+                2, //first column (0-based)
+                3  //last column  (0-based)
+        ));
+
+        Cell cellRekapPengeluaran1x3 = rowRekapPengeluaran1.createCell(4);
+        cellRekapPengeluaran1x3.setCellValue(totalPerawatanMasjid);
+        cellRekapPengeluaran1x3.setCellStyle(dataCellStyle);
+
+        Row rowRekapPengeluaran2 = sheet.createRow(dataRekap+10);
+        Cell cellRekapPengeluaran2x1 = rowRekapPengeluaran2.createCell(1);
+        cellRekapPengeluaran2x1.setCellValue(2);
+        cellRekapPengeluaran2x1.setCellStyle(styleNomor);
+
+        Cell cellRekapPengeluaran2x2 = rowRekapPengeluaran2.createCell(2);
+        cellRekapPengeluaran2x2.setCellValue("Renovasi Masjid");
+        cellRekapPengeluaran2x2.setCellStyle(dataCellStyle);
+        sheet.addMergedRegion(new CellRangeAddress(
+                dataRekap+10, //first row (0-based)
+                dataRekap+10, //last row  (0-based)
+                2, //first column (0-based)
+                3  //last column  (0-based)
+        ));
+
+        Cell cellRekapPengeluaran2x3 = rowRekapPengeluaran2.createCell(4);
+        cellRekapPengeluaran2x3.setCellValue(totalRenovasiMasjid);
+        cellRekapPengeluaran2x3.setCellStyle(dataCellStyle);
+
+        Row rowRekapPengeluaran3 = sheet.createRow(dataRekap+11);
+        Cell cellRekapPengeluaran3x1 = rowRekapPengeluaran3.createCell(1);
+        cellRekapPengeluaran3x1.setCellValue(3);
+        cellRekapPengeluaran3x1.setCellStyle(styleNomor);
+
+        Cell cellRekapPengeluaran3x2 = rowRekapPengeluaran3.createCell(2);
+        cellRekapPengeluaran3x2.setCellValue("Dana Kegiatan");
+        cellRekapPengeluaran3x2.setCellStyle(dataCellStyle);
+        sheet.addMergedRegion(new CellRangeAddress(
+                dataRekap+11, //first row (0-based)
+                dataRekap+11, //last row  (0-based)
+                2, //first column (0-based)
+                3  //last column  (0-based)
+        ));
+
+        Cell cellRekapPengeluaran3x3 = rowRekapPengeluaran3.createCell(4);
+        cellRekapPengeluaran3x3.setCellValue(totalDanaKegiatan);
+        cellRekapPengeluaran3x3.setCellStyle(dataCellStyle);
+
+        Row rowRekapPengeluaran4 = sheet.createRow(dataRekap+12);
+        Cell cellRekapPengeluaran4x1 = rowRekapPengeluaran4.createCell(1);
+        cellRekapPengeluaran4x1.setCellValue(4);
+        cellRekapPengeluaran4x1.setCellStyle(styleNomor);
+
+        Cell cellRekapPengeluaran4x2 = rowRekapPengeluaran4.createCell(2);
+        cellRekapPengeluaran4x2.setCellValue("Lain-lain");
+        cellRekapPengeluaran4x2.setCellStyle(dataCellStyle);
+        sheet.addMergedRegion(new CellRangeAddress(
+                dataRekap+12, //first row (0-based)
+                dataRekap+12, //last row  (0-based)
+                2, //first column (0-based)
+                3  //last column  (0-based)
+        ));
+
+        Cell cellRekapPengeluaran4x3 = rowRekapPengeluaran4.createCell(4);
+        cellRekapPengeluaran4x3.setCellValue(totalLainPengeluaran);
+        cellRekapPengeluaran4x3.setCellStyle(dataCellStyle);
+
+        Row rowRekapPengeluaran5 = sheet.createRow(dataRekap+13);
+
+        Cell cellRekapPengeluaran5x1 = rowRekapPengeluaran5.createCell(1);
+        cellRekapPengeluaran5x1.setCellStyle(headTableRekapStyle);
+
+        Cell cellRekapPengeluaran5x2 = rowRekapPengeluaran5.createCell(2);
+        cellRekapPengeluaran5x2.setCellValue("Total Pengeluaran");
+        cellRekapPengeluaran5x2.setCellStyle(headTableRekapStyle);
+        sheet.addMergedRegion(new CellRangeAddress(
+                dataRekap+13, //first row (0-based)
+                dataRekap+13, //last row  (0-based)
+                2, //first column (0-based)
+                3  //last column  (0-based)
+        ));
+
+        Cell cellRekapPengeluaran5x3 = rowRekapPengeluaran5.createCell(4);
+        cellRekapPengeluaran5x3.setCellFormula("SUM(E"+(dataRekap+10)+":E"+(dataRekap+13)+")");
+        cellRekapPengeluaran5x3.setCellStyle(headTableRekapStyle);
+
+        Row rowRekapSaldoAkhir = sheet.createRow(dataRekap+14);
+        Cell cellKosodngSaldoAkhir = rowRekapSaldoAkhir.createCell(1);
+        cellKosodngSaldoAkhir.setCellStyle(headTableRekapStyle);
+
+        Cell cellRekapSaldoAkhir = rowRekapSaldoAkhir.createCell(2);
+        cellRekapSaldoAkhir.setCellValue("Saldo Akhir");
+        cellRekapSaldoAkhir.setCellStyle(headTableRekapStyle);
+        sheet.addMergedRegion(new CellRangeAddress(
+                dataRekap+14, //first row (0-based)
+                dataRekap+14, //last row  (0-based)
+                2, //first column (0-based)
+                3  //last column  (0-based)
+        ));
+
+        Cell cellValueRekapSaldoAkhir = rowRekapSaldoAkhir.createCell(4);
+        cellValueRekapSaldoAkhir.setCellValue(keuanganList.get(keuanganList.size()-1).getJmlKasAkhir());
+        cellValueRekapSaldoAkhir.setCellStyle(headTableRekapStyle);
+
+        Row rowTtdKetua;
+        Cell cellTtdKetua;
+        Cell cellTtdBendahara;
+        if (sheet.getRow(dataTtd+2) ==null){
+            rowTtdKetua = sheet.createRow(dataTtd+2);
+            cellTtdKetua = rowTtdKetua.createCell(10);
+            cellTtdBendahara = rowTtdKetua.createCell(14);
+        } else{
+            cellTtdKetua = sheet.getRow(dataTtd+2).createCell(10);
+            cellTtdBendahara = sheet.getRow(dataTtd+2).createCell(14);
+        }
+        cellTtdKetua.setCellValue("Ketua Takmir");
+        cellTtdKetua.setCellStyle(cellTtdStyle);
+        sheet.addMergedRegion(new CellRangeAddress(
+                dataTtd+2, //first row (0-based)
+                dataTtd+2, //last row  (0-based)
+                10, //first column (0-based)
+                12  //last column  (0-based)
+        ));
+
+        cellTtdBendahara.setCellValue("Bendahara");
+        cellTtdBendahara.setCellStyle(cellTtdStyle);
+        sheet.addMergedRegion(new CellRangeAddress(
+                dataTtd+2, //first row (0-based)
+                dataTtd+2, //last row  (0-based)
+                14, //first column (0-based)
+                16  //last column  (0-based)
+        ));
+
+        Row rowNamaKetua;
+        Cell cellNamaKetua;
+        Cell cellNamaBendahara;
+        if (sheet.getRow(dataTtd+6) == null){
+            rowNamaKetua = sheet.createRow(dataTtd+6);
+            cellNamaKetua = rowNamaKetua.createCell(10);
+            cellNamaBendahara = rowNamaKetua.createCell(14);
+        } else {
+            cellNamaKetua = sheet.getRow(dataTtd+6).createCell(10);
+            cellNamaBendahara = sheet.getRow(dataTtd+6).createCell(14);
+        }
+
+        cellNamaKetua.setCellValue("H. M. Supeno");
+        cellNamaKetua.setCellStyle(cellTtdStyle);
+        sheet.addMergedRegion(new CellRangeAddress(
+                dataTtd+6, //first row (0-based)
+                dataTtd+6, //last row  (0-based)
+                10, //first column (0-based)
+                12  //last column  (0-based)
+        ));
+
+        cellNamaBendahara.setCellValue("Nanang Ma'ruf");
+        cellNamaBendahara.setCellStyle(cellTtdStyle);
+        sheet.addMergedRegion(new CellRangeAddress(
+                dataTtd+6, //first row (0-based)
+                dataTtd+6, //last row  (0-based)
+                14, //first column (0-based)
+                16  //last column  (0-based)
+        ));
 
         pt.applyBorders(sheet);
         ptDonatur.applyBorders(sheet);
+        ptRekap.applyBorders(sheet);
+
         try {
             FileOutputStream outputStream = new FileOutputStream(file);
             workbook.write(outputStream);
@@ -1001,130 +1387,52 @@ public class RiwayatActivity extends AppCompatActivity implements RiwayatListAda
         }
     }
 
-//    private File getLaporanExcel(){
-//        try {
-//            //buat file csv attachment
-//            requestRuntimePermission();
-//            file = null;
-//            root = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
-//            String csvFile = "Laporan.xlsx";
-//            if (root.canWrite()) {
-//                File dir = new File(root.getAbsolutePath() + "/simtaq");
-//
-//                if (!dir.isDirectory()) {
-//                    dir.mkdirs();
-//                }
-//
-//                file = new File(dir, csvFile);
-//
-//                WorkbookSettings wbSettings = new WorkbookSettings();
-//                wbSettings.setLocale(new Locale("en", "EN"));
-//                WritableWorkbook workbook;
-//                workbook = Workbook.createWorkbook(file, wbSettings);
-//                // sheet 1
-//                WritableSheet sheet = workbook.createSheet("Riwayat Kas Masjid", 0);
-//
-//                WritableFont cellJud = new WritableFont(WritableFont.ARIAL, 16);
-//                cellJud.setColour(Colour.BLACK);
-//                cellJud.setBoldStyle(WritableFont.BOLD);
-//                WritableFont cellJud2 = new WritableFont(WritableFont.ARIAL, 16);
-//                cellJud2.setColour(Colour.BLACK);
-//                cellJud2.setBoldStyle(WritableFont.BOLD);
-//                cellJud2.setUnderlineStyle(UnderlineStyle.SINGLE);
-//
-//                WritableFont cellHead = new WritableFont(WritableFont.TIMES, 14);
-//                cellHead.setColour(Colour.BLACK);
-//                cellHead.setBoldStyle(WritableFont.BOLD);
-//
-//                WritableFont cellFont = new WritableFont(WritableFont.TIMES, 12);
-//                cellFont.setColour(Colour.BLACK);
-//
-//                WritableCellFormat cellFormatJud = new WritableCellFormat(cellJud);
-//                cellFormatJud.setAlignment(Alignment.CENTRE);
-//                WritableCellFormat cellFormatJud2 = new WritableCellFormat(cellJud2);
-//                cellFormatJud2.setAlignment(Alignment.CENTRE);
-//
-//                WritableCellFormat cellFormatHead = new WritableCellFormat(cellHead);
-//                cellFormatHead.setAlignment(Alignment.CENTRE);
-//                cellFormatHead.setBorder(Border.ALL, BorderLineStyle.MEDIUM);
-//
-//                WritableCellFormat cellFormat = new WritableCellFormat(cellFont);
-//                cellFormat.setAlignment(Alignment.CENTRE);
-//                cellFormat.setBorder(Border.ALL, BorderLineStyle.THIN);
-//
-//                sheet.setColumnView(0, 5);
-//                sheet.setColumnView(1, 10);
-//                sheet.setColumnView(2, 26);
-//                sheet.setColumnView(3, 28);
-//                sheet.mergeCells(0,0,3,0);
-//                //sheet.mergeCells(0,transaksiList.size()+2, 2,transaksiList.size()+2);
-//                sheet.addCell(new Label(1 , 2, "LAPORAN KEUANGAN MASJID AT - TAQWA", cellFormatJud));
-//                sheet.addCell(new Label(1 , 3, "Dsn/Ds. Jogoloyo - Sumobito - Jombang", cellFormatJud));
-//                sheet.addCell(new Label(1 , 4, "Arus Kas  Keuangan Bulan "+tvFilterBulanKeuangan.getText().toString()+" Tahun "+tvFilterTahunKeuangan.getText().toString(), cellFormatJud2));
-//
-//                sheet.addCell(new Label(1, 6, "No", cellFormatHead));
-//                sheet.addCell(new Label(2, 6, "Tanggal", cellFormatHead));
-//                sheet.addCell(new Label(3, 6, "Keterangan", cellFormatHead));
-//                sheet.addCell(new Label(4, 6, "Pemasukan perJenis", cellFormatHead));
-////                            for (int i = 0; i < keuanganList.size(); i++) {
-////                                sheet.addCell(new Label(1, i+2, i+1 + "", cellFormat));
-////                                sheet.addCell(new Label(2, i+2, keuanganList.get(i).getTglKeuangan(), cellFormat));
-////                                sheet.addCell(new Label(3, i+2, keuanganList.get(i).getKetKeuangan(), cellFormat));
-////                                sheet.addCell(new Label(4, i+2, "Rp. "+toRupiah(transaksiList.get(i).getTotal() + ""), cellFormat));
-////                            }
-////                            sheet.addCell(new Label(0,transaksiList.size()+2,"Total", cellFormatHead));
-////                            sheet.addCell(new Label(3,transaksiList.size()+2,sum, cellFormatHead));
-//                workbook.write();
-//                workbook.close();
-//            } else {
-//                Toast.makeText(RiwayatActivity.this, "Cannot write" , Toast.LENGTH_LONG).show();
-//
-//            }
-//        } catch (Exception ex) {
-//            ex.printStackTrace();
-//            Toast.makeText(RiwayatActivity.this, "File excel tidak bisa dibuat" , Toast.LENGTH_LONG).show();
-//        }
-//        return file;
-//    }
-
     private void doSendEmail() {
-        final ProgressDialog pd = ProgressDialog.show(RiwayatActivity.this,"Loading", "Please Wait...",true);
+        final ProgressDialog pd = ProgressDialog.show(this,"Loading", "Please Wait...",true);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    getLaporanApache();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                try {
+                    //atur data ke body email
+                    record = "";
+                    record += StringUtils.left("Riwayat Keuangan Kas Masjid At-Taqwa Dusun Jogoloyo", 32);
+                    record += StringUtils.newLine(32);
+                    record += StringUtils.left("Assalamu'alaikum Wr.Wb. : ", 48);
+                    record += StringUtils.left("Berikut terlampir laporan keuangan kas Masjid At-Taqwa Jogoloyo pada Bulan "+tvFilterBulanKeuangan.getText().toString()+"" +
+                            " Tahun "+tvFilterTahunKeuangan.getText().toString(), 32);
+                    record += StringUtils.doubleLine(32);
+                    record += StringUtils.newLine(32);
 
-        getLaporanApache();
-        try {
-            //atur data ke body email
-            record = "";
-            record += StringUtils.left("Riwayat Keuangan Kas Masjid At-Taqwa Dusun Jogoloyo", 32);
-            record += StringUtils.newLine(32);
-            record += StringUtils.left("Assalamu'alaikum Wr.Wb. : ", 48);
-            record += StringUtils.left("Berikut terlampir laporan keuangan kas Masjid At-Taqwa Jogoloyo pada Bulan "+tvFilterBulanKeuangan.getText().toString()+"" +
-                    " Tahun "+tvFilterTahunKeuangan.getText().toString(), 32);
-            record += StringUtils.doubleLine(32);
-            record += StringUtils.newLine(32);
+                    try {
+                        step = 1;
+                        Uri attachment;
+                        attachment = FileProvider.getUriForFile(RiwayatActivity.this, "id.simtaq.androidapp.provider", file);
+                        //attachment = Uri.fromFile(file);
 
-            try {
-                step = 1;
-                Uri attachment;
-                attachment = FileProvider.getUriForFile(RiwayatActivity.this, "id.simtaq.androidapp.provider", file);
-                //attachment = Uri.fromFile(file);
-
-                step =2;
-                Intent i = new Intent(Intent.ACTION_SEND);
-                i.setType("*/*");
-                step = 3;
-                i.putExtra(Intent.EXTRA_EMAIL, new String[]{"simtaq9@gmail.com"});
-                i.putExtra(Intent.EXTRA_SUBJECT, "Riwayat Kas Masjid Bulan "+tvFilterBulanKeuangan.getText().toString());
-                step=4;
-                i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                i.putExtra(Intent.EXTRA_STREAM, attachment);
-                i.putExtra(Intent.EXTRA_TEXT, record);
-                startActivity(Intent.createChooser(i, "Kirim laporan..."));
-            } catch (ActivityNotFoundException ex) {
-                Toast.makeText(RiwayatActivity.this, "Tidak ada aplikasi pengirim yang terpasang."+step, Toast.LENGTH_SHORT).show();
+                        step =2;
+                        Intent i = new Intent(Intent.ACTION_SEND);
+                        i.setType("*/*");
+                        step = 3;
+                        i.putExtra(Intent.EXTRA_EMAIL, new String[]{"simtaq9@gmail.com"});
+                        i.putExtra(Intent.EXTRA_SUBJECT, "Riwayat Kas Masjid Bulan "+tvFilterBulanKeuangan.getText().toString());
+                        step=4;
+                        i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                        i.putExtra(Intent.EXTRA_STREAM, attachment);
+                        i.putExtra(Intent.EXTRA_TEXT, record);
+                        startActivity(Intent.createChooser(i, "Kirim laporan..."));
+                    } catch (ActivityNotFoundException ex) {
+                        Toast.makeText(RiwayatActivity.this, "Tidak ada aplikasi pengirim yang terpasang."+step, Toast.LENGTH_SHORT).show();
+                    }
+                }catch(Exception e){
+                    Toast.makeText(RiwayatActivity.this, "Tidak ada memuat email"+step, Toast.LENGTH_SHORT).show();
+                }
             }
-        }catch(Exception e){
-            Toast.makeText(RiwayatActivity.this, "Tidak ada memuat email"+step, Toast.LENGTH_SHORT).show();
-        }
+        }).start();
         pd.dismiss();
     }
 
@@ -1152,15 +1460,18 @@ public class RiwayatActivity extends AppCompatActivity implements RiwayatListAda
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.riwayatmenu, menu);
         //getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
+        return super.onCreateOptionsMenu(menu);
 
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId()==R.id.eksporlap){
-            doSendEmail();
+        switch (item.getItemId()) {
+            case R.id.eksporlap:
+                doSendEmail();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return true;
     }
 
     @Override

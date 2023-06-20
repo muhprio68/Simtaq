@@ -4,5 +4,7 @@
     <item
         android:id="@+id/eksporlap"
         android:title="@string/ekspor_laporan"
-        app:showAsAction="never|withText"/>
+        app:showAsAction="never"
+        />
+
 </menu>

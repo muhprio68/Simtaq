@@ -139,6 +139,16 @@ public class config {
         return dateFormat.format(cal.getTime());
     }
 
+    public static Date getFullCurentDate(){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", locale);
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.HOUR_OF_DAY, -2);
+        Date date = new Date();
+        date = cal.getTime();
+        //System.out.println(dateFormat.format(cal.getTime()));
+        return date;
+    }
+
     public static String getIdCurentDate(){
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyMMdd", locale);
         Calendar cal = Calendar.getInstance();

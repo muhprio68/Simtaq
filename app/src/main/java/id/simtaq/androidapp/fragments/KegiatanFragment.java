@@ -32,10 +32,15 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -49,16 +54,22 @@ import id.simtaq.androidapp.adapter.RiwayatListAdapter;
 import id.simtaq.androidapp.helper.Preferences;
 import id.simtaq.androidapp.models.CalendarModel;
 import id.simtaq.androidapp.models.Kegiatan;
+import id.simtaq.androidapp.models.Keuangan;
 
+import static id.simtaq.androidapp.helper.config.formatLihatFullTanggal;
+import static id.simtaq.androidapp.helper.config.formatLihatWaktu;
+import static id.simtaq.androidapp.helper.config.getCurentDate;
+import static id.simtaq.androidapp.helper.config.getFullCurentDate;
 import static id.simtaq.androidapp.helper.config.url;
 
 public class KegiatanFragment extends Fragment implements View.OnClickListener, JadwalKegiatanAdapter.IJadwalKegiatanAdapter {
 
-    private ArrayList<Kegiatan> kegiatanList;
+    public ArrayList<Kegiatan> kegiatanList, kegiatans;
     private RecyclerView rvKegiatan;
     private ProgressBar pbInfoKegiatan;
     private TextView tvLihatSemuaKegiatan;
     private TextView tvTambahData;
+    private TextView tvKetKeg, tvValueTipeKeg, tvValueHariTglKeg, tvValueWaktuKeg, tvValueTempatKeg;
     private JadwalKegiatanAdapter adapter;
     private RequestQueue queue;
     private String authToken;
@@ -96,9 +107,13 @@ public class KegiatanFragment extends Fragment implements View.OnClickListener, 
         tvLihatSemuaKegiatan.setOnClickListener(this);
         rvKegiatan.setHasFixedSize(true);
         kegiatanList = new ArrayList<>();
+        kegiatans = new ArrayList<Kegiatan>();
         queue = Volley.newRequestQueue(view.getContext());
 //        addData();
         getData(view, authToken);
+        //getNearestDate1(kegiatanList, stringToDate(getCurentDate(),"00:00:00"));
+        //tvKetKeg.setText(stringToDate(kegiatanList.get(0).getTglKegiatan(), kegiatanList.get(0).getWaktuKegiatan())+"");
+        //getNear();
         //buildRecyclerView(view);
         aksesLevel(level);
         return view;
@@ -112,6 +127,11 @@ public class KegiatanFragment extends Fragment implements View.OnClickListener, 
         tvTambahData = v.findViewById(R.id.tvTambahDataKegiatan);
         clTambahKegiatan = v.findViewById(R.id.clTambahKegiatan);
         clViewInfoKegiatan = v.findViewById(R.id.clViewInfoKegiatan);
+        tvKetKeg = v.findViewById(R.id.tvKeteranganKegiatan);
+        tvValueTipeKeg = v.findViewById(R.id.tvValueTipeKegiatan);
+        tvValueHariTglKeg = v.findViewById(R.id.tvValueHariTanggal);
+        tvValueWaktuKeg = v.findViewById(R.id.tvValueWaktuKegiatan);
+        tvValueTempatKeg = v.findViewById(R.id.tvValueTempatKegiatan);
     }
 
     public void getData(View view, String token){
@@ -135,12 +155,32 @@ public class KegiatanFragment extends Fragment implements View.OnClickListener, 
                         String deskripsiKegiatan = responseObj.getString("deskripsi_kegiatan");
                         String createAt = responseObj.getString("create_at");
                         String updateAt = responseObj.getString("update_at");
-                        kegiatanList.add(new Kegiatan(idKegiatan, noKegiatan, namaKegiatan, tipeKegiatan, tglKegiatan, waktuKegiatan, tempatKegiatan, pembicaraKegiatan, deskripsiKegiatan, createAt, updateAt));
-                        buildRecyclerView(view);
+
+                        if (stringToDate(tglKegiatan, waktuKegiatan).after(getFullCurentDate())){
+                            kegiatanList.add(new Kegiatan(idKegiatan, noKegiatan, namaKegiatan, tipeKegiatan, tglKegiatan, waktuKegiatan, tempatKegiatan, pembicaraKegiatan, deskripsiKegiatan, createAt, updateAt));
+                            Collections.sort(kegiatanList, new Comparator<Kegiatan>() {
+                                @Override
+                                public int compare(Kegiatan keuangan, Kegiatan k1) {
+                                    return stringToDate(keuangan.getTglKegiatan(), keuangan.getWaktuKegiatan()).compareTo(stringToDate(k1.getTglKegiatan(), k1.getWaktuKegiatan()));
+                                }
+                            });
+                            buildRecyclerView(view);
+                        } else{
+                            buildRecyclerView(view);
+                        }
+
+
+//                        kegiatanList.add(new Kegiatan(idKegiatan, noKegiatan, namaKegiatan, tipeKegiatan, tglKegiatan, waktuKegiatan, tempatKegiatan, pembicaraKegiatan, deskripsiKegiatan, createAt, updateAt));
+//                        buildRecyclerView(view);
+//                        if (stringToDate(tglKegiatan, waktuKegiatan).after(stringToDate(getCurentDate(),"00:00:00"))){
+//                            kegiatans.add(new Kegiatan(idKegiatan, noKegiatan, namaKegiatan, tipeKegiatan, tglKegiatan, waktuKegiatan, tempatKegiatan, pembicaraKegiatan, deskripsiKegiatan, createAt, updateAt));
+//                        }
+                        //getNearestDate1(kegiatanList, stringToDate(getCurentDate(),"00:00:00"));
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }
+                setKegiatanSelanjutnya(kegiatanList.get(0));
             }
         }, new Response.ErrorListener() {
             @Override
@@ -174,6 +214,27 @@ public class KegiatanFragment extends Fragment implements View.OnClickListener, 
             }
         };
         queue.add(jsonArrayRequest);
+    }
+
+    public void setKegiatanSelanjutnya(Kegiatan kegiatan){
+        tvKetKeg.setText(kegiatan.getNamaKegiatan());
+        tvValueTipeKeg.setText(kegiatan.getTipeKegiatan());
+        tvValueHariTglKeg.setText(formatLihatFullTanggal(kegiatan.getTglKegiatan()));
+        tvValueWaktuKeg.setText(formatLihatWaktu(kegiatan.getWaktuKegiatan())+" WIB");
+        tvValueTempatKeg.setText(kegiatan.getTempatKegiatan());
+    }
+
+    public Date stringToDate(String tgl, String waktu){
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
+
+        Date date = null;
+        String dateInString = tgl+" "+waktu;
+        try {
+            date = formatter.parse(dateInString);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return date;
     }
 
     public void buildRecyclerView(View view) {
