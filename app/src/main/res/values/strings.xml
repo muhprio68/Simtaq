@@ -57,6 +57,14 @@
         <item>RT 01/RW 03</item>
     </string-array>
 
+    <string-array name="petugas_donatur">
+        <item>Bpk. Purwanto</item>
+        <item>Bpk. Sunali &amp; Ibu Yayuk</item>
+        <item>Bpk. Supadi &amp; Ibu Zuliatin</item>
+        <item>Bpk. Munari &amp; Cak suhardiman</item>
+        <item>Ibu Khotim &amp; Ibu Napiyah</item>
+    </string-array>
+
     <string-array name="lvl_pengguna">
         <item>Jamaah masjid</item>
         <item>Bendahara takmir</item>

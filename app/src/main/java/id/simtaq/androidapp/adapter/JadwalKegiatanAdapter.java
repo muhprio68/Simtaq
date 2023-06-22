@@ -32,7 +32,6 @@ import java.util.Map;
 
 import id.simtaq.androidapp.JadwalKegiatanActivity;
 import id.simtaq.androidapp.R;
-import id.simtaq.androidapp.models.CalendarModel;
 import id.simtaq.androidapp.models.Kegiatan;
 import id.simtaq.androidapp.viewholder.JadwalKegiatanViewHolder;
 

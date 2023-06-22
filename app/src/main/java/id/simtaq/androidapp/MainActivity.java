@@ -56,12 +56,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         //authToken = String.valueOf(getIntent().getStringExtra("token"));
         authToken = Preferences.getKeyToken(MainActivity.this);
-        if (Preferences.getKeyId(MainActivity.this)==null){
+        intentDari = String.valueOf(getIntent().getStringExtra("intentDari"));
+        if (intentDari.isEmpty()){
             auth(authToken);
         }
         setContentView(R.layout.activity_main);
         initView();
-        intentDari = String.valueOf(getIntent().getStringExtra("intentDari"));
         if (intentDari.equals("detail keuangan")){
             bottomNavigationView.setSelectedItemId(R.id.menu_infokas);
             getSupportFragmentManager().beginTransaction().replace(R.id.flPageContainer, new InfoKasFragment()).commit();

@@ -18,15 +18,18 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
@@ -36,6 +39,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -65,6 +69,9 @@ public class UbahDonaturActivity extends AppCompatActivity {
     private DatePickerDialog datePickerDialog;
     private SimpleDateFormat dateFormatter;
     private String[] petugas;
+    private String message, judulMessage;
+    private String pilih1, pilih2;
+    private int iconDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -146,12 +153,7 @@ public class UbahDonaturActivity extends AppCompatActivity {
     }
 
     public void initPetugas(){
-        petugas = new String[5];
-        petugas[0] = "Bpk. Suhardiman";
-        petugas[1] = "Bpk. Supadi";
-        petugas[2] = "Bpk. a";
-        petugas[3] = "Bpk. b";
-        petugas[4] = "Bpk. c";
+        petugas = getResources().getStringArray(R.array.petugas_donatur);
     }
 
     public void getDataUbahDonatur(String token){
@@ -203,25 +205,49 @@ public class UbahDonaturActivity extends AppCompatActivity {
                     JSONObject jsonObject = new JSONObject(response);
                     // on below line we are displaying a success toast message.
                     //snackbarWithAction();
-                    showDialogBerhasilUbah();
+                    judulMessage = "Berhasil";
+                    message = "Donatur berhasil ditambahkan, ingin lihat detailnya?";
+                    pilih1 = "Lihat";
+                    pilih2 = "Tidak";
+                    iconDialog = R.drawable.ic_ok;
+                    showDialogMsg(1);
 
                     //Toast.makeText(TambahKegiatanActivity.this, "Data berhasil disimpan", Toast.LENGTH_SHORT).show();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                // and setting data to edit text as empty
-//                etNamaKegiatan.setText("");
-//                etTglKegiatan.setText("");
-//                etWaktuKegiatan.setText("");
-//                etTempatKegiatan.setText("");
-//                etPembicaraKegiatan.setText("");
-//                etDeskripsiKegiatan.setText("");
             }
         }, new com.android.volley.Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 // method to handle errors.
-                Toast.makeText(UbahDonaturActivity.this, "Fail to get response = " + error, Toast.LENGTH_SHORT).show();
+                String body = null;
+                try {
+                    if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                        judulMessage = "Gagal";
+                        message = "Tidak ada koneksi internet, silahkan nyalakan data";
+                        pilih1 = "Saya Mengerti";
+                        pilih2 = "Keluar";
+                        iconDialog = R.drawable.ic_fail;
+                        showDialogMsg(3);
+                    } else if (error.networkResponse != null) {
+                        if (error.networkResponse.data != null) {
+                            body = new String(error.networkResponse.data, "UTF-8");
+                            JSONObject obj = new JSONObject(body);
+                            JSONObject msg = obj.getJSONObject("messages");
+                            String errorMsg = msg.getString("error");
+                            judulMessage = "Gagal";
+                            message = errorMsg;
+                            pilih1 = "Saya Mengerti";
+                            pilih2 = "Lihat Donatur";
+                            iconDialog = R.drawable.ic_fail;
+                            showDialogMsg(2);
+                        }
+                    }
+                    //Toast.makeText(getApplicationContext(),s,Toast.LENGTH_SHORT).show();
+                } catch (UnsupportedEncodingException | JSONException e) {
+                    e.printStackTrace();
+                }
             }
         }) {
             @Override
@@ -296,36 +322,77 @@ public class UbahDonaturActivity extends AppCompatActivity {
         finish();
     }
 
-    public void showDialogBerhasilUbah(){
+    public void showDialogMsg(int i){
         AlertDialog.Builder dialogBuilder;
         AlertDialog alertDialog;
         dialogBuilder = new AlertDialog.Builder(UbahDonaturActivity.this, R.style.DialogSlideAnim);
         View layoutView = getLayoutInflater().inflate(R.layout.dialogberhasiltambahdata, null);
-        Button btnDialogYa = layoutView.findViewById(R.id.btnYaDialogBerhasil);
-        Button btnDialogTidak = layoutView.findViewById(R.id.btnTidakDialogBerhasil);
-        TextView tvKetBerhasil = layoutView.findViewById(R.id.tvKeteranganDialogBerhasil);
-        btnDialogYa.setText("Ya");
-        btnDialogTidak.setText("Tidak");
-        tvKetBerhasil.setText("Data donatur berhasil diubah, apakah anda ingin melihat detailnya?");
+        ImageView ivIconDialog = layoutView.findViewById(R.id.ivIconDialog);
+        Button btnDialog1 = layoutView.findViewById(R.id.btnYaDialogBerhasil);
+        Button btnDialog2 = layoutView.findViewById(R.id.btnTidakDialogBerhasil);
+        TextView tvJdlMsg = layoutView.findViewById(R.id.tvJudulDialog);
+        TextView tvKetMsg = layoutView.findViewById(R.id.tvKeteranganDialogBerhasil);
+        ivIconDialog.setImageResource(iconDialog);
+        btnDialog1.setText(pilih1);
+        btnDialog2.setText(pilih2);
+        tvJdlMsg.setText(judulMessage);
+        tvKetMsg.setText(message);
         dialogBuilder.setView(layoutView);
         alertDialog = dialogBuilder.create();
         alertDialog.setCancelable(false);
         alertDialog.show();
         alertDialog.getWindow().setGravity(Gravity.BOTTOM);
         alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        btnDialogYa.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                lihatUbahData();
-            }
-        });
+        if (i==1){
+            btnDialog1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    alertDialog.dismiss();
+                    lihatUbahData();
+                }
+            });
 
-        btnDialogTidak.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                alertDialog.dismiss();
-            }
-        });
+            btnDialog2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    alertDialog.dismiss();
+                }
+            });
+
+        } else if (i == 2){
+            btnDialog1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    alertDialog.dismiss();
+                }
+            });
+
+            btnDialog2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    alertDialog.dismiss();
+                    Intent i = new Intent(UbahDonaturActivity.this, RiwayatDonaturActivity.class);
+                    i.putExtra("intentDari", "ubah donatur");
+                    startActivity(i);
+                }
+            });
+        } else{
+            btnDialog1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    alertDialog.dismiss();
+                }
+            });
+
+            btnDialog2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    alertDialog.dismiss();
+                    finish();
+                    System.exit(0);
+                }
+            });
+        }
     }
 
 }

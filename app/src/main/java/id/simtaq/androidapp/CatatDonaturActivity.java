@@ -1,26 +1,34 @@
 package id.simtaq.androidapp;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -29,6 +37,7 @@ import com.google.android.material.snackbar.Snackbar;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -61,6 +70,9 @@ public class CatatDonaturActivity extends AppCompatActivity {
     private SimpleDateFormat dateFormatter;
     private String jmlSaldo;
     private String[] petugas;
+    private String message, judulMessage;
+    private String pilih1, pilih2;
+    private int iconDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,12 +154,7 @@ public class CatatDonaturActivity extends AppCompatActivity {
     }
 
     public void initPetugas(){
-        petugas = new String[5];
-        petugas[0] = "Bpk. Suhardiman";
-        petugas[1] = "Bpk. Supadi";
-        petugas[2] = "Bpk. a";
-        petugas[3] = "Bpk. b";
-        petugas[4] = "Bpk. c";
+        petugas = getResources().getStringArray(R.array.petugas_donatur);
     }
 
     private void tambahDataDonatur(String token, String tglDonatur, String wilDonatur, String petugasDonatur, String nominalDonatur) {
@@ -159,7 +166,13 @@ public class CatatDonaturActivity extends AppCompatActivity {
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     // on below line we are displaying a success toast message.
-                    snackbarWithAction();
+                    judulMessage = "Berhasil";
+                    message = "Donatur berhasil ditambahkan, ingin lihat detailnya?";
+                    pilih1 = "Lihat";
+                    pilih2 = "Tidak";
+                    iconDialog = R.drawable.ic_ok;
+                    showDialogMsg(1);
+                    //snackbarWithAction();
 
                     //Toast.makeText(TambahKegiatanActivity.this, "Data berhasil disimpan", Toast.LENGTH_SHORT).show();
                 } catch (JSONException e) {
@@ -174,7 +187,33 @@ public class CatatDonaturActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 // method to handle errors.
-                Toast.makeText(CatatDonaturActivity.this, "Fail to get response = " + error, Toast.LENGTH_SHORT).show();
+                String body = null;
+                try {
+                    if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                        judulMessage = "Gagal";
+                        message = "Tidak ada koneksi internet, silahkan nyalakan data";
+                        pilih1 = "Saya Mengerti";
+                        pilih2 = "Keluar";
+                        iconDialog = R.drawable.ic_fail;
+                        showDialogMsg(3);
+                    } else if (error.networkResponse != null) {
+                        if (error.networkResponse.data != null) {
+                            body = new String(error.networkResponse.data, "UTF-8");
+                            JSONObject obj = new JSONObject(body);
+                            JSONObject msg = obj.getJSONObject("messages");
+                            String errorMsg = msg.getString("error");
+                            judulMessage = "Gagal";
+                            message = errorMsg;
+                            pilih1 = "Saya Mengerti";
+                            pilih2 = "Lihat Donatur";
+                            iconDialog = R.drawable.ic_fail;
+                            showDialogMsg(2);
+                        }
+                    }
+                    //Toast.makeText(getApplicationContext(),s,Toast.LENGTH_SHORT).show();
+                } catch (UnsupportedEncodingException | JSONException e) {
+                    e.printStackTrace();
+                }
             }
         }) {
             @Override
@@ -254,9 +293,80 @@ public class CatatDonaturActivity extends AppCompatActivity {
         snackbar.show();
     }
 
+    public void showDialogMsg(int i){
+        AlertDialog.Builder dialogBuilder;
+        AlertDialog alertDialog;
+        dialogBuilder = new AlertDialog.Builder(CatatDonaturActivity.this, R.style.DialogSlideAnim);
+        View layoutView = getLayoutInflater().inflate(R.layout.dialogberhasiltambahdata, null);
+        ImageView ivIconDialog = layoutView.findViewById(R.id.ivIconDialog);
+        Button btnDialog1 = layoutView.findViewById(R.id.btnYaDialogBerhasil);
+        Button btnDialog2 = layoutView.findViewById(R.id.btnTidakDialogBerhasil);
+        TextView tvJdlMsg = layoutView.findViewById(R.id.tvJudulDialog);
+        TextView tvKetMsg = layoutView.findViewById(R.id.tvKeteranganDialogBerhasil);
+        ivIconDialog.setImageResource(iconDialog);
+        btnDialog1.setText(pilih1);
+        btnDialog2.setText(pilih2);
+        tvJdlMsg.setText(judulMessage);
+        tvKetMsg.setText(message);
+        dialogBuilder.setView(layoutView);
+        alertDialog = dialogBuilder.create();
+        alertDialog.setCancelable(false);
+        alertDialog.show();
+        alertDialog.getWindow().setGravity(Gravity.BOTTOM);
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        if (i==1){
+            btnDialog1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    lihatTambahData();
+                }
+            });
+
+            btnDialog2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    alertDialog.dismiss();
+                }
+            });
+
+        } else if (i == 2){
+            btnDialog1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    alertDialog.dismiss();
+                }
+            });
+
+            btnDialog2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    alertDialog.dismiss();
+                    Intent i = new Intent(CatatDonaturActivity.this, RiwayatDonaturActivity.class);
+                    i.putExtra("intentDari", "catat donatur");
+                    startActivity(i);
+                }
+            });
+        } else{
+            btnDialog1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    alertDialog.dismiss();
+                }
+            });
+
+            btnDialog2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    finish();
+                    System.exit(0);
+                }
+            });
+        }
+    }
+
     public void lihatTambahData() {
         Intent intent = new Intent(CatatDonaturActivity.this, DetailKeuanganActivity.class);
-        intent.putExtra("intentDari", "catat keuangan");
+        intent.putExtra("intentDari", "catat donatur");
         startActivity(intent);
     }
     

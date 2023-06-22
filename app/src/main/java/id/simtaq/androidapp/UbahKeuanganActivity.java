@@ -217,23 +217,9 @@ public class UbahKeuanganActivity extends AppCompatActivity {
                                     selectJenis = k;
                                 }
                             }
-                            //spJenisKeu.setSelection(selectJenis);
                         }
                         etTglKeu.setText(formatLihatTanggal(responseObj.getString("tgl_keuangan")));
                         etKetKeu.setText(responseObj.getString("keterangan_keuangan"));
-//                        if (valueTipe.equals("Pemasukan")){
-//                            for(int f=0; f< arrayPemasukan.length ;f++){
-//                                if(arrayPemasukan[f].equals(b)){
-//                                    spJenisKeu.setSelection(f);
-//                                }
-//                            }
-//                        } else if (valueTipe.equals("Pengeluaran")) {
-//                            //for(int g=0; g< arrayPengeluaran.length ;g++){
-//                                //if(arrayPengeluaran[g].equals(b)){
-//                                    spJenisKeu.setSelection(2);
-//                                //}
-//                            //}
-//                        }
                         etNominalKeu.setText(responseObj.getString("nominal_keuangan"));
                         etDesKeu.setText(responseObj.getString("deskripsi_keuangan"));
                     } catch (JSONException e) {

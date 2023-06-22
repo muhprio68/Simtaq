@@ -91,7 +91,7 @@ public class DetailKeuanganActivity extends AppCompatActivity {
         intentDari = getIntent().getStringExtra("intentDari");
         idKeuangan = getIntent().getExtras().getInt("idKeuangan", 0);
         initLevel(level);
-        if (intentDari.equals("catat keuangan")){
+        if (intentDari.contains("catat")){
             btnUbahKeuangan.setVisibility(View.GONE);
             btnHapusKeuangan.setVisibility(View.GONE);
             lihatTambah(authToken);
@@ -387,7 +387,8 @@ public class DetailKeuanganActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         //super.onBackPressed();
-        if (intentDari.equals("riwayat keuangan") || intentDari.equals("info kas") || intentDari.equals("catat keuangan")){
+        if (intentDari.equals("riwayat keuangan") || intentDari.equals("info kas")
+                || intentDari.equals("catat keuangan") || intentDari.equals("catat donatur")){
             super.onBackPressed();
         } else if (intentDari.equals("ubah riwayat keuangan")){
             Intent i = new Intent(DetailKeuanganActivity.this, RiwayatActivity.class);
@@ -397,6 +398,12 @@ public class DetailKeuanganActivity extends AppCompatActivity {
             startActivity(i);
         } else if (intentDari.equals("ubah info kas")){
             Intent i = new Intent(DetailKeuanganActivity.this, MainActivity.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            i.putExtra("intentDari", "detail keuangan");
+            startActivity(i);
+        } else if (intentDari.equals("ubah donatur")){
+            Intent i = new Intent(DetailKeuanganActivity.this, RiwayatDonaturActivity.class);
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             i.putExtra("intentDari", "detail keuangan");

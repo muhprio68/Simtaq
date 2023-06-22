@@ -52,7 +52,6 @@ import id.simtaq.androidapp.RiwayatActivity;
 import id.simtaq.androidapp.adapter.JadwalKegiatanAdapter;
 import id.simtaq.androidapp.adapter.RiwayatListAdapter;
 import id.simtaq.androidapp.helper.Preferences;
-import id.simtaq.androidapp.models.CalendarModel;
 import id.simtaq.androidapp.models.Kegiatan;
 import id.simtaq.androidapp.models.Keuangan;
 
@@ -168,19 +167,19 @@ public class KegiatanFragment extends Fragment implements View.OnClickListener, 
                         } else{
                             buildRecyclerView(view);
                         }
-
-
-//                        kegiatanList.add(new Kegiatan(idKegiatan, noKegiatan, namaKegiatan, tipeKegiatan, tglKegiatan, waktuKegiatan, tempatKegiatan, pembicaraKegiatan, deskripsiKegiatan, createAt, updateAt));
-//                        buildRecyclerView(view);
-//                        if (stringToDate(tglKegiatan, waktuKegiatan).after(stringToDate(getCurentDate(),"00:00:00"))){
-//                            kegiatans.add(new Kegiatan(idKegiatan, noKegiatan, namaKegiatan, tipeKegiatan, tglKegiatan, waktuKegiatan, tempatKegiatan, pembicaraKegiatan, deskripsiKegiatan, createAt, updateAt));
-//                        }
-                        //getNearestDate1(kegiatanList, stringToDate(getCurentDate(),"00:00:00"));
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }
-                setKegiatanSelanjutnya(kegiatanList.get(0));
+                if (!kegiatanList.isEmpty()){
+                    setKegiatanSelanjutnya(kegiatanList.get(0));
+                } else {
+                    tvKetKeg.setText("Tidak ada jadwal");
+                    tvValueTipeKeg.setText("-");
+                    tvValueHariTglKeg.setText("-");
+                    tvValueWaktuKeg.setText("-");
+                    tvValueTempatKeg.setText("-");
+                }
             }
         }, new Response.ErrorListener() {
             @Override
