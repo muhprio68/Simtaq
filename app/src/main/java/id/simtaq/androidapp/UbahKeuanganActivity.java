@@ -366,13 +366,13 @@ public class UbahKeuanganActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 alertDialog.dismiss();
-                if (intentDari.equals("ubah jadwal kegiatan")){
+                if (intentDari.equals("ubah riwayat keuangan")){
                     Intent i = new Intent(UbahKeuanganActivity.this, JadwalKegiatanActivity.class);
                     i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     i.putExtra("intentDari", "detail keuangan");
                     startActivity(i);
-                } else if (intentDari.equals("ubah info kegiatan") ){
+                } else if (intentDari.equals("ubah info kas") ){
                     Intent i = new Intent(UbahKeuanganActivity.this, MainActivity.class);
                     i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

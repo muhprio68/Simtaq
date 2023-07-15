@@ -376,24 +376,4 @@ public class DetailKegiatanActivity extends AppCompatActivity {
             startActivity(i);
         }
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu){
-        getMenuInflater().inflate(R.menu.detail_menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.ubah_kegiatan:
-                Intent intent = new Intent(DetailKegiatanActivity.this, UbahKegiatanActivity.class);
-                intent.putExtra("idKegiatan", idKegiatan);
-                startActivity(intent);
-                finish();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
 }
