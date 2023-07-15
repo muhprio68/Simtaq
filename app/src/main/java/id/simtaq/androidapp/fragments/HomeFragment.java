@@ -35,10 +35,8 @@ import java.util.Map;
 
 import id.simtaq.androidapp.CatatDonaturActivity;
 import id.simtaq.androidapp.CatatKeuanganActivity;
-import id.simtaq.androidapp.InfakOnlineActivity;
+import id.simtaq.androidapp.JariyahOnlineActivity;
 import id.simtaq.androidapp.JadwalKegiatanActivity;
-import id.simtaq.androidapp.LokasiKegiatanActivity;
-import id.simtaq.androidapp.MainActivity;
 import id.simtaq.androidapp.PengurusTakmirActivity;
 import id.simtaq.androidapp.R;
 import id.simtaq.androidapp.RiwayatActivity;
@@ -50,7 +48,7 @@ import id.simtaq.androidapp.helper.config;
 
 public class HomeFragment extends Fragment implements View.OnClickListener {
 
-    private RelativeLayout rlRiwayatUangKas, rlJadwalKegiatan, rlInfakOnline;
+    private RelativeLayout rlRiwayatUangKas, rlJadwalKegiatan, rlJariyahOnline;
     private RelativeLayout rlCatatKeuangan,rlCatatDonatur, rlTambahKegiatan;
     private RelativeLayout rlLokasiKegiatan, rlPengurusTakmir, rlTentangSimtaq;
 
@@ -87,7 +85,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         //auth(authToken, view);
         rlRiwayatUangKas.setOnClickListener(this);
         rlJadwalKegiatan.setOnClickListener(this);
-        rlInfakOnline.setOnClickListener(this);
+        rlJariyahOnline.setOnClickListener(this);
         rlCatatKeuangan.setOnClickListener(this);
         rlCatatDonatur.setOnClickListener(this);
         rlTambahKegiatan.setOnClickListener(this);
@@ -101,7 +99,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     public void initViews(View v){
         rlRiwayatUangKas = v.findViewById(R.id.rlButtonRiwayatUangKas);
         rlJadwalKegiatan = v.findViewById(R.id.rlButtonJadwalKegiatan);
-        rlInfakOnline = v.findViewById(R.id.rlInfakOnline);
+        rlJariyahOnline = v.findViewById(R.id.rlJariyahOnline);
         rlCatatKeuangan = v.findViewById(R.id.rlCatatKeuangan);
         rlCatatDonatur = v.findViewById(R.id.rlCatatDonatur);
         rlTambahKegiatan = v.findViewById(R.id.rlTambahKegiatan);
@@ -116,8 +114,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             startActivity(new Intent(v.getContext(), RiwayatActivity.class));
         } else if (v== rlJadwalKegiatan){
             startActivity(new Intent(v.getContext(), JadwalKegiatanActivity.class));
-        } else if (v== rlInfakOnline){
-            startActivity(new Intent(v.getContext(), InfakOnlineActivity.class));
+        } else if (v== rlJariyahOnline){
+            startActivity(new Intent(v.getContext(), JariyahOnlineActivity.class));
         } else if (v== rlCatatKeuangan){
             if (level.equals("3")){
                 Toast.makeText(getContext(), "Menu hanya untuk bendahara takmir", Toast.LENGTH_SHORT).show();

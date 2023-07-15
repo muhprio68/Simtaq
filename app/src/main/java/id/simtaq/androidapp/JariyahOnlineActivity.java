@@ -5,25 +5,21 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import static android.provider.Telephony.BaseMmsColumns.TRANSACTION_ID;
 import static id.simtaq.androidapp.helper.config.getCurentDate;
 import static id.simtaq.androidapp.helper.config.getIdCurentDate;
 import static id.simtaq.androidapp.helper.config.url;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.midtrans.sdk.corekit.callback.TransactionFinishedCallback;
 import com.midtrans.sdk.corekit.core.MidtransSDK;
@@ -31,7 +27,6 @@ import com.midtrans.sdk.corekit.core.TransactionRequest;
 import com.midtrans.sdk.corekit.core.themes.CustomColorTheme;
 import com.midtrans.sdk.corekit.models.BillingAddress;
 import com.midtrans.sdk.corekit.models.CustomerDetails;
-import com.midtrans.sdk.corekit.models.ItemDetails;
 import com.midtrans.sdk.corekit.models.ShippingAddress;
 import com.midtrans.sdk.corekit.models.snap.TransactionResult;
 import com.midtrans.sdk.uikit.SdkUIFlowBuilder;
@@ -40,58 +35,53 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Map;
-
 import id.simtaq.androidapp.helper.Preferences;
-import id.simtaq.androidapp.models.Keuangan;
 
-public class InfakOnlineActivity extends AppCompatActivity implements TransactionFinishedCallback{
+public class JariyahOnlineActivity extends AppCompatActivity implements TransactionFinishedCallback{
 
     private Toolbar toolbar;
-    private ProgressBar pbInfakOnline;
-    private EditText etInfakAtasNama;
-    private EditText etNominalInfak;
-    private EditText etDeskripsiInfak;
-    private Button btnInfak;
-    private Button btnBatalInfak, btnContinue;
+    private ProgressBar pbJariyahOnline;
+    private EditText etJariyahAtasNama;
+    private EditText etNominalJariyah;
+    private EditText etDeskripsiJariyah;
+    private Button btnJariyah;
+    private Button btnBatalJariyah;
     private RequestQueue queue;
     private String authToken;
 
-    private String noKeuangan, ketInfak, nominalInfak, deskripInfak, jmlSaldo ;
+    private String noKeuangan, ketJariyah, nominalJariyah, deskripJariyah;
 
     TransactionRequest transactionRequest;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_infak_online);
+        setContentView(R.layout.activity_jariyah_online);
         initViews();
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Infak Online");
+        getSupportActionBar().setTitle("Jariyah Online");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back_white);
-        authToken = Preferences.getKeyToken(InfakOnlineActivity.this);
-        queue = Volley.newRequestQueue(InfakOnlineActivity.this);
+        authToken = Preferences.getKeyToken(JariyahOnlineActivity.this);
+        queue = Volley.newRequestQueue(JariyahOnlineActivity.this);
         getNomorKeuangan();
         showPembayaran();
-        btnInfak.setOnClickListener(new View.OnClickListener() {
+        btnJariyah.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (TextUtils.isEmpty(etInfakAtasNama.getText().toString())) {
-                    etInfakAtasNama.setError("Masukkan nama");
-                } else if (TextUtils.isEmpty(etNominalInfak.getText().toString())){
-                    etNominalInfak.setError("Masukkan nominal");
-                }  else {
-                    ketInfak = etInfakAtasNama.getText().toString();
-                    nominalInfak = etNominalInfak.getText().toString();
-                    deskripInfak = etDeskripsiInfak.getText().toString();
-                    transactionRequest= new TransactionRequest(noKeuangan, Integer.parseInt(nominalInfak));
-                    transactionRequest.setCustomField1(ketInfak);
-                    transactionRequest.setCustomField2(deskripInfak+"");
+                if (TextUtils.isEmpty(etJariyahAtasNama.getText().toString())) {
+                    etJariyahAtasNama.setError("Masukkan nama");
+                } else if (TextUtils.isEmpty(etNominalJariyah.getText().toString())){
+                    etNominalJariyah.setError("Masukkan nominal");
+                } else if (TextUtils.isEmpty(etDeskripsiJariyah.getText().toString())){
+                    etDeskripsiJariyah.setError("Masukkan deskripsi");
+                } else {
+                    ketJariyah = etJariyahAtasNama.getText().toString();
+                    nominalJariyah = etNominalJariyah.getText().toString();
+                    deskripJariyah = etDeskripsiJariyah.getText().toString();
+                    transactionRequest= new TransactionRequest(noKeuangan, Integer.parseInt(nominalJariyah));
+                    transactionRequest.setCustomField1(ketJariyah);
+                    transactionRequest.setCustomField2(deskripJariyah+"");
                     transactionRequest.setCustomField3(authToken);
 
                     clickPay();
@@ -99,20 +89,14 @@ public class InfakOnlineActivity extends AppCompatActivity implements Transactio
                 }
             }
         });
-
-        btnContinue.setOnClickListener(new View.OnClickListener() {
+        btnBatalJariyah.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                transactionRequest= new TransactionRequest("KEU-2306170015", 50000);
-                transactionRequest.setCustomField1("Apalah");
-                transactionRequest.setCustomField2("Apalah");
-                transactionRequest.setCustomField3(authToken);
-
-                clickPay();
-                setCustomer();
+                etJariyahAtasNama.setText("");
+                etNominalJariyah.setText("");
+                etDeskripsiJariyah.setText("");
             }
         });
-
     }
 
     public void getNomorKeuangan (){
@@ -139,7 +123,7 @@ public class InfakOnlineActivity extends AppCompatActivity implements Transactio
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(InfakOnlineActivity.this, "Fail to get the data..", Toast.LENGTH_SHORT).show();
+                Toast.makeText(JariyahOnlineActivity.this, "Fail to get the data..", Toast.LENGTH_SHORT).show();
             }
         });
         queue.add(jsonArrayRequest);
@@ -169,20 +153,19 @@ public class InfakOnlineActivity extends AppCompatActivity implements Transactio
     }
 
     public void initViews(){
-        toolbar = findViewById(R.id.tbInfakOnline);
-        pbInfakOnline = findViewById(R.id.pbInfakOnline);
-        etInfakAtasNama = findViewById(R.id.etInfakNama);
-        etNominalInfak = findViewById(R.id.etNominalInfak);
-        etDeskripsiInfak = findViewById(R.id.etDeskripsiInfak);
-        btnInfak = findViewById(R.id.btnBayarInfak);
-        btnBatalInfak = findViewById(R.id.btnBatalInfak);
-        btnContinue = findViewById(R.id.btnBayarContinue);
+        toolbar = findViewById(R.id.tbJariyahOnline);
+        pbJariyahOnline = findViewById(R.id.pbJariyahOnline);
+        etJariyahAtasNama = findViewById(R.id.etJariyahNama);
+        etNominalJariyah = findViewById(R.id.etNominalJariyah);
+        etDeskripsiJariyah = findViewById(R.id.etDeskripsiJariyah);
+        btnJariyah = findViewById(R.id.btnBayarJariyah);
+        btnBatalJariyah = findViewById(R.id.btnBatalJariyah);
     }
-//.setColorTheme(new CustomColorTheme("#FF07b846", "#008715", "#FF5cec75"))
+
     public void showPembayaran(){
         SdkUIFlowBuilder.init()
                 .setClientKey(BuildConfig.CLIENT_KEY) // client_key is mandatory
-                .setContext(InfakOnlineActivity.this) // context is mandatory
+                .setContext(JariyahOnlineActivity.this) // context is mandatory
                 .setTransactionFinishedCallback(this)
                 .setMerchantBaseUrl(BuildConfig.BASE_URL) //set merchant url (required)
                 .enableLog(true) // enable sdk log (optional)
@@ -193,7 +176,7 @@ public class InfakOnlineActivity extends AppCompatActivity implements Transactio
 
     private void clickPay(){
         MidtransSDK.getInstance().setTransactionRequest(transactionRequest);
-        MidtransSDK.getInstance().startPaymentUiFlow(InfakOnlineActivity.this);
+        MidtransSDK.getInstance().startPaymentUiFlow(JariyahOnlineActivity.this);
     }
 
     @Override
@@ -202,16 +185,16 @@ public class InfakOnlineActivity extends AppCompatActivity implements Transactio
             switch (result.getStatus()){
                 case TransactionResult.STATUS_SUCCESS:
                     getNomorKeuangan();
-                    etInfakAtasNama.setText("");
-                    etNominalInfak.setText("" );
-                    etDeskripsiInfak.setText("");
+                    etJariyahAtasNama.setText("");
+                    etNominalJariyah.setText("" );
+                    etDeskripsiJariyah.setText("");
                     Toast.makeText(this, "Transaction Sukses " + result.getResponse().getOrderId(), Toast.LENGTH_LONG).show();
                     break;
                 case TransactionResult.STATUS_PENDING:
                     getNomorKeuangan();
-                    etInfakAtasNama.setText("");
-                    etNominalInfak.setText("" );
-                    etDeskripsiInfak.setText("");
+                    etJariyahAtasNama.setText("");
+                    etNominalJariyah.setText("" );
+                    etDeskripsiJariyah.setText("");
                     Toast.makeText(this, "Transaction Pending " + result.getResponse().getOrderId(), Toast.LENGTH_LONG).show();
                     break;
                 case TransactionResult.STATUS_FAILED:
@@ -228,69 +211,6 @@ public class InfakOnlineActivity extends AppCompatActivity implements Transactio
                 Toast.makeText(this, "Something Wrong", Toast.LENGTH_LONG).show();
             }
         }
-    }
-
-    private void tambahDataPemasukan(String token, String tglInfak, String ketInfak, String statusInfak, String nominalInfak, String deskripInfak) {
-        StringRequest request = new StringRequest(Request.Method.POST, url+"/keuangan", new com.android.volley.Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                //pbCatatPemasukan.setVisibility(View.GONE);
-                Log.e("TAG", "RESPONSE IS " + response);
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-                    // on below line we are displaying a success toast message.
-                    //snackbarWithAction();
-
-                    //Toast.makeText(TambahKegiatanActivity.this, "Data berhasil disimpan", Toast.LENGTH_SHORT).show();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                // and setting data to edit text as empty
-            }
-        }, new com.android.volley.Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                // method to handle errors.
-                Toast.makeText(InfakOnlineActivity.this, "Fail to get response = " + error, Toast.LENGTH_SHORT).show();
-            }
-        }) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap<String, String> headers = new HashMap<String, String>();
-                headers.put("Authorization", "Bearer " + token);
-                return headers;
-            }
-            @Override
-            public String getBodyContentType() {
-                // as we are passing data in the form of url encoded
-                // so we are passing the content type below
-                return "application/x-www-form-urlencoded; charset=UTF-8";
-            }
-
-            @Override
-            protected Map<String, String> getParams() {
-
-                // below line we are creating a map for storing
-                // our values in key and value pair.
-                Map<String, String> params = new HashMap<String, String>();
-
-                // on below line we are passing our
-                // key and value pair to our parameters.
-                params.put("tipe_keuangan", "Pemasukan");
-                params.put("tgl_keuangan", tglInfak);
-                params.put("keterangan_keuangan", ketInfak);
-                params.put("jenis_keuangan", "Lain-lain");
-                params.put("status_keuangan", statusInfak);
-                params.put("nominal_keuangan", nominalInfak);
-                params.put("deskripsi_keuangan", deskripInfak);
-
-                // at last we are returning our params.
-                return params;
-            }
-        };
-        // below line is to make
-        // a json object request.
-        queue.add(request);
     }
 
     @Override

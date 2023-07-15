@@ -72,7 +72,7 @@
             android:name=".CatatKeuanganActivity"
             android:exported="false" />
         <activity
-            android:name=".InfakOnlineActivity"
+            android:name=".JariyahOnlineActivity"
             android:exported="false" />
         <activity
             android:name=".UbahKegiatanActivity"

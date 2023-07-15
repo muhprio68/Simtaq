@@ -30,7 +30,6 @@ import java.util.Random;
 import id.simtaq.androidapp.R;
 import id.simtaq.androidapp.RiwayatActivity;
 import id.simtaq.androidapp.models.Keuangan;
-import id.simtaq.androidapp.models.RiwayatKas;
 import id.simtaq.androidapp.viewholder.RiwayatViewHolder;
 
 import static id.simtaq.androidapp.helper.config.formatLihatTanggal;

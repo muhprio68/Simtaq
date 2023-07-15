@@ -156,7 +156,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:layout_constraintStart_toEndOf="@id/rlRiwayatUangKas"
-                    app:layout_constraintEnd_toStartOf="@id/rlInfakOnline"
+                    app:layout_constraintEnd_toStartOf="@id/rlJariyahOnline"
                     app:layout_constraintTop_toTopOf="parent">
 
                     <RelativeLayout
@@ -186,33 +186,33 @@
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:id="@+id/rlInfakOnline"
+                    android:id="@+id/rlJariyahOnline"
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
                     <RelativeLayout
-                        android:id="@+id/rlButtonInfakOnline"
+                        android:id="@+id/rlButtonJariyahOnline"
                         android:layout_width="92dp"
                         android:layout_height="84dp"
-                        android:background="@drawable/rounded_infakonline">
+                        android:background="@drawable/rounded_jariyahonline">
 
                         <ImageView
                             android:layout_width="42dp"
                             android:layout_height="42dp"
                             android:layout_centerHorizontal="true"
                             android:layout_centerVertical="true"
-                            android:src="@drawable/ic_home_infakonline" />
+                            android:src="@drawable/ic_home_jariyahonline" />
 
                     </RelativeLayout>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/rlButtonInfakOnline"
+                        android:layout_below="@id/rlButtonJariyahOnline"
                         android:layout_centerHorizontal="true"
-                        android:text="Infak\nOnline"
+                        android:text="Jariyah\nOnline"
                         android:textAlignment="center"
                         android:textColor="@color/primaryTextColor"
                         android:textSize="14sp" />

@@ -109,7 +109,7 @@ public class KegiatanFragment extends Fragment implements View.OnClickListener, 
         kegiatans = new ArrayList<Kegiatan>();
         queue = Volley.newRequestQueue(view.getContext());
 //        addData();
-        getData(view, authToken);
+        getDataKegiatan(view, authToken);
         //getNearestDate1(kegiatanList, stringToDate(getCurentDate(),"00:00:00"));
         //tvKetKeg.setText(stringToDate(kegiatanList.get(0).getTglKegiatan(), kegiatanList.get(0).getWaktuKegiatan())+"");
         //getNear();
@@ -133,13 +133,12 @@ public class KegiatanFragment extends Fragment implements View.OnClickListener, 
         tvValueTempatKeg = v.findViewById(R.id.tvValueTempatKegiatan);
     }
 
-    public void getData(View view, String token){
+    public void getDataKegiatan(View view, String token){
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url+"/kegiatan", null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 pbInfoKegiatan.setVisibility(View.GONE);
                 clViewInfoKegiatan.setVisibility(View.VISIBLE);
-                //rvKegiatan.setVisibility(View.VISIBLE);
                 for (int i = 0; i < response.length(); i++) {
                     try {
                         JSONObject responseObj = response.getJSONObject(i);
@@ -154,7 +153,6 @@ public class KegiatanFragment extends Fragment implements View.OnClickListener, 
                         String deskripsiKegiatan = responseObj.getString("deskripsi_kegiatan");
                         String createAt = responseObj.getString("create_at");
                         String updateAt = responseObj.getString("update_at");
-
                         if (stringToDate(tglKegiatan, waktuKegiatan).after(getFullCurentDate())){
                             kegiatanList.add(new Kegiatan(idKegiatan, noKegiatan, namaKegiatan, tipeKegiatan, tglKegiatan, waktuKegiatan, tempatKegiatan, pembicaraKegiatan, deskripsiKegiatan, createAt, updateAt));
                             Collections.sort(kegiatanList, new Comparator<Kegiatan>() {
@@ -184,7 +182,6 @@ public class KegiatanFragment extends Fragment implements View.OnClickListener, 
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                //Toast.makeText(view.getContext(), "Fail to get the data..", Toast.LENGTH_SHORT).show();
                 String body = null;
                 try {
                     if (error instanceof TimeoutError || error instanceof NoConnectionError) {
@@ -196,10 +193,8 @@ public class KegiatanFragment extends Fragment implements View.OnClickListener, 
                             JSONObject msg = obj.getJSONObject("messages");
                             String errorMsg = msg.getString("error");
                             Toast.makeText(getContext(), errorMsg, Toast.LENGTH_LONG).show();
-
                         }
                     }
-                    //Toast.makeText(getApplicationContext(),s,Toast.LENGTH_SHORT).show();
                 } catch (UnsupportedEncodingException | JSONException e) {
                     e.printStackTrace();
                 }

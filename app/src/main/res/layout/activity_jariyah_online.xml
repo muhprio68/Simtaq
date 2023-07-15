@@ -6,10 +6,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    tools:context=".InfakOnlineActivity">
+    tools:context=".JariyahOnlineActivity">
 
     <ProgressBar
-        android:id="@+id/pbInfakOnline"
+        android:id="@+id/pbJariyahOnline"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:layout_width="wrap_content"
@@ -18,7 +18,7 @@
         android:layout_height="wrap_content" />
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/tbInfakOnline"
+        android:id="@+id/tbJariyahOnline"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="?attr/actionBarSize"
@@ -27,14 +27,14 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/tbInfakOnline"
+        android:layout_below="@+id/tbJariyahOnline"
         android:padding="16dp">
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvInfakNama"
+            android:id="@+id/tvJariyahNama"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Infak Atas Nama"
+            android:text="Jariyah Atas Nama"
             android:textSize="18sp"
             android:textColor="@color/primaryTextColor"
             app:layout_constraintTop_toTopOf="parent"
@@ -42,7 +42,7 @@
             app:layout_constraintEnd_toEndOf="parent"/>
 
         <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/etInfakNama"
+            android:id="@+id/etJariyahNama"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -53,67 +53,67 @@
             android:focusable="true"
             android:inputType="text"
             android:padding="16dp"
-            app:layout_constraintTop_toBottomOf="@id/tvInfakNama"
+            app:layout_constraintTop_toBottomOf="@id/tvJariyahNama"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvNominalInfak"
+            android:id="@+id/tvNominalJariyah"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Nominal Infak"
+            android:text="Nominal Jariyah"
             android:textSize="18sp"
             android:textColor="@color/primaryTextColor"
             android:layout_marginTop="16dp"
-            app:layout_constraintTop_toBottomOf="@+id/etInfakNama"
+            app:layout_constraintTop_toBottomOf="@+id/etJariyahNama"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
 
         <EditText
-            android:id="@+id/etNominalInfak"
+            android:id="@+id/etNominalJariyah"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:background="@drawable/rounded_border_tambahdata"
             android:drawablePadding="16dp"
             android:ems="10"
-            android:hint="Masukkan Nominal Infak"
+            android:hint="Masukkan Nominal Jariyah"
             android:inputType="number"
             android:padding="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvNominalInfak" />
+            app:layout_constraintTop_toBottomOf="@+id/tvNominalJariyah" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvDeskripsiInfak"
+            android:id="@+id/tvDeskripsiJariyah"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Deskripsi Infak"
+            android:text="Deskripsi Jariyah"
             android:textSize="18sp"
             android:textColor="@color/primaryTextColor"
             android:layout_marginTop="16dp"
-            app:layout_constraintTop_toBottomOf="@+id/etNominalInfak"
+            app:layout_constraintTop_toBottomOf="@+id/etNominalJariyah"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
 
         <EditText
-            android:id="@+id/etDeskripsiInfak"
+            android:id="@+id/etDeskripsiJariyah"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:background="@drawable/rounded_border_tambahdata"
             android:ems="10"
             android:lines="3"
-            android:hint="Masukkan Deskripsi (opsional)"
+            android:hint="Masukkan Deskripsi"
             android:padding="16dp"
             android:gravity="top"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvDeskripsiInfak" />
+            app:layout_constraintTop_toBottomOf="@+id/tvDeskripsiJariyah" />
 
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnBatalInfak"
+            android:id="@+id/btnBatalJariyah"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -124,11 +124,11 @@
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/btnBayarInfak"
-            app:layout_constraintTop_toBottomOf="@+id/etDeskripsiInfak" />
+            app:layout_constraintEnd_toStartOf="@id/btnBayarJariyah"
+            app:layout_constraintTop_toBottomOf="@+id/etDeskripsiJariyah" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnBayarInfak"
+            android:id="@+id/btnBayarJariyah"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
@@ -138,9 +138,9 @@
             android:textColor="@android:color/white"
             android:textSize="16sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@id/btnBatalInfak"
+            app:layout_constraintStart_toEndOf="@id/btnBatalJariyah"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etDeskripsiInfak" />
+            app:layout_constraintTop_toBottomOf="@+id/etDeskripsiJariyah" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnBayarContinue"
@@ -156,6 +156,6 @@
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnBayarInfak" />
+            app:layout_constraintTop_toBottomOf="@+id/btnBayarJariyah" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </RelativeLayout>

@@ -25,8 +25,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -35,6 +37,7 @@ import com.google.android.material.snackbar.Snackbar;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -42,6 +45,7 @@ import java.util.Map;
 
 import id.simtaq.androidapp.DetailKeuanganActivity;
 import id.simtaq.androidapp.R;
+import id.simtaq.androidapp.TambahKegiatanActivity;
 import id.simtaq.androidapp.UbahKeuanganActivity;
 import id.simtaq.androidapp.helper.Preferences;
 
@@ -154,17 +158,7 @@ public class PemasukanFragment extends Fragment {
             public void onResponse(String response) {
                 pbCatatPemasukan.setVisibility(View.GONE);
                 Log.e("TAG", "RESPONSE IS " + response);
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-                    // on below line we are displaying a success toast message.
-                    //snackbarWithAction();
-                    showDialogBerhasilTambah();
-
-                    //Toast.makeText(TambahKegiatanActivity.this, "Data berhasil disimpan", Toast.LENGTH_SHORT).show();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                // and setting data to edit text as empty
+                showDialogBerhasilTambah();
                 etTglPemasukan.setText("");
                 etKetPemasukan.setText("");
                 etNominalPemasukan.setText("");
@@ -173,9 +167,22 @@ public class PemasukanFragment extends Fragment {
         }, new com.android.volley.Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                // method to handle errors.
-                Toast.makeText(getContext(), "Fail to get response = " + error, Toast.LENGTH_SHORT).show();
-            }
+                String body = null;
+                try {
+                    if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                        Toast.makeText(getContext(), "Tidak ada koneksi internet, silahkan nyalakan data", Toast.LENGTH_SHORT).show();
+                    } else if (error.networkResponse != null) {
+                        if (error.networkResponse.data != null) {
+                            body = new String(error.networkResponse.data, "UTF-8");
+                            JSONObject obj = new JSONObject(body);
+                            JSONObject msg = obj.getJSONObject("messages");
+                            String errorMsg = msg.getString("error");
+                            Toast.makeText(getContext(), errorMsg, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                } catch (UnsupportedEncodingException | JSONException e) {
+                    e.printStackTrace();
+                }            }
         }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
@@ -185,20 +192,11 @@ public class PemasukanFragment extends Fragment {
             }
             @Override
             public String getBodyContentType() {
-                // as we are passing data in the form of url encoded
-                // so we are passing the content type below
                 return "application/x-www-form-urlencoded; charset=UTF-8";
             }
-
             @Override
             protected Map<String, String> getParams() {
-
-                // below line we are creating a map for storing
-                // our values in key and value pair.
                 Map<String, String> params = new HashMap<String, String>();
-
-                // on below line we are passing our
-                // key and value pair to our parameters.
                 params.put("tipe_keuangan", "Pemasukan");
                 params.put("tgl_keuangan", tglPemasukan);
                 params.put("keterangan_keuangan", ketPemasukan);
@@ -206,13 +204,9 @@ public class PemasukanFragment extends Fragment {
                 params.put("status_keuangan", "Selesai");
                 params.put("nominal_keuangan", nominalPemasukan);
                 params.put("deskripsi_keuangan", deskripPemasukan);
-
-                // at last we are returning our params.
                 return params;
             }
         };
-        // below line is to make
-        // a json object request.
         queue.add(request);
     }
 
@@ -243,18 +237,6 @@ public class PemasukanFragment extends Fragment {
          * Tampilkan DatePicker dialog
          */
         datePickerDialog.show();
-    }
-
-    public void snackbarWithAction(){
-        Snackbar snackbar = Snackbar.make(flCatatPemasukan ,"Data berhasil disimpan",Snackbar.LENGTH_SHORT);
-        snackbar.setAction("Lihat", new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                lihatTambahData();
-                //Toast.makeText(getApplicationContext(),"Lahhhh",Toast.LENGTH_SHORT).show();
-            }
-        });
-        snackbar.show();
     }
 
     public void lihatTambahData() {

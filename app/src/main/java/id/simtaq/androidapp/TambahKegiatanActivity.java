@@ -1,27 +1,34 @@
 package id.simtaq.androidapp;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -30,6 +37,7 @@ import com.google.android.material.snackbar.Snackbar;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -161,16 +169,7 @@ public class TambahKegiatanActivity extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 Log.e("TAG", "RESPONSE IS " + response);
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-                    // on below line we are displaying a success toast message.
-                    snackbarWithAction();
-
-                    //Toast.makeText(TambahKegiatanActivity.this, "Data berhasil disimpan", Toast.LENGTH_SHORT).show();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                // and setting data to edit text as empty
+                showDialogBerhasilTambah();
                 etNamaKegiatan.setText("");
                 etTglKegiatan.setText("");
                 etWaktuKegiatan.setText("");
@@ -181,8 +180,22 @@ public class TambahKegiatanActivity extends AppCompatActivity {
         }, new com.android.volley.Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                // method to handle errors.
-                Toast.makeText(TambahKegiatanActivity.this, "Fail to get response = " + error, Toast.LENGTH_SHORT).show();
+                String body = null;
+                try {
+                    if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                        Toast.makeText(TambahKegiatanActivity.this, "Tidak ada koneksi internet, silahkan nyalakan data", Toast.LENGTH_SHORT).show();
+                    } else if (error.networkResponse != null) {
+                        if (error.networkResponse.data != null) {
+                            body = new String(error.networkResponse.data, "UTF-8");
+                            JSONObject obj = new JSONObject(body);
+                            JSONObject msg = obj.getJSONObject("messages");
+                            String errorMsg = msg.getString("error");
+                            Toast.makeText(TambahKegiatanActivity.this, errorMsg, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                } catch (UnsupportedEncodingException | JSONException e) {
+                    e.printStackTrace();
+                }
             }
         }) {
             @Override
@@ -193,20 +206,11 @@ public class TambahKegiatanActivity extends AppCompatActivity {
             }
             @Override
             public String getBodyContentType() {
-                // as we are passing data in the form of url encoded
-                // so we are passing the content type below
                 return "application/x-www-form-urlencoded; charset=UTF-8";
             }
-
             @Override
             protected Map<String, String> getParams() {
-
-                // below line we are creating a map for storing
-                // our values in key and value pair.
                 Map<String, String> params = new HashMap<String, String>();
-
-                // on below line we are passing our
-                // key and value pair to our parameters.
                 params.put("nama_kegiatan", namaKegiatan);
                 params.put("tipe_kegiatan", tipeKegiatan);
                 params.put("tgl_kegiatan", tglKegiatan);
@@ -214,12 +218,9 @@ public class TambahKegiatanActivity extends AppCompatActivity {
                 params.put("tempat_kegiatan", tempatKegiatan);
                 params.put("pembicara_kegiatan", pembicaraKegiatan);
                 params.put("deskripsi_kegiatan", deskripsiKegiatan);
-                // at last we are returning our params.
                 return params;
             }
         };
-        // below line is to make
-        // a json object request.
         queue.add(request);
     }
 
@@ -287,6 +288,39 @@ public class TambahKegiatanActivity extends AppCompatActivity {
         Intent intent = new Intent(TambahKegiatanActivity.this, DetailKegiatanActivity.class);
         intent.putExtra("intentDari", "tambah kegiatan");
         startActivity(intent);
+    }
+
+    public void showDialogBerhasilTambah(){
+        AlertDialog.Builder dialogBuilder;
+        AlertDialog alertDialog;
+        dialogBuilder = new AlertDialog.Builder(TambahKegiatanActivity.this, R.style.DialogSlideAnim);
+        View layoutView = getLayoutInflater().inflate(R.layout.dialogberhasiltambahdata, null);
+        Button btnDialogYa = layoutView.findViewById(R.id.btnYaDialogBerhasil);
+        Button btnDialogTidak = layoutView.findViewById(R.id.btnTidakDialogBerhasil);
+        TextView tvKetBerhasil = layoutView.findViewById(R.id.tvKeteranganDialogBerhasil);
+        btnDialogYa.setText("Ya");
+        btnDialogTidak.setText("Tidak");
+        tvKetBerhasil.setText("Data kegiatan berhasil ditambahkan, apakah anda ingin melihat detailnya?");
+        dialogBuilder.setView(layoutView);
+        alertDialog = dialogBuilder.create();
+        alertDialog.setCancelable(false);
+        alertDialog.show();
+        alertDialog.getWindow().setGravity(Gravity.BOTTOM);
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        btnDialogYa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                lihatTambahData();
+                alertDialog.dismiss();
+            }
+        });
+
+        btnDialogTidak.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+            }
+        });
     }
 
     @Override

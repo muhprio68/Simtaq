@@ -54,7 +54,6 @@ import id.simtaq.androidapp.adapter.RiwayatListAdapter;
 import id.simtaq.androidapp.helper.Preferences;
 import id.simtaq.androidapp.models.Kegiatan;
 import id.simtaq.androidapp.models.Keuangan;
-import id.simtaq.androidapp.models.RiwayatKas;
 
 import static id.simtaq.androidapp.helper.config.locale;
 import static id.simtaq.androidapp.helper.config.toRupiah;
@@ -142,7 +141,6 @@ public class InfoKasFragment extends Fragment implements View.OnClickListener, R
             public void onResponse(JSONArray response) {
                 pbInfoKas.setVisibility(View.GONE);
                 clViewInfoKas.setVisibility(View.VISIBLE);
-                //rvRiwayatInfoKas.setVisibility(View.VISIBLE);
                 for (int i = 0; i < response.length(); i++) {
                     try {
                         JSONObject responseObj = response.getJSONObject(i);

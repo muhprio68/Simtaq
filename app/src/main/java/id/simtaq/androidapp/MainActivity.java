@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         //authToken = String.valueOf(getIntent().getStringExtra("token"));
         authToken = Preferences.getKeyToken(MainActivity.this);
         intentDari = String.valueOf(getIntent().getStringExtra("intentDari"));
-        if (intentDari.isEmpty()){
+        if (intentDari.equals("login")){
             auth(authToken);
         }
         setContentView(R.layout.activity_main);

@@ -25,8 +25,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -35,6 +37,7 @@ import com.google.android.material.snackbar.Snackbar;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -42,6 +45,7 @@ import java.util.Map;
 
 import id.simtaq.androidapp.DetailKeuanganActivity;
 import id.simtaq.androidapp.R;
+import id.simtaq.androidapp.TambahKegiatanActivity;
 import id.simtaq.androidapp.helper.Preferences;
 
 import static id.simtaq.androidapp.helper.config.formatSimpanTanggal;
@@ -148,17 +152,7 @@ public class PengeluaranFragment extends Fragment {
             public void onResponse(String response) {
                 Log.e("TAG", "RESPONSE IS " + response);
                 pbCatatPengeluaran.setVisibility(View.GONE);
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-                    // on below line we are displaying a success toast message.
-                    //snackbarWithAction();
-                    showDialogBerhasilTambah();
-
-                    //Toast.makeText(TambahKegiatanActivity.this, "Data berhasil disimpan", Toast.LENGTH_SHORT).show();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                // and setting data to edit text as empty
+                showDialogBerhasilTambah();
                 etTglPengeluaran.setText("");
                 etKetPengeluaran.setText("");
                 etNominalPengeluaran.setText("");
@@ -167,8 +161,22 @@ public class PengeluaranFragment extends Fragment {
         }, new com.android.volley.Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                // method to handle errors.
-                Toast.makeText(getContext(), "Fail to get response = " + error, Toast.LENGTH_SHORT).show();
+                String body = null;
+                try {
+                    if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                        Toast.makeText(getContext(), "Tidak ada koneksi internet, silahkan nyalakan data", Toast.LENGTH_SHORT).show();
+                    } else if (error.networkResponse != null) {
+                        if (error.networkResponse.data != null) {
+                            body = new String(error.networkResponse.data, "UTF-8");
+                            JSONObject obj = new JSONObject(body);
+                            JSONObject msg = obj.getJSONObject("messages");
+                            String errorMsg = msg.getString("error");
+                            Toast.makeText(getContext(), errorMsg, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                } catch (UnsupportedEncodingException | JSONException e) {
+                    e.printStackTrace();
+                }
             }
         }) {
 
