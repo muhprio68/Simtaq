@@ -76,12 +76,12 @@ public class RiwayatListAdapter extends RecyclerView.Adapter<RiwayatViewHolder> 
         final Keuangan keuangan = keuanganList.get(position);
         if (tipe == 1) {
             if (keuangan.getTipeKeuangan().equals("Pemasukan") ){
-                holder.cvIconRiwayat.getBackground().setTint(ContextCompat.getColor(context, R.color.jmlPemasukan));
+                holder.rlIcRiwayat.setBackgroundResource(R.drawable.rounded_pemasukanblnini);
                 holder.ivIconRiwayat.setImageResource(R.drawable.ic_bullish);
                 holder.tvJmlUang.setText("+ "+toRupiah(keuangan.getNominalKeuangan()+""));
                 holder.tvJmlUang.setTextColor(ContextCompat.getColor(context, R.color.jmlPemasukan));
             } else {
-                holder.cvIconRiwayat.getBackground().setTint(ContextCompat.getColor(context, R.color.jmlPengeluaran));
+                holder.rlIcRiwayat.setBackgroundResource(R.drawable.rounded_pengeluaranblnini);
                 holder.ivIconRiwayat.setImageResource(R.drawable.ic_bearish);
                 holder.tvJmlUang.setText("- "+toRupiah(keuangan.getNominalKeuangan()+""));
                 holder.tvJmlUang.setTextColor(ContextCompat.getColor(context, R.color.jmlPengeluaran));

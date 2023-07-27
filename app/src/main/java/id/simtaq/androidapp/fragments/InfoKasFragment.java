@@ -105,17 +105,17 @@ public class InfoKasFragment extends Fragment implements View.OnClickListener, R
         level = Preferences.getKeyLevel(view.getContext());
         authToken = Preferences.getKeyToken(view.getContext());
         tvSemuaRiwayat.setOnClickListener(this);
+        clCatatKeuangan.setOnClickListener(this);
+        clCatatDonatur.setOnClickListener(this);
         rvRiwayatInfoKas.setHasFixedSize(true);
         clViewInfoKas.setVisibility(View.GONE);
         queue = Volley.newRequestQueue(view.getContext());
         keuanganList = new ArrayList<>();
-        //addData();
         getSaldo(view, authToken);
         getDataKeuangan(view, authToken);
         pemasukanBulanIni = 0;
         pengeluaranBulanIni = 0;
-        aksesLevel(level);
-        //buildRecyclerView(view);
+        initLevel(level);
         return view;
     }
 
@@ -256,7 +256,7 @@ public class InfoKasFragment extends Fragment implements View.OnClickListener, R
         }
     }
 
-    private void aksesLevel(String level){
+    private void initLevel(String level){
         if (level.equals("1") || level.equals("3")) {
             clCatatKeuangan.setVisibility(View.GONE);
             clCatatDonatur.setVisibility(View.GONE);

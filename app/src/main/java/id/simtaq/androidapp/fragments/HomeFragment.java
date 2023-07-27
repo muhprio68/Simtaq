@@ -72,6 +72,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //((AppCompatActivity) getActivity()).getSupportActionBar().hide();
+
     }
 
     @Override
@@ -80,7 +81,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         initViews(view);
-        level = Preferences.getKeyLevel(getContext());
+        level = Preferences.getKeyLevel(view.getContext());
+
         //authToken = Preferences.getKeyToken(view.getContext());
         //auth(authToken, view);
         rlRiwayatUangKas.setOnClickListener(this);

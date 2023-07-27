@@ -7,20 +7,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="8dp">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cvIcRiwayat"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clIcRiwayat"
         android:layout_width="34dp"
         android:layout_height="34dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginTop="4dp"
         android:layout_marginEnd="14dp"
-        android:backgroundTint="@color/jmlPemasukan"
         app:cardCornerRadius="34dp">
 
         <RelativeLayout
+            android:id="@+id/rlIcRiwayat"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@drawable/rounded_pemasukanblnini">
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/ivIcRiwayat"
@@ -30,14 +31,14 @@
                 android:src="@drawable/ic_bullish" />
 
         </RelativeLayout>
-    </androidx.cardview.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
     <TextView
         android:id="@+id/tvKeteranganRiwayat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="16sp"
         android:layout_alignParentTop="true"
-        android:layout_toRightOf="@id/cvIcRiwayat"
+        android:layout_toRightOf="@id/clIcRiwayat"
         android:textColor="@color/primaryTextColor"
         tools:text="Kotak Amal" />
 
@@ -46,7 +47,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/tvKeteranganRiwayat"
-        android:layout_toRightOf="@id/cvIcRiwayat"
+        android:layout_toRightOf="@id/clIcRiwayat"
         android:textColor="@color/primaryTextColor"
         android:layout_marginBottom="8dp"
         android:textSize="12sp"

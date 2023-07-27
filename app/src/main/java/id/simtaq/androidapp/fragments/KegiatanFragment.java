@@ -49,6 +49,7 @@ import id.simtaq.androidapp.DetailKegiatanActivity;
 import id.simtaq.androidapp.JadwalKegiatanActivity;
 import id.simtaq.androidapp.R;
 import id.simtaq.androidapp.RiwayatActivity;
+import id.simtaq.androidapp.TambahKegiatanActivity;
 import id.simtaq.androidapp.adapter.JadwalKegiatanAdapter;
 import id.simtaq.androidapp.adapter.RiwayatListAdapter;
 import id.simtaq.androidapp.helper.Preferences;
@@ -104,17 +105,13 @@ public class KegiatanFragment extends Fragment implements View.OnClickListener, 
         authToken = Preferences.getKeyToken(getContext());
         clViewInfoKegiatan.setVisibility(View.GONE);
         tvLihatSemuaKegiatan.setOnClickListener(this);
+        clTambahKegiatan.setOnClickListener(this);
         rvKegiatan.setHasFixedSize(true);
         kegiatanList = new ArrayList<>();
         kegiatans = new ArrayList<Kegiatan>();
         queue = Volley.newRequestQueue(view.getContext());
-//        addData();
         getDataKegiatan(view, authToken);
-        //getNearestDate1(kegiatanList, stringToDate(getCurentDate(),"00:00:00"));
-        //tvKetKeg.setText(stringToDate(kegiatanList.get(0).getTglKegiatan(), kegiatanList.get(0).getWaktuKegiatan())+"");
-        //getNear();
-        //buildRecyclerView(view);
-        aksesLevel(level);
+        initLevel(level);
         return view;
     }
 
@@ -244,6 +241,8 @@ public class KegiatanFragment extends Fragment implements View.OnClickListener, 
     public void onClick(View v) {
         if (v == tvLihatSemuaKegiatan){
             startActivity(new Intent(v.getContext(), JadwalKegiatanActivity.class));
+        } else if (v == clTambahKegiatan){
+            startActivity(new Intent(v.getContext(), TambahKegiatanActivity.class));
         }
     }
 
@@ -255,7 +254,7 @@ public class KegiatanFragment extends Fragment implements View.OnClickListener, 
         startActivity(intent);
     }
 
-    private void aksesLevel(String level){
+    private void initLevel(String level){
         if (level.equals("1") || level.equals("2")) {
             clTambahKegiatan.setVisibility(View.GONE);
             tvTambahData.setVisibility(View.GONE);

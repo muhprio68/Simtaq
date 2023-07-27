@@ -8,13 +8,14 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import id.simtaq.androidapp.R;
 
 public class RiwayatViewHolder extends RecyclerView.ViewHolder {
 
-    public CardView cvIconRiwayat;
+    public ConstraintLayout clIconRiwayat;
     public ImageView ivIconRiwayat;
     public TextView tvKeteranganRiwayat;
     public TextView tvTanggalRiwayat;
@@ -24,12 +25,13 @@ public class RiwayatViewHolder extends RecyclerView.ViewHolder {
     public TextView tvKeteranganInfoKas;
     public TextView tvJmlInfoKas;
     public TextView tvTglInfoKas;
+    public RelativeLayout rlIcRiwayat;
     public RelativeLayout rlLisRiwayat;
     public RelativeLayout rlListInfoKas;
 
     public RiwayatViewHolder(@NonNull View itemView) {
         super(itemView);
-        cvIconRiwayat = itemView.findViewById(R.id.cvIcRiwayat);
+        clIconRiwayat = itemView.findViewById(R.id.clIcRiwayat);
         ivIconRiwayat = itemView.findViewById(R.id.ivIcRiwayat);
         tvKeteranganRiwayat = itemView.findViewById(R.id.tvKeteranganRiwayat);
         tvTanggalRiwayat = itemView.findViewById(R.id.tvTanggalRiwayat);
@@ -38,6 +40,7 @@ public class RiwayatViewHolder extends RecyclerView.ViewHolder {
         tvKeteranganInfoKas = itemView.findViewById(R.id.tvKeteranganInfoKas);
         tvJmlInfoKas = itemView.findViewById(R.id.tvJmlInfoKas);
         tvTglInfoKas = itemView.findViewById(R.id.tvTglInfoKas);
+        rlIcRiwayat = itemView.findViewById(R.id.rlIcRiwayat);
         rlLisRiwayat = itemView.findViewById(R.id.rlListRiwayat);
         pbRiwayat = itemView.findViewById(R.id.pbRiwayatKeuangan);
         rlListInfoKas = itemView.findViewById(R.id.rlListInfoKas);

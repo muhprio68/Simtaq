@@ -153,6 +153,8 @@ public class MainActivity extends AppCompatActivity {
                     Preferences.setKeyNama(MainActivity.this, nama);
                     Preferences.setKeyEmail(MainActivity.this, email);
                     Preferences.setKeyLevel(MainActivity.this, level);
+                    getSupportFragmentManager().beginTransaction().replace(R.id.flPageContainer, new HomeFragment()).commit();
+
 
                     // on below line we are setting this string s to our text view.
                 } catch (JSONException e) {

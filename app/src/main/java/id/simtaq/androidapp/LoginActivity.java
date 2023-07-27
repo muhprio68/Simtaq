@@ -71,6 +71,9 @@ public class LoginActivity extends AppCompatActivity {
                 if (TextUtils.isEmpty(email)) {
                     etEmail.requestFocus();
                     etEmail.setError("Masukkan email");
+                } else if (!config.isEmailValid(email)) {
+                    etEmail.requestFocus();
+                    etEmail.setError("Email tidak valid");
                 } else if (TextUtils.isEmpty(password)){
                     etPassword.requestFocus();
                     etPassword.setError("Masukkan password");
