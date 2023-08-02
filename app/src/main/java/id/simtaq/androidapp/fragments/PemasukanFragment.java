@@ -236,6 +236,10 @@ public class PemasukanFragment extends Fragment {
         /**
          * Tampilkan DatePicker dialog
          */
+        newCalendar.add(Calendar.DAY_OF_MONTH, -3);
+        datePickerDialog.getDatePicker().setMinDate(newCalendar.getTimeInMillis());
+        newCalendar.add(Calendar.DAY_OF_MONTH, 6);
+        datePickerDialog.getDatePicker().setMaxDate(newCalendar.getTimeInMillis());
         datePickerDialog.show();
     }
 

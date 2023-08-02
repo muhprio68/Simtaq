@@ -250,6 +250,9 @@ public class TambahKegiatanActivity extends AppCompatActivity {
         /**
          * Tampilkan DatePicker dialog
          */
+        datePickerDialog.getDatePicker().setMinDate(newCalendar.getTimeInMillis());
+        newCalendar.add(Calendar.DAY_OF_MONTH, 60);
+        datePickerDialog.getDatePicker().setMaxDate(newCalendar.getTimeInMillis());
         datePickerDialog.show();
     }
 

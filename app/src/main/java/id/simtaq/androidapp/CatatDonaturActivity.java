@@ -278,6 +278,10 @@ public class CatatDonaturActivity extends AppCompatActivity {
         /**
          * Tampilkan DatePicker dialog
          */
+        newCalendar.add(Calendar.DAY_OF_MONTH, -30);
+        datePickerDialog.getDatePicker().setMinDate(newCalendar.getTimeInMillis());
+        newCalendar.add(Calendar.DAY_OF_MONTH, 33);
+        datePickerDialog.getDatePicker().setMaxDate(newCalendar.getTimeInMillis());
         datePickerDialog.show();
     }
 
