@@ -16,4 +16,4 @@ https://github.com/muhprio68/simtaqapi
 ![mockuper (3)](https://github.com/muhprio68/Simtaq/assets/33832985/e1ad846d-17aa-4236-be4b-c69e003f6469)
 
 _Source code by Muhammad Prio Agustian
-Email : muhammadprio93@gmail.com_
+ /Email : muhammadprio93@gmail.com_
